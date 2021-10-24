@@ -89,7 +89,7 @@
                     </ListViewItem>
                     <ListViewItem Height="30">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/exchange.png"/>
+                            <Image Source="icons/cost.png"/>
                             <TextBlock
                                 
                                 Text="Quản lý thu chi"
@@ -111,7 +111,7 @@
                     </ListViewItem>
                     <ListViewItem Height="30">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/mail.png"/>
+                            <Image Source="icons/event.png"/>
                             <TextBlock
                                 
                                 Text="Quản lý sự kiện"
