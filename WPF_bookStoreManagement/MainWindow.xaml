@@ -20,7 +20,13 @@
             Height="50"
             VerticalAlignment="Top"
             Background="Aqua">
-
+            <materialDesign:Chip
+                Content="Tài khoản"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Icon="T"
+                Background="White" Margin="0,10,23.6,8">
+            </materialDesign:Chip>
         </Grid>
         <Grid
             Width="150"
@@ -30,6 +36,7 @@
                 <Grid
                     Height="110"
                     Background="White">
+
                 </Grid>
                 <ListView
                     BorderBrush="Transparent"
@@ -145,6 +152,6 @@
                 </ListView>
             </StackPanel>
         </Grid>
-       
+
     </Grid>
 </Window>
