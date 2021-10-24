@@ -1,4 +1,12 @@
 ﻿<Window x:Class="WPF_bookStoreManagement.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,13 +14,13 @@
         xmlns:local="clr-namespace:WPF_bookStoreManagement"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="0,0,-0.4,0" Height="420" VerticalAlignment="Bottom">
         <Grid
             Width="Auto"
             Height="50"
             VerticalAlignment="Top"
             Background="Aqua">
-            
+
         </Grid>
         <Grid
             Width="150"
@@ -20,7 +28,7 @@
             Background="Aqua">
             <StackPanel>
                 <Grid
-                    Height="100"
+                    Height="110"
                     Background="White">
                 </Grid>
                 <ListView
@@ -30,7 +38,8 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="icons/home.png"/>
                             <TextBlock 
-                                Text="Trang chủ"
+                                
+                                Text="Dashboard"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="15 0 0 0"/>
@@ -38,9 +47,21 @@
                     </ListViewItem>
                     <ListViewItem Height="30">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/bill.png"/>
-                            <TextBlock
-                                Text="Hóa đơn"
+                            <Image Source="icons/book.png"/>
+                            <TextBlock 
+                                
+                                Text="Quản lý sản phẩm"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/booksell.png"/>
+                            <TextBlock 
+                                
+                                Text="Bán hàng"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="15 0 0 0"/>
@@ -66,8 +87,64 @@
                                 Margin="15 0 0 0"/>
                         </StackPanel>
                     </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/exchange.png"/>
+                            <TextBlock
+                                
+                                Text="Quản lý thu chi"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/bill.png"/>
+                            <TextBlock
+                                
+                                Text="Quản lý report"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/mail.png"/>
+                            <TextBlock
+                                
+                                Text="Quản lý sự kiện"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/mail.png"/>
+                            <TextBlock
+                                
+                                Text="Quản lý email"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/setting.png"/>
+                            <TextBlock
+                                
+                                Text="Cài đặt chung"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
                 </ListView>
             </StackPanel>
         </Grid>
+       
     </Grid>
 </Window>
