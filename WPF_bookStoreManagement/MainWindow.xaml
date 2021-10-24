@@ -68,7 +68,6 @@
                     </ListViewItem>
                 </ListView>
             </StackPanel>
-            
         </Grid>
     </Grid>
 </Window>
