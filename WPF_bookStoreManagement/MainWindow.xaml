@@ -1,0 +1,74 @@
+﻿<Window x:Class="WPF_bookStoreManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_bookStoreManagement"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid
+            Width="Auto"
+            Height="50"
+            VerticalAlignment="Top"
+            Background="Aqua">
+            
+        </Grid>
+        <Grid
+            Width="150"
+            HorizontalAlignment="Left"
+            Background="Aqua">
+            <StackPanel>
+                <Grid
+                    Height="100"
+                    Background="White">
+                </Grid>
+                <ListView
+                    BorderBrush="Transparent"
+                    Background="Transparent">
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/home.png"/>
+                            <TextBlock 
+                                Text="Trang chủ"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/bill.png"/>
+                            <TextBlock
+                                Text="Hóa đơn"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/customer.png"/>
+                            <TextBlock
+                                Text="Khách hàng"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="30">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="icons/employee.png"/>
+                            <TextBlock
+                                Text="Nhân viên"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="15 0 0 0"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+            
+        </Grid>
+    </Grid>
+</Window>
