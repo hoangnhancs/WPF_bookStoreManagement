@@ -69,6 +69,19 @@ namespace WPF_bookStoreManagement
             collaped_btn = new List<Button>();
             setupVarible();
         }
+        void zoomStackpanelMain()
+        {
+            if (isMenuOpen==true)
+            {
+                Storyboard s = (Storyboard)TryFindResource("ZoomOutStackpanelMain");
+                s.Begin();
+            }
+            else
+            {
+                Storyboard s = (Storyboard)TryFindResource("ZoomInStackpanelMain");
+                s.Begin();
+            }
+        }
         private void btnBanhang_Click(object sender, RoutedEventArgs e)
         {
             if (isMenuOpen == false)
@@ -79,6 +92,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -99,6 +113,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -119,6 +134,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -138,6 +154,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -157,6 +174,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -176,6 +194,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -195,6 +214,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -214,6 +234,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             else
@@ -234,6 +255,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
 
             }
@@ -251,8 +273,7 @@ namespace WPF_bookStoreManagement
                 btnOpenMenu.Visibility = Visibility.Collapsed;
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
-                //setupVarible();
-                //test_block.Text = collaped_btn.Count.ToString();
+                zoomStackpanelMain();
             }
         }
 
@@ -264,6 +285,7 @@ namespace WPF_bookStoreManagement
                 btnCloseMenu.Visibility = Visibility.Collapsed;
                 closeallMenu();
                 isMenuOpen = false;
+                zoomStackpanelMain();
                 //test_block.Text = collaped_btn.Count.ToString();
             }
             
@@ -281,12 +303,22 @@ namespace WPF_bookStoreManagement
                 btnCloseMenu.Visibility = Visibility.Visible;
                 isMenuOpen = true;
                 //test_block.Text = collaped_btn.Count.ToString();
+                zoomStackpanelMain();
             }
             else
             {
                 //check_collapsed_stackpanel(btnCDC, sub_stpCDC, collaped_btn);
                 //test_block.Text = collaped_btn.Count.ToString();
             }
+        }
+        private void chipAccount_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnNCC_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
