@@ -318,7 +318,12 @@ namespace WPF_bookStoreManagement
 
         private void btnNCC_Click(object sender, RoutedEventArgs e)
         {
-
+            Nhacungcap nccWin = new Nhacungcap();
+            stackpanelMain.Children.Clear();
+            object content = nccWin.Content;
+            nccWin.Content = null;
+            nccWin.Close();
+            this.stackpanelMain.Children.Add(content as UIElement);
         }
     }
 }
