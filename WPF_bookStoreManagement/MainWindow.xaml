@@ -13,145 +13,377 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_bookStoreManagement"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="0,0,-0.4,0" Height="420" VerticalAlignment="Bottom">
-        <Grid
-            Width="Auto"
-            Height="50"
-            VerticalAlignment="Top"
-            Background="Aqua">
+        Title="MainWindow" Height="800" Width="1200">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="220"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="220"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+        <!--
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnQLSP">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        -->
+    </Window.Triggers>
+    <Grid Background="LightGray">
+        <Grid Height="115" VerticalAlignment="Top" Background="Aqua" >
             <materialDesign:Chip
-                Content="Tài khoản"
+                x:Name="chipAccount"
+                Width="auto"
+                Content="Tài Khoản"
+                Icon="T" 
                 VerticalAlignment="Center"
-                HorizontalAlignment="Right"
-                Icon="T"
-                Background="White" Margin="0,10,23.6,8">
-            </materialDesign:Chip>
+                HorizontalAlignment="Right" Margin="0,45,40.6,38"
+                Click="chipAccount_Click"/>
         </Grid>
-        <Grid
-            Width="150"
-            HorizontalAlignment="Left"
-            Background="Aqua">
-            <StackPanel>
-                <Grid
-                    Height="110"
-                    Background="White">
 
+        <Grid x:Name="GridMenu" Width="65" Height="650" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Aqua">
+            <StackPanel >
+                <Grid Height="50" Background="White">
+                    <Button x:Name="btnCloseMenu"
+                            VerticalAlignment="Bottom" 
+                            HorizontalAlignment="Right" 
+                            Width="60" Height="60"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Visibility="Collapsed"
+                            Click="btnCloseMenu_Click">
+                        <materialDesign:PackIcon Kind="ArrowLeft" Foreground="#FF1B3861" Width="30" Height="30"/>
+                    </Button>
+                    <Button x:Name="btnOpenMenu"
+                            VerticalAlignment="Bottom" 
+                            HorizontalAlignment="Right" 
+                            Width="60" Height="60"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Click="btnOpenMenu_Click">
+                        <materialDesign:PackIcon Kind="Menu" Foreground="#FF1B3861" Width="30" Height="30" Margin="-10 0 0 0"/>
+                    </Button>
                 </Grid>
-                <ListView
-                    BorderBrush="Transparent"
-                    Background="Transparent">
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/home.png"/>
-                            <TextBlock 
-                                
-                                Text="Dashboard"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/book.png"/>
-                            <TextBlock 
-                                
-                                Text="Quản lý sản phẩm"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/booksell.png"/>
-                            <TextBlock 
-                                
-                                Text="Bán hàng"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/customer.png"/>
-                            <TextBlock
-                                Text="Khách hàng"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/employee.png"/>
-                            <TextBlock
-                                Text="Nhân viên"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/cost.png"/>
-                            <TextBlock
-                                
-                                Text="Quản lý thu chi"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/bill.png"/>
-                            <TextBlock
-                                
-                                Text="Quản lý report"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/event.png"/>
-                            <TextBlock
-                                
-                                Text="Quản lý sự kiện"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/mail.png"/>
-                            <TextBlock
-                                
-                                Text="Quản lý email"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="icons/setting.png"/>
-                            <TextBlock
-                                
-                                Text="Cài đặt chung"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="15 0 0 0"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                <Grid>
+                    <StackPanel>
+                        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalContentAlignment="Top" >
+                            <StackPanel x:Name="stpDashboard">
+                                <Button 
+                                    x:Name="btnDashboard"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"                                    
+                                    HorizontalContentAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30"
+                                    Click="btnDashboard_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/home.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Dashboard</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLSP">
+                                <Button 
+                                    x:Name="btnQLSP"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnQLSP_Click"
+                                    HorizontalContentAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/book.png"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="20 0 0 0">Quản lý sản phẩm</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLSP" Visibility="Collapsed" Margin="50 0 0 0">
+                                    <Button
+                                        x:Name="btnDSSP"
+                                        Content="DS Sản phẩm" 
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        HorizontalContentAlignment="Left"
+                                        Height="30"/>
+                                    <Button
+                                        x:Name="btnNH"
+                                        Content="Nhập hàng" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button
+                                        x:Name="btnKH"
+                                        Content="Kiểm hàng" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button
+                                        x:Name="btnNCC"
+                                        Content="Nhà cung cấp" 
+                                        HorizontalContentAlignment="Left"    
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpBH">
+                                <Button 
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    x:Name="btnBH"
+                                    Click="btnBanhang_Click"                    
+                                    HorizontalContentAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/booksell.png" />
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Bán hàng</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpBH" Visibility="Collapsed" Margin="50 0 0 0">
+                                    <Button 
+                                        x:Name="btnDSHD"
+                                        Content="DS hóa đơn" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button 
+                                        x:Name="btnKTH"
+                                        Content="Khách trả hàng" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLKH">
+                                <Button 
+                                    x:Name="btnQLKH"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    HorizontalContentAlignment="Left"
+                                    Click="btnQLKH_Click"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/customer.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Quản lý khách hàng</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLKH" Visibility="Collapsed" Margin="50 0 0 0">
+                                    <Button 
+                                        x:Name="btnDSKH"
+                                        Content="DS Khách hàng" 
+                                        HorizontalContentAlignment="Left"  
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button 
+                                        x:Name="btnNKH"
+                                        Content="Nhóm khách hàng" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLNV">
+                                <Button 
+                                    x:Name="btnQLNV"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnQLNV_Click"
+                                    HorizontalContentAlignment="Left"
+                                    Height="30"
+                                    Margin="-5 0 0 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/employee.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Quản lý nhân viên</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLNV" Visibility="Collapsed" Margin="50 0 0 0">
+                                    <Button
+                                        x:Name="btnDSNV"
+                                        Content="DS nhân viên" 
+                                        HorizontalContentAlignment="Left"  
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button 
+                                        x:Name="btnPQ"
+                                        Content="Phân quyền" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLTC">
+                                <Button
+                                    x:Name="btnQLTC"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnQLTC_Click"
+                                    HorizontalAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/cost.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Quản lý thu chi</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLTC" Visibility="Collapsed" Margin="50 0 0 0">
+                                    <Button 
+                                        x:Name="btnDSTC"
+                                        Content="DS thu chi" 
+                                        HorizontalContentAlignment="Left"  
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button 
+                                        x:Name="btnPT"
+                                        Content="Phiếu thu" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                    <Button 
+                                        x:Name="btnPC"
+                                        Content="Phiếu chi" 
+                                        HorizontalContentAlignment="Left"
+                                        BorderBrush="{x:Null}"
+                                        Background="{x:Null}"
+                                        Foreground="Black"
+                                        Height="30"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLRP">
+                                <Button
+                                    x:Name="btnQLRP"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnQLRP_Click"
+                                    HorizontalAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/event.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Quản lý Report</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLRP" Visibility="Collapsed" Margin="20 0 0 0">
+
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLSK">
+                                <Button
+                                    x:Name="btnQLSK"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnQLSK_Click" 
+                                    HorizontalAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/event.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Quản lý sự kiện</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLSK" Visibility="Collapsed" Margin="20 0 0 0">
+
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLMail">
+                                <Button
+                                    x:Name="btnQLMail"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnQLMail_Click"
+                                    HorizontalAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/mail.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Quản lý Report</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpQLMail" Visibility="Collapsed" Margin="20 0 0 0">
+
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpCDC">
+                                <Button
+                                    x:Name="btnCDC"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black"
+                                    Click="btnCDC_Click"
+                                    HorizontalAlignment="Left"
+                                    Margin="-5 0 0 0"
+                                    Height="30">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="icons/setting.png"/>
+                                        <TextBlock Margin="20 0 0 0" VerticalAlignment="Center">Cài đặt chung</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel x:Name="sub_stpCDC" Visibility="Collapsed" Margin="20 0 0 0">
+
+                                </StackPanel>
+                                <!--test block
+                                <StackPanel>
+                                    <TextBlock x:Name="test_block">0</TextBlock>
+                                </StackPanel>
+                                -->
+                            </StackPanel>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
             </StackPanel>
         </Grid>
-
+        <Grid x:Name="GridLogo" VerticalAlignment="Top" HorizontalAlignment="Left"
+              Width="220" Height="115" Background="White">
+            <Image Source="icons/store.png"/>
+        </Grid>
     </Grid>
+
+
+
+
+
+
 </Window>
