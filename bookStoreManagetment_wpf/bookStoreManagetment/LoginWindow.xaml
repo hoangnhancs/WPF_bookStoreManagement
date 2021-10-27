@@ -1,0 +1,100 @@
+﻿<Window x:Class="bookStoreManagetment.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bookStoreManagetment"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="LoginWindow" Height="300" Width="500" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--Tên phầm mềm-->
+        <Grid Grid.Row="0">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Phầm Mền XXXX">
+            </TextBlock>
+        </Grid>
+
+        <!--Login-->
+        <Grid Grid.Row="1">
+            <StackPanel>
+                
+                <!--Dòng tên đăng nhập-->
+                <Grid
+                VerticalAlignment="Top"
+                Margin="0 30 0 0"
+                Height="20"
+                    >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <TextBlock 
+                            Margin="40 0 0 0"
+                            Text="Tên Đăng Nhập:"
+                               HorizontalAlignment="Left">
+
+                        </TextBlock>
+                    </Grid>
+                    
+                    <!--ô nhập tên đăng nhập-->
+                    <Grid Grid.Column="1">
+                        <TextBox
+                        HorizontalAlignment="Center"
+                        Width="200"
+                        TextWrapping="Wrap">
+                        </TextBox>
+                    </Grid>
+
+                </Grid>
+                
+                <!--Dòng mật khẩu-->
+                <Grid
+                VerticalAlignment="Top"
+                Margin="0 30 0 0"
+                Height="20"
+                    >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <TextBlock 
+                            Margin="40 0 0 0"
+                            Text="Mật Khẩu:"
+                               HorizontalAlignment="Left">
+
+                        </TextBlock>
+                    </Grid>
+                    
+                    <!--Ô nhập mật khẩu-->
+                    <Grid Grid.Column="1">
+                        <TextBox
+                        HorizontalAlignment="Center"
+                        Width="200"
+                        TextWrapping="Wrap">
+                        </TextBox>
+                    </Grid>
+                </Grid>
+                
+                <!--Nút đăng nhập-->
+                <Button
+                    Content="Đăng Nhập"
+                    Margin="0 40 0 0"
+                    Width="150" 
+                    Background="#FF00C6F7" 
+                    BorderBrush="#FF2AE3FD"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
