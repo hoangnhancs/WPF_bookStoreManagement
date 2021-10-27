@@ -7,9 +7,34 @@
         mc:Ignorable="d"
         Title="Nhacungcap" Height="450" Width="800">
     <Grid>
+        <!--
         <Grid x:Name="GridLogo" VerticalAlignment="Top" HorizontalAlignment="Left"
               Width="220" Height="115" Background="White">
             <Image Source="icons/store.png"/>
-        </Grid>
+        
+        </Grid>-->
+        <ListView x:Name="lstViewNhacungcap" BorderBrush="{x:Null}">
+            <ListView.View>
+                <GridView x:Name="gridViewNhacungcap">
+                    <GridViewColumn  Width="120" DisplayMemberBinding="{Binding ID}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>ID</TextBlock>
+                            <Button BorderBrush="{x:Null}" Background="Aqua"
+                                    Width="10" Height="10"></Button>
+                        </StackPanel>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Name" Width="300" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Trạng thái" Width="150" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="Setting" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnDeleteSupplier" Tag="{Binding}" Content="Delete" Click="btnDeleteSupplier_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
     </Grid>
 </Window>

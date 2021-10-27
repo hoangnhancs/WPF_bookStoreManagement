@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF_bookStoreManagement.DAO;
+using WPF_bookStoreManagement.DTO;
 
 namespace WPF_bookStoreManagement
 {
@@ -22,6 +24,20 @@ namespace WPF_bookStoreManagement
         public Nhacungcap()
         {
             InitializeComponent();
+            fillDataintoDataGrid();
+        }
+        void fillDataintoDataGrid()
+        {
+            List<NhacungcapDTO> lstNcc = NhacungcapDAO.Instance.getallNhacungcap();
+            lstViewNhacungcap.ItemsSource = lstNcc;
+            
+        }
+
+        private void btnDeleteSupplier_Click(object sender, RoutedEventArgs e)
+        {
+            //string s = lstViewNhacungcap.SelectedItem.ToString();
+            //test_label.Content = s;
+            //Console.WriteLine(s);
         }
     }
 }
