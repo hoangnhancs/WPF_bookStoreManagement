@@ -1,0 +1,159 @@
+﻿<Window x:Class="bookStoreManagetment.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bookStoreManagetment"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource MainVM}"
+        Title="MainWindow" Height="700" Width="1200">
+        
+       
+    <!--Resouces-->
+    <Window.Resources>
+        <ResourceDictionary Source="./styles/styleResources.xaml"></ResourceDictionary>
+    </Window.Resources>
+
+    <!--Main-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--Header-->
+        <Grid Grid.Row="0" Background="{StaticResource VertihicalAquaLinearGradient}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!--Logo-->
+            <Grid Grid.Column="0" 
+                  Background="OrangeRed">
+                <!-- Bỏ source ảnh vào đây-->
+                <!--<Image x:Name="Logo" Source="myLogo.png" Stretch="Fill"></Image>-->
+            </Grid>
+
+            <!--sub header-->
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <materialDesign:Chip
+                        Width="auto"
+                        Content="Tài Khoản"
+                        Icon="T" 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                    />
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!--Main-->
+        <Grid Grid.Row="1">
+            <DockPanel>
+                <!--Menu-->
+                <DockPanel
+                    Width="auto"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource HorizontalAquaLinearGradient}">
+
+                    <!--Icon stack panel-->
+                    <StackPanel
+                        Width="40"
+                        HorizontalAlignment="Left">
+                        <!--icon button-->
+                        <!--show/hidden button-->
+                        <Button
+                            x:Name="btnHidden"
+                            Width="auto"
+                            Height="40"
+                            Background="LightPink"
+                            Foreground="White"
+                            BorderBrush="White">
+                            <materialDesign:PackIcon  
+                                Width="40"
+                                Height="20"
+                                HorizontalAlignment="Center"
+                                Kind="ArrowRightBold" 
+                                />
+                        </Button>
+                        
+                        <!--List button features-->
+                        <Button Style="{StaticResource btnStyle_MenuIcon}"
+                                >
+
+                        </Button>
+                        <Button Style="{StaticResource btnStyle_MenuIcon}"
+                                >
+
+                        </Button>
+                        <Button Style="{StaticResource btnStyle_MenuIcon}"
+                                >
+
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+
+                <!--Main Form-->
+                <Grid 
+                    Background="AntiqueWhite"
+                    HorizontalAlignment="Stretch">
+                    
+                    <!--Features-->
+                    <StackPanel
+                        x:Name="stackPanelFeatures"
+                        Width="199"
+                        HorizontalAlignment="Left" >
+                        <StackPanel.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <!--chỉnh độ trong suốt với bảng màu RGBA-->
+                                <GradientStop Color="#CC00DFFF" Offset="0"/>
+                                <GradientStop Color="#CCFFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </StackPanel.Background>
+                        
+                        <!--Space hidden/show button-->
+                        <Grid
+                            Width="auto"
+                            Height="40">
+                        </Grid>
+                        
+                        <!--Feature Buttons-->
+                        <Button
+                            Style="{StaticResource btnStyle_MenuFeatures}"
+                            Content="Dashboard">
+                            
+                        </Button>
+
+                        <Button
+                            Style="{StaticResource btnStyle_MenuFeatures}"
+                            Content="Quản Lý Vật Phẩm">
+
+                        </Button>
+                        
+                        <Button
+                            Style="{StaticResource btnStyle_MenuFeatures}"
+                            Content="Quản Lý Bán Hàng">
+
+                        </Button>
+
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>
