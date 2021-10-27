@@ -21,7 +21,7 @@ namespace WPF_bookStoreManagement
 
         private dataProvider() { }
 
-        private string connectionSTR = @"Data Source=DESKTOP-NMLT1AC\SQLEXPRESS;Initial Catalog=bookStoreManagement;integrated security=True";
+        private string connectionSTR = @"(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\bookStoreManagement.mdf;Integrated Security=True";
 
         public DataTable ExecuteQuery(string query, object[] parameter = null)
         {

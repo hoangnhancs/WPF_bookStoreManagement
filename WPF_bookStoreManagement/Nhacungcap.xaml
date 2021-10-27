@@ -6,6 +6,27 @@
         xmlns:local="clr-namespace:WPF_bookStoreManagement"
         mc:Ignorable="d"
         Title="Nhacungcap" Height="450" Width="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Black"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <!--
         <Grid x:Name="GridLogo" VerticalAlignment="Top" HorizontalAlignment="Left"
@@ -35,6 +56,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Width="200" Height="40" Margin="5" 
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    >
+            <Image Source="icons/search.png" />
+            <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Background="Aqua" Width="150" VerticalContentAlignment="Center"></TextBox>
+        </StackPanel>
         
     </Grid>
 </Window>
