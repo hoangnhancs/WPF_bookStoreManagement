@@ -13,6 +13,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand LoadedMainWindowCommand { get; set; }
         public MainViewModel()
         {
+
             
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
                 p.Hide();
@@ -30,6 +31,7 @@ namespace bookStoreManagetment.ViewModel
                     p.Close();
                 }
             });
+
         }
     }
 }

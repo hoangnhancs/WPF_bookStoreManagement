@@ -18,7 +18,12 @@
         <Setter Property="Foreground" Value="White"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
     </Style>
-
+    <Style TargetType="Button" x:Key="btnCollapsed">
+        <Setter Property="Visibility" Value="Collapsed"></Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="btnHidden">
+        <Setter Property="Visibility" Value="Hidden"></Setter>
+    </Style>
     <!--Dùng cái trải màu-->
     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="1,0" x:Key="VertihicalAquaLinearGradient">
         <GradientStop Color="White"/>
