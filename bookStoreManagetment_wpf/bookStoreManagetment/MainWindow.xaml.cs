@@ -23,8 +23,6 @@ namespace bookStoreManagetment
         public MainWindow()
         {
             InitializeComponent();
-            LoginWindow newLogin = new LoginWindow();
-            newLogin.ShowDialog();
-        }       
+        }     
     }
 }
