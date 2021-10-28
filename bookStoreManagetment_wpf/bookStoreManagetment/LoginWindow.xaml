@@ -4,10 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bookStoreManagetment"
+        xmlns:i ="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Name="LoginForm"
+        DataContext="{StaticResource LoginVM}"
         Title="LoginWindow" Height="300" Width="500" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center">
-    <Grid>
+    <!--Bắt sự kiện đóng login form để đóng main form-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction
+                Command="{Binding ExitCommand}"
+                CommandParameter="{Binding ElementName=LoginForm}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <!--main login form-->
+    <Grid x:Name="GridLoginForm"
+          Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
@@ -16,84 +31,168 @@
         <!--Tên phầm mềm-->
         <Grid Grid.Row="0">
             <TextBlock
+                Text="PHẦN MỀM XXX"
+                FontSize="20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Text="Phầm Mền XXXX">
+                FontWeight="Bold">
             </TextBlock>
         </Grid>
 
         <!--Login-->
         <Grid Grid.Row="1">
             <StackPanel>
-                
+
                 <!--Dòng tên đăng nhập-->
                 <Grid
                 VerticalAlignment="Top"
                 Margin="0 30 0 0"
-                Height="20"
-                    >
+                Height="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
-                        <TextBlock 
+                        <TextBlock
+                            FontWeight="DemiBold"
                             Margin="40 0 0 0"
                             Text="Tên Đăng Nhập:"
-                               HorizontalAlignment="Left">
-
+                            HorizontalAlignment="Left">
                         </TextBlock>
                     </Grid>
-                    
+
                     <!--ô nhập tên đăng nhập-->
                     <Grid Grid.Column="1">
                         <TextBox
-                        HorizontalAlignment="Center"
-                        Width="200"
-                        TextWrapping="Wrap">
+                            x:Name="txtBoxUserName"
+                            Padding="0 0 0 2"
+                            Width="200"
+                            HorizontalAlignment="Center" >
+                            <!--Bắt sự kiện thay đổi kí tự trong user-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding UserChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
                     </Grid>
-
                 </Grid>
-                
+
                 <!--Dòng mật khẩu-->
                 <Grid
                 VerticalAlignment="Top"
                 Margin="0 30 0 0"
-                Height="20"
-                    >
+                Height="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
-                        <TextBlock 
+                        <TextBlock
+                            FontWeight="DemiBold"
                             Margin="40 0 0 0"
                             Text="Mật Khẩu:"
-                               HorizontalAlignment="Left">
-
+                            HorizontalAlignment="Left">
                         </TextBlock>
                     </Grid>
-                    
+
                     <!--Ô nhập mật khẩu-->
                     <Grid Grid.Column="1">
+
+                        <PasswordBox
+                            x:Name="passwordBoxLogin"
+                            Padding="0 0 0 2"
+                            Width="200"
+                            HorizontalAlignment="Center">
+                            
+                            <!--Bắt sự kiện thay đổi kí tự trong ô password box-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding PasswordChangedCommand}"
+                                    CommandParameter="{Binding ElementName=passwordBoxLogin}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
                         <TextBox
-                        HorizontalAlignment="Center"
-                        Width="200"
-                        TextWrapping="Wrap">
+                            Background="{Binding 
+                                ElementName=GridLoginForm, 
+                                Path=Background}"
+                            x:Name="txtBoxPassWord"
+                            Text="{Binding Path=Password,
+                                   ElementName=passwordBoxLogin,
+                                   UpdateSourceTrigger=PropertyChanged,
+                                   Mode=TwoWay}"
+                            Visibility="Collapsed"
+                            Padding="0 0 0 2"
+                            Width="200"
+                            HorizontalAlignment="Center">
                         </TextBox>
                     </Grid>
                 </Grid>
-                
-                <!--Nút đăng nhập-->
-                <Button
-                    Content="Đăng Nhập"
-                    Margin="0 40 0 0"
-                    Width="150" 
-                    Background="#FF00C6F7" 
-                    BorderBrush="#FF2AE3FD"></Button>
+                <StackPanel>
+                    <CheckBox
+                        x:Name="checkBoxShowPass"
+                        Margin="0 10 65 0"
+                        Content="Hiện mật khẩu"
+                        HorizontalAlignment="Right">
+                        <!--Bắt sự kiện check/uncheck để hiện/ẩn mật khẩu -->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction
+                                    Command="{Binding CheckedCommand}"
+                                    CommandParameter="{Binding ElementName=txtBoxPassWord}" />
+                            </i:EventTrigger>
+
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction
+                                    Command="{Binding UnCheckedCommand}"
+                                    CommandParameter="{Binding ElementName=txtBoxPassWord}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <!--Nút đăng nhập-->
+                    <Button
+                        Content="Đăng Nhập"
+                        Margin="0 20 40 0"
+                        Width="150"
+                        Background="#FF00C6F7"
+                        BorderBrush="#FF2AE3FD">
+                        
+                        <!--Bắt sự kiện nhấn nút đăng nhập-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
+                                    Command="{Binding LogindCommand}" 
+                                    CommandParameter="{Binding ElementName=LoginForm}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <!--Nút thoát-->
+                    <Button
+                        Content="Thoát"
+                        Margin="20 20 0 0"
+                        Width="150"
+                        Background="#FFF7002C"
+                        BorderBrush="#FFF95F7A">
+                        <!--Bắt sự kiện thoát khỏi form login-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
+                                    Command="{Binding ExitCommand}"
+                                    CommandParameter="{Binding ElementName=LoginForm}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

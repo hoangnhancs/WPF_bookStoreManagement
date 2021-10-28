@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bookStoreManagetment"
         mc:Ignorable="d"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        DataContext="{StaticResource MainVM}"
+        
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource MainVM}" 
+        Name="_MainWindow"
+        
         Title="MainWindow" Height="700" Width="1200">
 
 
@@ -20,20 +24,24 @@
     <Window.Resources>
         <ResourceDictionary Source="./styles/styleResources.xaml"></ResourceDictionary>
     </Window.Resources>
-    <Window.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpen">
-            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnHidden">
-            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
-            
-        </EventTrigger>
-    </Window.Triggers>
 
+
+    
+    <!--loaded command-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction 
+                    Command="{Binding LoadedMainWindowCommand}"
+                    CommandParameter="{Binding ElementName=_MainWindow}"
+                    />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 
     <!--Main-->
     <Grid>
+        
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
