@@ -25,6 +25,18 @@ namespace bookStoreManagetment
             InitializeComponent();
             LoginWindow newLogin = new LoginWindow();
             newLogin.ShowDialog();
-        }       
+        }
+
+        private void btnHidden_Click(object sender, RoutedEventArgs e)
+        {
+            btnHidden.Visibility = Visibility.Collapsed;
+            btnOpen.Visibility = Visibility.Visible;
+        }
+
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            btnHidden.Visibility = Visibility.Visible;
+            btnOpen.Visibility = Visibility.Collapsed;
+        }
     }
 }

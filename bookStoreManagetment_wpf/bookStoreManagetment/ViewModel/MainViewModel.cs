@@ -11,7 +11,7 @@ namespace bookStoreManagetment.ViewModel
     {
         public MainViewModel()
         {
-            
+
         }
     }
 }

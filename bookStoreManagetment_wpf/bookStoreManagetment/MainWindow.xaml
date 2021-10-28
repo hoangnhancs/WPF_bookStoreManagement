@@ -14,12 +14,23 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource MainVM}"
         Title="MainWindow" Height="700" Width="1200">
-        
-       
+
+
     <!--Resouces-->
     <Window.Resources>
         <ResourceDictionary Source="./styles/styleResources.xaml"></ResourceDictionary>
     </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpen">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnHidden">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+            
+        </EventTrigger>
+    </Window.Triggers>
+
+
 
     <!--Main-->
     <Grid>
@@ -49,7 +60,7 @@
                     <ColumnDefinition Width="7*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                
+
                 <!--Account-->
                 <Grid Grid.Column="1">
                     <materialDesign:Chip
@@ -78,21 +89,41 @@
                         HorizontalAlignment="Left">
                         <!--icon button-->
                         <!--show/hidden button-->
-                        <Button
+                        <StackPanel Height="40">
+                            <Button
                             x:Name="btnHidden"
                             Width="auto"
                             Height="40"
                             Background="LightPink"
                             Foreground="White"
-                            BorderBrush="White">
-                            <materialDesign:PackIcon  
+                            BorderBrush="White"
+                                Click="btnHidden_Click">
+                                <materialDesign:PackIcon  
                                 Width="40"
                                 Height="20"
                                 HorizontalAlignment="Center"
-                                Kind="ArrowRightBold" 
+                                Kind="ArrowLeft"
                                 />
-                        </Button>
-                        
+                            
+                            </Button>
+                            <Button
+                            x:Name="btnOpen"
+                            Width="auto"
+                            Height="40"
+                            Background="LightPink"
+                            Foreground="White"
+                            BorderBrush="White"
+                                Click="btnOpen_Click">
+                                <materialDesign:PackIcon  
+                                Width="40"
+                                Height="20"
+                                HorizontalAlignment="Center"
+                                Kind="Menu" 
+                                Visibility="Collapsed"/>
+                            </Button>
+                        </StackPanel>
+
+
                         <!--List button features-->
                         <Button Style="{StaticResource btnStyle_MenuIcon}"
                                 >
@@ -113,12 +144,16 @@
                 <Grid 
                     Background="AntiqueWhite"
                     HorizontalAlignment="Stretch">
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="111*"/>
+                    </Grid.RowDefinitions>
+
                     <!--Features-->
                     <StackPanel
                         x:Name="stackPanelFeatures"
                         Width="199"
-                        HorizontalAlignment="Left" >
+                        HorizontalAlignment="Left" Margin="0,0,0,0.4" Grid.RowSpan="2" >
                         <StackPanel.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <!--chỉnh độ trong suốt với bảng màu RGBA-->
@@ -126,18 +161,18 @@
                                 <GradientStop Color="#CCFFFFFF" Offset="1"/>
                             </LinearGradientBrush>
                         </StackPanel.Background>
-                        
+
                         <!--Space hidden/show button-->
                         <Grid
                             Width="auto"
                             Height="40">
                         </Grid>
-                        
+
                         <!--Feature Buttons-->
                         <Button
                             Style="{StaticResource btnStyle_MenuFeatures}"
                             Content="Dashboard">
-                            
+
                         </Button>
 
                         <Button
@@ -145,7 +180,7 @@
                             Content="Quản Lý Vật Phẩm">
 
                         </Button>
-                        
+
                         <Button
                             Style="{StaticResource btnStyle_MenuFeatures}"
                             Content="Quản Lý Bán Hàng">
