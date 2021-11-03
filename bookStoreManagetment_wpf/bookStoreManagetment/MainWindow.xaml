@@ -105,7 +105,7 @@
                             Background="LightPink"
                             Foreground="White"
                             BorderBrush="White"
-                                Click="btnHidden_Click">
+                                >
                                 <materialDesign:PackIcon  
                                 Width="40"
                                 Height="20"
@@ -121,7 +121,7 @@
                             Background="LightPink"
                             Foreground="White"
                             BorderBrush="White"
-                                Click="btnOpen_Click">
+                               >
                                 <materialDesign:PackIcon  
                                 Width="40"
                                 Height="20"
