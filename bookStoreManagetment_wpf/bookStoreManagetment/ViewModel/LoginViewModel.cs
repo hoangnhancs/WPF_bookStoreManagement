@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bookStoreManagetment.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace bookStoreManagetment.ViewModel
 
         public String User { get; set; }
         public String Password { get; set; }
+        public int IDUser { get; set; }
 
         public ICommand CheckedCommand { get; set; }
         public ICommand UnCheckedCommand { get; set; }
@@ -24,6 +26,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand UserChangedCommand { get; set; }
         public LoginViewModel()
         {
+            IDUser = -1;
             IsClose = false;
             IsLogin = false;
             Password = "";
@@ -46,14 +49,32 @@ namespace bookStoreManagetment.ViewModel
                     Password = (p as TextBox).Text;
             });
             UserChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                User = (p as TextBox).Text;
+                var _user = (p as TextBox);
+                if (_user != null)
+                    User = _user.Text;
             });
 
             // click login
             LogindCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
-                IsLogin = true;
-                if (p != null)
-                    p.Close();
+
+                // query to database to find list account 
+                var lstAccount = DataProvider.Ins.DB.accounts
+                                                    .Where(acc => 
+                                                                (acc.nameAccount == User) && 
+                                                                (acc.passwordAccount == Password))
+                                                    .ToList();
+                // check has account in dtb
+                if (lstAccount.Count > 0)
+                {
+                    IDUser = lstAccount[0].idAccount;
+                    IsLogin = true;
+                    if (p != null)
+                        p.Close();
+                }  
+                else
+                {
+                    MessageBox.Show("Vui lòng nhập đúng tài khoản/ mật khẩu");
+                }
             });
 
             // exit form
