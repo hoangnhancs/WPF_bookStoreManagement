@@ -72,8 +72,9 @@
                             <!--Bắt sự kiện thay đổi kí tự trong user-->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction
-                                    Command="{Binding UserChangedCommand}"/>
+                                    <i:InvokeCommandAction 
+                                        Command="{Binding UserChangedCommand}"
+                                        CommandParameter="{Binding ElementName=txtBoxUserName}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>
