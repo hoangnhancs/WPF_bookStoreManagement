@@ -127,6 +127,7 @@
 
                 <!--Main Form-->
                 <Grid 
+                    x:Name="GridMainForm"
                     Background="AntiqueWhite"
                     HorizontalAlignment="Stretch">
                     
@@ -151,9 +152,16 @@
                         
                         <!--Feature Buttons-->
                         <Button
+                            x:Name="btnDashboard"
                             Style="{StaticResource btnStyle_MenuFeatures}"
                             Content="Dashboard">
-                            
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding DashboardClickCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}" />       
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Button>
 
                         <Button

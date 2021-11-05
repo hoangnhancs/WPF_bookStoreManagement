@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace bookStoreManagetment.ViewModel
@@ -11,6 +12,7 @@ namespace bookStoreManagetment.ViewModel
     public class MainViewModel:BaseViewModel
     {
         public ICommand LoadedMainWindowCommand { get; set; }
+        public ICommand DashboardClickCommand { get; set; }
         public MainViewModel()
         {
             
@@ -29,6 +31,14 @@ namespace bookStoreManagetment.ViewModel
                 {
                     p.Close();
                 }
+            });
+
+            // is check box
+            DashboardClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                CheckItemsWindow checkItemsForm = new CheckItemsWindow();
+                object checkItemsContent = checkItemsForm.Content;
+                checkItemsForm.Content = null;
+                (p as Grid).Children.Add(checkItemsContent as UIElement);
             });
         }
     }
