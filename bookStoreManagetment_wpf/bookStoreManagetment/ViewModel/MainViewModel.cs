@@ -15,6 +15,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand DashboardClickCommand { get; set; }
         public MainViewModel()
         {
+
             
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
                 p.Hide();
@@ -33,6 +34,7 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
+
             // is check box
             DashboardClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 CheckItemsWindow checkItemsForm = new CheckItemsWindow();
@@ -40,6 +42,7 @@ namespace bookStoreManagetment.ViewModel
                 checkItemsForm.Content = null;
                 (p as Grid).Children.Add(checkItemsContent as UIElement);
             });
+
         }
     }
 }
