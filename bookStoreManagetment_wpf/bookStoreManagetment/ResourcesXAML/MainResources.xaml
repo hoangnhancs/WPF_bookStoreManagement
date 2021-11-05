@@ -22,4 +22,6 @@
 
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
 
+    <viewmodel:CheckItemsViewModel x:Key="CheckItemsVM"></viewmodel:CheckItemsViewModel>
+
 </ResourceDictionary>
