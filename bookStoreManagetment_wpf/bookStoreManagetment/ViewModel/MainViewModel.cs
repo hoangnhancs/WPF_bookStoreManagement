@@ -17,6 +17,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
         public List<StackPanel> opensubstp = new List<StackPanel>();
+        public List<Button> openbtn = new List<Button>();
         public MainViewModel()
         {
 
@@ -62,10 +63,19 @@ namespace bookStoreManagetment.ViewModel
             });
 
             ChangeColorOpenedSTP = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                var converter = new System.Windows.Media.BrushConverter();
-                var brush = (Brush)converter.ConvertFromString("#0000EE");
-                (p as Button).Background = brush;
+            {   if (!openbtn.Contains((p as Button)))
+                {
+                    var converter = new System.Windows.Media.BrushConverter();
+                    var brush = (Brush)converter.ConvertFromString("#0000EE");
+                    (p as Button).Background = brush;
+                    openbtn.Add((p as Button));
+                }
+                else
+                {
+                    var brush = System.Windows.Media.Brushes.Transparent;
+                    (p as Button).Background = brush;
+                    openbtn.Remove((p as Button));
+                }
             });
 
 
