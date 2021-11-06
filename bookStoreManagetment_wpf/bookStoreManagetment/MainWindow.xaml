@@ -84,70 +84,120 @@
 
         <!--Main-->
         <Grid Grid.Row="1">
-            <DockPanel>
-                <!--Menu-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--Menmu-->
+            <Grid Grid.Column="0">
                 <DockPanel
-                    Width="auto"
-                    HorizontalAlignment="Left"
+                    
                     Background="{StaticResource HorizontalAquaLinearGradient}">
-
-                    <!--Icon stack panel-->
+                    <!--Feature sub menu-->
                     <StackPanel
-                        Width="40"
-                        HorizontalAlignment="Left">
-                        <!--icon button-->
-                        <!--show/hidden button-->
-                        <StackPanel Height="40">
+                        x:Name="stackPanelFeatures">
+                        <StackPanel.Background>
+                            <LinearGradientBrush>
+                                <!--chỉnh độ trong suốt với bảng màu RGBA-->
+                                <GradientStop Color="#CC00DFFF" Offset="0"/>
+                                <GradientStop Color="#CCFFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </StackPanel.Background>
+                        <StackPanel x:Name="stpDashBoard">
                             <Button
-                            x:Name="btnHidden"
-                            Width="auto"
-                            Height="40"
-                            Background="LightPink"
-                            Foreground="White"
-                            BorderBrush="White"
-                                >
-                                <materialDesign:PackIcon  
-                                Width="40"
-                                Height="20"
-                                HorizontalAlignment="Center"
-                                Kind="ArrowLeft"
-                                />
-                            
-                            </Button>
-                            <Button
-                            x:Name="btnOpen"
-                            Width="auto"
-                            Height="40"
-                            Background="LightPink"
-                            Foreground="White"
-                            BorderBrush="White"
-                               >
-                                <materialDesign:PackIcon  
-                                Width="40"
-                                Height="20"
-                                HorizontalAlignment="Center"
-                                Kind="Menu" 
-                                Visibility="Collapsed"/>
+                            x:Name="btnDashboard"
+                            Style="{StaticResource btnStyle_MenuFeatures}"
+                            Content="Dashboard">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                        Command="{Binding DashboardClickCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </Button>
                         </StackPanel>
-
-
-                        <!--List button features-->
-                        <Button Style="{StaticResource btnStyle_MenuIcon}"
-                                >
-
-                        </Button>
-                        <Button Style="{StaticResource btnStyle_MenuIcon}"
-                                >
-
-                        </Button>
-                        <Button Style="{StaticResource btnStyle_MenuIcon}"
-                                >
-
-                        </Button>
+                        <StackPanel x:Name="stpQLVP">
+                            <Button
+                            Style="{StaticResource btnStyle_MenuFeatures}"
+                            Content="Quản Lý Vật Phẩm">
+                            </Button>
+                            <StackPanel x:Name="subMenuQLVP" Visibility="Collapsed">
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Danh sách sản phẩm">
+                                </Button>
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Nhập hàng">
+                                </Button>
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Kiểm hàng">
+                                </Button>
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Nhà cung cấp">
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLBH">
+                            <Button
+                            Style="{StaticResource btnStyle_MenuFeatures}"
+                            Content="Quản Lý Bán Hàng">
+                            </Button>
+                            <StackPanel x:Name="subMenuQLBH" Visibility="Collapsed">
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Danh sách hóa đơn">
+                                </Button>
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Khách trả hàng">
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLKH">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản lý khách hàng">
+                            </Button>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLNV">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản lý nhân viên">
+                            </Button>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLTC">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản lý thu chi">
+                            </Button>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLRP">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản lý report">
+                            </Button>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLSK">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản lý sự kiện">
+                            </Button>
+                        </StackPanel>
+                        <StackPanel x:Name="stpQLMail">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản lý Mail">
+                            </Button>
+                        </StackPanel>
+                        <StackPanel x:Name="stpCDC">
+                            <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Cài đặt chung">
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
                 </DockPanel>
-
+            </Grid>
+            <Grid Grid.Column="1">
                 <!--Main Form-->
                 <Grid 
                     x:Name="GridMainForm"
@@ -155,55 +205,9 @@
                     HorizontalAlignment="Stretch">
 
                     <!--Features-->
-                    <StackPanel
-                        x:Name="stackPanelFeatures"
-                        Width="199"
-                        HorizontalAlignment="Left" >
-                        <StackPanel.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <!--chỉnh độ trong suốt với bảng màu RGBA-->
-                                <GradientStop Color="#CC00DFFF" Offset="0"/>
-                                <GradientStop Color="#CCFFFFFF" Offset="1"/>
-                            </LinearGradientBrush>
-                        </StackPanel.Background>
 
-                        <!--Space hidden/show button-->
-                        <Grid
-                            Width="auto"
-                            Height="40">
-                        </Grid>
-
-                        <!--Feature Buttons-->
-                        <Button
-                            x:Name="btnDashboard"
-                            Style="{StaticResource btnStyle_MenuFeatures}"
-                            Content="Dashboard">
-
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction
-                                        Command="{Binding DashboardClickCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}" />       
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-
-                        </Button>
-
-                        <Button
-                            Style="{StaticResource btnStyle_MenuFeatures}"
-                            Content="Quản Lý Vật Phẩm">
-
-                        </Button>
-
-                        <Button
-                            Style="{StaticResource btnStyle_MenuFeatures}"
-                            Content="Quản Lý Bán Hàng">
-
-                        </Button>
-
-                    </StackPanel>
                 </Grid>
-            </DockPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
