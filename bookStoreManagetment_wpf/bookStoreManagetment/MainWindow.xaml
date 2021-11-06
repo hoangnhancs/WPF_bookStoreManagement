@@ -109,17 +109,9 @@
                         </StackPanel.Background>
                         <StackPanel x:Name="stpDashBoard">
                             <Button
-                            x:Name="btnDashboard"
-                            Style="{StaticResource btnStyle_MenuFeatures}"
-                            Content="Dashboard">
-
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
-                                        Command="{Binding DashboardClickCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                                x:Name="btnDashboard"
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Dashboard">
                             </Button>
                         </StackPanel>
                         <StackPanel x:Name="stpQLVP">
@@ -131,16 +123,11 @@
                                     <!--Tạo event click vô button mở submenu và đổi màu btn-->
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLVP}"/>
+                                    Command="{Binding OpenSubMenuCommand}"
+                                    CommandParameter="{Binding ElementName=subMenuQLVP}"/>
                                         <i:InvokeCommandAction
-                                        Command="{Binding ChangeColorOpenedSTP}"
-                                        CommandParameter="{Binding ElementName=btnQLVP}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="MouseOver">
-                                        <i:InvokeCommandAction
-                                            Command="{Binding ChangeColorOpenedSTP}"
-                                            CommandParameter="{Binding ElementName=btnQLVP}"/>
+                                    Command="{Binding ChangeColorOpenedSTP}"
+                                    CommandParameter="{Binding ElementName=btnQLVP}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
@@ -157,10 +144,26 @@
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Kiểm hàng">
-                                </Button>
-                                <Button 
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                            Command="{Binding KiemhangClickCommand}"
+                                            CommandParameter="{Binding ElementName=GridMainForm}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    </Button>
+                                <Button
+                                    x:Name="btnNhacungcap"
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Nhà cung cấp">
+                                    <i:Interaction.Triggers>
+                                        <!--Tạo event click vô button mở submenu và đổi màu btn-->
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                                Command="{Binding NhacungcapClickCommand}"
+                                                CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                            </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </Button>
                             </StackPanel>
                         </StackPanel>
