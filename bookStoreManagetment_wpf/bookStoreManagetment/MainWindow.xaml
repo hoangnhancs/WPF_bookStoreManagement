@@ -94,7 +94,11 @@
                     
                     Background="{StaticResource HorizontalAquaLinearGradient}">
                     <!--Feature sub menu-->
-                    <StackPanel
+                    <ScrollViewer
+                        x:Name="test_scv" 
+                        VerticalScrollBarVisibility="Visible" 
+                        HorizontalScrollBarVisibility="Hidden">
+                        <StackPanel
                         x:Name="stackPanelFeatures">
                         <StackPanel.Background>
                             <LinearGradientBrush>
@@ -120,29 +124,52 @@
                         </StackPanel>
                         <StackPanel x:Name="stpQLVP">
                             <Button
+                                x:Name="btnQLVP"
                             Style="{StaticResource btnStyle_MenuFeatures}"
                             Content="Quản Lý Vật Phẩm">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                            Command="{Binding OpenSubMenuCommand}"
+                                            CommandParameter="{Binding ElementName=subMenuQLVP}"/>
+                                            <i:InvokeCommandAction
+                                            Command="{Binding ChangeColorOpenedSTP}"
+                                            CommandParameter="{Binding ElementName=btnQLVP}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseOver">
+                                            <i:InvokeCommandAction
+                                                Command="{Binding ChangeColorOpenedSTP}"
+                                                CommandParameter="{Binding ElementName=btnQLVP}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                             </Button>
                             <StackPanel x:Name="subMenuQLVP" Visibility="Collapsed">
-                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                    <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Danh sách sản phẩm">
-                                </Button>
+                                    </Button>
                                 <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Nhập hàng">
                                 </Button>
                                 <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Kiểm hàng">
                                 </Button>
-                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                    <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Nhà cung cấp">
-                                </Button>
+                                    </Button>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="stpQLBH">
                             <Button
                             Style="{StaticResource btnStyle_MenuFeatures}"
                             Content="Quản Lý Bán Hàng">
-                            </Button>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                            Command="{Binding OpenSubMenuCommand}"
+                                            CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
                             <StackPanel x:Name="subMenuQLBH" Visibility="Collapsed">
                                 <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Danh sách hóa đơn">
@@ -153,16 +180,53 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="stpQLKH">
-                            <Button 
+                            <Button x:Name="btnQLKH"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản lý khách hàng">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                        Command="{Binding OpenSubMenuCommand}"
+                                        CommandParameter="{Binding ElementName=subMenuQLKH}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </Button>
+                            <StackPanel x:Name="subMenuQLKH" Visibility="Collapsed">
+                                <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Danh sách khách hàng">
+                                </Button>
+                                <Button 
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Nhóm khách hàng">
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="stpQLNV">
-                            <Button 
+                            <Button x:Name="btnQLNV"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản lý nhân viên">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                        Command="{Binding OpenSubMenuCommand}"
+                                        CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                        <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorOpenedSTP}"
+                                        CommandParameter="{Binding ElementName=btnQLNV}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </Button>
+                            <StackPanel x:Name="subMenuQLNV" Visibility="Collapsed">
+                                <Button 
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Content="Danh sách nhân viên">
+                                </Button>
+                                <Button 
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Content="Phân quyền">
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="stpQLTC">
                             <Button 
@@ -188,13 +252,14 @@
                                 Content="Quản lý Mail">
                             </Button>
                         </StackPanel>
-                        <StackPanel x:Name="stpCDC">
-                            <Button 
+                            <StackPanel x:Name="stpCDC">
+                                <Button 
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Cài đặt chung">
-                            </Button>
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </ScrollViewer>
                 </DockPanel>
             </Grid>
             <Grid Grid.Column="1">

@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace bookStoreManagetment.ViewModel
 {
-    public class MainViewModel:BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
         public ICommand LoadedMainWindowCommand { get; set; }
         public ICommand DashboardClickCommand { get; set; }
+        public ICommand OpenSubMenuCommand { get; set; }
+        public ICommand ChangeColorOpenedSTP { get; set; }
+        public List<StackPanel> opensubstp = new List<StackPanel>();
         public MainViewModel()
         {
 
@@ -42,6 +46,29 @@ namespace bookStoreManagetment.ViewModel
                 checkItemsForm.Content = null;
                 (p as Grid).Children.Add(checkItemsContent as UIElement);
             });
+
+            OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (!opensubstp.Contains((p as StackPanel)))
+                {
+                    (p as StackPanel).Visibility = Visibility.Visible;
+                    opensubstp.Add(p as StackPanel);
+                }
+                else
+                {
+                    (p as StackPanel).Visibility = Visibility.Collapsed;
+                    opensubstp.Remove((p as StackPanel));
+                }
+            });
+
+            ChangeColorOpenedSTP = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                var converter = new System.Windows.Media.BrushConverter();
+                var brush = (Brush)converter.ConvertFromString("#0000EE");
+                (p as Button).Background = brush;
+            });
+
+
 
         }
     }

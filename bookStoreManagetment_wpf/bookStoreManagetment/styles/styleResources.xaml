@@ -7,8 +7,7 @@
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Foreground" Value="Black"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
-        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
-        <Setter Property="Margin" Value="10 0 0 0"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
     </Style>
     
     <!--Style của mấy nút icon-->
@@ -19,12 +18,26 @@
         <Setter Property="Foreground" Value="White"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
     </Style>
-    <Style TargetType="Button" x:Key="btnCollapsed">
-        <Setter Property="Visibility" Value="Collapsed"></Setter>
+
+    <Style TargetType="{x:Type Button}" x:Key="testStyle">
+        <Setter Property="Background" Value="LightBlue" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-    <Style TargetType="Button" x:Key="btnHidden">
-        <Setter Property="Visibility" Value="Hidden"></Setter>
-    </Style>
+
+
     <!--Dùng cái trải màu-->
     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="1,0" x:Key="VertihicalAquaLinearGradient">
         <GradientStop Color="White"/>
