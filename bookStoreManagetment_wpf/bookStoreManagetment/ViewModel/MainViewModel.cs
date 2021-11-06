@@ -13,11 +13,14 @@ namespace bookStoreManagetment.ViewModel
     public class MainViewModel : BaseViewModel
     {
         public ICommand LoadedMainWindowCommand { get; set; }
-        public ICommand DashboardClickCommand { get; set; }
+        public ICommand KiemhangClickCommand { get; set; }
+        public ICommand NhacungcapClickCommand { get; set; }
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
         public List<StackPanel> opensubstp = new List<StackPanel>();
         public List<Button> openbtn = new List<Button>();
+        public List<Window> openWindow = new List<Window>();
+        public Window isOpenningWindow = new Window();
         public MainViewModel()
         {
 
@@ -41,11 +44,22 @@ namespace bookStoreManagetment.ViewModel
 
 
             // is check box
-            DashboardClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+            KiemhangClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                (p as Grid).Children.Clear();
                 CheckItemsWindow checkItemsForm = new CheckItemsWindow();
                 object checkItemsContent = checkItemsForm.Content;
                 checkItemsForm.Content = null;
                 (p as Grid).Children.Add(checkItemsContent as UIElement);
+                //isOpenningWindow = (checkItemsContent as Window);
+            });
+
+            NhacungcapClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                (p as Grid).Children.Clear();
+                Nhacungcap ncc = new Nhacungcap();
+                object nccContent = ncc.Content;
+                ncc.Content = null;
+                (p as Grid).Children.Add(nccContent as UIElement);
+                //isOpenningWindow = (nccContent as Window);
             });
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
