@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Center">
                 <Border 
-                    Height="40" Width="200" 
+                    Height="25" Width="200" 
                     BorderBrush="Black" 
                     CornerRadius="12"
                     BorderThickness="1">
@@ -33,7 +33,7 @@
             <Grid Grid.Column="1" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center">Trạng thái</TextBlock>
-                    <ComboBox Height="40" Width="125" Margin="10 0 0 0" VerticalContentAlignment="Center">
+                    <ComboBox Height="25" Width="125" Margin="10 0 0 0" VerticalContentAlignment="Center">
                         <ComboBoxItem Content="Đang hợp tác"/>
                         <ComboBoxItem Content="Không còn hợp tác"/>
                     </ComboBox>
