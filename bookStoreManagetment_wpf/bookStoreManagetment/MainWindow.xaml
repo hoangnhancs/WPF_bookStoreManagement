@@ -128,6 +128,7 @@
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản Lý Vật Phẩm">
                                 <i:Interaction.Triggers>
+                                    <!--Tạo event click vô button mở submenu và đổi màu btn-->
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction
                                         Command="{Binding OpenSubMenuCommand}"
@@ -143,6 +144,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
+                            <!--Sub menu-->
                             <StackPanel x:Name="subMenuQLVP" Visibility="Collapsed">
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
@@ -167,6 +169,7 @@
                                 x:Name="btnQLBH"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản Lý Bán Hàng">
+                                <!--Tạo event click vô button mở submenu và đổi màu btn-->
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction
@@ -192,6 +195,7 @@
                                 x:Name="btnQLKH"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản lý khách hàng">
+                                <!--Tạo event click vô button mở submenu và đổi màu btn-->
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction
@@ -203,6 +207,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
+                            <!--Sub menu-->
                             <StackPanel x:Name="subMenuQLKH" Visibility="Collapsed">
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
@@ -231,6 +236,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
+                            <!--Sub menu-->
                             <StackPanel x:Name="subMenuQLNV" Visibility="Collapsed">
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
@@ -257,7 +263,8 @@
                                         CommandParameter="{Binding ElementName=btnQLTC}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                </Button>
+                            </Button>
+                            <!--Sub menu-->
                             <StackPanel x:Name="subMenuQLTC" Visibility="Collapsed">
                                 <Button 
                                 Style="{StaticResource btnStyle_MenuFeatures}"
