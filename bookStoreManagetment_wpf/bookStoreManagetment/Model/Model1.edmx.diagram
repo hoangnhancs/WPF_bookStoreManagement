@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="bookStoreManagementModel.itemSummary" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.profitSummary" Width="1.5" PointX="11.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.sellBill" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.studytoolsInformation" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.studytoolsInformation" Width="1.5" PointX="1.75" PointY="21.875" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.supplier" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
         <AssociationConnector Association="bookStoreManagementModel.FK__importBil__billC__276EDEB3" ManuallyRouted="false" />
         <AssociationConnector Association="bookStoreManagementModel.FK__itemSumma__billC__2E1BDC42" ManuallyRouted="false" />

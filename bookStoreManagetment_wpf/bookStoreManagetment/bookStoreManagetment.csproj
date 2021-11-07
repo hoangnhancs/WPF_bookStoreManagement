@@ -151,6 +151,7 @@
     <Compile Include="Model\supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Inventory.cs" />
     <Compile Include="Nhacungcap.xaml.cs">
       <DependentUpon>Nhacungcap.xaml</DependentUpon>
     </Compile>

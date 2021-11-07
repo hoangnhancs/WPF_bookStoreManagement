@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using bookStoreManagetment.Model;
+using MaterialDesignThemes.Wpf;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,7 +10,11 @@ namespace bookStoreManagetment.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+        public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
+        public ICommand ClosedMainWindowCommand { get; set; }
+        public ICommand AccountMainWindowCommand { get; set; }
+        public ICommand DashboardClickCommand { get; set; }
         public ICommand KiemhangClickCommand { get; set; }
         public ICommand NhacungcapClickCommand { get; set; }
         public ICommand OpenSubMenuCommand { get; set; }
@@ -23,25 +25,65 @@ namespace bookStoreManagetment.ViewModel
         public Window isOpenningWindow = new Window();
         public MainViewModel()
         {
+            // người đăng nhập hiện tại
+            IDUser = "null";
 
-            
-            LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+            // hàm load form khác
+            LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
                 p.Hide();
-                LoginWindow newLogin = new LoginWindow();
-                newLogin.ShowDialog();
+                // hiện form login
+                CheckItemsWindow newCheckItems = new CheckItemsWindow();
+                newCheckItems.ShowDialog();
+            });
 
-                var loginVM = newLogin.DataContext as LoginViewModel;
-                if (loginVM.IsLogin)
+            //// hàm load form
+            //LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            //{
+            //    // ẩn form chính
+            //    p.Hide();
+
+            //    // hiện form login
+            //    LoginWindow newLogin = new LoginWindow();
+            //    newLogin.ShowDialog();
+
+            //    // lấy dữ liệu từ form login
+            //    var loginVM = newLogin.DataContext as LoginViewModel;
+            //    if (loginVM.IsLogin)
+            //    {
+            //        p.Show();
+            //        IDUser = loginVM.IDUser.ToString();
+            //    }
+            //    if (loginVM.IsClose)
+            //    {
+            //        p.Close();
+            //    }
+            //});
+
+            // hàm đóng form => đảm bảo không có form con nào còn mở
+            ClosedMainWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                    App.Current.Windows[intCounter].Close();
+            });
+
+            // hàm check đăng nhập thành công => đổi account
+            AccountMainWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IDUser != "null")
                 {
-                    p.Show();
-                    MessageBox.Show("Bạn đã đăng nhập thành công");
-                }
-                if (loginVM.IsClose)
-                {
-                    p.Close();
+                    var user = DataProvider.Ins.DB.accounts
+                                                  .Where(acc => (acc.idAccount.ToString() == IDUser))
+                                                  .FirstOrDefault();
+                    string nameAccount = user.nameAccount.ToString();
+                    (p as Chip).Content = nameAccount;
+                    (p as Chip).Icon = (nameAccount[0]).ToString().ToUpper();
                 }
             });
 
+            // Hàm mở form dashboard
+            DashboardClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
 
             // is check box
             KiemhangClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
@@ -52,6 +94,7 @@ namespace bookStoreManagetment.ViewModel
                 (p as Grid).Children.Add(checkItemsContent as UIElement);
                 //isOpenningWindow = (checkItemsContent as Window);
             });
+
 
             NhacungcapClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 (p as Grid).Children.Clear();
@@ -91,8 +134,6 @@ namespace bookStoreManagetment.ViewModel
                     openbtn.Remove((p as Button));
                 }
             });
-
-
 
         }
     }
