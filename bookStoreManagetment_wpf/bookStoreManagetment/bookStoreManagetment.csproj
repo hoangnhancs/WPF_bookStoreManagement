@@ -158,6 +158,7 @@
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NhacungcapViewMode.cs" />
     <Page Include="CheckItemsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
