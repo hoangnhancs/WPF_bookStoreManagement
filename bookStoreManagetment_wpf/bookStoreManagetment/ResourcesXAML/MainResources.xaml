@@ -10,4 +10,6 @@
 
     <viewmodel:CheckItemsViewModel x:Key="CheckItemsVM"></viewmodel:CheckItemsViewModel>
 
+    <viewmodel:NhacungcapViewMode x:Key="NhacungcapVM"></viewmodel:NhacungcapViewMode>
+
 </ResourceDictionary>

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:bookStoreManagetment"
+        xmlns:local="clr-namespace:bookStoreManagetment" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Nhacungcap" Height="450" Width="800">
+        Title="Nhacungcap" Height="450" Width="800"
+        DataContext="{StaticResource NhacungcapVM}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -41,24 +42,38 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <ListView>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Mã nhà cung cấp"/>
-                        <GridViewColumn Header="Tên nhà cung cấp"/>
-                        <GridViewColumn Header="Email"/>
-                        <GridViewColumn Header="Số điện thoại"/>
-                        <GridViewColumn Header="Tình trạng"/>
-                        <GridViewColumn Header="">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="btnTest"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid 
+                x:Name="dgNhacungcap" 
+                AutoGenerateColumns="False" 
+                CanUserAddRows="False" 
+                HorizontalAlignment="Center" 
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction
+                            Command="{Binding LoadNhacungcapCommand}"
+                            CommandParameter="{Binding ElementName=dgNhacungcap}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path = 'idSupplier'}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Tên nhà cung cấp" Binding="{Binding Path = 'nameSupplier'}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Path = 'addressSupplier'}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Path ='emailSupplier'}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path = 'phoneNumberSupplier'}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Path = 'statusSupplier'}" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click">
+                                    
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>
