@@ -44,6 +44,7 @@ namespace bookStoreManagetment.ViewModel
             //    CheckItemsWindow newCheckItems = new CheckItemsWindow();
             //    newCheckItems.ShowDialog();
             //});
+            //test git
 
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
