@@ -16,7 +16,6 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}" 
         Name="_MainWindow"
-        
         Title="MainWindow" Height="700" Width="1200">
 
 
@@ -27,12 +26,21 @@
 
 
     
-    <!--loaded command-->
+    <!--command-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction 
-                    Command="{Binding LoadedMainWindowCommand}"
-                    CommandParameter="{Binding ElementName=_MainWindow}"
+                Command="{Binding LoadedMainWindowCommand}"
+                CommandParameter="{Binding ElementName= _MainWindow}">
+            </i:InvokeCommandAction>
+            <i:InvokeCommandAction 
+                Command="{Binding AccountMainWindowCommand}"
+                CommandParameter="{Binding ElementName= chipAccount}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction 
+                    Command="{Binding ClosedMainWindowCommand}"
                     />
         </i:EventTrigger>
     </i:Interaction.Triggers>
@@ -72,6 +80,7 @@
                 <!--Account-->
                 <Grid Grid.Column="1">
                     <materialDesign:Chip
+                        x:Name="chipAccount"
                         Width="auto"
                         Content="Tài Khoản"
                         Icon="T" 
