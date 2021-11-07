@@ -1,5 +1,7 @@
 ﻿using bookStoreManagetment.Model;
+using bookStoreManagetment.UserControls;
 using MaterialDesignThemes.Wpf;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +12,10 @@ namespace bookStoreManagetment.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+
+        private UserControl _ChildUserControl;
+        public UserControl ChildUserControl { get => _ChildUserControl; set { _ChildUserControl = value; OnPropertyChanged(); } }
+
         public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
         public ICommand ClosedMainWindowCommand { get; set; }
@@ -23,42 +29,43 @@ namespace bookStoreManagetment.ViewModel
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
         public Window isOpenningWindow = new Window();
+
         public MainViewModel()
         {
             // người đăng nhập hiện tại
             IDUser = "null";
 
-            // hàm load form khác
-            LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                p.Hide();
-                // hiện form login
-                CheckItemsWindow newCheckItems = new CheckItemsWindow();
-                newCheckItems.ShowDialog();
-            });
-
-            //// hàm load form
+            //// hàm load form khác
             //LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             //{
-            //    // ẩn form chính
             //    p.Hide();
-
             //    // hiện form login
-            //    LoginWindow newLogin = new LoginWindow();
-            //    newLogin.ShowDialog();
-
-            //    // lấy dữ liệu từ form login
-            //    var loginVM = newLogin.DataContext as LoginViewModel;
-            //    if (loginVM.IsLogin)
-            //    {
-            //        p.Show();
-            //        IDUser = loginVM.IDUser.ToString();
-            //    }
-            //    if (loginVM.IsClose)
-            //    {
-            //        p.Close();
-            //    }
+            //    CheckItemsWindow newCheckItems = new CheckItemsWindow();
+            //    newCheckItems.ShowDialog();
             //});
+
+            // hàm load form
+            LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                // ẩn form chính
+                p.Hide();
+
+                // hiện form login
+                LoginWindow newLogin = new LoginWindow();
+                newLogin.ShowDialog();
+
+                // lấy dữ liệu từ form login
+                var loginVM = newLogin.DataContext as LoginViewModel;
+                if (loginVM.IsLogin)
+                {
+                    p.Show();
+                    IDUser = loginVM.IDUser.ToString();
+                }
+                if (loginVM.IsClose)
+                {
+                    p.Close();
+                }
+            });
 
             // hàm đóng form => đảm bảo không có form con nào còn mở
             ClosedMainWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -81,18 +88,9 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
-            // Hàm mở form dashboard
-            DashboardClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-
             // is check box
             KiemhangClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                (p as Grid).Children.Clear();
-                CheckItemsWindow checkItemsForm = new CheckItemsWindow();
-                object checkItemsContent = checkItemsForm.Content;
-                checkItemsForm.Content = null;
-                (p as Grid).Children.Add(checkItemsContent as UIElement);
-                //isOpenningWindow = (checkItemsContent as Window);
+                AddChildUC(p as Grid, new CheckItemsUC());
             });
 
 
@@ -135,6 +133,15 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
+        }
+
+
+        // hàm thêm user control con vào grid
+        public void AddChildUC(Grid p, UserControl childUC)
+        {
+            ChildUserControl = childUC;
+            p.Children.Clear();
+            p.Children.Add(ChildUserControl);
         }
     }
 }
