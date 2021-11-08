@@ -1,5 +1,7 @@
-﻿using System;
+﻿using bookStoreManagetment.Model;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,21 @@ namespace bookStoreManagetment.UserControls
         public NhacungcapUC()
         {
             InitializeComponent();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Inventory dataRowView = (Inventory)((Button)e.Source).DataContext;
+                string id = dataRowView.Supplier.idSupplier;
+                MessageBox.Show("You Clicked : " + id);
+                //This is the code which will show the button click row data. Thank you.
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
     }
 }

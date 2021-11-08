@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace bookStoreManagetment.Model
 {
-    public class Inventory
+    public class Nhacungcap
     {
-        public item Item { get; set; }
-        public int Count { get; set; }
-        public string Note { get; set; }
         public supplier Supplier { get; set; }
+
     }
 }

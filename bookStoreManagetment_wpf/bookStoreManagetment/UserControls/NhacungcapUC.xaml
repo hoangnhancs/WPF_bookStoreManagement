@@ -7,6 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{StaticResource NhacungcapVM}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                    Command="{Binding LoadNhacungcapCommand}"
+                    />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -26,7 +33,7 @@
                     CornerRadius="12"
                     BorderThickness="1">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="pictures/search.png"/>
+                        
                         <TextBox VerticalAlignment="Center" Margin="10 0 0 0" Text="search"></TextBox>
                     </StackPanel>
                 </Border>
@@ -48,27 +55,28 @@
                 CanUserAddRows="False" 
                 HorizontalAlignment="Center" 
                 VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                        <i:InvokeCommandAction
-                            Command="{Binding LoadNhacungcapCommand}"
-                            CommandParameter="{Binding ElementName=dgNhacungcap}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                HorizontalContentAlignment="Center"
+                ItemsSource="{Binding InventoryList}"
+                >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Path = 'idSupplier'}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Tên nhà cung cấp" Binding="{Binding Path = 'nameSupplier'}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Path = 'addressSupplier'}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Email" Binding="{Binding Path ='emailSupplier'}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path = 'phoneNumberSupplier'}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Path = 'statusSupplier'}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Tên nhà cung cấp" Binding="{Binding Supplier.nameSupplier}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Supplier.addressSupplier}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Supplier.emailSupplier}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Supplier.phoneNumberSupplier}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Supplier.statusSupplier}" IsReadOnly="True"/>
                     <DataGridTemplateColumn Header="">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDelete" Content="Delete">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btnDelete" Content="Delete"
+                                            >
+                                        
+                                    </Button>
+                                    <Button x:Name="btnEdit" Content="Edit">
 
-                                </Button>
+                                    </Button>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -141,6 +141,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Nhacungcap.cs" />
     <Compile Include="Model\profitSummary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -156,6 +157,9 @@
     <Compile Include="Model\Inventory.cs" />
     <Compile Include="Nhacungcap.xaml.cs">
       <DependentUpon>Nhacungcap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AddSupplier.xaml.cs">
+      <DependentUpon>AddSupplier.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CheckItemsUC.xaml.cs">
       <DependentUpon>CheckItemsUC.xaml</DependentUpon>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="styles\styleResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AddSupplier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
