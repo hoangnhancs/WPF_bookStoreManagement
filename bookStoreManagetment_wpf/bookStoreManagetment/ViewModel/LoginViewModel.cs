@@ -67,6 +67,7 @@ namespace bookStoreManagetment.ViewModel
                 if (lstAccount.Count > 0)
                 {
                     IDUser = lstAccount[0].idAccount;
+                    LoggedAccount.Account = lstAccount[0];
                     IsLogin = true;
                     if (p != null)
                         p.Close();
