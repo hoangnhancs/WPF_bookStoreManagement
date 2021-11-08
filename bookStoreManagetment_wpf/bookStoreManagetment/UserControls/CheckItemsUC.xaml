@@ -28,7 +28,8 @@
         <Grid Grid.Row="0"
               Background="AliceBlue">
             <TextBlock
-                Text="Danh sách phiếu kiểm hàng"
+                x:Name="textBlockSubTitle"
+                Text="{Binding SubTitle}"
                 FontSize="20"
                 FontWeight="Bold"
                 HorizontalAlignment="Left"
@@ -39,7 +40,7 @@
         <!--add check items-->
         <Grid Grid.Row="1"
               x:Name="gridAddReport"
-              Visibility="Visible">
+              Visibility="Collapsed">
             <!--loaded command-->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="IsVisibleChanged">
@@ -222,13 +223,17 @@
                                                       Margin="16 0 0 0" 
                                                       VerticalAlignment="Bottom" 
                                                       IsEditable="True" 
+                                                      SelectedValue="{Binding Count}"
                                                       ItemsSource="{Binding ListIntergers}">
+                                                <!--click add command-->
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="SelectionChanged">
+                                                        <i:InvokeCommandAction 
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.SelectedIndexChangedCommand}" 
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
 
-                                                <ComboBox.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <VirtualizingStackPanel />
-                                                    </ItemsPanelTemplate>
-                                                </ComboBox.ItemsPanel>
                                             </ComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -544,7 +549,7 @@
         <!--show check items-->
         <Grid Grid.Row="1"
                   x:Name="gridShowReport"
-                  Visibility="Collapsed">
+                  Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>

@@ -21,6 +21,8 @@ namespace bookStoreManagetment.ViewModel
 
     public class CheckItemsViewModel : BaseViewModel
     {
+        private string _SubTitle;
+        public string SubTitle { get => _SubTitle; set { _SubTitle = value; OnPropertyChanged(); } }
 
         private List<string> _AllStaff;
         public List<string> AllStaff { get => _AllStaff; set { _AllStaff = value; OnPropertyChanged(); } }
@@ -40,12 +42,16 @@ namespace bookStoreManagetment.ViewModel
         public ICommand ClickAllSelectedCommand { get; set; }
         public ICommand ClickAllUnSelectedCommand { get; set; }
         public ICommand ClickCompletedCommand { get; set; }
+        public ICommand SelectedIndexChangedCommand { get; set; }
+        public ICommand ChangedTextSubTitleCommand { get; set; }
         public CheckItemsViewModel()
         {
             AllStaff = new List<string>();
             AllStaff.Add(LoggedAccount.Account.nameAccount);
 
             InventoryList = new ObservableCollection<Inventory>();
+
+            SubTitle = "Danh Sách Phiếu Kiểm Hàng";
 
             LoadedCheckItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -58,6 +64,19 @@ namespace bookStoreManagetment.ViewModel
                 if (grid.Visibility == Visibility.Collapsed)
                 {
                     grid.Visibility = Visibility.Visible;
+
+                    if (grid.Name == "gridShowReport")
+                    {
+                        SubTitle = "Danh Sách Phiếu Kiểm Hàng";
+                    }
+                    else if (grid.Name == "gridAddReport")
+                    {
+                        SubTitle = "Danh Sách Phiếu Kiểm Hàng > Thêm Phiếu Kiểm Hàng";
+                    }
+                    else
+                    {
+                        SubTitle = "Danh Sách Phiếu Kiểm Hàng > Thêm Phiếu Kiểm Hàng > Thêm Sản Phẩm Kiểm";
+                    }
                 }
                 else
                 {
@@ -151,6 +170,25 @@ namespace bookStoreManagetment.ViewModel
                     }
                 }
             });
+
+            SelectedIndexChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                var selectedValue = (p as Inventory);
+                for (int i = 0; i < InventoryList.Count; i++)
+                {
+                    if (InventoryList[i].Item.idItem == selectedValue.Item.idItem)
+                    {
+                        InventoryList[i].Count = selectedValue.Item.quantity;
+
+                    }
+                }
+
+            });
+
+            ChangedTextSubTitleCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                (p as TextBlock).Text += " > Thêm Phiếu Kiểm Hàng";
+            });
         }
 
         private void LoadData()
@@ -178,5 +216,6 @@ namespace bookStoreManagetment.ViewModel
             }
         }
 
+        
     }
 }
