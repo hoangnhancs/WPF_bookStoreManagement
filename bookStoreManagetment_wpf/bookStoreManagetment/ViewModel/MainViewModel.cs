@@ -96,8 +96,7 @@ namespace bookStoreManagetment.ViewModel
 
 
             NhacungcapClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                
-                //isOpenningWindow = (nccContent as Window);
+                AddChildUC(p as Grid, new NhacungcapUC());
             });
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
