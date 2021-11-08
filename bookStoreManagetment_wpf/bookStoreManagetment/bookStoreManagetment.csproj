@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="UserControls\TestUC.xaml.cs">
       <DependentUpon>TestUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\NhacungcapUC.xaml.cs">
       <DependentUpon>NhacungcapUC.xaml</DependentUpon>
     </Compile>
@@ -215,7 +216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\TestUC.xaml">
+    <Page Include="UserControls\TestUC.xaml"/>
     <Page Include="UserControls\NhacungcapUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
