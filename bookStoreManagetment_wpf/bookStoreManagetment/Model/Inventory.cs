@@ -11,5 +11,12 @@ namespace bookStoreManagetment.Model
         public item Item { get; set; }
         public int Count { get; set; }
         public string Note { get; set; }
+        public List<int> ListIntergers { get; set; }
+
+        public Inventory()
+        {
+            int maxQuantity = DataProvider.Ins.DB.items.Max(i => i.quantity);
+            ListIntergers = Enumerable.Range(1, maxQuantity).ToList();
+        }
     }
 }

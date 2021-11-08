@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="bookStoreManagetment.UserControls.CheckItemsUC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
              DataContext="{StaticResource CheckItemsVM}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <!--loaded command-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -37,7 +38,7 @@
 
         <!--add check items-->
         <Grid Grid.Row="1"
-              x:Name="addCheckItems"
+              x:Name="gridAddReport"
               Visibility="Visible">
             <!--loaded command-->
             <i:Interaction.Triggers>
@@ -80,16 +81,26 @@
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal"
                                         Margin="20 0 0 0">
-                            <TextBlock 
+                            <TextBlock
                                     VerticalAlignment="Center"
                                     Text="Nhân viên kiểm"></TextBlock>
-                            <ComboBox x:Name="comboBoxNameStaf"
+                            <ComboBox x:Name="comboBoxNameStaff"
                                       ItemsSource="{Binding AllStaff}"
                                       Background="WhiteSmoke"
                                       Margin="50 0 0 0"
                                       Width="200"
                                       Height="25"
-                                      SelectedIndex="0"></ComboBox>
+                                      HorizontalContentAlignment="Center"
+                                      SelectedIndex="0">
+                                <!--loaded command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="IsEnabledChanged">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding comboBoxStaffSourceUpdatedCommand}"
+                                            CommandParameter="{Binding ElementName=comboBoxNameStaff}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
 
                             <!-- Ngày kiểm tra -->
                             <StackPanel Margin="150 0 0 0"
@@ -103,7 +114,6 @@
                                            x:Name="textBlockDateCheck"
                                            VerticalAlignment="Center"
                                            Margin="10 0 0 0">
-
                                 </TextBlock>
                             </StackPanel>
                         </StackPanel>
@@ -146,7 +156,7 @@
                     <Grid Grid.Row="0">
                         <DataGrid
                             ItemsSource="{Binding InventoryList}"
-                            ColumnWidth="*"
+                            ColumnWidth="2*"
                             Margin="0 8 0 0"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
@@ -156,7 +166,7 @@
                             <DataGrid.Columns>
 
                                 <!--Mã sản phẩm-->
-                                <DataGridTextColumn                                
+                                <DataGridTextColumn
                                     Binding="{Binding Item.idItem}"
                                     Header="Mã Sản Phẩm"
                                     Width="auto"
@@ -202,29 +212,32 @@
                                 </DataGridTextColumn>
 
                                 <!--Số lượng thực tế -->
-                                <materialDesign:DataGridComboBoxColumn
-                                    ItemsSource="{Binding }">
-                                    <materialDesign:DataGridComboBoxColumn.SelectedItemBinding>
-                                        <Binding
-                                            Path="SelectedValueOne"
-                                            Mode="TwoWay"
-                                            UpdateSourceTrigger="PropertyChanged">
+                                <DataGridTemplateColumn
+                                    Header="Số lượng thực tế"
+                                    Width="auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox materialDesign:HintAssist.Hint="(Thực)" 
+                                                      MinWidth="72" 
+                                                      Margin="16 0 0 0" 
+                                                      VerticalAlignment="Bottom" 
+                                                      IsEditable="True" 
+                                                      ItemsSource="{Binding ListIntergers}">
 
-                                        </Binding>
-                                    </materialDesign:DataGridComboBoxColumn.SelectedItemBinding>
-                                </materialDesign:DataGridComboBoxColumn>
+                                                <ComboBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel />
+                                                    </ItemsPanelTemplate>
+                                                </ComboBox.ItemsPanel>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--Giá-->
                                 <DataGridTextColumn
-                                    
-                                    Binding="{Binding }"
-                                    Header= "Số lượng thực tế"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                </DataGridTextColumn>
-
-                                <!--Ghi chú-->
-                                <DataGridTextColumn
-                                    
-                                    Binding="{Binding Note}"
-                                    Header="Ghi chú"
+                                    Binding="{Binding Item.priceItem}"
+                                    Width="*"
+                                    Header="Giá"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 </DataGridTextColumn>
 
@@ -255,15 +268,25 @@
                                 <Setter Property="Background" Value="YellowGreen"></Setter>
                             </Style>
                         </Grid.Resources>
-                        <StackPanel HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
-                            Orientation="Horizontal">
+
+                        <StackPanel HorizontalAlignment="Left" 
+                                    VerticalAlignment="Bottom" 
+                                    Orientation="Horizontal">
                             <Button Content="Thêm sản phẩm"
-                            Margin="0 0 10 0 "
-                            Style="{StaticResource btnControls}"></Button>
-                            <Button Content="Tất cả sản phẩm"
-                            Margin="10 0 0 0 "
-                            Style="{StaticResource btnControls}"></Button>
+                                    Margin="0 0 10 0 "
+                                    Style="{StaticResource btnControls}">
+                                <!--loaded command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=gridAddItems}"/>
+                                        <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=gridAddReport}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -295,10 +318,10 @@
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
-                                            CommandParameter="{Binding ElementName=addCheckItems}" />
+                                            CommandParameter="{Binding ElementName=gridAddReport}" />
                                 <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
-                                            CommandParameter="{Binding ElementName=showCheckItems}" />
+                                            CommandParameter="{Binding ElementName=gridShowReport}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
@@ -310,9 +333,217 @@
             </Grid>
         </Grid>
 
+        <!-- thêm sản phẩm kiểm tra-->
+        <Grid Grid.Row="1"
+              Visibility="Collapsed"
+              x:Name="gridAddItems">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--Tìm kiếm-->
+                <Grid Grid.Row="0" 
+                      x:Name="gridSearchItems">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="15*"></ColumnDefinition>
+                        <ColumnDefinition Width="7*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Image Margin="10 0 0 0" 
+                               Width="{Binding ElementName=imgIconSearch, Path=Height}" 
+                               Height="30" 
+                               HorizontalAlignment="Left" 
+                               x:Name="imgIconSearch"></Image>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <TextBox materialDesign:HintAssist.Hint="Tìm kiếm" 
+                                 VerticalContentAlignment="Center"
+                                 x:Name="textBoxSearch"
+                                  Margin="20 0 0 0" 
+                                  Padding="20 0 0 0"                          
+                                  materialDesign:HintAssist.HintOpacity=".37">
+                            <!--loaded command-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding txtBoxTextChangedSearchCommand}"
+                                        CommandParameter="{Binding ElementName=textBoxSearch}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+
+                    <Grid Grid.Column="2">
+                        <Grid.Resources>
+                            <Style x:Key="btnControls" TargetType="Button">
+                                <Setter Property="FontWeight" Value="Bold"></Setter>
+                                <Setter Property="Width" Value="120"></Setter>
+                                <Setter Property="Height" Value="26"></Setter>
+                                <Setter Property="Padding" Value="10 0 10 0"></Setter>
+                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="BorderBrush" Value="AliceBlue"></Setter>
+                                <Setter Property="Background" Value="AliceBlue"></Setter>
+                            </Style>
+                        </Grid.Resources>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            
+                            <Button Content="Chọn Tất Cả"
+                                    Margin="0 0 5 0 "
+                                    Style="{StaticResource btnControls}"
+                                    Background="ForestGreen">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding ClickAllSelectedCommand}"
+                                            CommandParameter="{Binding ElementName=gridResultSearch}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+
+                            <Button Content="Bỏ Tất Cả"
+                            Margin="5 0 0 0 "
+                            Style="{StaticResource btnControls}"
+                            Background="OrangeRed" BorderBrush="#FF0088FF">
+                                <!--click add command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding ClickAllUnSelectedCommand}"
+                                            CommandParameter="{Binding ElementName=gridResultSearch}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                </Grid>
+
+                <!-- view chọn item-->
+                <Grid Grid.Row="1">
+                    <DataGrid Margin="0 8 0 0" 
+                              x:Name="gridResultSearch"
+                              ColumnWidth="*"
+                              ItemsSource="{Binding ShowItems}" 
+                              CanUserSortColumns="True" 
+                              CanUserAddRows="False" 
+                              AutoGenerateColumns="False" 
+                              materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                              materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn
+                                                    Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Width="auto"
+                                                  x:Name="checkboxGridSearch"
+                                                  IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Height="auto">
+                                            <!--click add command-->
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Checked">
+                                                    <i:InvokeCommandAction 
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.CheckedGridSearchCommand}" 
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!--ảnh-->
+                            <DataGridTemplateColumn Header="Ảnh"
+                                                    Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Ảnh"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Binding="{Binding Items.nameItem}" 
+                                                Width="auto"
+                                                Header="Tên sản phảm"
+                                                IsReadOnly="True"
+                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" >
+                            </DataGridTextColumn>
+                            
+                            <!--Số lượng-->
+                            <materialDesign:DataGridTextColumn Binding="{Binding Items.quantity}" 
+                                                               Header="Số lượng" 
+                                                               EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <!--buton-->
+                <Grid Grid.Row="2">
+                    <Grid.Resources>
+                        <Style x:Key="btnControls" TargetType="Button">
+                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                            <Setter Property="Width" Value="120"></Setter>
+                            <Setter Property="Height" Value="26"></Setter>
+                            <Setter Property="Padding" Value="10 0 10 0"></Setter>
+                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                            <Setter Property="BorderBrush" Value="AliceBlue"></Setter>
+                            <Setter Property="Background" Value="AliceBlue"></Setter>
+                        </Style>
+                    </Grid.Resources>
+                    <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                        <Button Content="Thoát"
+                            Margin="0 0 10 0 "
+                            Style="{StaticResource btnControls}"
+                            Background="OrangeRed" BorderBrush="#FF0088FF">
+                            <!--click add command-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=gridAddReport}" />
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=gridAddItems}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Content="Hoàn Thành"
+                            Margin="10 0 0 0 "
+                            Style="{StaticResource btnControls}"
+                            Background="ForestGreen">
+                            <!--click add command-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickCompletedCommand}"/>
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=gridAddReport}" />
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=gridAddItems}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+
         <!--show check items-->
         <Grid Grid.Row="1"
-                  x:Name="showCheckItems"
+                  x:Name="gridShowReport"
                   Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"></RowDefinition>
@@ -416,10 +647,10 @@
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction
                                     Command="{Binding ClickHiddenCommand}"
-                                    CommandParameter="{Binding ElementName=addCheckItems}" />
+                                    CommandParameter="{Binding ElementName=gridAddReport}" />
                                 <i:InvokeCommandAction
                                     Command="{Binding ClickHiddenCommand}"
-                                    CommandParameter="{Binding ElementName=showCheckItems}" />
+                                    CommandParameter="{Binding ElementName=gridShowReport}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
