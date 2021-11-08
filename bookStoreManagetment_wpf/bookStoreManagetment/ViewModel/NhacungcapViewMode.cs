@@ -1,5 +1,7 @@
-﻿using System;
+﻿using bookStoreManagetment.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,23 +15,60 @@ namespace bookStoreManagetment.ViewModel
 {
     public class NhacungcapViewMode : BaseViewModel
     {
+        private ObservableCollection<Inventory> _InventoryList;
+        public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
+
         public ICommand LoadNhacungcapCommand { get; set; }
         public ICommand btnDeleteNCCClickCommand { get; set; }
+        public ICommand btnEditNCCClickCommand { get; set; }
 
         public NhacungcapViewMode()
         {
             LoadNhacungcapCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                string connectionString = @"data source=DESKTOP-NMLT1AC\SQLEXPRESS;initial catalog = bookStoreManagementDTB;integrated security = True";
-                SqlConnection con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand("Select * from supplier", con);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                cmd.Dispose();
-                adapter.Dispose();
-                con.Close();
-                (p as DataGrid).ItemsSource = dt.DefaultView;
+                LoadData();
             });
+
+            btnDeleteNCCClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => {
+                MessageBox.Show("hi");
+            });
+            void LoadData(int status=2)
+            {
+                InventoryList = new ObservableCollection<Inventory>();
+                
+                if (status == 2)
+                {
+                    var lstNhacungcap = DataProvider.Ins.DB.suppliers;
+                    foreach (var ncc in lstNhacungcap)
+                    {
+                        Inventory _Inventory = new Inventory();
+                        _Inventory.Supplier = ncc;
+                        InventoryList.Add(_Inventory);
+                    }
+                }
+                else
+                {
+                    if(status==1)
+                    {
+                        var lstNhacungcap = DataProvider.Ins.DB.suppliers.Where(i=>i.statusSupplier=="Đang hợp tác");
+                        foreach (var ncc in lstNhacungcap)
+                        {
+                            Inventory _Inventory = new Inventory();
+                            _Inventory.Supplier = ncc;
+                            InventoryList.Add(_Inventory);
+                        }
+                    }
+                    else
+                    {
+                        var lstNhacungcap = DataProvider.Ins.DB.suppliers.Where(i => i.statusSupplier == "Ngừng hợp tác");
+                        foreach (var ncc in lstNhacungcap)
+                        {
+                            Inventory _Inventory = new Inventory();
+                            _Inventory.Supplier = ncc;
+                            InventoryList.Add(_Inventory);
+                        }
+                    }
+                }
+            }
         }
     }
 }

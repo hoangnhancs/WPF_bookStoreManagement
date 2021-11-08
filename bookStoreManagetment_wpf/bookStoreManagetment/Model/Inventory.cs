@@ -18,5 +18,6 @@ namespace bookStoreManagetment.Model
             int maxQuantity = DataProvider.Ins.DB.items.Max(i => i.quantity);
             ListIntergers = Enumerable.Range(1, maxQuantity).ToList();
         }
+        public supplier Supplier { get; set; }
     }
 }
