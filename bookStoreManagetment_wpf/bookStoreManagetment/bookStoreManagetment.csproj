@@ -160,6 +160,9 @@
     <Compile Include="UserControls\CheckItemsUC.xaml.cs">
       <DependentUpon>CheckItemsUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\NhacungcapUC.xaml.cs">
+      <DependentUpon>NhacungcapUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CheckItemsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\NhacungcapUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
