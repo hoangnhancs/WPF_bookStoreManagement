@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Center">
                 <Border 
@@ -41,11 +41,37 @@
             <Grid Grid.Column="1" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center">Trạng thái</TextBlock>
-                    <ComboBox Height="25" Width="125" Margin="10 0 0 0" VerticalContentAlignment="Center">
+                    <ComboBox  x:Name="cbbStatus" Height="25" Width="125" Margin="10 0 0 0" VerticalContentAlignment="Center">
                         <ComboBoxItem Content="Đang hợp tác"/>
-                        <ComboBoxItem Content="Không còn hợp tác"/>
+                        <ComboBoxItem Content="Ngừng hợp tác"/>
+    
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    Command="{Binding cbbStatusChangedCommand}"
+                                    CommandParameter="{Binding ElementName=cbbStatus}"/>
+                                <i:InvokeCommandAction
+                                    Command="{Binding refreshDatagridCommand}"
+                                    CommandParameter="{Binding ElementName=dgNhacungcap}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+ 
                     </ComboBox>
                 </StackPanel>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Button 
+                    x:Name="btnAddSuplier" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Width="100"  
+                    Background="Transparent" 
+                    Foreground="Black" 
+                    BorderBrush="Black"
+                    Content="Thêm"
+                    >
+
+                </Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
@@ -57,6 +83,7 @@
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
                 ItemsSource="{Binding InventoryList}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                 >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True"/>
@@ -69,12 +96,30 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="btnDelete" Content="Delete"
-                                            >
+                                    <Button 
+                                        x:Name="btnDelete" Content="Delete"
+                                        Width="100"
+                                        Background="Transparent" 
+                                        Foreground="Black" 
+                                        BorderBrush="Black">
+                                        
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
+                                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteNCCClickCommand}"
+                                                    CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" >
+  
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                         
                                     </Button>
-                                    <Button x:Name="btnEdit" Content="Edit">
-
+                                    <Button 
+                                        x:Name="btnEdit" Content="Edit"
+                                        Width="100"
+                                        Background="Transparent" 
+                                        Foreground="Black" 
+                                        BorderBrush="Black">
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
