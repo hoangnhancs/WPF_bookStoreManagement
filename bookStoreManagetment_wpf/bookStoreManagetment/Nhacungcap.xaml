@@ -40,6 +40,7 @@
                     </ComboBox>
                 </StackPanel>
             </Grid>
+
         </Grid>
         <Grid Grid.Row="1">
             <DataGrid 

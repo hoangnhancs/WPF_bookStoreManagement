@@ -69,7 +69,8 @@
                     Foreground="Black" 
                     BorderBrush="Black"
                     Content="Thêm"
-                    >
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.MenuCommand}"
+                    CommandParameter="AddNhacungcap">
 
                 </Button>
             </Grid>

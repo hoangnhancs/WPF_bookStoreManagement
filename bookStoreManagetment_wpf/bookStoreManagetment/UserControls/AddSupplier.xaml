@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:bookStoreManagetment.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
@@ -200,7 +201,9 @@
         </Grid>
         <Grid Grid.Row="3">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Width="100"  Background="Transparent" Foreground="Black" BorderBrush="Black">Thoát</Button>
+                <Button Width="100"  Background="Transparent" Foreground="Black" BorderBrush="Black"
+                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.MenuCommand}"
+                        CommandParameter="Nhacungcap">Thoát</Button>
                 <Button Width="100" Background="Transparent" Foreground="Black" BorderBrush="Black">Cập nhật</Button>
             </StackPanel>
         </Grid>
