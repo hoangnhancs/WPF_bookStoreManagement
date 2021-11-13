@@ -29,15 +29,15 @@ namespace bookStoreManagetment.ViewModel
         public NhacungcapViewMode()
         {
             LoadNhacungcapCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                LoadData();
+                LoadDataWithQuery("Tất cả");
             });
             btnDeleteNCCClickCommand = new RelayCommand<Object>((p) => { return true; }, (p) => {
 
                 SelectedItem = p as Inventory;
-                SelectedItem.Supplier.statusSupplier = "Ngừng hợp tác";
+                //SelectedItem.Supplier.statusSupplier = "Ngừng hợp tác";
                 string selectedID = SelectedItem.Supplier.idSupplier;
-                string query = "update supplier set statusSupplier=N'Ngừng cung cấp' where idSupplier=" + selectedID + "'";
-                DataProvider.Ins.DB.suppliers.SqlQuery(query);
+                string query = "update supplier set statusSupplier=N'Ngừng hợp tác' where idSupplier=N'" + selectedID + "'";
+                DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
                 //ctx.SqlQuery("update supplier set statusSupplier=N'Ngừng cung cấp' where idSupplier=");
                 MessageBox.Show(query);
 
@@ -49,28 +49,30 @@ namespace bookStoreManagetment.ViewModel
                 p.Items.Refresh();
                 MessageBox.Show("hi");
             });
-            void LoadData()
-            {
-                InventoryList = new ObservableCollection<Inventory>();           
-                var lstNhacungcap = DataProvider.Ins.DB.suppliers;
-                foreach (var ncc in lstNhacungcap)
-                {
-                    Inventory _Inventory = new Inventory();
-                    _Inventory.Supplier = ncc;
-                    InventoryList.Add(_Inventory);
-                } 
-            }
+
             void LoadDataWithQuery(string query)
             {
                 InventoryList = new ObservableCollection<Inventory>();
-                var lstNhacungcap = DataProvider.Ins.DB.suppliers.Where(i=>i.statusSupplier==query);
-                foreach (var ncc in lstNhacungcap)
+                if (query != "Tất cả")
                 {
-                    Inventory _Inventory = new Inventory();
-                    _Inventory.Supplier = ncc;
-                    InventoryList.Add(_Inventory);
+                    var lstNhacungcap = DataProvider.Ins.DB.suppliers.Where(i => i.statusSupplier == query);
+                    foreach (var ncc in lstNhacungcap)
+                    {
+                        Inventory _Inventory = new Inventory();
+                        _Inventory.Supplier = ncc;
+                        InventoryList.Add(_Inventory);
+                    }
                 }
-
+                else
+                {
+                    var lstNhacungcap = DataProvider.Ins.DB.suppliers;
+                    foreach (var ncc in lstNhacungcap)
+                    {
+                        Inventory _Inventory = new Inventory();
+                        _Inventory.Supplier = ncc;
+                        InventoryList.Add(_Inventory);
+                    }
+                }
             }
 
         }

@@ -342,7 +342,7 @@
             <ContentControl
                 Background="LightCyan"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"  
+                VerticalAlignment="Top"  
                 Grid.Column="1"
                 Grid.Row="1"               
                 Content="{Binding SelectedViewModel}"></ContentControl>
