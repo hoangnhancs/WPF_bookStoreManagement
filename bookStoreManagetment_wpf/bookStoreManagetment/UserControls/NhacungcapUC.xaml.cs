@@ -26,20 +26,5 @@ namespace bookStoreManagetment.UserControls
         {
             InitializeComponent();
         }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Inventory dataRowView = (Inventory)((Button)e.Source).DataContext;
-                string id = dataRowView.Supplier.idSupplier;
-                MessageBox.Show("You Clicked : " + id);
-                //This is the code which will show the button click row data. Thank you.
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-        }
     }
 }
