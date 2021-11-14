@@ -274,8 +274,30 @@
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction
                                 Command="{Binding insertSupplierCommand}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=huyenAddressSuptb}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=mailSuptb}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=nameSuptb}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=phoneSuptb}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=sonhaAddressSuptb}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=tinhAddressSuptb}"></i:InvokeCommandAction>
+                            <i:InvokeCommandAction
+                                Command="{Binding clearTextboxCommand}"
+                                CommandParameter="{Binding ElementName=xaAddressSuptb}"></i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    
                 </Button>
             </StackPanel>
         </Grid>

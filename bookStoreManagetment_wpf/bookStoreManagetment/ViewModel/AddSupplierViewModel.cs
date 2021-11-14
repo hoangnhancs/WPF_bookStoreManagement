@@ -37,6 +37,17 @@ namespace bookStoreManagetment.ViewModel
             }
         }
         public ICommand insertSupplierCommand { get; set; }
+        private ICommand _cleartextboxcommand;
+        public ICommand clearTextboxCommand {
+            get
+            {
+                if(_cleartextboxcommand==null)
+                {
+                    _cleartextboxcommand = new RelayCommand<object>((p) => { return true; }, (p) => clearTextbox(p));
+                }
+                return _cleartextboxcommand;
+            }
+        }
 
         public AddSupplierViewModel()
         {
@@ -61,11 +72,11 @@ namespace bookStoreManagetment.ViewModel
             {
                 case "nameSuptb":
                     nameSup = (obj as TextBox).Text;
-                    Console.WriteLine("nameSuptb " + nameSup);
+                    
                     break;
                 case "tinhAddressSuptb":
                     tinh = (obj as TextBox).Text;
-                    Console.WriteLine("tinhAddressSuptb " + tinh);
+                    
                     break;
                 case "huyenAddressSuptb":
                     huyen = (obj as TextBox).Text;
@@ -81,9 +92,15 @@ namespace bookStoreManagetment.ViewModel
                     break;
                 case "phoneSuptb":
                     phoneSup = (obj as TextBox).Text;
+                    Console.WriteLine(phoneSup);
                     break;
             }
                 
+        }
+
+        public void clearTextbox(object obj)
+        {
+            (obj as TextBox).Text = "";
         }
 
         public void addSupExcuteQuery()
@@ -108,9 +125,26 @@ namespace bookStoreManagetment.ViewModel
             addressSup = sonha + " " + xa + " " + huyen + " " + tinh;
             string query = "insert into supplier values (N'" + newIdSup + "', N'" + nameSup + "', N'" + addressSup + "', N'" + emailSup + "', N'" + phoneSup + "', N'Đang hợp tác')";
             if (nameSup != "" && addressSup != "   " && emailSup != "" && phoneSup != "")
+            {
                 DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                refreshall();
+                MessageBox.Show("Thêm nhà cung cấp thành công");
+            }
             else
                 MessageBox.Show("Vui lòng điền đủ thông tin");
+        }
+
+        public void refreshall()
+        {
+            idSup = "";
+            addressSup = "";
+            tinh = "";
+            huyen = "";
+            xa = "";
+            sonha = "";
+            phoneSup = "";
+            emailSup = "";
+            nameSup = "";
         }
     }
 }
