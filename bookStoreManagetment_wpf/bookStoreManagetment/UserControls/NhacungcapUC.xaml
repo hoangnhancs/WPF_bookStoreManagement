@@ -113,7 +113,6 @@
                                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteNCCClickCommand}"
                                                     CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" >
                                                 </i:InvokeCommandAction>
-
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
 
@@ -123,7 +122,18 @@
                                         Width="100"
                                         Background="Transparent" 
                                         Foreground="Black" 
-                                        BorderBrush="Black">
+                                        BorderBrush="Black"
+                                        >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
+                                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.MenuCommand}"
+                                                    CommandParameter="EditNhacungcap">
+                                                    
+                                                </i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>

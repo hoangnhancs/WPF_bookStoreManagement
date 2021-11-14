@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="bookStoreManagetment.UserControls.EditSupplier"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <TextBlock 
+                    Text="Thông tin cơ bản" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock 
+                            Text="Tên nhà cung cấp" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBox x:Name="nameSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                  
+                    </TextBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock 
+                            Text="Email" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBlock 
+                            Text="Số điện thoại" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBox x:Name="mailSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                        
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBox x:Name="phoneSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                       
+                    </TextBox>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <TextBlock 
+                    Text="Thông tin cơ bản" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock 
+                            Text="Tỉnh thành" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBlock 
+                            Text="Quận huyện" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBox x:Name="tinhAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                        
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBox x:Name="huyenAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                        
+                    </TextBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock 
+                            Text="Phường xã" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBlock 
+                            Text="Số nhà, đường" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBox x:Name="xaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                        
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBox x:Name="sonhaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                        
+                    </TextBox>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <TextBlock 
+                    Text="Thông tin bổ sung" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock 
+                            Text="Số fax" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBlock 
+                            Text="Mã số thuế" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock 
+                            Text="Website" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="3">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Width="100"  Background="Transparent" Foreground="Black" BorderBrush="Black"
+                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.MenuCommand}"
+                        CommandParameter="Nhacungcap">Thoát</Button>
+                <Button Width="100" Background="Transparent" Foreground="Black" BorderBrush="Black" Content="Cập nhật">
+
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

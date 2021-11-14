@@ -165,6 +165,9 @@
     <Compile Include="UserControls\CheckItemsUC.xaml.cs">
       <DependentUpon>CheckItemsUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\EditSupplier.xaml.cs">
+      <DependentUpon>EditSupplier.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TestUC.xaml.cs">
       <DependentUpon>TestUC.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,7 @@
     <Compile Include="ViewModel\AddSupplierViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
+    <Compile Include="ViewModel\EditSupplierViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhacungcapViewMode.cs" />
@@ -214,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CheckItemsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EditSupplier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

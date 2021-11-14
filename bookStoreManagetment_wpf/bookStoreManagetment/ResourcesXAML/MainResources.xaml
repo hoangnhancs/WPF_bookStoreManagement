@@ -13,6 +13,7 @@
     <viewmodel:NhacungcapViewMode x:Key="NhacungcapVM"></viewmodel:NhacungcapViewMode>
 
     <viewmodel:AddSupplierViewModel x:Key="AddSupplierVM"></viewmodel:AddSupplierViewModel>
+    <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
 
     <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
         <view:NhacungcapUC></view:NhacungcapUC>
@@ -20,5 +21,9 @@
 
     <DataTemplate DataType="{x:Type viewmodel:AddSupplierViewModel}">
         <view:AddSupplier></view:AddSupplier>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:EditSupplierViewModel}">
+        <view:EditSupplier></view:EditSupplier>
     </DataTemplate>
 </ResourceDictionary>

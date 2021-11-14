@@ -54,6 +54,9 @@ namespace bookStoreManagetment.ViewModel
                 case "AddNhacungcap":
                     SelectedViewModel = new AddSupplierViewModel();
                     break;
+                case "EditNhacungcap":
+                    SelectedViewModel = new EditSupplierViewModel();
+                    break;
 
             }
         }
