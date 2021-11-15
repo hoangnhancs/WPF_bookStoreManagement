@@ -17,6 +17,8 @@ namespace bookStoreManagetment.ViewModel
 
         private UserControl _ChildUserControl;
         public UserControl ChildUserControl { get => _ChildUserControl; set { _ChildUserControl = value; OnPropertyChanged(); } }
+        private object _selectedViewModel;
+        public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
         public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
@@ -34,6 +36,34 @@ namespace bookStoreManagetment.ViewModel
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
         public Window isOpenningWindow = new Window();
+        private ICommand _menucommand;
+        public ICommand MenuCommand
+        {
+            get
+            {
+                if (_menucommand == null)
+                {
+                    _menucommand = new RelayCommand<object>((p) => { return true; }, (p) => SwitchViews(p));
+                }
+                return _menucommand;
+            }
+        }
+        public void SwitchViews(object parameter)
+        {
+            switch (parameter)
+            {
+                case "Nhacungcap":
+                    SelectedViewModel = new NhacungcapViewMode();
+                    break;
+                case "AddNhacungcap":
+                    SelectedViewModel = new AddSupplierViewModel();
+                    break;
+                case "EditNhacungcap":
+                    SelectedViewModel = new EditSupplierViewModel();
+                    break;
+
+            }
+        }
 
         public MainViewModel()
         {
