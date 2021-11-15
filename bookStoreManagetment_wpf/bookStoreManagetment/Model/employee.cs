@@ -17,6 +17,7 @@ namespace bookStoreManagetment.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public employee()
         {
+            this.checkItems = new HashSet<checkItem>();
             this.itemSummaries = new HashSet<itemSummary>();
             this.profitSummaries = new HashSet<profitSummary>();
         }
@@ -35,6 +36,8 @@ namespace bookStoreManagetment.Model
         public Nullable<int> employeeSalary { get; set; }
         public string employeeNote { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<checkItem> checkItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<itemSummary> itemSummaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -13,10 +13,10 @@ namespace bookStoreManagetment.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class bookStoreManagementEntities : DbContext
+    public partial class bookStoreManagementDTBEntities : DbContext
     {
-        public bookStoreManagementEntities()
-            : base("name=bookStoreManagementEntities")
+        public bookStoreManagementDTBEntities()
+            : base("name=bookStoreManagementDTBEntities")
         {
         }
     
@@ -28,6 +28,7 @@ namespace bookStoreManagetment.Model
         public virtual DbSet<account> accounts { get; set; }
         public virtual DbSet<bill> bills { get; set; }
         public virtual DbSet<bookInformation> bookInformations { get; set; }
+        public virtual DbSet<checkItem> checkItems { get; set; }
         public virtual DbSet<custommer> custommers { get; set; }
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<importBill> importBills { get; set; }

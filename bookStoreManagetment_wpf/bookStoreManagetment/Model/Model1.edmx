@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="bookStoreManagementDTBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="idAccount" />
@@ -36,6 +36,16 @@
           <Property Name="translator" Type="nvarchar" MaxLength="100" />
           <Property Name="NXB" Type="nvarchar" MaxLength="300" />
           <Property Name="NPH" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="checkItems">
+          <Key>
+            <PropertyRef Name="idCheckItems" />
+          </Key>
+          <Property Name="idCheckItems" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="idEmployee" Type="int" Nullable="false" />
+          <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
+          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="quantityItem" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -96,10 +106,11 @@
           <Property Name="nameItem" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="priceItem" Type="int" Nullable="false" />
           <Property Name="descriptionItem" Type="nvarchar" MaxLength="2000" />
-          <Property Name="barcode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="barcode" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
           <Property Name="typeItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="supplierItem" Type="nvarchar" MaxLength="10" />
+          <Property Name="unit" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="itemSummary">
           <Key>
@@ -151,6 +162,7 @@
           </Key>
           <Property Name="idInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idStudyTool" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="typeContent" Type="nvarchar" MaxLength="50" />
           <Property Name="origin" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="distributor" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
@@ -165,7 +177,7 @@
           <Property Name="phoneNumberSupplier" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="statusSupplier" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
-        <Association Name="FK__bookInfor__idBoo__25869641">
+        <Association Name="FK__bookInfor__idBoo__276EDEB3">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="bookInformation" Type="Self.bookInformation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -177,7 +189,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__importBil__billC__276EDEB3">
+        <Association Name="FK__checkItem__idEmp__34C8D9D1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="checkItems" Type="Self.checkItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="checkItems">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__checkItem__idIte__35BCFE0A">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="checkItems" Type="Self.checkItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="idItem" />
+            </Principal>
+            <Dependent Role="checkItems">
+              <PropertyRef Name="idItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__importBil__billC__29572725">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="importBill" Type="Self.importBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,7 +225,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__importBil__idIte__286302EC">
+        <Association Name="FK__importBil__idIte__2A4B4B5E">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="importBill" Type="Self.importBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -201,7 +237,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__item__supplierIt__31EC6D26">
+        <Association Name="FK__item__supplierIt__33D4B598">
           <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
           <End Role="item" Type="Self.item" Multiplicity="*" />
           <ReferentialConstraint>
@@ -213,7 +249,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__billC__2E1BDC42">
+        <Association Name="FK__itemSumma__billC__300424B4">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,7 +261,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__idCus__2F10007B">
+        <Association Name="FK__itemSumma__idCus__30F848ED">
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -237,7 +273,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__idEmp__300424B4">
+        <Association Name="FK__itemSumma__idEmp__31EC6D26">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -249,7 +285,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__idIte__30F848ED">
+        <Association Name="FK__itemSumma__idIte__32E0915F">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -261,7 +297,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__billC__2B3F6F97">
+        <Association Name="FK__profitSum__billC__2D27B809">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -273,7 +309,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__idCus__2C3393D0">
+        <Association Name="FK__profitSum__idCus__2E1BDC42">
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -285,7 +321,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__idEmp__2D27B809">
+        <Association Name="FK__profitSum__idEmp__2F10007B">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -297,7 +333,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__sellBill__billCo__29572725">
+        <Association Name="FK__sellBill__billCo__2B3F6F97">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="sellBill" Type="Self.sellBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -309,7 +345,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__sellBill__idItem__2A4B4B5E">
+        <Association Name="FK__sellBill__idItem__2C3393D0">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="sellBill" Type="Self.sellBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -321,7 +357,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__studytool__idStu__267ABA7A">
+        <Association Name="FK__studytool__idStu__286302EC">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="studytoolsInformation" Type="Self.studytoolsInformation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -333,10 +369,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="bookStoreManagementModelStoreContainer">
+        <EntityContainer Name="bookStoreManagementDTBModelStoreContainer">
           <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bookInformation" EntityType="Self.bookInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="checkItems" EntityType="Self.checkItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="custommer" EntityType="Self.custommer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="importBill" EntityType="Self.importBill" Schema="dbo" store:Type="Tables" />
@@ -346,59 +383,67 @@
           <EntitySet Name="sellBill" EntityType="Self.sellBill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="studytoolsInformation" EntityType="Self.studytoolsInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__bookInfor__idBoo__25869641" Association="Self.FK__bookInfor__idBoo__25869641">
+          <AssociationSet Name="FK__bookInfor__idBoo__276EDEB3" Association="Self.FK__bookInfor__idBoo__276EDEB3">
             <End Role="item" EntitySet="item" />
             <End Role="bookInformation" EntitySet="bookInformation" />
           </AssociationSet>
-          <AssociationSet Name="FK__importBil__billC__276EDEB3" Association="Self.FK__importBil__billC__276EDEB3">
+          <AssociationSet Name="FK__checkItem__idEmp__34C8D9D1" Association="Self.FK__checkItem__idEmp__34C8D9D1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="checkItems" EntitySet="checkItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__checkItem__idIte__35BCFE0A" Association="Self.FK__checkItem__idIte__35BCFE0A">
+            <End Role="item" EntitySet="item" />
+            <End Role="checkItems" EntitySet="checkItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__importBil__billC__29572725" Association="Self.FK__importBil__billC__29572725">
             <End Role="bill" EntitySet="bill" />
             <End Role="importBill" EntitySet="importBill" />
           </AssociationSet>
-          <AssociationSet Name="FK__importBil__idIte__286302EC" Association="Self.FK__importBil__idIte__286302EC">
+          <AssociationSet Name="FK__importBil__idIte__2A4B4B5E" Association="Self.FK__importBil__idIte__2A4B4B5E">
             <End Role="item" EntitySet="item" />
             <End Role="importBill" EntitySet="importBill" />
           </AssociationSet>
-          <AssociationSet Name="FK__item__supplierIt__31EC6D26" Association="Self.FK__item__supplierIt__31EC6D26">
+          <AssociationSet Name="FK__item__supplierIt__33D4B598" Association="Self.FK__item__supplierIt__33D4B598">
             <End Role="supplier" EntitySet="supplier" />
             <End Role="item" EntitySet="item" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__billC__2E1BDC42" Association="Self.FK__itemSumma__billC__2E1BDC42">
+          <AssociationSet Name="FK__itemSumma__billC__300424B4" Association="Self.FK__itemSumma__billC__300424B4">
             <End Role="bill" EntitySet="bill" />
             <End Role="itemSummary" EntitySet="itemSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__idCus__2F10007B" Association="Self.FK__itemSumma__idCus__2F10007B">
+          <AssociationSet Name="FK__itemSumma__idCus__30F848ED" Association="Self.FK__itemSumma__idCus__30F848ED">
             <End Role="custommer" EntitySet="custommer" />
             <End Role="itemSummary" EntitySet="itemSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__idEmp__300424B4" Association="Self.FK__itemSumma__idEmp__300424B4">
+          <AssociationSet Name="FK__itemSumma__idEmp__31EC6D26" Association="Self.FK__itemSumma__idEmp__31EC6D26">
             <End Role="employee" EntitySet="employee" />
             <End Role="itemSummary" EntitySet="itemSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__idIte__30F848ED" Association="Self.FK__itemSumma__idIte__30F848ED">
+          <AssociationSet Name="FK__itemSumma__idIte__32E0915F" Association="Self.FK__itemSumma__idIte__32E0915F">
             <End Role="item" EntitySet="item" />
             <End Role="itemSummary" EntitySet="itemSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__profitSum__billC__2B3F6F97" Association="Self.FK__profitSum__billC__2B3F6F97">
+          <AssociationSet Name="FK__profitSum__billC__2D27B809" Association="Self.FK__profitSum__billC__2D27B809">
             <End Role="bill" EntitySet="bill" />
             <End Role="profitSummary" EntitySet="profitSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__profitSum__idCus__2C3393D0" Association="Self.FK__profitSum__idCus__2C3393D0">
+          <AssociationSet Name="FK__profitSum__idCus__2E1BDC42" Association="Self.FK__profitSum__idCus__2E1BDC42">
             <End Role="custommer" EntitySet="custommer" />
             <End Role="profitSummary" EntitySet="profitSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__profitSum__idEmp__2D27B809" Association="Self.FK__profitSum__idEmp__2D27B809">
+          <AssociationSet Name="FK__profitSum__idEmp__2F10007B" Association="Self.FK__profitSum__idEmp__2F10007B">
             <End Role="employee" EntitySet="employee" />
             <End Role="profitSummary" EntitySet="profitSummary" />
           </AssociationSet>
-          <AssociationSet Name="FK__sellBill__billCo__29572725" Association="Self.FK__sellBill__billCo__29572725">
+          <AssociationSet Name="FK__sellBill__billCo__2B3F6F97" Association="Self.FK__sellBill__billCo__2B3F6F97">
             <End Role="bill" EntitySet="bill" />
             <End Role="sellBill" EntitySet="sellBill" />
           </AssociationSet>
-          <AssociationSet Name="FK__sellBill__idItem__2A4B4B5E" Association="Self.FK__sellBill__idItem__2A4B4B5E">
+          <AssociationSet Name="FK__sellBill__idItem__2C3393D0" Association="Self.FK__sellBill__idItem__2C3393D0">
             <End Role="item" EntitySet="item" />
             <End Role="sellBill" EntitySet="sellBill" />
           </AssociationSet>
-          <AssociationSet Name="FK__studytool__idStu__267ABA7A" Association="Self.FK__studytool__idStu__267ABA7A">
+          <AssociationSet Name="FK__studytool__idStu__286302EC" Association="Self.FK__studytool__idStu__286302EC">
             <End Role="item" EntitySet="item" />
             <End Role="studytoolsInformation" EntitySet="studytoolsInformation" />
           </AssociationSet>
@@ -407,7 +452,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="bookStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="bookStoreManagementDTBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="idAccount" />
@@ -424,10 +469,10 @@
           <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="setBillDay" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="importBills" Relationship="Self.FK__importBil__billC__276EDEB3" FromRole="bill" ToRole="importBill" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__billC__2E1BDC42" FromRole="bill" ToRole="itemSummary" />
-          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__billC__2B3F6F97" FromRole="bill" ToRole="profitSummary" />
-          <NavigationProperty Name="sellBills" Relationship="Self.FK__sellBill__billCo__29572725" FromRole="bill" ToRole="sellBill" />
+          <NavigationProperty Name="importBills" Relationship="Self.FK__importBil__billC__29572725" FromRole="bill" ToRole="importBill" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__billC__300424B4" FromRole="bill" ToRole="itemSummary" />
+          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__billC__2D27B809" FromRole="bill" ToRole="profitSummary" />
+          <NavigationProperty Name="sellBills" Relationship="Self.FK__sellBill__billCo__2B3F6F97" FromRole="bill" ToRole="sellBill" />
         </EntityType>
         <EntityType Name="bookInformation">
           <Key>
@@ -443,7 +488,19 @@
           <Property Name="translator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NXB" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="NPH" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="item" Relationship="Self.FK__bookInfor__idBoo__25869641" FromRole="bookInformation" ToRole="item" />
+          <NavigationProperty Name="item" Relationship="Self.FK__bookInfor__idBoo__276EDEB3" FromRole="bookInformation" ToRole="item" />
+        </EntityType>
+        <EntityType Name="checkItem">
+          <Key>
+            <PropertyRef Name="idCheckItems" />
+          </Key>
+          <Property Name="idCheckItems" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantityItem" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__checkItem__idEmp__34C8D9D1" FromRole="checkItems" ToRole="employee" />
+          <NavigationProperty Name="item" Relationship="Self.FK__checkItem__idIte__35BCFE0A" FromRole="checkItems" ToRole="item" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -461,8 +518,8 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="accumulatedPoints" Type="Int32" />
           <Property Name="custommerNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idCus__2F10007B" FromRole="custommer" ToRole="itemSummary" />
-          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idCus__2C3393D0" FromRole="custommer" ToRole="profitSummary" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idCus__30F848ED" FromRole="custommer" ToRole="itemSummary" />
+          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idCus__2E1BDC42" FromRole="custommer" ToRole="profitSummary" />
         </EntityType>
         <EntityType Name="employee">
           <Key>
@@ -481,8 +538,9 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idEmp__300424B4" FromRole="employee" ToRole="itemSummary" />
-          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idEmp__2D27B809" FromRole="employee" ToRole="profitSummary" />
+          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idEmp__34C8D9D1" FromRole="employee" ToRole="checkItems" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idEmp__31EC6D26" FromRole="employee" ToRole="itemSummary" />
+          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idEmp__2F10007B" FromRole="employee" ToRole="profitSummary" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -497,8 +555,8 @@
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="bill" Relationship="Self.FK__importBil__billC__276EDEB3" FromRole="importBill" ToRole="bill" />
-          <NavigationProperty Name="item" Relationship="Self.FK__importBil__idIte__286302EC" FromRole="importBill" ToRole="item" />
+          <NavigationProperty Name="bill" Relationship="Self.FK__importBil__billC__29572725" FromRole="importBill" ToRole="bill" />
+          <NavigationProperty Name="item" Relationship="Self.FK__importBil__idIte__2A4B4B5E" FromRole="importBill" ToRole="item" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -510,16 +568,18 @@
           <Property Name="nameItem" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="priceItem" Type="Int32" Nullable="false" />
           <Property Name="descriptionItem" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="barcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="barcode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
           <Property Name="typeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="supplierItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="bookInformations" Relationship="Self.FK__bookInfor__idBoo__25869641" FromRole="item" ToRole="bookInformation" />
-          <NavigationProperty Name="importBills" Relationship="Self.FK__importBil__idIte__286302EC" FromRole="item" ToRole="importBill" />
-          <NavigationProperty Name="supplier" Relationship="Self.FK__item__supplierIt__31EC6D26" FromRole="item" ToRole="supplier" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idIte__30F848ED" FromRole="item" ToRole="itemSummary" />
-          <NavigationProperty Name="sellBills" Relationship="Self.FK__sellBill__idItem__2A4B4B5E" FromRole="item" ToRole="sellBill" />
-          <NavigationProperty Name="studytoolsInformations" Relationship="Self.FK__studytool__idStu__267ABA7A" FromRole="item" ToRole="studytoolsInformation" />
+          <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="bookInformations" Relationship="Self.FK__bookInfor__idBoo__276EDEB3" FromRole="item" ToRole="bookInformation" />
+          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idIte__35BCFE0A" FromRole="item" ToRole="checkItems" />
+          <NavigationProperty Name="importBills" Relationship="Self.FK__importBil__idIte__2A4B4B5E" FromRole="item" ToRole="importBill" />
+          <NavigationProperty Name="supplier" Relationship="Self.FK__item__supplierIt__33D4B598" FromRole="item" ToRole="supplier" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idIte__32E0915F" FromRole="item" ToRole="itemSummary" />
+          <NavigationProperty Name="sellBills" Relationship="Self.FK__sellBill__idItem__2C3393D0" FromRole="item" ToRole="sellBill" />
+          <NavigationProperty Name="studytoolsInformations" Relationship="Self.FK__studytool__idStu__286302EC" FromRole="item" ToRole="studytoolsInformation" />
         </EntityType>
         <EntityType Name="itemSummary">
           <Key>
@@ -535,10 +595,10 @@
           <Property Name="incurredDay" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idCustomer" Type="Int32" />
           <Property Name="idEmployee" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="bill" Relationship="Self.FK__itemSumma__billC__2E1BDC42" FromRole="itemSummary" ToRole="bill" />
-          <NavigationProperty Name="custommer" Relationship="Self.FK__itemSumma__idCus__2F10007B" FromRole="itemSummary" ToRole="custommer" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__itemSumma__idEmp__300424B4" FromRole="itemSummary" ToRole="employee" />
-          <NavigationProperty Name="item" Relationship="Self.FK__itemSumma__idIte__30F848ED" FromRole="itemSummary" ToRole="item" />
+          <NavigationProperty Name="bill" Relationship="Self.FK__itemSumma__billC__300424B4" FromRole="itemSummary" ToRole="bill" />
+          <NavigationProperty Name="custommer" Relationship="Self.FK__itemSumma__idCus__30F848ED" FromRole="itemSummary" ToRole="custommer" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__itemSumma__idEmp__31EC6D26" FromRole="itemSummary" ToRole="employee" />
+          <NavigationProperty Name="item" Relationship="Self.FK__itemSumma__idIte__32E0915F" FromRole="itemSummary" ToRole="item" />
         </EntityType>
         <EntityType Name="profitSummary">
           <Key>
@@ -553,9 +613,9 @@
           <Property Name="idCustomer" Type="Int32" />
           <Property Name="idEmployee" Type="Int32" Nullable="false" />
           <Property Name="sellDay" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="bill" Relationship="Self.FK__profitSum__billC__2B3F6F97" FromRole="profitSummary" ToRole="bill" />
-          <NavigationProperty Name="custommer" Relationship="Self.FK__profitSum__idCus__2C3393D0" FromRole="profitSummary" ToRole="custommer" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__profitSum__idEmp__2D27B809" FromRole="profitSummary" ToRole="employee" />
+          <NavigationProperty Name="bill" Relationship="Self.FK__profitSum__billC__2D27B809" FromRole="profitSummary" ToRole="bill" />
+          <NavigationProperty Name="custommer" Relationship="Self.FK__profitSum__idCus__2E1BDC42" FromRole="profitSummary" ToRole="custommer" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__profitSum__idEmp__2F10007B" FromRole="profitSummary" ToRole="employee" />
         </EntityType>
         <EntityType Name="sellBill">
           <Key>
@@ -571,8 +631,8 @@
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="bill" Relationship="Self.FK__sellBill__billCo__29572725" FromRole="sellBill" ToRole="bill" />
-          <NavigationProperty Name="item" Relationship="Self.FK__sellBill__idItem__2A4B4B5E" FromRole="sellBill" ToRole="item" />
+          <NavigationProperty Name="bill" Relationship="Self.FK__sellBill__billCo__2B3F6F97" FromRole="sellBill" ToRole="bill" />
+          <NavigationProperty Name="item" Relationship="Self.FK__sellBill__idItem__2C3393D0" FromRole="sellBill" ToRole="item" />
         </EntityType>
         <EntityType Name="studytoolsInformation">
           <Key>
@@ -580,9 +640,10 @@
           </Key>
           <Property Name="idInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idStudyTool" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="origin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="distributor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="item" Relationship="Self.FK__studytool__idStu__267ABA7A" FromRole="studytoolsInformation" ToRole="item" />
+          <NavigationProperty Name="item" Relationship="Self.FK__studytool__idStu__286302EC" FromRole="studytoolsInformation" ToRole="item" />
         </EntityType>
         <EntityType Name="supplier">
           <Key>
@@ -594,9 +655,9 @@
           <Property Name="emailSupplier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phoneNumberSupplier" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="statusSupplier" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="items" Relationship="Self.FK__item__supplierIt__31EC6D26" FromRole="supplier" ToRole="item" />
+          <NavigationProperty Name="items" Relationship="Self.FK__item__supplierIt__33D4B598" FromRole="supplier" ToRole="item" />
         </EntityType>
-        <Association Name="FK__importBil__billC__276EDEB3">
+        <Association Name="FK__importBil__billC__29572725">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="importBill" Type="Self.importBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -608,7 +669,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__billC__2E1BDC42">
+        <Association Name="FK__itemSumma__billC__300424B4">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -620,7 +681,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__billC__2B3F6F97">
+        <Association Name="FK__profitSum__billC__2D27B809">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -632,7 +693,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__sellBill__billCo__29572725">
+        <Association Name="FK__sellBill__billCo__2B3F6F97">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="sellBill" Type="Self.sellBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -644,7 +705,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__bookInfor__idBoo__25869641">
+        <Association Name="FK__bookInfor__idBoo__276EDEB3">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="bookInformation" Type="Self.bookInformation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -656,7 +717,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__idCus__2F10007B">
+        <Association Name="FK__checkItem__idEmp__34C8D9D1">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="checkItems" Type="Self.checkItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="checkItems">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__checkItem__idIte__35BCFE0A">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="checkItems" Type="Self.checkItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="idItem" />
+            </Principal>
+            <Dependent Role="checkItems">
+              <PropertyRef Name="idItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__itemSumma__idCus__30F848ED">
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -668,7 +753,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__idCus__2C3393D0">
+        <Association Name="FK__profitSum__idCus__2E1BDC42">
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -680,7 +765,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__idEmp__300424B4">
+        <Association Name="FK__itemSumma__idEmp__31EC6D26">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -692,7 +777,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__idEmp__2D27B809">
+        <Association Name="FK__profitSum__idEmp__2F10007B">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -704,7 +789,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__importBil__idIte__286302EC">
+        <Association Name="FK__importBil__idIte__2A4B4B5E">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="importBill" Type="Self.importBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -716,7 +801,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__item__supplierIt__31EC6D26">
+        <Association Name="FK__item__supplierIt__33D4B598">
           <End Role="supplier" Type="Self.supplier" Multiplicity="0..1" />
           <End Role="item" Type="Self.item" Multiplicity="*" />
           <ReferentialConstraint>
@@ -728,7 +813,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__itemSumma__idIte__30F848ED">
+        <Association Name="FK__itemSumma__idIte__32E0915F">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -740,7 +825,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__sellBill__idItem__2A4B4B5E">
+        <Association Name="FK__sellBill__idItem__2C3393D0">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="sellBill" Type="Self.sellBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -752,7 +837,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__studytool__idStu__267ABA7A">
+        <Association Name="FK__studytool__idStu__286302EC">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="studytoolsInformation" Type="Self.studytoolsInformation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -764,10 +849,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="bookStoreManagementEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="bookStoreManagementDTBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="accounts" EntityType="Self.account" />
           <EntitySet Name="bills" EntityType="Self.bill" />
           <EntitySet Name="bookInformations" EntityType="Self.bookInformation" />
+          <EntitySet Name="checkItems" EntityType="Self.checkItem" />
           <EntitySet Name="custommers" EntityType="Self.custommer" />
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="importBills" EntityType="Self.importBill" />
@@ -777,59 +863,67 @@
           <EntitySet Name="sellBills" EntityType="Self.sellBill" />
           <EntitySet Name="studytoolsInformations" EntityType="Self.studytoolsInformation" />
           <EntitySet Name="suppliers" EntityType="Self.supplier" />
-          <AssociationSet Name="FK__importBil__billC__276EDEB3" Association="Self.FK__importBil__billC__276EDEB3">
+          <AssociationSet Name="FK__importBil__billC__29572725" Association="Self.FK__importBil__billC__29572725">
             <End Role="bill" EntitySet="bills" />
             <End Role="importBill" EntitySet="importBills" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__billC__2E1BDC42" Association="Self.FK__itemSumma__billC__2E1BDC42">
+          <AssociationSet Name="FK__itemSumma__billC__300424B4" Association="Self.FK__itemSumma__billC__300424B4">
             <End Role="bill" EntitySet="bills" />
             <End Role="itemSummary" EntitySet="itemSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__profitSum__billC__2B3F6F97" Association="Self.FK__profitSum__billC__2B3F6F97">
+          <AssociationSet Name="FK__profitSum__billC__2D27B809" Association="Self.FK__profitSum__billC__2D27B809">
             <End Role="bill" EntitySet="bills" />
             <End Role="profitSummary" EntitySet="profitSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__sellBill__billCo__29572725" Association="Self.FK__sellBill__billCo__29572725">
+          <AssociationSet Name="FK__sellBill__billCo__2B3F6F97" Association="Self.FK__sellBill__billCo__2B3F6F97">
             <End Role="bill" EntitySet="bills" />
             <End Role="sellBill" EntitySet="sellBills" />
           </AssociationSet>
-          <AssociationSet Name="FK__bookInfor__idBoo__25869641" Association="Self.FK__bookInfor__idBoo__25869641">
+          <AssociationSet Name="FK__bookInfor__idBoo__276EDEB3" Association="Self.FK__bookInfor__idBoo__276EDEB3">
             <End Role="item" EntitySet="items" />
             <End Role="bookInformation" EntitySet="bookInformations" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__idCus__2F10007B" Association="Self.FK__itemSumma__idCus__2F10007B">
+          <AssociationSet Name="FK__checkItem__idEmp__34C8D9D1" Association="Self.FK__checkItem__idEmp__34C8D9D1">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="checkItems" EntitySet="checkItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__checkItem__idIte__35BCFE0A" Association="Self.FK__checkItem__idIte__35BCFE0A">
+            <End Role="item" EntitySet="items" />
+            <End Role="checkItems" EntitySet="checkItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__itemSumma__idCus__30F848ED" Association="Self.FK__itemSumma__idCus__30F848ED">
             <End Role="custommer" EntitySet="custommers" />
             <End Role="itemSummary" EntitySet="itemSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__profitSum__idCus__2C3393D0" Association="Self.FK__profitSum__idCus__2C3393D0">
+          <AssociationSet Name="FK__profitSum__idCus__2E1BDC42" Association="Self.FK__profitSum__idCus__2E1BDC42">
             <End Role="custommer" EntitySet="custommers" />
             <End Role="profitSummary" EntitySet="profitSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__idEmp__300424B4" Association="Self.FK__itemSumma__idEmp__300424B4">
+          <AssociationSet Name="FK__itemSumma__idEmp__31EC6D26" Association="Self.FK__itemSumma__idEmp__31EC6D26">
             <End Role="employee" EntitySet="employees" />
             <End Role="itemSummary" EntitySet="itemSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__profitSum__idEmp__2D27B809" Association="Self.FK__profitSum__idEmp__2D27B809">
+          <AssociationSet Name="FK__profitSum__idEmp__2F10007B" Association="Self.FK__profitSum__idEmp__2F10007B">
             <End Role="employee" EntitySet="employees" />
             <End Role="profitSummary" EntitySet="profitSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__importBil__idIte__286302EC" Association="Self.FK__importBil__idIte__286302EC">
+          <AssociationSet Name="FK__importBil__idIte__2A4B4B5E" Association="Self.FK__importBil__idIte__2A4B4B5E">
             <End Role="item" EntitySet="items" />
             <End Role="importBill" EntitySet="importBills" />
           </AssociationSet>
-          <AssociationSet Name="FK__item__supplierIt__31EC6D26" Association="Self.FK__item__supplierIt__31EC6D26">
+          <AssociationSet Name="FK__item__supplierIt__33D4B598" Association="Self.FK__item__supplierIt__33D4B598">
             <End Role="supplier" EntitySet="suppliers" />
             <End Role="item" EntitySet="items" />
           </AssociationSet>
-          <AssociationSet Name="FK__itemSumma__idIte__30F848ED" Association="Self.FK__itemSumma__idIte__30F848ED">
+          <AssociationSet Name="FK__itemSumma__idIte__32E0915F" Association="Self.FK__itemSumma__idIte__32E0915F">
             <End Role="item" EntitySet="items" />
             <End Role="itemSummary" EntitySet="itemSummaries" />
           </AssociationSet>
-          <AssociationSet Name="FK__sellBill__idItem__2A4B4B5E" Association="Self.FK__sellBill__idItem__2A4B4B5E">
+          <AssociationSet Name="FK__sellBill__idItem__2C3393D0" Association="Self.FK__sellBill__idItem__2C3393D0">
             <End Role="item" EntitySet="items" />
             <End Role="sellBill" EntitySet="sellBills" />
           </AssociationSet>
-          <AssociationSet Name="FK__studytool__idStu__267ABA7A" Association="Self.FK__studytool__idStu__267ABA7A">
+          <AssociationSet Name="FK__studytool__idStu__286302EC" Association="Self.FK__studytool__idStu__286302EC">
             <End Role="item" EntitySet="items" />
             <End Role="studytoolsInformation" EntitySet="studytoolsInformations" />
           </AssociationSet>
@@ -839,9 +933,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bookStoreManagementModelStoreContainer" CdmEntityContainer="bookStoreManagementEntities">
+        <EntityContainerMapping StorageEntityContainer="bookStoreManagementDTBModelStoreContainer" CdmEntityContainer="bookStoreManagementDTBEntities">
           <EntitySetMapping Name="accounts">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.account">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.account">
               <MappingFragment StoreEntitySet="account">
                 <ScalarProperty Name="idAccount" ColumnName="idAccount" />
                 <ScalarProperty Name="nameAccount" ColumnName="nameAccount" />
@@ -851,7 +945,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="bills">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.bill">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.bill">
               <MappingFragment StoreEntitySet="bill">
                 <ScalarProperty Name="billCode" ColumnName="billCode" />
                 <ScalarProperty Name="billType" ColumnName="billType" />
@@ -860,7 +954,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="bookInformations">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.bookInformation">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.bookInformation">
               <MappingFragment StoreEntitySet="bookInformation">
                 <ScalarProperty Name="idInformation" ColumnName="idInformation" />
                 <ScalarProperty Name="idBook" ColumnName="idBook" />
@@ -875,8 +969,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="checkItems">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.checkItem">
+              <MappingFragment StoreEntitySet="checkItems">
+                <ScalarProperty Name="idCheckItems" ColumnName="idCheckItems" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
+                <ScalarProperty Name="idItem" ColumnName="idItem" />
+                <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="custommers">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.custommer">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.custommer">
               <MappingFragment StoreEntitySet="custommer">
                 <ScalarProperty Name="idCustommer" ColumnName="idCustommer" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -894,7 +999,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="employees">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.employee">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.employee">
               <MappingFragment StoreEntitySet="employee">
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -913,7 +1018,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="importBills">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.importBill">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.importBill">
               <MappingFragment StoreEntitySet="importBill">
                 <ScalarProperty Name="idImport" ColumnName="idImport" />
                 <ScalarProperty Name="billCodeImport" ColumnName="billCodeImport" />
@@ -928,7 +1033,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="items">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.item">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.item">
               <MappingFragment StoreEntitySet="item">
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
                 <ScalarProperty Name="linkItem" ColumnName="linkItem" />
@@ -940,11 +1045,12 @@
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="typeItem" ColumnName="typeItem" />
                 <ScalarProperty Name="supplierItem" ColumnName="supplierItem" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="itemSummaries">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.itemSummary">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.itemSummary">
               <MappingFragment StoreEntitySet="itemSummary">
                 <ScalarProperty Name="idSummary" ColumnName="idSummary" />
                 <ScalarProperty Name="billCode" ColumnName="billCode" />
@@ -960,7 +1066,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="profitSummaries">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.profitSummary">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.profitSummary">
               <MappingFragment StoreEntitySet="profitSummary">
                 <ScalarProperty Name="idPayHistory" ColumnName="idPayHistory" />
                 <ScalarProperty Name="billCode" ColumnName="billCode" />
@@ -975,7 +1081,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sellBills">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.sellBill">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.sellBill">
               <MappingFragment StoreEntitySet="sellBill">
                 <ScalarProperty Name="idSell" ColumnName="idSell" />
                 <ScalarProperty Name="billCodeSell" ColumnName="billCodeSell" />
@@ -991,17 +1097,18 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="studytoolsInformations">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.studytoolsInformation">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.studytoolsInformation">
               <MappingFragment StoreEntitySet="studytoolsInformation">
                 <ScalarProperty Name="idInformation" ColumnName="idInformation" />
                 <ScalarProperty Name="idStudyTool" ColumnName="idStudyTool" />
+                <ScalarProperty Name="typeContent" ColumnName="typeContent" />
                 <ScalarProperty Name="origin" ColumnName="origin" />
                 <ScalarProperty Name="distributor" ColumnName="distributor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="suppliers">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.supplier">
+            <EntityTypeMapping TypeName="bookStoreManagementDTBModel.supplier">
               <MappingFragment StoreEntitySet="supplier">
                 <ScalarProperty Name="idSupplier" ColumnName="idSupplier" />
                 <ScalarProperty Name="nameSupplier" ColumnName="nameSupplier" />

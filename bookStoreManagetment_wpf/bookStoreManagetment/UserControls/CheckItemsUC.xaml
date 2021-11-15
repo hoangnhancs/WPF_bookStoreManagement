@@ -39,7 +39,7 @@
         <!--add check items-->
         <Grid Grid.Row="1"
               x:Name="gridAddReport"
-              Visibility="Visible">
+              Visibility="Collapsed">
             <!--loaded command-->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="IsVisibleChanged">
@@ -335,7 +335,7 @@
 
         <!-- thêm sản phẩm kiểm tra-->
         <Grid Grid.Row="1"
-              Visibility="Collapsed"
+              Visibility="Visible"
               x:Name="gridAddItems">
             <Grid>
                 <Grid.RowDefinitions>

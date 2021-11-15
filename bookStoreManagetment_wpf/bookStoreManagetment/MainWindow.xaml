@@ -37,6 +37,10 @@
                 Command="{Binding AccountMainWindowCommand}"
                 CommandParameter="{Binding ElementName= chipAccount}">
             </i:InvokeCommandAction>
+            <i:InvokeCommandAction 
+                Command="{Binding LoadedDashBoardCommand}"
+                CommandParameter="{Binding ElementName=GridMainForm}">
+            </i:InvokeCommandAction>
         </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction 
@@ -121,7 +125,14 @@
                                 x:Name="btnDashboard"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Dashboard">
-                            </Button>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                        Command="{Binding DashBoardClickCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                </Button>
                         </StackPanel>
                         <StackPanel x:Name="stpQLVP">
                             <Button
@@ -145,7 +156,14 @@
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Danh sách sản phẩm">
-                                </Button>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                        Command="{Binding ListofProductsClickCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    </Button>
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Nhập hàng">
