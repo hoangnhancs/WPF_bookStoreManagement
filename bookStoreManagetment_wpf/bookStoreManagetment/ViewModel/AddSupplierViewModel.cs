@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace bookStoreManagetment.ViewModel
 {
-    public class AddSupplierViewModel
+    public class AddSupplierViewModel:BaseViewModel
     {
         string idSup { get; set; }
         string nameSup { get; set; }
@@ -56,15 +56,7 @@ namespace bookStoreManagetment.ViewModel
             });
         }
 
-        public void LoadInfor()
-        {
-            
-            //nameSup = nameSuptb.Text;
-            addressSup = "";
-            emailSup = "";
-            phoneSup = "";
-            statusSup = "";
-        } 
+
 
         public void changeInfor(object obj)
         {
@@ -92,7 +84,7 @@ namespace bookStoreManagetment.ViewModel
                     break;
                 case "phoneSuptb":
                     phoneSup = (obj as TextBox).Text;
-                    Console.WriteLine(phoneSup);
+                    //Console.WriteLine(phoneSup);
                     break;
             }
                 
@@ -133,6 +125,7 @@ namespace bookStoreManagetment.ViewModel
             else
                 MessageBox.Show("Vui lòng điền đủ thông tin");
         }
+         
 
         public void refreshall()
         {

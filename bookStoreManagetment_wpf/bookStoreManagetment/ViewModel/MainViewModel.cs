@@ -32,6 +32,7 @@ namespace bookStoreManagetment.ViewModel
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
         public Window isOpenningWindow = new Window();
+        public Inventory selectedEditInventory { get; set; }
         private ICommand _menucommand;
         public ICommand MenuCommand
         {
@@ -44,6 +45,7 @@ namespace bookStoreManagetment.ViewModel
                 return _menucommand;
             }
         }
+
         public void SwitchViews(object parameter)
         {
             switch (parameter)
@@ -60,20 +62,17 @@ namespace bookStoreManagetment.ViewModel
 
             }
         }
+        public void passInvNCCtoMain(object obj)
+        {
+            selectedEditInventory = (obj as Inventory);
+            MessageBox.Show(selectedEditInventory.Supplier.idSupplier);
+        }
 
         public MainViewModel()
         {
             // người đăng nhập hiện tại
             IDUser = "null";
 
-            //// hàm load form khác
-            //LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            //{
-            //    p.Hide();
-            //    // hiện form login
-            //    CheckItemsWindow newCheckItems = new CheckItemsWindow();
-            //    newCheckItems.ShowDialog();
-            //});
 
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
