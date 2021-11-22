@@ -167,7 +167,14 @@
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Nhập hàng">
-                                </Button>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
+                                                    Command="{Binding ImportGoodsClickCommand}"
+                                                    CommandParameter="{Binding ElementName=GridMainForm}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Button>
                                 <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Kiểm hàng">

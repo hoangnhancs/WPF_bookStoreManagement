@@ -29,7 +29,8 @@ namespace bookStoreManagetment.Model
         public string linkItem { get; set; }
         public string imageItem { get; set; }
         public string nameItem { get; set; }
-        public int priceItem { get; set; }
+        public int importPriceItem { get; set; }
+        public int sellPriceItem { get; set; }
         public string descriptionItem { get; set; }
         public string barcode { get; set; }
         public int quantity { get; set; }

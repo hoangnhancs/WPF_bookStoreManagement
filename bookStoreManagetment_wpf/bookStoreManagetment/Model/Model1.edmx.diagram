@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5202aae3991a46f59640ad8c95c7ff24" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="c8ef8de30e8748198d2e1e6ec9b8f4a9" Name="Diagram1">
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.bill" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.bookInformation" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
@@ -12,28 +12,29 @@
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.custommer" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.employee" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.importBill" Width="1.5" PointX="8.25" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementDTBModel.item" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementDTBModel.item" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.itemSummary" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementDTBModel.khachtrahang" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.profitSummary" Width="1.5" PointX="11.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.sellBill" Width="1.5" PointX="8.25" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.studytoolsInformation" Width="1.5" PointX="5.25" PointY="29.125" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementDTBModel.supplier" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__importBil__billC__29572725" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__billC__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__profitSum__billC__2D27B809" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__sellBill__billCo__2B3F6F97" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__bookInfor__idBoo__276EDEB3" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__checkItem__idEmp__34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__checkItem__idIte__35BCFE0A" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__idCus__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__profitSum__idCus__2E1BDC42" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__idEmp__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__profitSum__idEmp__2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__importBil__idIte__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__item__supplierIt__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__idIte__32E0915F" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__sellBill__idItem__2C3393D0" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementDTBModel.FK__studytool__idStu__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__importBil__billC__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__billC__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__profitSum__billC__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__sellBill__billCo__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__bookInfor__idBoo__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__checkItem__idEmp__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__checkItem__idIte__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__idCus__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__profitSum__idCus__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__idEmp__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__profitSum__idEmp__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__importBil__idIte__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__item__supplierIt__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__itemSumma__idIte__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__sellBill__idItem__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="bookStoreManagementDTBModel.FK__studytool__idStu__2A4B4B5E" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -30,6 +30,8 @@ namespace bookStoreManagetment.ViewModel
         public ICommand ChangeColorOpenedSTP { get; set; }
         public ICommand DashBoardClickCommand { get; set; }
         public ICommand ListofProductsClickCommand { get; set; }
+        public ICommand ImportGoodsClickCommand { get; set; }
+
         public List<StackPanel> opensubstp = new List<StackPanel>();
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
@@ -108,7 +110,11 @@ namespace bookStoreManagetment.ViewModel
             ListofProductsClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
                 AddChildUC(p, new ListofProductUC());
             });
-            
+
+            ImportGoodsClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
+                AddChildUC(p, new ImportGoodsUC());
+            });
+
             // is check box
             KiemhangClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new CheckItemsUC());

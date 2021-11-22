@@ -34,6 +34,7 @@ namespace bookStoreManagetment.Model
         public virtual DbSet<importBill> importBills { get; set; }
         public virtual DbSet<item> items { get; set; }
         public virtual DbSet<itemSummary> itemSummaries { get; set; }
+        public virtual DbSet<khachtrahang> khachtrahangs { get; set; }
         public virtual DbSet<profitSummary> profitSummaries { get; set; }
         public virtual DbSet<sellBill> sellBills { get; set; }
         public virtual DbSet<studytoolsInformation> studytoolsInformations { get; set; }

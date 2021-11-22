@@ -126,12 +126,12 @@ namespace bookStoreManagetment.ViewModel
                 if (data.typeItem == "book")
                 {
                     var type = DataProvider.Ins.DB.bookInformations.Where(p => p.idBook == data.idItem);
-                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.priceItem });
+                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.importPriceItem });
                 } 
                 else
                 {
                     var type = DataProvider.Ins.DB.studytoolsInformations.Where(p => p.idStudyTool == data.idItem);
-                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.priceItem });
+                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.importPriceItem });
                 }
                 
             }
@@ -171,7 +171,8 @@ namespace bookStoreManagetment.ViewModel
                     nameItem = NameProductsAdd,
                     linkItem = "Đang cập nhật",
                     imageItem = "Đang cập nhật",
-                    priceItem = Int32.Parse(PriceProductsAdd.ToString()),
+                    importPriceItem = Int32.Parse(PriceProductsAdd.ToString()),
+                    sellPriceItem = 1000000,
                     descriptionItem = DescriptionProductsAdd,
                     barcode = BarcodeProductsAdd,
                     quantity = 100,
@@ -305,7 +306,7 @@ namespace bookStoreManagetment.ViewModel
                 cellItem.typeItem = CatalogProductsEdit;
                 cellItem.nameItem = NameProductsEdit;
                 cellItem.barcode = BarcodeProductsEdit;
-                cellItem.priceItem = PriceProductsEdit;
+                cellItem.importPriceItem = PriceProductsEdit;
                 cellItem.unit = UnitProductsEdit;
                 cellItem.descriptionItem = DescriptionProductsEdit;
 
