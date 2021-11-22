@@ -169,8 +169,8 @@
                                     x:Name="btnNhacungcap"
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Nhà cung cấp"
-                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.MenuCommand}"
-                                    CommandParameter="Nhacungcap">
+                                    Command="{Binding NhacungcapClickCommand}"
+                                    CommandParameter="{Binding ElementName=GridMainForm}">
                                         <!--
                                     <i:Interaction.Triggers>
                                         
