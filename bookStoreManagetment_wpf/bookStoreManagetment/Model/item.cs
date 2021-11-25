@@ -18,6 +18,7 @@ namespace bookStoreManagetment.Model
         public item()
         {
             this.bookInformations = new HashSet<bookInformation>();
+            this.checkItems = new HashSet<checkItem>();
             this.importBills = new HashSet<importBill>();
             this.itemSummaries = new HashSet<itemSummary>();
             this.sellBills = new HashSet<sellBill>();
@@ -34,9 +35,12 @@ namespace bookStoreManagetment.Model
         public int quantity { get; set; }
         public string typeItem { get; set; }
         public string supplierItem { get; set; }
+        public string unit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bookInformation> bookInformations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<checkItem> checkItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<importBill> importBills { get; set; }
         public virtual supplier supplier { get; set; }
