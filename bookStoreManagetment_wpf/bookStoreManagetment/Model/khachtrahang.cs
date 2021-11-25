@@ -24,5 +24,7 @@ namespace bookStoreManagetment.Model
         public string idItem { get; set; }
         public int unitPrice { get; set; }
         public int discount { get; set; }
+        public string lido { get; set; }
+        public string trangthai { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand KiemhangClickCommand { get; set; }
         public ICommand NhacungcapClickCommand { get; set; }
         public ICommand QuanlyMailCommand { get; set; }
+        public ICommand KhachtrahangCommand { get; set; }
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
         public List<StackPanel> opensubstp = new List<StackPanel>();
@@ -131,6 +132,10 @@ namespace bookStoreManagetment.ViewModel
 
             QuanlyMailCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new mailUC());
+            });
+
+            KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new KhachtrahangUC());
             });
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>

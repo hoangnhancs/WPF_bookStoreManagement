@@ -23,5 +23,6 @@ namespace bookStoreManagetment.Model
         public custommer Custommer { get; set; }
         public employee Employee { get; set; }
         public sentmail Sentmail { get; set; }
+        public khachtrahang Khachtrahang { get; set; }
     }
 }

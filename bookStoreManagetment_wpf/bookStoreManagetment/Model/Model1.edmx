@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="idAccount" />
@@ -141,6 +141,8 @@
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="unitPrice" Type="int" Nullable="false" />
           <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="lido" Type="nvarchar" MaxLength="1000" />
+          <Property Name="trangthai" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="mail">
           <Key>
@@ -503,8 +505,7 @@
             <End Role="studytoolsInformation" EntitySet="studytoolsInformation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bookStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -669,6 +670,8 @@
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="lido" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="trangthai" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="mail">
           <Key>
@@ -1178,6 +1181,8 @@
           <EntitySetMapping Name="khachtrahangs">
             <EntityTypeMapping TypeName="bookStoreManagementModel.khachtrahang">
               <MappingFragment StoreEntitySet="khachtrahang">
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="lido" ColumnName="lido" />
                 <ScalarProperty Name="idTrahang" ColumnName="idTrahang" />
                 <ScalarProperty Name="billCodeTra" ColumnName="billCodeTra" />
                 <ScalarProperty Name="billCodeSell" ColumnName="billCodeSell" />
