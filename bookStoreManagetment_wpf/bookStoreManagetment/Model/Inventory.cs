@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +19,9 @@ namespace bookStoreManagetment.Model
             ListIntergers = Enumerable.Range(1, maxQuantity).ToList();
         }
         public supplier Supplier { get; set; }
+        public mail Mail { get; set; }
+        public custommer Custommer { get; set; }
+        public employee Employee { get; set; }
+        public sentmail Sentmail { get; set; }
     }
 }

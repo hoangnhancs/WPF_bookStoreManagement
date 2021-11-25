@@ -314,8 +314,19 @@
                             </StackPanel>
                             <StackPanel x:Name="stpQLMail">
                                 <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản lý Mail">
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Content="Quản lý Mail"
+                                    x:Name="btnQLMail" Click="btnQLMail_Click">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                                Command="{Binding ChangeColorOpenedSTP}"
+                                                CommandParameter="{Binding ElementName=btnQLMail}"/>
+                                            <i:InvokeCommandAction
+                                                Command="{Binding QuanlyMailCommand}"
+                                                CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </Button>
                             </StackPanel>
                             <StackPanel x:Name="stpCDC">

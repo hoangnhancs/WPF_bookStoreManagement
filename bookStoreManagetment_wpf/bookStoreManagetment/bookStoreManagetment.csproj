@@ -110,23 +110,33 @@
     <Compile Include="Model\bookInformation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\checkItem.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\custommer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="Model\Dataprovider.cs" />
     <Compile Include="Model\employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\importBill.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\item.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\itemSummary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\khachtrahang.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\LoggedAccount.cs" />
+    <Compile Include="Model\mail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -143,10 +153,17 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\Nhacungcap.cs" />
+    <Compile Include="Model\page.cs" />
     <Compile Include="Model\profitSummary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\sellBill.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sentmail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\setting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\studytoolsInformation.cs">
@@ -155,7 +172,6 @@
     <Compile Include="Model\supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Inventory.cs" />
     <Compile Include="Nhacungcap.xaml.cs">
       <DependentUpon>Nhacungcap.xaml</DependentUpon>
     </Compile>
@@ -168,6 +184,9 @@
     <Compile Include="UserControls\EditSupplier.xaml.cs">
       <DependentUpon>EditSupplier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\mailUC.xaml.cs">
+      <DependentUpon>mailUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TestUC.xaml.cs">
       <DependentUpon>TestUC.xaml</DependentUpon>
     </Compile>
@@ -179,6 +198,7 @@
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
     <Compile Include="ViewModel\EditSupplierViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\mailViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhacungcapViewMode.cs" />
     <Page Include="CheckItemsWindow.xaml">
@@ -222,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\EditSupplier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\mailUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,6 +325,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="pictures\icons8_edit_25px.png" />
+    <Resource Include="pictures\icons8_trash_25px.png" />
     <Resource Include="pictures\search.png" />
   </ItemGroup>
   <ItemGroup>
