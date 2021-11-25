@@ -207,6 +207,13 @@
                                     </Button>
                                     <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Khách trả hàng">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction 
+                                                    Command="{Binding KhachtrahangCommand}"
+                                                    CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                 </StackPanel>
                             </StackPanel>

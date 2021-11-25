@@ -184,6 +184,9 @@
     <Compile Include="UserControls\EditSupplier.xaml.cs">
       <DependentUpon>EditSupplier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\KhachtrahangUC.xaml.cs">
+      <DependentUpon>KhachtrahangUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\mailUC.xaml.cs">
       <DependentUpon>mailUC.xaml</DependentUpon>
     </Compile>
@@ -197,6 +200,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
     <Compile Include="ViewModel\EditSupplierViewModel.cs" />
+    <Compile Include="ViewModel\KhachtrahangViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\mailViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -242,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\EditSupplier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\KhachtrahangUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
