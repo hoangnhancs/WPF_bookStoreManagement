@@ -1,4 +1,4 @@
-﻿<Window x:Class="bookStoreManagetment.MainWindow"
+<Window x:Class="bookStoreManagetment.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -130,17 +130,17 @@
 
 
                                     <i:Interaction.Triggers>
-                                    
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
+
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                     Command="{Binding OpenSubMenuCommand}"
                                     CommandParameter="{Binding ElementName=subMenuQLVP}"/>
-                                        <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                     Command="{Binding ChangeColorOpenedSTP}"
                                     CommandParameter="{Binding ElementName=btnQLVP}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                   
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+
                                 </Button>
                                 <!--Sub menu-->
                                 <StackPanel x:Name="subMenuQLVP" Visibility="Collapsed">
@@ -268,92 +268,92 @@
                             </StackPanel>
                             <StackPanel x:Name="stpQLTC">
                                 <Button x:Name="btnQLTC"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản lý thu chi">
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Content="Quản lý thu chi">
                                     <!--Event button click open sub menu-->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLTC}"/>
+                                            Command="{Binding OpenSubMenuCommand}"
+                                            CommandParameter="{Binding ElementName=subMenuQLTC}"/>
                                             <i:InvokeCommandAction
-                                        Command="{Binding ChangeColorOpenedSTP}"
-                                        CommandParameter="{Binding ElementName=btnQLTC}"/>
+                                            Command="{Binding ChangeColorOpenedSTP}"
+                                            CommandParameter="{Binding ElementName=btnQLTC}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                            </Button>
-                            <!--Sub menu-->
-                            <StackPanel x:Name="subMenuQLTC" Visibility="Collapsed">
-                                <Button
+                                </Button>
+                                <!--Sub menu-->
+                                <StackPanel x:Name="subMenuQLTC" Visibility="Collapsed">
+                                    <Button
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Danh sách thu chi"
                                     Command="{Binding openDSThuChiUCCommand}"
                                     CommandParameter="{Binding ElementName=GridMainForm}">
-                                </Button>
-                                <Button 
+                                    </Button>
+                                    <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Command="{Binding openPhieuThuUCCommand}"
                                     CommandParameter="{Binding ElementName=GridMainForm}"
                                     Content="Phiếu thu">
-                                </Button>
-                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                    </Button>
+                                    <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Phiếu chi"
                                         Command="{Binding openPhieuChiUCCommand}"
                                         CommandParameter="{Binding ElementName=GridMainForm}">
-                                </Button>
-                                </Button>
-                                <!--Sub menu-->
-                                <StackPanel x:Name="subMenuQLTC" Visibility="Collapsed">
-                                    <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Danh sách thu chi">
                                     </Button>
-                                    <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Phiếu thu">
-                                    </Button>
-                                    <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Phiếu chi">
-                                    </Button>
+                                    <!--Sub menu-->
+                                    <!--<StackPanel x:Name="subMenuQLTC2" Visibility="Collapsed">
+                                        <Button 
+                                        Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Danh sách thu chi">
+                                        </Button>
+                                        <Button 
+                                            Style="{StaticResource btnStyle_MenuFeatures}"
+                                            Content="Phiếu thu">
+                                        </Button>
+                                        <Button 
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Phiếu chi">
+                                        </Button>
+                                    </StackPanel>-->
                                 </StackPanel>
-                            </StackPanel>
-                            <StackPanel x:Name="stpQLRP">
-                                <Button 
+                                <StackPanel x:Name="stpQLRP">
+                                    <Button 
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản lý report">
-                                </Button>
-                            </StackPanel>
-                            <StackPanel x:Name="stpQLSK">
-                                <Button 
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel x:Name="stpQLSK">
+                                    <Button 
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản lý sự kiện">
-                                </Button>
-                            </StackPanel>
-                            <StackPanel x:Name="stpQLMail">
-                                <Button 
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel x:Name="stpQLMail">
+                                    <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Quản lý Mail"
                                     x:Name="btnQLMail" Click="btnQLMail_Click">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
                                                 Command="{Binding ChangeColorOpenedSTP}"
                                                 CommandParameter="{Binding ElementName=btnQLMail}"/>
-                                            <i:InvokeCommandAction
+                                                <i:InvokeCommandAction
                                                 Command="{Binding QuanlyMailCommand}"
                                                 CommandParameter="{Binding ElementName=GridMainForm}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                            </StackPanel>
-                            <StackPanel x:Name="stpCDC">
-                                <Button
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel x:Name="stpCDC">
+                                    <Button
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Cài đặt chung"
                                     Command="{Binding openCaiDatChungUCCommand}"
                                     CommandParameter="{Binding ElementName=GridMainForm}">
-                                </Button>
+                                    </Button>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
