@@ -12,6 +12,13 @@
 
     <viewmodel:NhacungcapViewMode x:Key="NhacungcapVM"></viewmodel:NhacungcapViewMode>
 
+    <viewmodel:PhieuThuViewModel x:Key="PhieuThuVM"></viewmodel:PhieuThuViewModel>
+
+    <viewmodel:DSThuChiViewModel x:Key="DSThuChiVM"></viewmodel:DSThuChiViewModel>
+
+    <viewmodel:PhieuChiViewModel x:Key="PhieuChiVM"></viewmodel:PhieuChiViewModel>
+
+    <viewmodel:CaiDatChungViewModel x:Key="CaiDatChungVM"></viewmodel:CaiDatChungViewModel>
     <viewmodel:AddSupplierViewModel x:Key="AddSupplierVM"></viewmodel:AddSupplierViewModel>
     <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
     <viewmodel:mailViewModel x:Key="mailVM"></viewmodel:mailViewModel>

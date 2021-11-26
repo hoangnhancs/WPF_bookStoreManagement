@@ -14,12 +14,13 @@ namespace bookStoreManagetment.Model
     
     public partial class checkItem
     {
-        public string idCheckItems { get; set; }
+        public int idCheckItems { get; set; }
         public int idEmployee { get; set; }
         public System.DateTime dateCheckItems { get; set; }
         public string idItem { get; set; }
         public int quantityItem { get; set; }
-    
+        public string codeCheckItem { get; set; }
+        public string note { get; set; }
         public virtual employee employee { get; set; }
         public virtual item item { get; set; }
     }

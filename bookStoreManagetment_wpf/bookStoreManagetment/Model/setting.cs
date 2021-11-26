@@ -14,10 +14,14 @@ namespace bookStoreManagetment.Model
     
     public partial class setting
     {
+        public int sttSetting { get; set; }
         public string idSetting { get; set; }
         public string nameSetting { get; set; }
         public string statusSetting { get; set; }
         public string contentSetting { get; set; }
         public System.DateTime createdateSetting { get; set; }
+        public int idEmployee { get; set; }
+        public virtual employee employee { get; set; }
+
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="idAccount" />
@@ -41,11 +41,13 @@
           <Key>
             <PropertyRef Name="idCheckItems" />
           </Key>
-          <Property Name="idCheckItems" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="idCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idEmployee" Type="int" Nullable="false" />
           <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="quantityItem" Type="int" Nullable="false" />
+          <Property Name="codeCheckItem" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -164,11 +166,18 @@
           <Property Name="billCode" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="billType" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="rootPrice" Type="int" Nullable="false" />
-          <Property Name="paidAmount" Type="int" Nullable="false" />
-          <Property Name="profit" Type="int" Nullable="false" />
-          <Property Name="idCustomer" Type="int" />
+          <Property Name="payPrice" Type="int" Nullable="false" />
+          <Property Name="exchangePrice" Type="int" Nullable="false" />
+          <Property Name="codeCustomer" Type="nchar" MaxLength="10" />
           <Property Name="idEmployee" Type="int" Nullable="false" />
           <Property Name="sellDay" Type="datetime" Nullable="false" />
+          <Property Name="nameCustomer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nameEmployee" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="typeGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="payment" Type="nvarchar" MaxLength="50" />
+          <Property Name="nameBill" Type="nchar" MaxLength="10" />
+          <Property Name="note" Type="nvarchar" MaxLength="1000" />
+          <Property Name="budget" Type="int" />
         </EntityType>
         <EntityType Name="sellBill">
           <Key>
@@ -179,7 +188,7 @@
           <Property Name="idEmployee" Type="int" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="sellDate" Type="datetime" Nullable="false" />
-          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="idCustomer" Type="int" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="unitPrice" Type="int" Nullable="false" />
           <Property Name="discount" Type="int" Nullable="false" />
@@ -202,11 +211,13 @@
           <Key>
             <PropertyRef Name="idSetting" />
           </Key>
+          <Property Name="sttSetting" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idSetting" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="nameSetting" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="statusSetting" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="statusSetting" Type="nvarchar" MaxLength="10" />
           <Property Name="contentSetting" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="createdateSetting" Type="date" Nullable="false" />
+          <Property Name="idEmployee" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="studytoolsInformation">
           <Key>
@@ -240,7 +251,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__checkItem__idEmp__36B12243">
+        <Association Name="FK__checkItem__idEmp__5CD6CB2B">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="checkItems" Type="Self.checkItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -252,7 +263,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__checkItem__idIte__37A5467C">
+        <Association Name="FK__checkItem__idIte__5DCAEF64">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="checkItems" Type="Self.checkItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -264,7 +275,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__importBil__billC__2B3F6F97">
+        <Association Name="FK__importBil__billC__276EDEB3">
           <End Role="bill" Type="Self.bill" Multiplicity="1" />
           <End Role="importBill" Type="Self.importBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -360,6 +371,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__profitSum__idEmp__2D27B809">
         <Association Name="FK__profitSum__idCus__300424B4">
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
           <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
@@ -408,7 +420,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__studytool__idStu__2A4B4B5E">
+        <Association Name="FK__setting__idEmplo__6FE99F9F">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="setting" Type="Self.setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="setting">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__studytool__idStu__267ABA7A">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="studytoolsInformation" Type="Self.studytoolsInformation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -442,15 +466,15 @@
             <End Role="item" EntitySet="item" />
             <End Role="bookInformation" EntitySet="bookInformation" />
           </AssociationSet>
-          <AssociationSet Name="FK__checkItem__idEmp__36B12243" Association="Self.FK__checkItem__idEmp__36B12243">
+          <AssociationSet Name="FK__checkItem__idEmp__5CD6CB2B" Association="Self.FK__checkItem__idEmp__5CD6CB2B">
             <End Role="employee" EntitySet="employee" />
             <End Role="checkItems" EntitySet="checkItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__checkItem__idIte__37A5467C" Association="Self.FK__checkItem__idIte__37A5467C">
+          <AssociationSet Name="FK__checkItem__idIte__5DCAEF64" Association="Self.FK__checkItem__idIte__5DCAEF64">
             <End Role="item" EntitySet="item" />
             <End Role="checkItems" EntitySet="checkItems" />
           </AssociationSet>
-          <AssociationSet Name="FK__importBil__billC__2B3F6F97" Association="Self.FK__importBil__billC__2B3F6F97">
+          <AssociationSet Name="FK__importBil__billC__276EDEB3" Association="Self.FK__importBil__billC__276EDEB3">
             <End Role="bill" EntitySet="bill" />
             <End Role="importBill" EntitySet="importBill" />
           </AssociationSet>
@@ -482,6 +506,7 @@
             <End Role="bill" EntitySet="bill" />
             <End Role="profitSummary" EntitySet="profitSummary" />
           </AssociationSet>
+          <AssociationSet Name="FK__profitSum__idEmp__2D27B809" Association="Self.FK__profitSum__idEmp__2D27B809">
           <AssociationSet Name="FK__profitSum__idCus__300424B4" Association="Self.FK__profitSum__idCus__300424B4">
             <End Role="custommer" EntitySet="custommer" />
             <End Role="profitSummary" EntitySet="profitSummary" />
@@ -498,13 +523,16 @@
             <End Role="item" EntitySet="item" />
             <End Role="sellBill" EntitySet="sellBill" />
           </AssociationSet>
-          <AssociationSet Name="FK__studytool__idStu__2A4B4B5E" Association="Self.FK__studytool__idStu__2A4B4B5E">
+          <AssociationSet Name="FK__setting__idEmplo__6FE99F9F" Association="Self.FK__setting__idEmplo__6FE99F9F">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="setting" EntitySet="setting" />
+          </AssociationSet>
+          <AssociationSet Name="FK__studytool__idStu__267ABA7A" Association="Self.FK__studytool__idStu__267ABA7A">
             <End Role="item" EntitySet="item" />
             <End Role="studytoolsInformation" EntitySet="studytoolsInformation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bookStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -557,6 +585,20 @@
           <NavigationProperty Name="employee" Relationship="Self.FK__checkItem__idEmp__36B12243" FromRole="checkItems" ToRole="employee" />
           <NavigationProperty Name="item" Relationship="Self.FK__checkItem__idIte__37A5467C" FromRole="checkItems" ToRole="item" />
         </EntityType>
+        <EntityType Name="checkItem">
+          <Key>
+            <PropertyRef Name="idCheckItems" />
+          </Key>
+          <Property Name="idCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantityItem" Type="Int32" Nullable="false" />
+          <Property Name="codeCheckItem" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__checkItem__idEmp__5CD6CB2B" FromRole="checkItems" ToRole="employee" />
+          <NavigationProperty Name="item" Relationship="Self.FK__checkItem__idIte__5DCAEF64" FromRole="checkItems" ToRole="item" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="custommer">
           <Key>
             <PropertyRef Name="idCustommer" />
@@ -573,7 +615,7 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="accumulatedPoints" Type="Int32" />
           <Property Name="custommerNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idCus__32E0915F" FromRole="custommer" ToRole="itemSummary" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idCus__2F10007B" FromRole="custommer" ToRole="itemSummary" />
           <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idCus__300424B4" FromRole="custommer" ToRole="profitSummary" />
         </EntityType>
         <EntityType Name="employee">
@@ -593,9 +635,10 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idEmp__36B12243" FromRole="employee" ToRole="checkItems" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idEmp__33D4B598" FromRole="employee" ToRole="itemSummary" />
-          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idEmp__30F848ED" FromRole="employee" ToRole="profitSummary" />
+          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idEmp__5CD6CB2B" FromRole="employee" ToRole="checkItems" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idEmp__300424B4" FromRole="employee" ToRole="itemSummary" />
+          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idEmp__2D27B809" FromRole="employee" ToRole="profitSummary" />
+          <NavigationProperty Name="settings" Relationship="bookStoreManagementModel.FK__setting__idEmplo__6FE99F9F" FromRole="employee" ToRole="setting" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -627,14 +670,14 @@
           <Property Name="quantity" Type="Int32" Nullable="false" />
           <Property Name="typeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="supplierItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="bookInformations" Relationship="Self.FK__bookInfor__idBoo__29572725" FromRole="item" ToRole="bookInformation" />
-          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idIte__37A5467C" FromRole="item" ToRole="checkItems" />
-          <NavigationProperty Name="importBills" Relationship="Self.FK__importBil__idIte__2C3393D0" FromRole="item" ToRole="importBill" />
-          <NavigationProperty Name="supplier" Relationship="Self.FK__item__supplierIt__35BCFE0A" FromRole="item" ToRole="supplier" />
-          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idIte__34C8D9D1" FromRole="item" ToRole="itemSummary" />
-          <NavigationProperty Name="sellBills" Relationship="Self.FK__sellBill__idItem__2E1BDC42" FromRole="item" ToRole="sellBill" />
-          <NavigationProperty Name="studytoolsInformations" Relationship="Self.FK__studytool__idStu__2A4B4B5E" FromRole="item" ToRole="studytoolsInformation" />
+          <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="bookInformations" Relationship="Self.FK__bookInfor__idBoo__25869641" FromRole="item" ToRole="bookInformation" />
+          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idIte__5DCAEF64" FromRole="item" ToRole="checkItems" />
+          <NavigationProperty Name="importBills" Relationship="Self.FK__importBil__idIte__286302EC" FromRole="item" ToRole="importBill" />
+          <NavigationProperty Name="supplier" Relationship="Self.FK__item__supplierIt__31EC6D26" FromRole="item" ToRole="supplier" />
+          <NavigationProperty Name="itemSummaries" Relationship="Self.FK__itemSumma__idIte__30F848ED" FromRole="item" ToRole="itemSummary" />
+          <NavigationProperty Name="sellBills" Relationship="Self.FK__sellBill__idItem__2A4B4B5E" FromRole="item" ToRole="sellBill" />
+          <NavigationProperty Name="studytoolsInformations" Relationship="Self.FK__studytool__idStu__267ABA7A" FromRole="item" ToRole="studytoolsInformation" />
         </EntityType>
         <EntityType Name="itemSummary">
           <Key>
@@ -692,14 +735,20 @@
           <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="rootPrice" Type="Int32" Nullable="false" />
-          <Property Name="paidAmount" Type="Int32" Nullable="false" />
-          <Property Name="profit" Type="Int32" Nullable="false" />
-          <Property Name="idCustomer" Type="Int32" />
           <Property Name="idEmployee" Type="Int32" Nullable="false" />
           <Property Name="sellDay" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="bill" Relationship="Self.FK__profitSum__billC__2F10007B" FromRole="profitSummary" ToRole="bill" />
-          <NavigationProperty Name="custommer" Relationship="Self.FK__profitSum__idCus__300424B4" FromRole="profitSummary" ToRole="custommer" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__profitSum__idEmp__30F848ED" FromRole="profitSummary" ToRole="employee" />
+          <NavigationProperty Name="bill" Relationship="Self.FK__profitSum__billC__2B3F6F97" FromRole="profitSummary" ToRole="bill" />
+          <NavigationProperty Name="employee" Relationship="Self.FK__profitSum__idEmp__2D27B809" FromRole="profitSummary" ToRole="employee" />
+          <Property Name="nameCustomer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nameEmployee" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="typeGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="payment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="codeCustomer" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="nameBill" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="payPrice" Type="Int32" Nullable="false" />
+          <Property Name="exchangePrice" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="budget" Type="Int32" />
         </EntityType>
         <EntityType Name="sellBill">
           <Key>
@@ -710,7 +759,7 @@
           <Property Name="idEmployee" Type="Int32" Nullable="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <Property Name="sellDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="idCustomer" Type="Int32" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
@@ -823,7 +872,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__checkItem__idEmp__36B12243">
+        <Association Name="FK__checkItem__idEmp__5CD6CB2B">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="checkItems" Type="Self.checkItem" Multiplicity="*" />
           <ReferentialConstraint>
@@ -851,22 +900,34 @@
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
           <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="custommer">
-              <PropertyRef Name="idCustommer" />
+            <Principal Role="employee">
+              <PropertyRef Name="idEmployee" />
             </Principal>
-            <Dependent Role="itemSummary">
-              <PropertyRef Name="idCustomer" />
+            <Dependent Role="checkItems">
+              <PropertyRef Name="idEmployee" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profitSum__idCus__300424B4">
+        <Association Name="FK__checkItem__idIte__5DCAEF64">
+          <End Role="item" Type="Self.item" Multiplicity="1" />
+          <End Role="checkItems" Type="Self.checkItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="idItem" />
+            </Principal>
+            <Dependent Role="checkItems">
+              <PropertyRef Name="idItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__itemSumma__idCus__2F10007B">
           <End Role="custommer" Type="Self.custommer" Multiplicity="0..1" />
-          <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
+          <End Role="itemSummary" Type="Self.itemSummary" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="custommer">
               <PropertyRef Name="idCustommer" />
             </Principal>
-            <Dependent Role="profitSummary">
+            <Dependent Role="itemSummary">
               <PropertyRef Name="idCustomer" />
             </Dependent>
           </ReferentialConstraint>
@@ -1037,7 +1098,37 @@
             <End Role="item" EntitySet="items" />
             <End Role="studytoolsInformation" EntitySet="studytoolsInformations" />
           </AssociationSet>
+          <EntitySet Name="settings" EntityType="bookStoreManagementModel.setting" />
+          <AssociationSet Name="FK__setting__idEmplo__6FE99F9F" Association="bookStoreManagementModel.FK__setting__idEmplo__6FE99F9F">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="setting" EntitySet="settings" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="idSetting" />
+          </Key>
+          <Property Name="sttSetting" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSetting" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="nameSetting" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="statusSetting" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="contentSetting" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="createdateSetting" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="bookStoreManagementModel.FK__setting__idEmplo__6FE99F9F" FromRole="setting" ToRole="employee" />
+        </EntityType>
+        <Association Name="FK__setting__idEmplo__6FE99F9F">
+          <End Type="bookStoreManagementModel.employee" Role="employee" Multiplicity="1" />
+          <End Type="bookStoreManagementModel.setting" Role="setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="setting">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1082,11 +1173,13 @@
           <EntitySetMapping Name="checkItems">
             <EntityTypeMapping TypeName="bookStoreManagementModel.checkItem">
               <MappingFragment StoreEntitySet="checkItems">
+                <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="idCheckItems" ColumnName="idCheckItems" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
                 <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
+                <ScalarProperty Name="codeCheckItem" ColumnName="codeCheckItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1209,13 +1302,20 @@
           <EntitySetMapping Name="profitSummaries">
             <EntityTypeMapping TypeName="bookStoreManagementModel.profitSummary">
               <MappingFragment StoreEntitySet="profitSummary">
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="exchangePrice" ColumnName="exchangePrice" />
+                <ScalarProperty Name="payPrice" ColumnName="payPrice" />
+                <ScalarProperty Name="nameBill" ColumnName="nameBill" />
+                <ScalarProperty Name="codeCustomer" ColumnName="codeCustomer" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="typeGroup" ColumnName="typeGroup" />
+                <ScalarProperty Name="nameEmployee" ColumnName="nameEmployee" />
+                <ScalarProperty Name="nameCustomer" ColumnName="nameCustomer" />
                 <ScalarProperty Name="idPayHistory" ColumnName="idPayHistory" />
                 <ScalarProperty Name="billCode" ColumnName="billCode" />
                 <ScalarProperty Name="billType" ColumnName="billType" />
                 <ScalarProperty Name="rootPrice" ColumnName="rootPrice" />
-                <ScalarProperty Name="paidAmount" ColumnName="paidAmount" />
-                <ScalarProperty Name="profit" ColumnName="profit" />
-                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="sellDay" ColumnName="sellDay" />
               </MappingFragment>
@@ -1281,6 +1381,19 @@
                 <ScalarProperty Name="emailSupplier" ColumnName="emailSupplier" />
                 <ScalarProperty Name="phoneNumberSupplier" ColumnName="phoneNumberSupplier" />
                 <ScalarProperty Name="statusSupplier" ColumnName="statusSupplier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="createdateSetting" ColumnName="createdateSetting" />
+                <ScalarProperty Name="contentSetting" ColumnName="contentSetting" />
+                <ScalarProperty Name="statusSetting" ColumnName="statusSetting" />
+                <ScalarProperty Name="nameSetting" ColumnName="nameSetting" />
+                <ScalarProperty Name="idSetting" ColumnName="idSetting" />
+                <ScalarProperty Name="sttSetting" ColumnName="sttSetting" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

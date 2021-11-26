@@ -42,5 +42,6 @@ namespace bookStoreManagetment.Model
         public virtual DbSet<setting> settings { get; set; }
         public virtual DbSet<studytoolsInformation> studytoolsInformations { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
+        public virtual DbSet<setting> settings { get; set; }
     }
 }
