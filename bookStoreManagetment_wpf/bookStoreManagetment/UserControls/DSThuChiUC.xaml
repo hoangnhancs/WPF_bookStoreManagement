@@ -149,7 +149,7 @@
         <Grid Grid.Row="2">
             <DataGrid
                             ItemsSource="{Binding ListSheet}"
-                            ColumnWidth="2*"
+                            ColumnWidth="*"
                             Margin="10 8 10 0"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
