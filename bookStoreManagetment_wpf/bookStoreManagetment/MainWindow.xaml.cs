@@ -25,5 +25,9 @@ namespace bookStoreManagetment
             InitializeComponent();
         }
 
+        private void btnQLMail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

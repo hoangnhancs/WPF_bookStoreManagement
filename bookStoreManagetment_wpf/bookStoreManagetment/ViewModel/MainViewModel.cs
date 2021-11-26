@@ -15,6 +15,8 @@ namespace bookStoreManagetment.ViewModel
     { 
         private UserControl _ChildUserControl;
         public UserControl ChildUserControl { get => _ChildUserControl; set { _ChildUserControl = value; OnPropertyChanged(); } }
+        private object _selectedViewModel;
+        public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
         public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
@@ -23,6 +25,8 @@ namespace bookStoreManagetment.ViewModel
         public ICommand DashboardClickCommand { get; set; }
         public ICommand KiemhangClickCommand { get; set; }
         public ICommand NhacungcapClickCommand { get; set; }
+        public ICommand QuanlyMailCommand { get; set; }
+        public ICommand KhachtrahangCommand { get; set; }
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
         public ICommand openPhieuThuUCCommand { get; set; }
@@ -33,6 +37,41 @@ namespace bookStoreManagetment.ViewModel
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
         public Window isOpenningWindow = new Window();
+        public Inventory selectedEditInventory { get; set; }
+        private ICommand _menucommand;
+        public ICommand MenuCommand
+        {
+            get
+            {
+                if (_menucommand == null)
+                {
+                    _menucommand = new RelayCommand<object>((p) => { return true; }, (p) => SwitchViews(p));
+                }
+                return _menucommand;
+            }
+        }
+
+        public void SwitchViews(object parameter)
+        {
+            switch (parameter)
+            {
+                case "Nhacungcap":
+                    SelectedViewModel = new NhacungcapViewMode();
+                    break;
+                case "AddNhacungcap":
+                    SelectedViewModel = new AddSupplierViewModel();
+                    break;
+                case "EditNhacungcap":
+                    SelectedViewModel = new EditSupplierViewModel();
+                    break;
+
+            }
+        }
+        public void passInvNCCtoMain(object obj)
+        {
+            selectedEditInventory = (obj as Inventory);
+            MessageBox.Show(selectedEditInventory.Supplier.idSupplier);
+        }
 
         public MainViewModel()
         {
@@ -110,6 +149,14 @@ namespace bookStoreManagetment.ViewModel
 
             NhacungcapClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new NhacungcapUC());
+            });
+
+            QuanlyMailCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new mailUC());
+            });
+
+            KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new KhachtrahangUC());
             });
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>

@@ -1,7 +1,5 @@
-﻿using bookStoreManagetment.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace bookStoreManagetment.UserControls
 {
     /// <summary>
-    /// Interaction logic for NhacungcapUC.xaml
+    /// Interaction logic for EditSupplier.xaml
     /// </summary>
-    public partial class NhacungcapUC : UserControl
+    public partial class EditSupplier : UserControl
     {
-        public NhacungcapUC()
+        public EditSupplier()
         {
             InitializeComponent();
         }

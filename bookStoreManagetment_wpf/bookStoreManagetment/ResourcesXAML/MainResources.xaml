@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewmodel="clr-namespace:bookStoreManagetment.ViewModel" >
+                    xmlns:viewmodel="clr-namespace:bookStoreManagetment.ViewModel" 
+                    xmlns:view="clr-namespace:bookStoreManagetment.UserControls">
 
 
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
@@ -18,4 +19,9 @@
     <viewmodel:PhieuChiViewModel x:Key="PhieuChiVM"></viewmodel:PhieuChiViewModel>
 
     <viewmodel:CaiDatChungViewModel x:Key="CaiDatChungVM"></viewmodel:CaiDatChungViewModel>
+    <viewmodel:AddSupplierViewModel x:Key="AddSupplierVM"></viewmodel:AddSupplierViewModel>
+    <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
+    <viewmodel:mailViewModel x:Key="mailVM"></viewmodel:mailViewModel>
+    <viewmodel:KhachtrahangViewModel x:Key="KhachtrahangVM"></viewmodel:KhachtrahangViewModel>
+
 </ResourceDictionary>

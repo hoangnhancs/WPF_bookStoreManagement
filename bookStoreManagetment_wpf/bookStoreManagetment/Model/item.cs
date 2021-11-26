@@ -35,6 +35,7 @@ namespace bookStoreManagetment.Model
         public int quantity { get; set; }
         public string typeItem { get; set; }
         public string supplierItem { get; set; }
+        public string unit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bookInformation> bookInformations { get; set; }
