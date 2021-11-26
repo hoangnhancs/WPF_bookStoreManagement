@@ -110,6 +110,10 @@
     <Compile Include="Model\bookInformation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\checkItem.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CheckItemSheet.cs" />
     <Compile Include="Model\custommer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -117,6 +121,7 @@
     <Compile Include="Model\employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getNextCode.cs" />
     <Compile Include="Model\importBill.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -126,6 +131,7 @@
     <Compile Include="Model\itemSummary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ListInterger.cs" />
     <Compile Include="Model\LoggedAccount.cs" />
     <Compile Include="Model\Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -143,10 +149,14 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\Nhacungcap.cs" />
+    <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\profitSummary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\sellBill.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\setting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\studytoolsInformation.cs">
@@ -155,15 +165,26 @@
     <Compile Include="Model\supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Inventory.cs" />
     <Compile Include="Nhacungcap.xaml.cs">
       <DependentUpon>Nhacungcap.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\AddSupplier.xaml.cs">
       <DependentUpon>AddSupplier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CaiDatChungUC.xaml.cs">
+      <DependentUpon>CaiDatChungUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CheckItemsUC.xaml.cs">
       <DependentUpon>CheckItemsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DSThuChiUC.xaml.cs">
+      <DependentUpon>DSThuChiUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PhieuChiUC.xaml.cs">
+      <DependentUpon>PhieuChiUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PhieuThuUC.xaml.cs">
+      <DependentUpon>PhieuThuUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TestUC.xaml.cs">
       <DependentUpon>TestUC.xaml</DependentUpon>
@@ -172,10 +193,14 @@
       <DependentUpon>NhacungcapUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\CaiDatChungViewModel.cs" />
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
+    <Compile Include="ViewModel\DSThuChiViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhacungcapViewMode.cs" />
+    <Compile Include="ViewModel\PhieuChiViewModel.cs" />
+    <Compile Include="ViewModel\PhieuThuViewModel.cs" />
     <Page Include="CheckItemsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,11 +237,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\CaiDatChungUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\CheckItemsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\TestUC.xaml"/>
+    <Page Include="UserControls\DSThuChiUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PhieuChiUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PhieuThuUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TestUC.xaml" />
     <Page Include="UserControls\NhacungcapUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,6 +285,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Model\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>

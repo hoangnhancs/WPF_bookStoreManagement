@@ -18,7 +18,6 @@ namespace bookStoreManagetment.Model
         public custommer()
         {
             this.itemSummaries = new HashSet<itemSummary>();
-            this.profitSummaries = new HashSet<profitSummary>();
         }
     
         public int idCustommer { get; set; }
@@ -36,7 +35,5 @@ namespace bookStoreManagetment.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<itemSummary> itemSummaries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<profitSummary> profitSummaries { get; set; }
     }
 }

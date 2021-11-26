@@ -12,7 +12,6 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}" 
         Name="_MainWindow"
@@ -24,8 +23,6 @@
         <ResourceDictionary Source="./styles/styleResources.xaml"></ResourceDictionary>
     </Window.Resources>
 
-
-    
     <!--command-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -38,6 +35,7 @@
                 CommandParameter="{Binding ElementName= chipAccount}">
             </i:InvokeCommandAction>
         </i:EventTrigger>
+        
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction 
                     Command="{Binding ClosedMainWindowCommand}"
@@ -278,17 +276,22 @@
                             </Button>
                             <!--Sub menu-->
                             <StackPanel x:Name="subMenuQLTC" Visibility="Collapsed">
-                                <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Danh sách thu chi">
+                                <Button
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Content="Danh sách thu chi"
+                                    Command="{Binding openDSThuChiUCCommand}"
+                                    CommandParameter="{Binding ElementName=GridMainForm}">
                                 </Button>
                                 <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Phiếu thu">
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Command="{Binding openPhieuThuUCCommand}"
+                                    CommandParameter="{Binding ElementName=GridMainForm}"
+                                    Content="Phiếu thu">
                                 </Button>
-                                <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Phiếu chi">
+                                <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Phiếu chi"
+                                        Command="{Binding openPhieuChiUCCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}">
                                 </Button>
                             </StackPanel>
                         </StackPanel>
@@ -311,9 +314,11 @@
                             </Button>
                         </StackPanel>
                             <StackPanel x:Name="stpCDC">
-                                <Button 
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Cài đặt chung">
+                                <Button
+                                    Style="{StaticResource btnStyle_MenuFeatures}"
+                                    Content="Cài đặt chung"
+                                    Command="{Binding openCaiDatChungUCCommand}"
+                                    CommandParameter="{Binding ElementName=GridMainForm}">
                                 </Button>
                             </StackPanel>
                         </StackPanel>

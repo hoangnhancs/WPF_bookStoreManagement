@@ -19,7 +19,7 @@ namespace bookStoreManagetment.Model
         public int idEmployee { get; set; }
         public int number { get; set; }
         public System.DateTime sellDate { get; set; }
-        public int idCustomer { get; set; }
+        public Nullable<int> idCustomer { get; set; }
         public string idItem { get; set; }
         public int unitPrice { get; set; }
         public int discount { get; set; }

@@ -1,0 +1,545 @@
+﻿<UserControl x:Class="bookStoreManagetment.UserControls.CaiDatChungUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             DataContext="{StaticResource CaiDatChungVM}"
+             d:DesignHeight="575" d:DesignWidth="1024">
+    <!--load user control-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCheckItemsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <!--danh sách phiếu thu/chi-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--Header-->
+        <Grid Grid.Row="0">
+            <TextBlock Text="{Binding Title}"
+                       Margin="10 0 0 0"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       Width="auto"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"></TextBlock>
+
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0 0 10 0">
+
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            Width="150"
+                        Visibility="{Binding IsAddRule}"
+                            Background="Green"
+                            BorderBrush="Green"
+                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
+                    <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                        <materialDesign:PackIcon Kind="PlusCircleOutline" 
+                                             Height="20"
+                                             Width="20"
+                                             Margin="0 0 5 0"
+                                             HorizontalAlignment="Left"/>
+                        <TextBlock Text="Tạo Quy Định"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <!--ẩn hiện grid-->
+                            <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridAddRule}" />
+                            <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridListRule}" />
+                            <!--thêm quy đinh-->
+                            <i:InvokeCommandAction Command="{Binding AddSettingCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        <!--Ds quy định-->
+        <Grid Grid.Row="1"
+              Visibility="Visible"
+              x:Name="gridListRule">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="56"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36"></RowDefinition>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!--thanh tìm kiếm-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" 
+                          Margin="20 0 5 0">
+                        <TextBox materialDesign:HintAssist.Hint="Tìm kiếm"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Button Content="Bộ Lọc"></Button>
+                    </Grid>
+                </Grid>
+
+                <!--main listview-->
+                <Grid Grid.Row="1">
+                    <DataGrid
+                            ItemsSource="{Binding ListRules}"
+                            ColumnWidth="2*"
+                            Margin="10 8 10 0"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8">
+                        <DataGrid.Columns>
+                            <!--Mã Quy Định-->
+                            <DataGridTextColumn
+                                    Binding="{Binding Setting.idSetting, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="Mã Quy Định"
+                                    Width="auto"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                <DataGridTextColumn.HeaderStyle >
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!--Tên Quy Định-->
+                            <DataGridTextColumn
+                                    Binding="{Binding Setting.nameSetting}"
+                                    Header="Tên Quy Định"
+                                    Width="auto"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                <DataGridTextColumn.HeaderStyle >
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!--Nội dung-->
+                            <DataGridTextColumn
+                                    Binding="{Binding Setting.contentSetting}"
+                                    Header="Nội Dung"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                <DataGridTextColumn.HeaderStyle >
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!--Ngày Tạo -->
+                            <DataGridTextColumn
+                                    Binding="{Binding Setting.createdateSetting}"
+                                    Header="Ngày Tạo"
+                                    Width="auto"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                <DataGridTextColumn.HeaderStyle >
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!--tools-->
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                        <Setter Property="BorderThickness" Value="0"></Setter>
+                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right">
+                                            <!--show-->
+                                            <Button Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Padding="0"
+                                                    Margin="0 0 10 0">
+                                                <materialDesign:PackIcon 
+                                                    Kind="Eye"                                             
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="Aqua"/>
+                                                <i:Interaction.Triggers>
+                                                    <!--ẩn hiện grid-->
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                                               CommandParameter="{Binding ElementName=gridAddRule}" />
+                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                                               CommandParameter="{Binding ElementName=gridListRule}" />
+                                                        <!--xem phiếu thu-->
+                                                        <i:InvokeCommandAction 
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ShowSettingCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+
+                                            <!--edit-->
+                                            <Button Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Padding="0"
+                                                    Margin="0 0 5 0">
+                                                <materialDesign:PackIcon 
+                                                    Kind="LeadPencil"                                             
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="Green"/>
+                                                <i:Interaction.Triggers>
+                                                    <!--ẩn hiện grid-->
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                                               CommandParameter="{Binding ElementName=gridAddRule}" />
+                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                                               CommandParameter="{Binding ElementName=gridListRule}" />
+                                                        <!--xem phiếu thu-->
+                                                        <i:InvokeCommandAction 
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.EditSettingCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                            
+                                            <!--delete-->
+                                            <Button 
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                Width="auto"
+                                                Height="auto"
+                                                Padding="0">
+                                                <materialDesign:PackIcon 
+                                                    Kind="Delete"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="red"/>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <!--xoá phiếu thu-->
+                                                        <i:InvokeCommandAction 
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteRuleCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+            </Grid>
+
+            <!--qua trang-->
+            <Grid Grid.Row="1">
+                <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" x:Key="btnNextPage">
+                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="Padding" Value="0 0 0 0"></Setter>
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                            <Setter Property="FontSize" Value="9"></Setter>
+                            <Setter Property="Height" Value="18"></Setter>
+                            <Setter Property="Width" Value="18"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <ComboBox
+                        Padding="0 0 0 0"
+                        FontSize="9"
+                        SelectedValue="10"
+                        SelectedItem="10"
+                        Text="1"
+                        Height="22"
+                        Width="30">
+                    </ComboBox>
+                    <TextBlock
+                    Padding="10 0 10 0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="items per page"></TextBlock>
+                    <Button
+                    Content="1"
+                    Background="AliceBlue"
+                    Style="{StaticResource btnNextPage}">
+                    </Button>
+                    <Button
+                    Content="2"
+                    Margin="3 0 3 0"
+                    Style="{StaticResource btnNextPage}">
+                    </Button>
+                    <Button
+                    Content="3"
+                    Style="{StaticResource btnNextPage}">
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+        <!--Thêm quy định-->
+        <Grid Grid.Row="1"
+              Visibility="Collapsed"
+              x:Name="gridAddRule">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Margin="20 10 20 10">
+                <Border BorderBrush="Black"
+                        BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--title-->
+                        <Grid Grid.Row="0">
+                            <TextBlock Text="Nội Dung Quy Định"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                        
+                        <!--Content-->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="50 0 0 0"
+                                            Height="40">
+                                    <TextBlock Text="Mã Quy Định"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <TextBox Width="120"
+                                             Text="{Binding ViewRule.Setting.idSetting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             Margin="30 0 0 0"
+                                             VerticalAlignment="Center"></TextBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="50 0 0 0"
+                                            Height="40">
+                                    <TextBlock Text="Ngày chỉnh sửa"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <DatePicker
+                                        Width="120"
+                                        Text="{Binding ViewRule.Setting.createdateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="30 0 0 0"
+                                        materialDesign:HintAssist.Hint="Chọn Ngày"
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <!--Content-->
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="50 0 0 0"
+                                            Height="40">
+                                    <TextBlock Text="Tên Quy Định"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <TextBox Width="200"
+                                             Text="{Binding ViewRule.Setting.nameSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="30 0 0 0"
+                                             VerticalAlignment="Center"></TextBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="50 0 0 0"
+                                            Height="40">
+                                    <TextBlock Text="Người Tạo"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <ComboBox
+                                        ItemsSource="{Binding AllStaff}"
+                                        SelectedValue="{Binding DisplayStaff, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                        VerticalContentAlignment="Center"
+                                        Margin="50 0 0 0"
+                                        Text="{Binding ViewRule.FullNameEmployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                        IsEditable="True"
+                                        Width="120">
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        
+                        <!--Trạng Thái-->
+                        <!--<Grid Grid.Row="3">
+                            <StackPanel Orientation="Horizontal"
+                                            Margin="50 0 0 0"
+                                            Height="40">
+                                <TextBlock Text="Trạng Thái"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"></TextBlock>
+                                <ToggleButton
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Height="auto"
+                                    Margin="48 0 0 0"
+                                    Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                                    ToolTip="MaterialDesignSwitchAccentToggleButton"
+                                    IsChecked="True" />
+                            </StackPanel>
+                        </Grid>-->
+                        
+                        <!--Nội dung quy định-->
+                        <Grid Grid.Row="3"
+                              Margin="50 0 50 0">
+                            <StackPanel>
+                                <TextBlock Text="Nội Dung"
+                                           Margin="0 10 0 10"></TextBlock>
+                                <TextBox
+                                    Text="{Binding ViewRule.Setting.contentSetting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Stretch"
+                                    MinWidth="280"
+                                    AcceptsReturn="True"
+                                    VerticalScrollBarVisibility="Auto"
+                                    materialDesign:HintAssist.Hint="Mô tả của quy định"
+                                    Height="auto">
+                                </TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!--button-->
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                    <Button Width="120"
+                        Background="Red"
+                        BorderBrush="Red"
+                        Foreground="White"
+                       Content="Huỷ">
+                        <!--ẩn hiện grid-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridAddRule}" />
+                                <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridListRule}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Width="120"
+                            Visibility="{Binding IsSaveRule}"
+                        BorderBrush="Green"
+                        Background="Green"
+                        Foreground="White"
+                        Margin="50 0 0 0"
+                            Command="{Binding CheckSaveCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        Content="Lưu">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <!--ẩn hiện grid-->
+                                <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridAddRule}" />
+                                <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridListRule}" />
+                                <!--thêm quy đinh-->
+                                <i:InvokeCommandAction Command="{Binding SaveSettingCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
