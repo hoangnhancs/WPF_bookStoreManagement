@@ -21,7 +21,6 @@ namespace bookStoreManagetment.Model
         public int quantityItem { get; set; }
         public string codeCheckItem { get; set; }
         public string note { get; set; }
-    
         public virtual employee employee { get; set; }
         public virtual item item { get; set; }
     }

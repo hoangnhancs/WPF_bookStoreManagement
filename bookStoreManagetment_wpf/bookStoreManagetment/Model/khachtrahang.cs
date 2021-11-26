@@ -12,16 +12,17 @@ namespace bookStoreManagetment.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class setting
+    public partial class khachtrahang
     {
-        public int sttSetting { get; set; }
-        public string idSetting { get; set; }
-        public string nameSetting { get; set; }
-        public string statusSetting { get; set; }
-        public string contentSetting { get; set; }
-        public System.DateTime createdateSetting { get; set; }
+        public int idTrahang { get; set; }
+        public string billCodeTra { get; set; }
+        public string billCodeSell { get; set; }
         public int idEmployee { get; set; }
-        public virtual employee employee { get; set; }
-
+        public int number { get; set; }
+        public System.DateTime sellDate { get; set; }
+        public int idCustomer { get; set; }
+        public string idItem { get; set; }
+        public int unitPrice { get; set; }
+        public int discount { get; set; }
     }
 }
