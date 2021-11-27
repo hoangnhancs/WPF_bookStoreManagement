@@ -110,7 +110,7 @@ create table khachtrahang
 alter table khachtrahang add lido nvarchar(1000) not null
 alter table khachtrahang add trangthai nvarchar(30) not null
 alter table khachtrahang add nameCustomer nvarchar(30) not null
-
+alter table khachtrahang add unit nvarchar(10)
 
 
 create table bolockhachtrahang
