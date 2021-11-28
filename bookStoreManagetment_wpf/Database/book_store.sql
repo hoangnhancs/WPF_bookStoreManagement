@@ -258,7 +258,8 @@ create table mail
 	sender nvarchar(30) not null,
 	autosentDate date 
 )
-select * from supplier 
+alter table mail add typesent nvarchar(30)
+
 insert into mail values (N'Khuyến mãi sinh nhật',N'11/27/2021 8:44:13 AM', N'Thư mời', N'Nhà sách XXX mời quý khách', N'Sử dụng để gửi thông báo', N'ON', N'Nhà sách XXX')
 
 create table sentmail
