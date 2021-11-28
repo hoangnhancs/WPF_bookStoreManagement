@@ -106,12 +106,12 @@ create table khachtrahang
 	idItem nvarchar(10) not null,
 	unitPrice int not null,
 	discount int not null,
+	lido nvarchar(1000) not null,
+	trangthai nvarchar(30) not null,
+	nameCustomer nvarchar(30) not null,
+	unit nvarchar(10),
 )
-alter table khachtrahang add lido nvarchar(1000) not null
-alter table khachtrahang add trangthai nvarchar(30) not null
-alter table khachtrahang add nameCustomer nvarchar(30) not null
-alter table khachtrahang add unit nvarchar(10)
-
+select * from khachtrahang
 
 create table bolockhachtrahang
 (
@@ -120,7 +120,7 @@ create table bolockhachtrahang
 	nhanVien nvarchar(30),
 )
 select * from khachtrahang
-select * from sellBill
+
 
 create table custommer
 (
@@ -156,15 +156,11 @@ values
 (N'BILL002',1,2,N'Đã giao hàng',N'2021-11-24',N'2021-11-24',N'2021-11-24',N'BOOK002',145000,7,0,N'',N'')
 
 
-select * from sellBill
 
 
-insert into khachtrahang values
-(N'TRA001',N'BILL001',1,5,N'2021-11-25',1,N'BOOK001',250000,0,N'Khong thich',N'done',N'nhancute'),
-(N'TRA001',N'BILL001',1,5,N'2021-11-25',1,N'BOOK002',145000,0,N'Khong thich',N'done',N'nhancute')
 
 
-select * from khachtrahang
+
 
 create table employee
 (
@@ -209,7 +205,9 @@ create table supplier
 	phoneNumberSupplier nvarchar(12) not null,
 	statusSupplier nvarchar(30) not null,
 )
-
+alter table supplier add website nvarchar(100)
+alter table supplier add fax nvarchar(30)
+alter table supplier add masothue nvarchar(30)
 
 -- Tạo khóa ngoại sau khi tạo bảng
 
@@ -260,8 +258,8 @@ create table mail
 	sender nvarchar(30) not null,
 	autosentDate date 
 )
-
-
+select * from supplier 
+insert into mail values (N'Khuyến mãi sinh nhật',N'11/27/2021 8:44:13 AM', N'Thư mời', N'Nhà sách XXX mời quý khách', N'Sử dụng để gửi thông báo', N'ON', N'Nhà sách XXX')
 
 create table sentmail
 (
@@ -701,7 +699,6 @@ insert into item values
 (N'BOOK359',N'https://nhasachphuongnam.com/vi/tieng-viet-van-viet-nguoi-viet-tai-ban-nam-2021.html',N'https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/207/tieng-viet-van-viet-nguoi-viet-tb-2021.jpg',N'Tiếng Việt - Văn Việt - Người Việt (Tái bản năm 2021)',161100,177210,N'Tiếng Việt - Văn Việt - Người Việt Tập sách Tiếng Việt - Văn Việt - Người Việt tập hợp một số bài vở được đăng rải rác trên báo chí từ 1982 đến 2001 của Giáo sư Cao Xuân Hạo được chia thành ba phần: 1. Tiếng Việt 2. Văn Việt 3. Người Việt và văn hóa Việt Tập sách phản ánh những ý kiến của ông về một số vấn đề liên quan đến ngôn ngữ, văn học và văn hóa của dân tộc. Là một nhà Việt ngữ học lão thành, đương nhiên trung tâm chú ý của ông là những vấn đề của tiếng Việt, nhưng ngoài ra ông cũng quan tâm đến những vấn đề có liên quan xa gần với ngôn ngữ như văn học và văn hóa. Những ý kiến mà Ông phát biểu trên báo chí thường có một nét đặc trưng: nó rất ít khi trung hòa, cho nên thường gây nên trong lòng người đọc một phản ứng hoặc rất tích cực, hoặc rất tiêu cực. Người thì tán thưởng, người thì phản đối, chứ không mấy ai bình thản bỏ qua. Sở dĩ như vậy chắc cũng vì bài vở của ông rất ít khi xuôi theo cái dòng chảy quen thuộc của số đông, những ý kiến được công luận tán đồng. Khá nhiều lời lẽ của ông nghe có phần chướng tai, tuy không bao giờ thô lỗ. ...Hầu hết những văn bản được sưu tập trong cuốn sách này đều là những bài báo không có tính chất chuyên môn, không đòi hỏi một vốn tri thức gì chuyên biệt. Tác giả không có tham vọng trình bày những luận cứ thực sự khoa học. Những bạn đọc nào thấy cần tìm hiểu những luận cứ như vậy có thể tìm đọc những xuất bản phẩm như Tiếng Việt - Sơ thảo ngữ pháp chức năng; Tiếng Việt - Mấy vấn đề ngữ âm, ngữ pháp, ngữ nghĩa, Âm vị học và Tuyến tính hay các tạp chí chuyên ngành như Ngôn ngữ (Viện Ngôn ngữ học), Ngôn ngữ & Đời sống (Hội Ngôn ngữ học Việt Nam). ',N'893200013230',100,N'book',N'NCC005',N'quyển'),
 (N'BOOK360',N'https://nhasachphuongnam.com/vi/yeu-sai-cach-nen-mai-chang-dung-nguoi.html',N'https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/206/yeu-sai-cach-nen-mai-chang-dung-nguoi.jpg',N'Yêu Sai Cách Nên Mãi Chẳng Đúng Người',86000,94600,N'Có người trải qua hàng chục mối tình cũng không đọng lại gì. Lại có kẻ chỉ lướt qua vài mảnh yêu đương đã tích góp đủ cung bậc tình ái. Có người yêu hết người này tới người kia vẫn mạnh mẽ yêu tiếp tràn đầy nhiệt huyết. Lại có kẻ mới thất bại đôi ba lần đã sợ hãi mà chẳng dám mở lòng thêm. Có người kết thúc một mối tình bình thản, nhẹ nhõm. Lại có kẻ tổn thương mãi không sao tự chữa lành. Ai trong chúng ta cũng có cách riêng để trải nghiệm tình yêu, nhưng những kẻ càng mơ mộng ôm nhiều ảo vọng trong mối quan hệ, có lẽ tổn thương sau chia ly sẽ càng lớn. Thế nhưng, dù từng trải qua điều gì, chúng ta vẫn nên tin rằng “tình yêu của mình” sẽ đến vào đúng lúc nó cần đến, và tất cả những thất bại đi qua sẽ trở thành bài học giúp ta biết trân trọng và nâng niu tình yêu hiện tại đúng cách hơn. Sự trở lại của Night-fly- Tác giả 9x đầy tài năng sau thành công của “Đừng sợ mình sai đừng tin mình đúng” chắc chắn sẽ không bao giờ làm mọi người thất vọng. Đây là một cuốn sách mà bạn không nên mở ngẫu nhiên và đọc bất kỳ, cũng không phải là một cuốn sách bi lụy về tình yêu, hãy kiên trì đi từ đầu đến cuối để thấy góc nhìn về tình yêu biến đổi theo từng nấc thang trưởng thành… Trải qua nhiều những nỗi buồn, bi ai, con người ta mới hiểu, hóa ra trên đời không phải cứ yêu say đắm sẽ được đáp lại bằng thứ tình cảm nồng nhiệt. Gặp nhau là duyên, bên nhau là nợ, cái sai chính là thời điểm. Nhưng khi đã trải qua những đổ vỡ trong chuyện tình cảm, đã từng đau khổ, tổn thương, người ta mới biết rằng nếu sai người, sai thời điểm thì nên lý trí dừng lại đừng để những lạc lối làm tổn thương chính mình và người khác. ',N'893532500191',100,N'book',N'NCC005',N'quyển')
 
-
 insert into bookInformation values
 (N'BOOK001',N'Kinh Tế - Kinh Doanh',N'Bìa mềm',N'15.5 x 23.5 cm',384,N'Jacob Morgan',N'Vương Bảo Long',N'NXB Thế Giới',N'Saigon Books'),
 (N'BOOK002',N'Kinh tế',N'Bìa mềm',N'15.5 x 23.5 cm',372,N'Victor O. Schwab',N'Quyết Trần',N'NXB Hà Nội',N'THBooks'),
@@ -1063,3 +1060,28 @@ insert into bookInformation values
 (N'BOOK358',N'Thiếu Nhi',N'Bìa mềm',N'13 x 20 cm',208,N'Bùi Tiểu Quyên',N'Hoàng Thắng',N'NXB Kim Đồng',N'THBooks'),
 (N'BOOK359',N'Văn Học',N'Bìa mềm',N'15.5 x 23.5 cm',341,N'Cao Xuân Hạo',N'Hoàng Thắng',N'NXB Văn Hoá Dân Tộc',N'Phương Nam Book'),
 (N'BOOK360',N'Văn Học',N'Bìa mềm',N'13 x 20.5 cm',224,N'Night-fly',N'Hoàng Thắng',N'NXB Văn Học',N'Người Trẻ Việt')
+
+INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'EP001', N'export', N'2000-01-01 00:00:00')
+INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'EP002', N'export', N'2021-10-20 00:00:00')
+INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'IP001', N'import', N'2000-01-01 00:00:00')
+INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'IP002', N'import', N'2021-11-13 00:00:00')
+
+
+INSERT INTO [dbo].[sellBill] ([billCodeSell], [idEmployee], [number], [sellDate], [deliveryDate], [licenseDate], [idCustomer], [idItem], [unitPrice], [discount], [note], [billstatus], [tag]) VALUES (N'IP001', 1, 3, N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', 1, N'BOOK073', 3000, 10, N'không có note', N'Đã giao hàng', N'')
+INSERT INTO [dbo].[sellBill] ([billCodeSell], [idEmployee], [number], [sellDate], [deliveryDate], [licenseDate], [idCustomer], [idItem], [unitPrice], [discount], [note], [billstatus], [tag]) VALUES (N'IP002', 2, 7, N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', 1, N'BOOK074', 100, 0, N'không có note', N'Đã giao hàng', N'')
+
+SET IDENTITY_INSERT [dbo].[profitSummary] ON
+INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (7, N'IP001', N'import', 2000, 3000, 1000, NULL, 1, N'2000-01-01 00:00:00', N'Nguyen Van A', N'Nguyen Yen Chi', NULL, N'Tiền Mặt', N'Bán Hàng  ', NULL, 12000)
+INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (11, N'EP001', N'export', 2000, 2000, 0, N'NCC007    ', 1, N'2000-01-01 00:00:00', N'Cong ty A', N'Nguyen Yen Chi', N'Nhà Cung Cấp', N'Tiền Mặt', N'Nhập Hàng ', NULL, 10000)
+INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (12, N'IP002', N'import', 300, 300, 0, NULL, 1, N'2021-11-13 00:00:00', N'Hoang B', N'Thai Hoang Nhan', NULL, N'Tiền Mặt', N'Bán Hàng  ', NULL, 10300)
+INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (13, N'EP002', N'export', 2000, 2000, 0, N'2         ', 1, N'2021-10-20 00:00:00', N'Thai Hoang Nhan', N'Nguyen Yen Chi', N'Nhân Viên', N'Thẻ', N'Trả Lương ', NULL, 8300)
+SET IDENTITY_INSERT [dbo].[profitSummary] OFF
+
+
+SET IDENTITY_INSERT [dbo].[importBill] ON
+INSERT INTO [dbo].[importBill] ([idImport], [billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idnhacungcap]) VALUES (1, N'EP001', 1, N'Nguyen Yen Chi', 3000, N'2000-01-01 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001')
+SET IDENTITY_INSERT [dbo].[importBill] OFF
+SET IDENTITY_INSERT [dbo].[importBill] ON
+INSERT INTO [dbo].[importBill] ([idImport], [billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idnhacungcap]) VALUES (2, N'EP002', 1, N'Nguyen Yen Chi', 3000, N'2000-01-01 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001')
+SET IDENTITY_INSERT [dbo].[importBill] OFF
+
