@@ -211,16 +211,6 @@
                                         </i:Interaction.Triggers>
                                     </Button>
                                     <Button Style="{StaticResource btnStyle_MenuFeatures}"
-                                        Content="Tạo hóa đơn">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction
-                                            Command="{Binding CreateBillClickCommand}"
-                                            CommandParameter="{Binding ElementName=GridMainForm}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
-                                    <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Khách trả hàng">
                                     </Button>
                                 </StackPanel>

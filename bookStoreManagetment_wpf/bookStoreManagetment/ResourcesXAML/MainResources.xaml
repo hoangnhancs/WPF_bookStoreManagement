@@ -23,7 +23,7 @@
     <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
     <viewmodel:mailViewModel x:Key="mailVM"></viewmodel:mailViewModel>
     <viewmodel:DSHoaDonViewModel x:Key="DSHoaDonVM"></viewmodel:DSHoaDonViewModel>
-    <viewmodel:CreateBillViewModel x:Key="CreateBillVM"></viewmodel:CreateBillViewModel>
+
     <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
         <view:NhacungcapUC></view:NhacungcapUC>
     </DataTemplate>
@@ -36,3 +36,4 @@
         <view:EditSupplier></view:EditSupplier>
     </DataTemplate>
 </ResourceDictionary>
+    

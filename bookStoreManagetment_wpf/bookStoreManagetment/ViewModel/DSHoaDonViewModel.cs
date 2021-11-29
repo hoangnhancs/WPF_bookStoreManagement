@@ -35,49 +35,76 @@ namespace bookStoreManagetment.ViewModel
 
         public DSHoaDonViewModel()
         {
+            // Load data cho DSHoaDon UC
+            #region LoadedUserControlCommand
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) => LoadDSHoaDon());
+            #endregion
 
+            // Command reset filter DSHoaDon 
+            #region ResetFilterCommand
             ResetFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) => ResetFilter());
+            #endregion
 
+            // Command Load data hóa đơn để xem
+            #region LoadBillDataCommand
             LoadBillDataCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ViewBillDetail = (p as BillDetail);
                 IsBillViewing = Visibility.Visible;
+                IsDSHoaDon = Visibility.Collapsed;
+                IsBillCreating = Visibility.Collapsed;
             });
+            #endregion
+            
+            // Command Load data để tạo đơn hàng
+            #region LoadCreateBillCommand
+            LoadCreateBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => LoadCreateBill());
+            #endregion
 
-            // Copy của bên DS Thu Chi
-            ClickShowHideGridCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            // Command thêm vật phẩm vào đơn hàng
+            #region AddItemIntoSellBillCommand
+            AddItemIntoSellBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                var grid = (p as Grid);
-                if (grid.Visibility == Visibility.Collapsed)
+                if (SelectedItem != null && SelectedItem.quantity > 0)
                 {
-                    grid.Visibility = Visibility.Visible;
-                    if (grid.Name == "gridDSHoaDon")
+                    bool exists = false;
+                    if (SellBillInfomation != null)
                     {
-                        IsBillViewing = Visibility.Visible;
+                        foreach (var billinfo in SellBillInfomation)
+                        {
+                            if (billinfo.Item == SelectedItem)
+                            {
+                                exists = true;
+                            }
+                        }
                     }
-                    else
+                    if (exists == false)
                     {
-                        IsBillViewing = Visibility.Collapsed;
+                        var BillDetail = new SellBillItem() { Item = SelectedItem, Amount = 1, Discount = 0 };
+                        SellBillInfomation.Add(BillDetail);
                     }
+                    UpdateTotal();
                 }
-                else
-                {
-                    grid.Visibility = Visibility.Collapsed;
-                }
-
             });
+            #endregion 
+
+            // Hàm reset filter tìm kiếm của grid DS hóa đơn
+            #region ResetFilter
             void ResetFilter()
             {
                 SelectedEmployee = null;
                 SelectedOrderStatus = null;
                 SearchString = null;
             }
+            #endregion
 
+            // Hàm Load data của danh sách hóa đơn
+            #region LoadDSHoaDon
             void LoadDSHoaDon()
             {
                 IsDSHoaDon = Visibility.Visible;
                 IsBillViewing = Visibility.Collapsed;
+                IsBillCreating = Visibility.Collapsed;
                 HoadonList = new ObservableCollection<BillDetail>();
                 Employee = new ObservableCollection<employee>(DataProvider.Ins.DB.employees);
                 ListItems = new ObservableCollection<item>(DataProvider.Ins.DB.items);
@@ -123,6 +150,102 @@ namespace bookStoreManagetment.ViewModel
                 }
                 DisplayBillList = HoadonList.ToList();
             }
+            #endregion
+
+            //Hàm load data để tạo đơn mua hàng
+            #region LoadCreateBill
+            void LoadCreateBill()
+            {
+                IsBillCreating = Visibility.Visible;
+                IsDSHoaDon = Visibility.Collapsed;
+                IsBillViewing = Visibility.Collapsed;
+                // Load danh sác khách hàng
+                CustommerList = new ObservableCollection<custommer>(DataProvider.Ins.DB.custommers);
+                // Load danh sách nhân viên
+                EmployeeList = new ObservableCollection<employee>(DataProvider.Ins.DB.employees);
+                // Load danh sách item 
+                ItemsListSearch = new ObservableCollection<item>(DataProvider.Ins.DB.items);
+                // Tạo mới thông tin đơn hàng
+                SellBillInfomation = new ObservableCollection<SellBillItem>();
+                // Tự tạo mới bill code tăng dần
+                SellBillCode = "bill" + (DataProvider.Ins.DB.bills.Count() + 1).ToString();
+                // Đặt mặc định ngày giờ hiện tại cho ngày đặt hàng, ngày giao hàng, ngày chứng từ
+                DateTime CurrentDate = DateTime.Now;
+                OrderDate = CurrentDate;
+                DeliveryDate = CurrentDate;
+                LicenseDate = CurrentDate;
+                // Tạo danh sách phương thức thanh toán và phương thức giao hàng
+                string[] PaymentMethods = { "Thanh toán bằng thẻ", "Thanh toán bằng tiền mặt" };
+                string[] DeliveryMethods = { "Mua trực tiếp tại cửa hàng", "Giao hàng" };
+                PaymentMethodList = new List<string>(PaymentMethods);
+                DeliveryMethodList = new List<string>(DeliveryMethods);
+            }
+            #endregion
+
+            // Command thanh toán cho đơn hàng
+            #region CheckoutClickCommand
+            CheckoutClickCommand = new RelayCommand<object>((p) =>
+            {
+                if (SellBillInfomation.Count == 0 || SelectedCustommer == null || SelectedEmployeeCreateBill == null || SelectedDeliveryMethod == null || SelectedPaymentMethod == null)
+                    return false;
+                return true;
+            }, (p) =>
+            {
+                if (MessageBox.Show("Xác nhận thanh toán?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    bill SaveBill = new bill() { billCode = SellBillCode, billType = "sell", setBillDay = (DateTime)OrderDate };
+                    DataProvider.Ins.DB.bills.Add(SaveBill);
+                    //DataProvider.Ins.DB.SaveChanges();
+                    foreach (var bill_ in SellBillInfomation)
+                    {
+                        sellBill SaveSellBill = new sellBill()
+                        {
+                            billCodeSell = SellBillCode,
+                            billStatus = "Đã thanh toán",
+                            idEmployee = SelectedEmployeeCreateBill.idEmployee,
+                            idCustomer = SelectedCustommer.idCustommer,
+                            number = bill_.Amount,
+                            sellDate = (DateTime)OrderDate,
+                            licenseDate = (DateTime)LicenseDate,
+                            deliveryDate = (DateTime)DeliveryDate,
+                            idItem = bill_.Item.idItem,
+                            unitPrice = bill_.Item.priceItem,
+                            discount = bill_.Discount,
+                            tag = Tag,
+                            note = Note,
+                        };
+                        DataProvider.Ins.DB.sellBills.Add(SaveSellBill);
+                    }
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+            });
+            #endregion 
+
+            // Command xóa vật phẩm đang chọn khỏi đơn hàng
+            #region RemoveItemFromSellBillCommand
+            RemoveItemFromSellBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                SellBillInfomation.Remove(SelectedSellBillItem);
+                UpdateTotal();
+            });
+            #endregion
+
+            // Command tính tổng tiền của đơn hàng
+            #region UpdateTotalCommand
+            UpdateTotalCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                UpdateTotal();
+            });
+            #endregion
+
+            // Command back to DSHoaDon
+            BacktoDSHoaDonCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsBillViewing = Visibility.Collapsed;
+                IsBillCreating = Visibility.Collapsed;
+                IsDSHoaDon = Visibility.Visible;
+            });
+
         }
 
         private ObservableCollection<BillDetail> _HoadonList;
@@ -172,8 +295,6 @@ namespace bookStoreManagetment.ViewModel
                     DisplayBillList = HoadonList.ToList();
             }
         }
-        //public ICommand LoadDanhsachhoadonCommand { get; set; }
-
         public ICommand ResetFilterCommand { get; set; }
 
         public ICommand PrintBillCommand { get; set; }
@@ -182,7 +303,9 @@ namespace bookStoreManagetment.ViewModel
 
         public ICommand LoadBillDataCommand { get; set; }
 
-        public ICommand ClickShowHideGridCommand { get; set; }
+        public ICommand BacktoDSHoaDonCommand { get; set; }
+
+        public ICommand LoadCreateBillCommand { get; set; }
 
         private string _SearchString;
         public string SearchString
@@ -211,6 +334,9 @@ namespace bookStoreManagetment.ViewModel
         private Visibility _IsBillViewing;
         public Visibility IsBillViewing { get => _IsBillViewing; set { _IsBillViewing = value; OnPropertyChanged(); } }
 
+        private Visibility _IsBillCreating;
+        public Visibility IsBillCreating { get => _IsBillCreating; set { _IsBillCreating = value; OnPropertyChanged(); } }
+
         private BillDetail _ViewBillDetail;
         public BillDetail ViewBillDetail { get => _ViewBillDetail; set { _ViewBillDetail = value; OnPropertyChanged(); } }
 
@@ -220,5 +346,102 @@ namespace bookStoreManagetment.ViewModel
         private ObservableCollection<item> _ListItems;
         public ObservableCollection<item> ListItems { get => _ListItems; set { _ListItems = value; OnPropertyChanged(); } }
 
+
+        //Biến của phần tạo hóa đơn
+        public ICommand CheckoutClickCommand { get; set; }
+
+        public ICommand AddItemIntoSellBillCommand { get; set; }
+
+        public ICommand InputAmountCommand { get; set; }
+
+        public ICommand RemoveItemFromSellBillCommand { get; set; }
+
+        public ICommand UpdateTotalCommand { get; set; }
+
+        private ObservableCollection<custommer> _CustommerList;
+        public ObservableCollection<custommer> CustommerList { get => _CustommerList; set { _CustommerList = value; OnPropertyChanged(); } }
+
+        private custommer _SelectedCustommer;
+        public custommer SelectedCustommer
+        {
+            get => _SelectedCustommer;
+            set
+            {
+                _SelectedCustommer = value;
+                OnPropertyChanged();
+                if (SelectedCustommer != null)
+                {
+                    Address = SelectedCustommer.custommerAddress;
+                    PhoneNumber = SelectedCustommer.phoneNumber;
+                }
+            }
+        }
+
+        private ObservableCollection<item> _ItemsListSearch;
+        public ObservableCollection<item> ItemsListSearch { get => _ItemsListSearch; set { _ItemsListSearch = value; OnPropertyChanged(); } }
+
+        private item _SelectedItem;
+        public item SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<SellBillItem> _SellBillInfomation;
+        public ObservableCollection<SellBillItem> SellBillInfomation { get => _SellBillInfomation; set { _SellBillInfomation = value; OnPropertyChanged(); if (SellBillInfomation != null) { UpdateTotal(); } } }
+
+        private ObservableCollection<employee> _EmployeeList;
+        public ObservableCollection<employee> EmployeeList { get => _EmployeeList; set { _EmployeeList = value; OnPropertyChanged(); } }
+
+        private employee _SelectedEmployeeCreateBill;
+        public employee SelectedEmployeeCreateBill { get => _SelectedEmployeeCreateBill; set { _SelectedEmployeeCreateBill = value; OnPropertyChanged(); } }
+
+        private SellBillItem _SelectedSellBillItem;
+        public SellBillItem SelectedSellBillItem { get => _SelectedSellBillItem; set { _SelectedSellBillItem = value; OnPropertyChanged(); } }
+
+        private string _Address;
+        public string Address { get => _Address; set { _Address = value; OnPropertyChanged(); } }
+
+        private float _Total;
+        public float Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
+
+        private string _PhoneNumber;
+        public string PhoneNumber { get => _PhoneNumber; set { _PhoneNumber = value; OnPropertyChanged(); } }
+
+        private List<string> _PaymentMethodList;
+        public List<string> PaymentMethodList { get => _PaymentMethodList; set { _PaymentMethodList = value; OnPropertyChanged(); } }
+
+        private string _SelectedPaymentMethod;
+        public string SelectedPaymentMethod { get => _SelectedPaymentMethod; set { _SelectedPaymentMethod = value; OnPropertyChanged(); } }
+
+        private List<string> _DeliveryMethodList;
+        public List<string> DeliveryMethodList { get => _DeliveryMethodList; set { _DeliveryMethodList = value; OnPropertyChanged(); } }
+
+        private string _SelectedDeliveryMethod;
+        public string SelectedDeliveryMethod { get => _SelectedDeliveryMethod; set { _SelectedDeliveryMethod = value; OnPropertyChanged(); } }
+
+        private string _SellBillCode;
+        public string SellBillCode { get => _SellBillCode; set { _SellBillCode = value; OnPropertyChanged(); } }
+
+        private DateTime? _OrderDate;
+        public DateTime? OrderDate { get => _OrderDate; set { _OrderDate = value; OnPropertyChanged(); } }
+
+        private DateTime? _DeliveryDate;
+        public DateTime? DeliveryDate { get => _DeliveryDate; set { _DeliveryDate = value; OnPropertyChanged(); } }
+
+        private DateTime? _LicenseDate;
+        public DateTime? LicenseDate { get => _LicenseDate; set { _LicenseDate = value; OnPropertyChanged(); } }
+
+        private string _Tag;
+        public string Tag { get => _Tag; set { _Tag = value; OnPropertyChanged(); } }
+
+        private string _Note;
+        public string Note { get => _Note; set { _Note = value; OnPropertyChanged(); } }
+
+        //Hàm tính tổng tiền đơn hàng
+        public void UpdateTotal()
+        {
+            Total = 0;
+            foreach (var billinfo in SellBillInfomation)
+            {
+                Total += billinfo.Item.priceItem * billinfo.Amount * (1 - billinfo.Discount / 100);
+            }
+        }
     }
 }

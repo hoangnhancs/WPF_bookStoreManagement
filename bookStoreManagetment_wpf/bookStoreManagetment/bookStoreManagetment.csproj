@@ -198,9 +198,6 @@
     <Compile Include="UserControls\CheckItemsUC.xaml.cs">
       <DependentUpon>CheckItemsUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CreateBillUC.xaml.cs">
-      <DependentUpon>CreateBillUC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\DSHoaDonUC.xaml.cs">
       <DependentUpon>DSHoaDonUC.xaml</DependentUpon>
     </Compile>
@@ -229,7 +226,6 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CaiDatChungViewModel.cs" />
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
-    <Compile Include="ViewModel\CreateBillViewModel.cs" />
     <Compile Include="ViewModel\DSHoaDonViewModel.cs" />
     <Compile Include="ViewModel\DSThuChiViewModel.cs" />
     <Compile Include="ViewModel\EditSupplierViewModel.cs" />
@@ -284,10 +280,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CheckItemsUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\CreateBillUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
