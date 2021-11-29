@@ -24,5 +24,10 @@ namespace bookStoreManagetment.UserControls
         {
             InitializeComponent();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
