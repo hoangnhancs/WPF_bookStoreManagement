@@ -33,7 +33,7 @@ create table item
 
 create table bookInformation
 (
-	idInformation int identity (1,1) primary key,
+	sttInformation int identity (1,1) primary key,
 	idBook nvarchar(10) not null,
 	typeContent nvarchar(50),
 	typeMaterial nvarchar(50),
@@ -47,7 +47,7 @@ create table bookInformation
 
 create table studytoolsInformation
 (
-	idInformation int identity (1,1) primary key,
+	sttInformation int identity (1,1) primary key,
 	idStudyTool nvarchar(10) not null,
 	origin nvarchar(30) not null,
 	distributor nvarchar(30) not null,
@@ -59,12 +59,12 @@ create table bill
 (
 	billCode nvarchar(30) primary key,
 	billType nvarchar(20) not null, --loại hóa đơn mua hay bán hay trả hàng
-	setBillDay datetime not null,
+	--setBillDay datetime not null,
 )
 
 create table importBill --nhập kho
 (
-	idImport int identity (1,1) primary key,
+	sttImport int identity (1,1) primary key,
 	billCodeImport nvarchar(30) not null,
 	idEmployee int not null,
 	nameEmployee nvarchar(30) not null,
@@ -73,15 +73,17 @@ create table importBill --nhập kho
 	idItem nvarchar(10) not null,
 	unitPrice int not null,
 	note nvarchar(20),
+	paymentMethod nvarchar(30) not null,
 )
-alter table importbill add idnhacungcap nvarchar(10)
+
+alter table importbill add idsupplier nvarchar(10)
 
 create table sellBill --bán
 (
-	idSell int identity (1,1) primary key,
+	sttSell int identity (1,1) primary key,
 	billCodeSell nvarchar(30) not null,
-	idEmployee int not null,
-	idCustomer int not null,
+	idEmployee nvarchar(30),
+	idCustomer nvarchar(30),
 	billstatus nvarchar(30),
 	sellDate datetime not null, --ngay ban hang
 	deliveryDate datetime not null, --ngay giao hang
@@ -89,7 +91,7 @@ create table sellBill --bán
 	idItem nvarchar(10) not null,
 	unitPrice int not null,
 	number int not null,
-	discount int not null,
+	discount int not null default 0,
 	note nvarchar(20),
 	tag nvarchar(20),
 )
@@ -118,18 +120,13 @@ create table khachtrahang
 )
 
 
-create table bolockhachtrahang
-(
-	idBoloc int identity (1,1) primary key,
-	trangThai nvarchar(30),
-	nhanVien nvarchar(30),
-)
 
 
 
 create table custommer
 (
-	idCustommer int identity (1,1) primary key,
+	sttCustommer int identity (1,1) primary key,
+	idCustomer nvarchar(30) not null,
 	firstName nvarchar(30) not null,
 	lastName nvarchar(30) not null,
 	phoneNumber nvarchar(11) not null,
@@ -154,7 +151,8 @@ create table custommer
 
 create table employee
 (
-	idEmployee int identity (1,1) primary key,
+	sttEmployee int identity (1,1) primary key,
+	idEmployee nvarchar(30) not null,
 	firstName nvarchar(30) not null,
 	lastName nvarchar(30) not null,
 	phoneNumber nvarchar(11) not null,
@@ -171,19 +169,7 @@ create table employee
 
 
 
-create table itemSummary
-(
-	idSummary int identity (1,1) primary key,
-	billCode nvarchar(30) not null,
-	billType nvarchar(20) not null,
-	idItem nvarchar(10) not null,
-	quantityBefore int not null,
-	incurred int not null,
-	quantityAfter int not null,
-	incurredDay datetime not null,
-	idCustomer int,
-	idEmployee int not null,
-)
+
 
 create table supplier
 (
@@ -275,18 +261,18 @@ CREATE TABLE [dbo].[setting] (
 [createdateSetting] DATE NOT NULL,
 [idEmployee] INT NOT NULL,
 PRIMARY KEY CLUSTERED ([idSetting] ASC),
-FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
+--FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
 );
 CREATE TABLE [dbo].[profitSummary] (
-[idPayHistory] INT IDENTITY (1, 1) NOT NULL,
+[sttPayHistory] INT IDENTITY (1, 1) NOT NULL,
 [billCode] NVARCHAR (30) NOT NULL,
 [billType] NVARCHAR (20) NOT NULL,
 [rootPrice] INT NOT NULL,
 [payPrice] INT NOT NULL,
 [exchangePrice] INT NOT NULL,
-[codeCustomer] NCHAR (10) NULL,
-[idEmployee] INT NOT NULL,
-[sellDay] DATETIME NOT NULL,
+[idCustomer] NCHAR (30) NULL,
+[idEmployee] NVARCHAR(30) NOT NULL,
+[day] DATETIME NOT NULL,
 [nameCustomer] NVARCHAR (50) NOT NULL,
 [nameEmployee] NVARCHAR (50) NOT NULL,
 [typeGroup] NVARCHAR (50) NULL,
@@ -294,23 +280,23 @@ CREATE TABLE [dbo].[profitSummary] (
 [nameBill] NCHAR (10) NULL,
 [note] NVARCHAR (1000) NULL,
 [budget] INT NULL,
-PRIMARY KEY CLUSTERED ([idPayHistory] ASC),
-FOREIGN KEY ([billCode]) REFERENCES [dbo].[bill] ([billCode]),
-FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
+PRIMARY KEY CLUSTERED ([sttPayHistory] ASC),
+--FOREIGN KEY ([billCode]) REFERENCES [dbo].[bill] ([billCode]),
+--FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
 );
 
 
 CREATE TABLE [dbo].[checkItems] (
-[idCheckItems] INT IDENTITY (1, 1) NOT NULL,
+[sttCheckItems] INT IDENTITY (1, 1) NOT NULL,
+[idCheckItems] NVARCHAR(30) NOT NULL,
 [idEmployee] INT NOT NULL,
 [dateCheckItems] DATETIME NOT NULL,
 [idItem] NVARCHAR (10) NOT NULL,
 [quantityItem] INT NOT NULL,
-[codeCheckItem] NCHAR (10) NOT NULL,
 [note] NVARCHAR (MAX) NULL,
 PRIMARY KEY CLUSTERED ([idCheckItems] ASC),
-FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee]),
-FOREIGN KEY ([idItem]) REFERENCES [dbo].[item] ([idItem])
+--FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee]),
+--FOREIGN KEY ([idItem]) REFERENCES [dbo].[item] ([idItem])
 );
 
 insert into item values
@@ -1049,56 +1035,60 @@ insert into bookInformation values
 SET DATEFORMAT dmy;  
 GO
 
-insert into bill(billCode,billType,setBillDay) values
-(N'ep001', N'sell', '11-11-2021 11:20:37'),
-(N'ep002', N'sell', '11-11-2021 16:02:42'),
-(N'ep003', N'sell', '11-11-2021 8:06:06'),
-(N'ep004', N'sell', '11-11-2021 1:22:30'),
-(N'IP001', N'import', N'01-01-2000 00:00:00'),
-(N'IP002', N'import', N'01-01-2000 00:00:00')
+insert into bill(billCode,billType) values
+(N'EP001', N'export'),
+(N'EP002', N'export'),
+(N'EP003', N'export'),
+(N'EP004', N'export'),
+(N'IP001', N'import'),
+(N'IP002', N'import')
 
-insert into custommer(firstName, lastName, phoneNumber, custommerAddress, custommerEmail, sex, citizenIdentification, dateOfBirth) values
-(N'tenKH1', N'hoKH1', N'1234578', N'123abc', N'emailKH1@gmail.com', N'Nam', N'13223112', '01-01-2000'),
-(N'tenKH2', N'hoKH2', N'12345718', N'123adbc', N'emailKH2@gmail.com', N'Nu', N'12623112', '01-01-2000'),
-(N'tenKH3', N'hoKH3', N'123456818', N'122223adbc', N'emacccilKH2@gmail.com', N'Nu', N'1262323112', '01-02-2000')
+insert into custommer(idCustomer, firstName, lastName, phoneNumber, custommerAddress, custommerEmail, sex, citizenIdentification, dateOfBirth) values
+(N'CUS001', N'Thắng', N'Nguyễn Hoàng', N'0463643789', N'TPHCM', N'thangnh@gmail.com', N'Nam', N'34719451', '01-01-2000'),
+(N'CUS002', N'Anh', N'Lê Võ Ngọc', N'0442913789', N'TPHCM', N'anhlvn@gmail.com', N'Nam', N'12623112', '01-01-2000'),
+(N'CUS003', N'Tấn', N'Phan Quang', N'0442917615', N'TPHCM', N'tanpq@gmail.com', N'Nam', N'98064184', '01-02-2000')
 
-insert into employee(firstName, lastName, phoneNumber, employeeType, employeeAddress, employeeEmail, sex, citizenIdentification, dateOfBirth, nameAccount) values
-(N'tenNV1', N'hoNV1', N'12345678', N'admin', N'124423abc', N'emailNV1@gmail.com', N'Nam', N'123112', '01-01-2000', N'nameAccount1'),
-(N'tenNV2', N'hoNV2', N'123145678', N'admin', N'12313abc', N'emailNV2@gmail.com', N'Nu', N'1231212', '01-01-2000', N'nameAccount2'),
-(N'tenNV3', N'hoNV3', N'12345678', N'admin', N'133223abc', N'emailNV3@gmail.com', N'Nam', N'1231312', '01-01-2000', N'nameAccount3')
+insert into employee(idEmployee, firstName, lastName, phoneNumber, employeeType, employeeAddress, employeeEmail, sex, citizenIdentification, dateOfBirth, nameAccount) values
+(N'EMP001', N'Nhân', N'Thái Hoàng', N'04819350', N'staff', N'nhanth@gmail.com', N'TPHCM', N'Nam', N'45612847', '12-01-2000', N'staff1'),
+(N'EMP002', N'Chi', N'Nguyễn Yến', N'07364016', N'staff', N'chiny@gmail.com', N'TPHCM', N'Nu', N'46571834', '01-04-2000', N'staff2'),
+(N'EMP003', N'Anh', N'Phùng Minh', N'03678123', N'admin', N'anhpm@gmail.com', N'TPHCM', N'Nam', N'57385963', '14-03-2000', N'admin'),
+(N'EMP004', N'Ân', N'Huỳnh Ngọc Thiên', N'04567219', N'staff', N'anhnt@gmail.com', N'TPHCM', N'Nam', N'19087652', '15-01-2000', N'staff3')
 
 insert into sellBill(billCodeSell, idEmployee, number, sellDate, deliveryDate, licenseDate, idCustomer, idItem, unitPrice, billStatus, discount, tag, note, deliveryMethod, paymentMethod) values
-(N'ep001', 1, 3, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', 1, N'BOOK118', 31000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep001', 1, 2, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', 1, N'BOOK117', 25000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep001', 1, 6, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', 1, N'BOOK116', 61000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep001', 1, 1, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', 1, N'BOOK115', 42000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep002', 1, 4, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', 2, N'BOOK123', 111000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep002', 1, 7, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', 2, N'BOOK111', 36000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep002', 1, 2, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', 2, N'BOOK112', 12000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep003', 3, 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 2, N'BOOK141', 27000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep003', 3, 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 2, N'BOOK110', 15000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep003', 3, 7, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 2, N'BOOK112', 34000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep003', 3, 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 2, N'BOOK114', 12000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep004', 2, 2, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 1, N'BOOK138', 22000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep004', 2, 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 1, N'BOOK109', 21000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep004', 2, 6, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 1, N'BOOK118', 17000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep004', 2, 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 1, N'BOOK128', 15000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'ep004', 2, 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', 1, N'BOOK119', 10000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD')
+(N'EP001', N'EMP001', 3, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK118', 31000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP001', N'EMP001', 2, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK117', 25000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP001', N'EMP001', 6, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK116', 61000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP001', N'EMP001', 1, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK115', 42000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP002', N'EMP001', 4, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK123', 111000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP002', N'EMP001', 7, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK111', 36000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP002', N'EMP001', 2, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK112', 12000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK141', 27000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK110', 15000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 7, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK112', 34000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK114', 12000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 2, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK138', 22000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK109', 21000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 6, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK118', 17000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK128', 15000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK119', 10000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD')
 
 
-SET IDENTITY_INSERT [dbo].[profitSummary] ON
-INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (7, N'IP001', N'import', 2000, 3000, 1000, NULL, 1, N'01-01-2000 00:00:00', N'Nguyen Van A', N'Nguyen Yen Chi', NULL, N'Tiền Mặt', N'Bán Hàng  ', NULL, 12000)
-INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (11, N'EP001', N'export', 2000, 2000, 0, N'NCC007    ', 1, N'01-01-2000 00:00:00', N'Cong ty A', N'Nguyen Yen Chi', N'Nhà Cung Cấp', N'Tiền Mặt', N'Nhập Hàng ', NULL, 10000)
-INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (12, N'IP002', N'import', 300, 300, 0, NULL, 1, N'13-11-2021 00:00:00', N'Hoang B', N'Thai Hoang Nhan', NULL, N'Tiền Mặt', N'Bán Hàng  ', NULL, 10300)
-INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (13, N'EP002', N'export', 2000, 2000, 0, N'2         ', 1, N'20-10-2021 00:00:00', N'Thai Hoang Nhan', N'Nguyen Yen Chi', N'Nhân Viên', N'Thẻ', N'Trả Lương ', NULL, 8300)
-SET IDENTITY_INSERT [dbo].[profitSummary] OFF
 
-SET IDENTITY_INSERT [dbo].[importBill] ON
-INSERT INTO [dbo].[importBill] ([idImport], [billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idnhacungcap]) VALUES (1, N'IP001', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001')
-SET IDENTITY_INSERT [dbo].[importBill] OFF
-SET IDENTITY_INSERT [dbo].[importBill] ON
-INSERT INTO [dbo].[importBill] ([idImport], [billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idnhacungcap]) VALUES (2, N'IP002', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001')
-SET IDENTITY_INSERT [dbo].[importBill] OFF
+INSERT INTO [dbo].[profitSummary] ([billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [idCustomer], [idEmployee], [day], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) 
+VALUES 
+(N'EP001', N'import', 551000, 551000, 0, N'CUS001', N'EMP001', N'01-01-2000 00:00:00', N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 551000),
+(N'EP001', N'export', 720000, 720000, 0, N'CUS001', N'EMP001', N'01-01-2000 00:00:00', N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 10000),
+(N'EP002', N'import', 361000, 361000, 0, N'CUS002', N'EMP002', N'13-11-2021 00:00:00', N'Lê Võ Ngọc Anh', N'Nguyễn Yến Chi', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 10300),
+(N'EP002', N'export', 253000, 253000, 0, N'CUS002', N'EMP002', N'20-10-2021 00:00:00', N'Lê Võ Ngọc Anh', N'Nguyễn Yến Chi',NULL, N'Thẻ', N'Bán Hàng ', NULL, 8300)
+
+
+
+
+INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
+(N'IP001', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Tiền mặt')
+INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
+(N'IP002', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Thẻ')
+
 
 
 
