@@ -17,7 +17,7 @@ namespace bookStoreManagetment.Model
         public int idTrahang { get; set; }
         public string billCodeTra { get; set; }
         public string billCodeSell { get; set; }
-        public int idEmployee { get; set; }
+        public string nameEmployee { get; set; }
         public int number { get; set; }
         public System.DateTime sellDate { get; set; }
         public int idCustomer { get; set; }
@@ -26,5 +26,7 @@ namespace bookStoreManagetment.Model
         public int discount { get; set; }
         public string lido { get; set; }
         public string trangthai { get; set; }
+        public string nameCustomer { get; set; }
+        public string unit { get; set; }
     }
 }

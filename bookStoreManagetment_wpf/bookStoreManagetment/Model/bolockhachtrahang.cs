@@ -12,17 +12,10 @@ namespace bookStoreManagetment.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class checkItem
+    public partial class bolockhachtrahang
     {
-        public int idCheckItems { get; set; }
-        public int idEmployee { get; set; }
-        public System.DateTime dateCheckItems { get; set; }
-        public string idItem { get; set; }
-        public int quantityItem { get; set; }
-        public string codeCheckItem { get; set; }
-        public string note { get; set; }
-    
-        public virtual employee employee { get; set; }
-        public virtual item item { get; set; }
+        public int idBoloc { get; set; }
+        public string trangThai { get; set; }
+        public string nhanVien { get; set; }
     }
 }

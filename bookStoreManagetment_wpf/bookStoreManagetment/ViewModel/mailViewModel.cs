@@ -10,16 +10,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Net.Mail;
+using System.Net;
 
 namespace bookStoreManagetment.ViewModel
 {
     public class mailViewModel : BaseViewModel
     {
 
-        private ObservableCollection<Inventory> _InventoryList;
-        public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
-        private ObservableCollection<Inventory> _DivInventoryList;
-        public ObservableCollection<Inventory> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
+        private ObservableCollection<checkmail> _InventoryList;
+        public ObservableCollection<checkmail> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
+        private ObservableCollection<checkmail> _DivInventoryList;
+        public ObservableCollection<checkmail> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
         private ObservableCollection<Inventory> _InventoryListSentMail;
         public ObservableCollection<Inventory> InventoryListSentMail { get => _InventoryListSentMail; set { _InventoryListSentMail = value; OnPropertyChanged(); } }
         private ObservableCollection<Inventory> _DivInventoryListSentMail;
@@ -28,8 +30,38 @@ namespace bookStoreManagetment.ViewModel
         public ObservableCollection<Inventory> InventoryCustomerList { get => _InventoryCustomerList; set { _InventoryCustomerList = value; OnPropertyChanged(); } }
         private ObservableCollection<Inventory> _InventoryEmployeeList;
         public ObservableCollection<Inventory> InventoryEmployeeList { get => _InventoryEmployeeList; set { _InventoryEmployeeList = value; OnPropertyChanged(); } }
-        public Inventory SelectedItem { get; set; }
+        public checkmail SelectedItem { get; set; }
         public Inventory SelectedItemSentMail { get; set; }
+        private ObservableCollection<string> _cbbmailtype;
+        public ObservableCollection<String> cbbMailType
+        {
+            get { return _cbbmailtype; }
+            set
+            {
+                _cbbmailtype = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<string> _cbbsenttype;
+        public ObservableCollection<String> cbbSentType
+        {
+            get { return _cbbsenttype; }
+            set
+            {
+                _cbbsenttype = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime _datesent;
+        public DateTime DateSent
+        {
+            get { return _datesent; }
+            set
+            {
+                _datesent = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand LoadMailCommand { get; set; }
         public ICommand ShowMailCommand { get; set; }
@@ -43,6 +75,8 @@ namespace bookStoreManagetment.ViewModel
         public ICommand btnChitietSentMailCommand { get; set; }
         public ICommand OpenButton { get; set; }
         public ICommand CloseButton { get; set; }
+        public ICommand cbbMailTypeSelectionChanged { get; set; }
+        public ICommand toggleClickCommand { get; set; }
         public string textBoxSearchValue { get; set; }
         public bool seen { get; set; }
         private bool _readOnly;
@@ -62,6 +96,16 @@ namespace bookStoreManagetment.ViewModel
             set
             {
                 _enable = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _cbbsenttypeenable;
+        public bool ComboBoxSenttypeEnable
+        {
+            get { return _cbbsenttypeenable; }
+            set
+            {
+                _cbbsenttypeenable = value;
                 OnPropertyChanged();
             }
         }
@@ -148,6 +192,18 @@ namespace bookStoreManagetment.ViewModel
                 Console.WriteLine(mailtype);
             }
         }
+        private string senttype;
+        public string Senttype
+        {
+            get { return senttype; }
+            set
+            {
+                senttype = value;
+                OnPropertyChanged();
+                Console.WriteLine(senttype);
+            }
+        }
+
 
         //Page Property
         /*
@@ -264,7 +320,7 @@ namespace bookStoreManagetment.ViewModel
                 SearchEngineer(textBoxSearchValue);
                 seen = false;
                 EnableChange(seen);
-                
+                //autosentmail();
             });
             ShowMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -284,11 +340,13 @@ namespace bookStoreManagetment.ViewModel
             {
                 seen = false;
                 EnableChange(seen);
-                SelectedItem = (p as Inventory);
+                SelectedItem = (p as checkmail);
                 Subject = SelectedItem.Mail.subjectMail;
                 Content = SelectedItem.Mail.content;
                 Sender = SelectedItem.Mail.sender;
                 Mailtype = SelectedItem.Mail.typeMail;
+                Senttype = SelectedItem.Mail.typesent;
+                DateSent = (DateTime)SelectedItem.Mail.autosentDate;
                 GridDataGridVisible = Visibility.Collapsed;
                 GridDetailMailVisible = Visibility.Collapsed;
                 GridSentMailVisible = Visibility.Collapsed;
@@ -311,8 +369,20 @@ namespace bookStoreManagetment.ViewModel
                 if (MessageBox.Show("Bạn có muốn cập nhật?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     DateTime now = DateTime.Now.Date;
-                    string query = "update mail set content=N'" + Content +"',mailType=N'"+Mailtype +"',subjectMail=N'" + Subject + "',sender=N'" + Sender + "',updateDate=N'" + now.ToString() + "' where idMail=" + SelectedItem.Mail.idMail;
-                    DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                    //string query = "update mail set content=N'" + Content +"',typeMail=N'"+Mailtype +"',subjectMail=N'" + Subject + "',sender=N'" + Sender + "',updateDate=N'" + now.ToString() + "' where idMail=" + SelectedItem.Mail.idMail;
+                    //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                    var res = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
+                    if(res!=null)
+                    {
+                        res.content = Content;
+                        res.typeMail = Mailtype;
+                        res.subjectMail = Subject;
+                        res.sender = Sender;
+                        res.updateDate = now;
+                        res.autosentDate = DateSent;
+                        res.typesent = Senttype;
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
                     MessageBox.Show("Cập nhật thành công");
                 }
             });
@@ -328,18 +398,31 @@ namespace bookStoreManagetment.ViewModel
             });
             btnAddClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                
+                string query;
                 DateTime now = DateTime.Now;
-                string query = String.Format("insert into mail values (N'{0}',N'{1}', N'Thư mời', N'{2}', N'Sử dụng để gửi thông báo', N'ON', N'{3}')", Mailtype, now, Content, Sender);
+                if (Mailtype.ToLower() != "sinh nhật")
+                {
+                    query = String.Format("insert into mail values (N'{0}',N'{1}', N'{2}', N'{3}', N'Sử dụng để gửi thông báo', N'ON', N'{4}',N'{5}',N'{6}')", Mailtype, now, subject, Content, Sender, DateSent,Senttype);
+                }
+                else
+                    query = String.Format("insert into mail values (N'{0}',N'{1}', N'{2}', N'{3}', N'Sử dụng để gửi thông báo', N'ON', N'{4}', null,N'{5}')", Mailtype, now, subject, Content, Sender, Senttype);
                 MessageBox.Show(query);
-                DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
-                MessageBox.Show("Thêm thành công");
+                try
+                {
+                    DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                    MessageBox.Show("Thêm thành công");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 clearData();
                 LoadData();
+
             });
             btnDeleteCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                SelectedItem = (p as Inventory);
+                SelectedItem = (p as checkmail);
                 int id = SelectedItem.Mail.idMail;
                 
                 string sbj = SelectedItem.Mail.subjectMail;
@@ -363,7 +446,8 @@ namespace bookStoreManagetment.ViewModel
                 Mailtype = SelectedItemSentMail.Sentmail.typeMail;
                 Sender = SelectedItemSentMail.Sentmail.sender;
                 int id = SelectedItemSentMail.Sentmail.idMail;
-                
+                DateSent = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select autosentDate from mail where idMail=" + id.ToString()).FirstOrDefault();
+                Senttype = DataProvider.Ins.DB.Database.SqlQuery<string>("select typesent from mail where idMail=" + id.ToString()).FirstOrDefault();
                 var _res = DataProvider.Ins.DB.mails.Where(i => i.idMail == id);
                 Content = DataProvider.Ins.DB.Database.SqlQuery<String>("select content from mail where idMail=" + id.ToString()).FirstOrDefault();
                 Console.WriteLine("select content from mail where idMail=" + id.ToString());
@@ -389,6 +473,54 @@ namespace bookStoreManagetment.ViewModel
             {
                 (p as Button).Visibility = System.Windows.Visibility.Collapsed;
             });
+
+            toggleClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (MessageBox.Show("Bạn có muốn thay đổi trạng thái? Điều này có thể sẽ lặp lại việc gửi mail?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    SelectedItem = (p as checkmail);
+                    var result = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
+                    if (result != null)
+                    {
+                        if (result.statusMail == "OFF")
+                        {
+                            result.statusMail = "ON";
+                            MessageBox.Show(SelectedItem.Mail.subjectMail+SelectedItem.Mail.typeMail+ SelectedItem.Mail.typesent);
+                            autosentmail(SelectedItem,SelectedItem.Mail.typeMail,SelectedItem.Mail.typesent);
+                        }
+                        else
+                            result.statusMail = "OFF";
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    
+                }
+                
+                LoadData();
+            });
+            cbbMailTypeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                try
+                {
+                    if ((p as ComboBox).SelectedItem != null)
+                    {
+                        string value = (p as ComboBox).SelectedItem.ToString();
+                        if (value == "Sinh nhật")
+                        {
+                            ComboBoxSenttypeEnable = false;
+                            Senttype = "EVERYYEAR";
+                        }
+                        else
+                        {
+                            ComboBoxSenttypeEnable = true;
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+            });
             /*
             tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -412,12 +544,16 @@ namespace bookStoreManagetment.ViewModel
             */
             void SearchEngineer(string query)
             {
-                InventoryList = new ObservableCollection<Inventory>();
+                InventoryList = new ObservableCollection<checkmail>();
                 var lstMail = DataProvider.Ins.DB.mails.Where(i => (i.subjectMail.Contains(query) || i.typeMail.Contains(query)));
                 foreach (var mail in lstMail)
                 {
-                    Inventory _Inventory = new Inventory();
+                    checkmail _Inventory = new checkmail();
                     _Inventory.Mail = mail;
+                    if (mail.statusMail == "ON")
+                        _Inventory.Check = true;
+                    else
+                        _Inventory.Check = false;
                     InventoryList.Add(_Inventory);
                 }
                 
@@ -426,7 +562,7 @@ namespace bookStoreManagetment.ViewModel
             }
             void LoadData()
             { 
-                DivInventoryList = new ObservableCollection<Inventory>();
+                DivInventoryList = new ObservableCollection<checkmail>();
                 DivInventoryListSentMail = new ObservableCollection<Inventory>();
                 InventoryCustomerList = new ObservableCollection<Inventory>();
                 InventoryEmployeeList = new ObservableCollection<Inventory>();
@@ -452,16 +588,30 @@ namespace bookStoreManagetment.ViewModel
                     _Inventory.Sentmail = item;
                     InventoryListSentMail.Add(_Inventory);
                 }
-                InventoryList = new ObservableCollection<Inventory>();
+                InventoryList = new ObservableCollection<checkmail>();
 
 
                 var lstMail = DataProvider.Ins.DB.mails;
                 foreach (var mail in lstMail)
                 {
-                    Inventory _Inventory = new Inventory();
+                    checkmail _Inventory = new checkmail();
                     _Inventory.Mail = mail;
+                    if (mail.statusMail == "ON")
+                        _Inventory.Check = true;
+                    else
+                        _Inventory.Check = false;
                     InventoryList.Add(_Inventory);
                 }
+                cbbMailType = new ObservableCollection<string>();
+                cbbMailType.Add("Hội họp");
+                cbbMailType.Add("Sự kiện");
+                cbbMailType.Add("Sinh nhật");
+                cbbSentType = new ObservableCollection<string>();
+                cbbSentType.Add("ONEDAY");
+                cbbSentType.Add("EVERYWEEK");
+                cbbSentType.Add("EVERYMONTH");
+                cbbSentType.Add("EVERYYEAR");
+                DateSent = DateTime.Now.Date;
 
             }
             /*
@@ -652,11 +802,7 @@ namespace bookStoreManagetment.ViewModel
 
                 }
             }*/
-            void autoSendMail(string typeMail)
-            {
-                DateTime dnow = DateTime.Now.Date;
-                Console.WriteLine(dnow);
-            }
+
             void clearData()
             {
                 Subject = "";
@@ -671,7 +817,143 @@ namespace bookStoreManagetment.ViewModel
                 Enable = !seen;
 
             }
-            
+            void sentmail(string from, string pass, string to, string subject, string body)
+            {
+                try
+                {
+                    SmtpClient clientDetails = new SmtpClient();
+                    clientDetails.Port = 587;
+                    clientDetails.Host = "smtp.gmail.com";
+                    clientDetails.EnableSsl = true;
+                    clientDetails.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    clientDetails.Credentials = new NetworkCredential(from, pass);
+
+
+                    MailMessage mailDetails = new MailMessage(from, to, subject, body);
+                    clientDetails.Send(mailDetails);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            void autosentmail(checkmail selected, string typemail, string sentype)
+            {
+                DateTime now = DateTime.Now.Date;
+                int nowday = now.Day;
+                int nowmonth = now.Month;
+                int nowyear = now.Year;
+                string from = "thaihoangnhan12@gmail.com";
+                string pass = "khmt2018";
+                
+                DayOfWeek nowdayofweek = now.DayOfWeek;
+                MessageBox.Show(nowdayofweek.ToString());
+                List<custommer> sentcus = new List<custommer>();
+                List<employee> sentemp = new List<employee>();
+                sentcus = DataProvider.Ins.DB.custommers.ToList();
+                sentemp = DataProvider.Ins.DB.employees.ToList();
+
+                if(typemail=="Sinh nhật")
+                {
+                    foreach(var item in sentcus)
+                    {
+                        if(nowday==item.dateOfBirth.Day && nowmonth==item.dateOfBirth.Month)
+                        {
+                            sentmail(from, pass, item.custommerEmail, selected.Mail.subjectMail, selected.Mail.content);
+                        }
+                    }
+                }
+                else
+                {
+                    if(typemail=="Khuyến mãi")
+                    {
+                       
+                        switch (senttype)
+                        {
+                            case "ONEDAY":
+                                foreach (var item in sentcus)
+                                {
+                                    if (nowday == selected.Mail.autosentDate.Value.Day && nowmonth == selected.Mail.autosentDate.Value.Month && nowyear == selected.Mail.autosentDate.Value.Year)
+                                    {
+                                        sentmail(from, pass, item.custommerEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                            case "EVERYWEEK":
+                                foreach (var item in sentcus)
+                                {
+                                    if (nowdayofweek == selected.Mail.autosentDate.Value.DayOfWeek)
+                                    {
+                                        sentmail(from, pass, item.custommerEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                            case "EVERTYMONTH":
+                                foreach (var item in sentcus)
+                                {
+                                    if (nowday == selected.Mail.autosentDate.Value.Day)
+                                    {
+                                        sentmail(from, pass, item.custommerEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                            case "EVERYYEAR":
+                                foreach (var item in sentcus)
+                                {
+                                    if (nowday == selected.Mail.autosentDate.Value.Day && nowmonth == selected.Mail.autosentDate.Value.Month)
+                                    {
+                                        sentmail(from, pass, item.custommerEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (senttype)
+                        {
+                            case "ONEDAY":
+                                foreach (var item in sentemp)
+                                {
+                                    if (nowday == selected.Mail.autosentDate.Value.Day && nowmonth == selected.Mail.autosentDate.Value.Month && nowyear == selected.Mail.autosentDate.Value.Year)
+                                    {
+                                        sentmail(from, pass, item.employeeEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                            case "EVERYWEEK":
+                                foreach (var item in sentemp)
+                                {
+                                    if (nowdayofweek == selected.Mail.autosentDate.Value.DayOfWeek)
+                                    {
+                                        sentmail(from, pass, item.employeeEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                            case "EVERTYMONTH":
+                                foreach (var item in sentemp)
+                                {
+                                    if (nowday == selected.Mail.autosentDate.Value.Day)
+                                    {
+                                        sentmail(from, pass, item.employeeEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                            case "EVERYYEAR":
+                                foreach (var item in sentemp)
+                                {
+                                    if (nowday == selected.Mail.autosentDate.Value.Day && nowmonth == selected.Mail.autosentDate.Value.Month)
+                                    {
+                                        sentmail(from, pass, item.employeeEmail, selected.Mail.subjectMail, selected.Mail.content);
+                                    }
+                                }
+                                break;
+                        }
+                    }    
+                }
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ namespace bookStoreManagetment.Model
     
         public virtual DbSet<account> accounts { get; set; }
         public virtual DbSet<bill> bills { get; set; }
+        public virtual DbSet<bolockhachtrahang> bolockhachtrahangs { get; set; }
         public virtual DbSet<bookInformation> bookInformations { get; set; }
         public virtual DbSet<checkItem> checkItems { get; set; }
         public virtual DbSet<custommer> custommers { get; set; }

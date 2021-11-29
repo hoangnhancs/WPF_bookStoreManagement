@@ -25,33 +25,170 @@ namespace bookStoreManagetment.ViewModel
         public ICommand LoadNhacungcapCommand { get; set; }
         public ICommand btnDeleteNCCClickCommand { get; set; }
         public ICommand btnEditNCCClickCommand { get; set; }
-        public ICommand CollapsedGridCommand { get; set; }
-        public ICommand VisibleGridCommand { get; set; }
-        public ICommand searchTBchangedCommand { get; set; }
         public ICommand cbbStatusChangedCommand { get; set; }
         public string cbbStatusValue { get; set; }
-        public string textBoxSearchValue { get; set; }
+        private string _tbsv;
+        public string textBoxSearchValue 
+        {
+            get { return _tbsv; }
+            set
+            {
+                _tbsv = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand searchEngineer { get; set; }
         //phan nay cua grid danh sach nha cung cap
 
         //phan nay cua grid add nha cung cap
-        string idSup { get; set; }
-        string nameSup { get; set; }
-        string tinh { get; set; }
-        string huyen { get; set; }
-        string xa { get; set; }
-        string sonha { get; set; }
-        string addressSup { get; set; }
-        string emailSup { get; set; }
-        string phoneSup { get; set; }
+        private string _idsup;
+        public string idSup 
+        {
+            get { return _idsup; }
+            set
+            {
+                _idsup = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _namesup;
+        public string nameSup 
+        {
+            get { return _namesup; }
+            set
+            {
+                _namesup = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _t;
+        public string tinh
+        {
+            get { return _t; }
+            set
+            {
+                _t = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _h;
+        public string huyen
+        {
+            get { return _h; }
+            set
+            {
+                _h = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _x;
+        public string xa 
+        {
+            get { return _x; }
+            set
+            {
+                _x = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _sn;
+        public string sonha 
+        {
+            get { return _sn; }
+            set
+            {
+                _sn = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _adr;
+        public string addressSup 
+        {
+            get { return _adr; }
+            set
+            {
+                _adr = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _em;
+        public string emailSup
+        {
+            get { return _em; }
+            set
+            {
+                _em = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _phone;
+        public string phoneSup 
+        {
+            get { return _phone; }
+            set
+            {
+                _phone = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _fax;
+        public string fax
+        {
+            get { return _fax; }
+            set
+            {
+                _fax = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _mst;
+        public string masothue
+        {
+            get { return _mst; }
+            set
+            {
+                _mst = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _ws;
+        public string website
+        {
+            get { return _ws; }
+            set
+            {
+                _ws = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand LoadInsertInforCommand { get; set; }
         public ICommand insertSupplierCommand { get; set; }
-        public ICommand reloadTextBoxCommand { get; set; }
+        public ICommand btnAddSupCommand { get; set; }
+        public ICommand btnThoatCommand { get; set; }
         public string _function { get; set; }
-        public ICommand loadFunctionCommand { get; set; }
-        public ICommand canEditCommand { get; set; }
-        bool changed = false;
 
+
+        bool changed = false;
+        private Visibility _dsnhacungcapvisible { get; set; }
+        public Visibility DSNhacungcapVisible
+        {
+            get { return _dsnhacungcapvisible; }
+            set
+            {
+                _dsnhacungcapvisible = value;
+                OnPropertyChanged();
+            }
+        }
+        private Visibility _editnhacungcapvisible;
+        public Visibility EditNhacungcapVisible
+        {
+            get { return _editnhacungcapvisible; }
+            set
+            {
+                _editnhacungcapvisible = value;
+                OnPropertyChanged();
+            }
+        }
         //phan nay cua grid add nha cung cap
 
         //phan nay cua edit nha cung cap
@@ -68,6 +205,8 @@ namespace bookStoreManagetment.ViewModel
                 cbbStatusValue = "Tất cả";
                 openedGrid = new Grid();
                 openedGrid.Name = "gridAddNCC";
+                EditNhacungcapVisible = Visibility.Collapsed;
+                DSNhacungcapVisible = Visibility.Visible;
                 SearchEngineer(textBoxSearchValue, cbbStatusValue);
             });
             //delete nha cung cap
@@ -76,12 +215,19 @@ namespace bookStoreManagetment.ViewModel
 
                 SelectedItem = p as Inventory;
                 string selectedID = SelectedItem.Supplier.idSupplier;
-                //string query = "delete from supplier where idSupplier=N'" + selectedID + "'";
-                string query = "update supplier set statusSupplier=N'Ngừng hợp tác' where idSupplier=N'" + selectedID + "'";
-                if (MessageBox.Show("Bạn có muốn xóa nhà cung cấp này?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
                 
+                if (MessageBox.Show("Bạn có muốn xóa nhà cung cấp này?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                    var x = (from y in DataProvider.Ins.DB.suppliers where y.idSupplier == selectedID select y).FirstOrDefault();
+                    if(x!=null)
+                    {
+                        DataProvider.Ins.DB.suppliers.Remove(x);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                }
 
+                SearchEngineer(textBoxSearchValue, cbbStatusValue);
             });
             //edit nha cung cap
             btnEditNCCClickCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
@@ -94,42 +240,19 @@ namespace bookStoreManagetment.ViewModel
                 addressSup = SelectedItem.Supplier.addressSupplier;
                 emailSup = SelectedItem.Supplier.emailSupplier;
                 string[] lstadd = addressSup.Split(',');
+                MessageBox.Show(lstadd[0] + "," + lstadd[1] + "," + lstadd[2] + "," + lstadd[3]);
                 sonha = lstadd[0];
-                xa = lstadd[1];
-                huyen = lstadd[2];
-                tinh = lstadd[3];
+                xa = lstadd[1].Replace(" xã ", "");
+                huyen = lstadd[2].Replace(" huyện ", "");
+                tinh = lstadd[3].Replace(" tỉnh ", "");
                 phoneSup = SelectedItem.Supplier.phoneNumberSupplier;
-                //Console.WriteLine(idSup);
+                EditNhacungcapVisible = Visibility.Visible;
+                DSNhacungcapVisible = Visibility.Collapsed;
             });
             //collapsed select grid
-            CollapsedGridCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                if (nameSup == "" && emailSup == "" && addressSup == "" && phoneSup == "" && idSup == "" && tinh == "" && huyen == "" && xa == "" && sonha == "")
-                {
-                    (p as Grid).Visibility = Visibility.Collapsed;
 
-                }
-                else
-                {
-                    if (MessageBox.Show("Do you want to close this window?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        (p as Grid).Visibility = Visibility.Collapsed;
-                        refreshall();
-                    }
-                }
-
-            });
-            //visible select grid
-            VisibleGridCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                (p as Grid).Visibility = Visibility.Visible;
-                refreshall();
-            });
             //event text box search thay doi, moi lan thay doi cap nhat lai gia tri bien textBoxSearchValue
-            searchTBchangedCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
-            {
-                textBoxSearchValue = (p as TextBox).Text;
-            });
+
             //event combo box trang thai thay doi, moi lan thay doi cap nhat lai gia tri bien cbbStatusValue
             cbbStatusChangedCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
@@ -138,14 +261,19 @@ namespace bookStoreManagetment.ViewModel
                 cbbStatusValue = value;
             });
             //load function is add or edit
-            loadFunctionCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+
+            btnAddSupCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
                 _function = (p as Button).Name;
-                MessageBox.Show(_function);
+                refreshall();
+                EditNhacungcapVisible = Visibility.Visible;
+                DSNhacungcapVisible = Visibility.Collapsed;
             });
-            canEditCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            btnThoatCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
-                (p as TextBox).IsReadOnly = false;
+                refreshall();
+                EditNhacungcapVisible = Visibility.Collapsed;
+                DSNhacungcapVisible = Visibility.Visible;
             });
             //query tim kiem nhung nha cung cap thoa man
             searchEngineer = new RelayCommand<Object>((p) => { return true; }, (p) =>
@@ -155,6 +283,7 @@ namespace bookStoreManagetment.ViewModel
             //ham tiem kiem
             void SearchEngineer(string tbsearchval, string cbbstatusval)
             {
+                
                 InventoryList = new ObservableCollection<Inventory>();
                 if (cbbstatusval != "Tất cả")
                 {
@@ -183,135 +312,68 @@ namespace bookStoreManagetment.ViewModel
             //phan nay cua delete, edit nha cung cap
 
 
-            LoadInsertInforCommand = new RelayCommand<object>((p) => { return true; }, (p) => changeInfor(p));
-            reloadTextBoxCommand = new RelayCommand<object>((p) => { return true; }, (p) => reloadTextBox(p));
-            insertSupplierCommand = new RelayCommand<object>((p) => { return true; }, (p) => addSupExcuteQuery());
-            //moi lan text box thong tin nha cung cap thay doi, se bat su kien, cap nhat lai cac bien
-            void changeInfor(object obj)
-            {
-                switch ((obj as TextBox).Name)
-                {
-                    case "idSuptb":
-                        idSup = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "nameSuptb":
-                        nameSup = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "tinhAddressSuptb":
-                        tinh = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "huyenAddressSuptb":
-                        huyen = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "xaAddressSuptb":
-                        xa = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "sonhaAddressSuptb":
-                        sonha = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "mailSuptb":
-                        emailSup = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                    case "phoneSuptb":
-                        phoneSup = (obj as TextBox).Text;
-                        changed = true;
-                        break;
-                }
-            }
-            //su kien xoa text trong text box khi them nha cung cap xong
-            void reloadTextBox(object obj)
-            {
 
-                switch ((obj as TextBox).Name)
-                {
-                    case "idSuptb":
-                        (obj as TextBox).Text = idSup;
-                        if (_function == "btnEdit")
-                            (obj as TextBox).IsReadOnly = true;
-                        else
-                            (obj as TextBox).IsReadOnly = false;
-                        break;
-                    case "nameSuptb":
-                        (obj as TextBox).Text = nameSup;
-                        break;
-                    case "tinhAddressSuptb":
-                        (obj as TextBox).Text = tinh;
-                        break;
-                    case "huyenAddressSuptb":
-                        (obj as TextBox).Text = huyen;
-                        break;
-                    case "xaAddressSuptb":
-                        (obj as TextBox).Text = xa;
-                        break;
-                    case "sonhaAddressSuptb":
-                        (obj as TextBox).Text = sonha;
-                        break;
-                    case "mailSuptb":
-                        (obj as TextBox).Text = emailSup;
-                        break;
-                    case "phoneSuptb":
-                        (obj as TextBox).Text = phoneSup;
-                        break;
-                }
-            }
+            insertSupplierCommand = new RelayCommand<object>((p) => { return true; }, (p) => addSupExcuteQuery());
+
+
             //ham them nha cung cap bang query
             void addSupExcuteQuery()
             {
-                bool flag = false;
+                string newid;
 
-                addressSup = sonha + "," + xa + "," + huyen + "," + tinh;
-                
-                if (idSup!=""&&nameSup != "" && addressSup != "   " && emailSup != "" && phoneSup != "")
+                addressSup = String.Format("{0}, xã {1}, huyện {1}, tỉnh {2}", sonha, xa, huyen, tinh);
+
+                if (nameSup != "" && tinh!="" && huyen!="" && xa!="" && sonha!="" && emailSup != "" && phoneSup != "")
                 {
                     if (_function == "btnAddSuplier")
                     {
-                        string query = "insert into supplier values (N'" + idSup + "', N'" + nameSup + "', N'" + addressSup + "', N'" + emailSup + "', N'" + phoneSup + "', N'Đang hợp tác')";
-                        foreach (var item in InventoryList)
-                        {
-                            if (idSup == item.Supplier.idSupplier)
-                            {
-                                flag = false;
-                                MessageBox.Show("Mã nhà cung cấp đã tồn tại");
-                                break;
+                        int count;
 
+                        string _lastid = DataProvider.Ins.DB.suppliers.OrderByDescending(p => p.idSupplier).First().idSupplier;
+                        count = Convert.ToInt32(_lastid.Replace("NCC", "")) + 1;
+
+                        if (count > 99)
+                        {
+                            newid = "NCC" + count.ToString();
+                        }
+                        else
+                        {
+                            if (count > 9)
+                            {
+                                newid = "NCC0" + count.ToString();
                             }
                             else
-                                flag = true;
+                                newid = "NCC00" + count.ToString();
                         }
-                        if (flag == true)
-                        {
-                            //flag = true;
-                            DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
-                            SearchEngineer(textBoxSearchValue, cbbStatusValue);
-                            refreshall();
-                            MessageBox.Show("Thêm nhà cung cấp thành công");
-                        }
+                        //string query = "insert into supplier values (N'" + newid + "', N'" + nameSup + "', N'" + addressSup + "', N'" + emailSup + "', N'" + phoneSup + "', N'Đang hợp tác')";
+                        //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                        supplier _tmp = new supplier();
+                        _tmp.idSupplier = newid;
+                        _tmp.nameSupplier = nameSup;
+                        _tmp.addressSupplier = addressSup;
+                        _tmp.emailSupplier = emailSup;
+                        _tmp.phoneNumberSupplier = phoneSup;
+                        _tmp.statusSupplier = "Đang hợp tác";
+                        DataProvider.Ins.DB.suppliers.Add(_tmp);
+                        DataProvider.Ins.DB.SaveChanges();
+                        SearchEngineer(textBoxSearchValue, cbbStatusValue);
+                        refreshall();
+                        MessageBox.Show("Thêm nhà cung cấp thành công");
+                        
                     }
                     else
                     {
-                        string query = "update supplier set nameSupplier=N'" + nameSup + "',addressSupplier=N'" + addressSup + "',emailSupplier=N'" + emailSup + "',phoneNumberSupplier=N'" + phoneSup + "' where idSupplier=N'" + idSup + "'";
-                        //Console.WriteLine(query);
-                        if (changed == true)
+                        var res = DataProvider.Ins.DB.suppliers.SingleOrDefault(i => i.idSupplier == idSup);
+                        if (res != null)
                         {
-                            DataProvider.Ins.DB.SaveChanges();
-                            DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                            res.nameSupplier = nameSup;
+                            res.addressSupplier = addressSup;
+                            res.emailSupplier = emailSup;
+                            res.phoneNumberSupplier = phoneSup;
                             
-                            MessageBox.Show("Cập nhật thành công");
-                            SearchEngineer(textBoxSearchValue, cbbStatusValue);
-                            foreach(var item in InventoryList)
-                            {
-                                MessageBox.Show(item.Supplier.nameSupplier);
-                            }
+                            DataProvider.Ins.DB.SaveChanges();
                         }
-                        else
-                            MessageBox.Show("Bạn chưa hay đổi bất kì thông tin nào");
+                        MessageBox.Show("Cập nhật thành công");
                     }
 
                 }
@@ -323,7 +385,6 @@ namespace bookStoreManagetment.ViewModel
             void refreshall()
             {
                 idSup = "";
-                addressSup = "";
                 tinh = "";
                 huyen = "";
                 xa = "";
@@ -331,6 +392,9 @@ namespace bookStoreManagetment.ViewModel
                 phoneSup = "";
                 emailSup = "";
                 nameSup = "";
+                fax = "";
+                masothue = "";
+                website = "";
             }
         }
     }

@@ -3,10 +3,401 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:bookStoreManagetment.UserControls"
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{StaticResource KhachtrahangVM}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                    Command="{Binding LoadDSKhachtrahangCommand}"
+                    />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBlock>Khách trả hàng</TextBlock>
+            </Grid>
+            <Grid x:Name="gridChucnang" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button
+                        Command="{Binding btnXuatfileCommand}">Xuất file</Button>
+                    <Button>Nhập file</Button>
+                    <Button Content="Tạo đơn hàng trả">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding taoDonhangtraCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid x:Name="gridDSKhachtrahang" Visibility="{Binding DSKhachtrahangVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Left">
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center"/>
+                            <TextBox Margin="5 0 0 0" Width="150" x:Name="tbSearch" VerticalContentAlignment="Center"
+                                     Text="{Binding TextBoxSearchValue,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding tbSearchChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center">Tên khách hàng</TextBlock>
+                        <Border BorderBrush="Black">
+                            <ComboBox x:Name="cbbTenKH" Width="100"
+                                      Text="{Binding ComboBoxTenKhachhang,UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding TenkhachhangList,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding cbbTenKHChangedCommand}"
+                                                               CommandParameter="{Binding ElementName=cbbTenKH}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <DataGrid 
+                        x:Name="dgDSTrahang" 
+                        AutoGenerateColumns="False" 
+                        CanUserAddRows="False" 
+                        HorizontalAlignment="Center" 
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        ItemsSource="{Binding InventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="100" Header="Mã hóa đơn" Binding="{Binding BillcodeSell}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="100" Header="Tên khách hàng" Binding="{Binding NameCustomer}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="150" Header="Trạng thái" Binding="{Binding TrangThai}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="250" Header="Lí do" Binding="{Binding LiDo}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="200" Header="Ngày trả hàng" Binding="{Binding SellDate}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Width="250" Header="Trạng thái">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button 
+                                                x:Name="btnChitiet" Content="Chi tiết"
+                                                Width="100"
+                                                Background="Transparent" 
+                                                Foreground="Black" 
+                                                BorderBrush="Black">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnChitietClickCommand}"
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Row="2">
+                
+                </Grid>
+            </Grid>
+            <Grid x:Name="gridTaoKhachtrahang" Visibility="{Binding ThemKhachtrahangVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="Tìm kiếm đơn trả hàng" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Border BorderBrush="Black" BorderThickness="1" 
+                                        CornerRadius="5" Width="200" Height="25" VerticalAlignment="Top">
+                                    <TextBox VerticalContentAlignment="Center"
+                                             Text="{Binding Mahoadon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding tbMahoadonChangedCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="6*"/>
+                                <RowDefinition Height="20*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">Thông tin trả hàng</TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Nhân viên"/>
+                                        <Border Margin="10 0 0 0" BorderBrush="Black" BorderThickness="1" Width="200">
+                                            <TextBox VerticalAlignment="Center" 
+                                                     VerticalContentAlignment="Center"
+                                                     Text="{Binding TenNhanVien,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Ngày trả hàng"/>
+                                        <Border Margin="10 0 0 0" BorderBrush="Black" BorderThickness="1" Width="100">
+                                            <DatePicker Text="{Binding NgayTra,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Lý do" VerticalAlignment="Top"
+                                               Margin="10 10 0 0"/>
+                                    <Border Margin="38 0 0 0" BorderBrush="Black" BorderThickness="1"
+                                            Width="350">
+                                        <TextBox
+                                            Text="{Binding LiDo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <DataGrid 
+                                    x:Name="dgTaodontrahang" 
+                                    AutoGenerateColumns="False" 
+                                    CanUserAddRows="False" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalContentAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Margin="0 0 0 10"
+                                    ItemsSource="{Binding Danhsachsanpham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedItem="{Binding SelectedItemTrave}"
+                                    >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Width="100" Header="Mã sản phẩm" Binding="{Binding Item.idItem}" IsReadOnly="True"/>
+                                        <DataGridTextColumn Width="100" Header="Tên sản phẩm" Binding="{Binding Item.nameItem}" IsReadOnly="True"/>
+                                        <DataGridTextColumn Width="150" Header="Đơn vị" Binding="{Binding Item.unit}" IsReadOnly="True"/>
+                                        <DataGridTextColumn Width="200" Header="Số lượng mua" Binding="{Binding BuyNumber}" IsReadOnly="True"/>
+                                        <DataGridTemplateColumn Width="200" Header="Số lượng trả về">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox x:Name="tbSLTV" Text="{Binding TraveNumber,UpdateSourceTrigger=PropertyChanged}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="TextChanged">
+                                                                <i:InvokeCommandAction 
+                                                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.defindSelectedItemTrave}"
+                                                                    CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                                <i:InvokeCommandAction 
+                                                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.saveTextBoxSLTVCommand}"
+                                                                    CommandParameter="{Binding ElementName=tbSLTV}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <StackPanel Orientation="Horizontal" Width="220">
+                        <Grid Width="220">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Button Content="Luu">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding saveKhachTrahangCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Button Content="Huy">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding huyKhachtrahangCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid x:Name="gridChitietTrahang" Visibility="{Binding ChitietHoadontraVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <DataGrid 
+                                x:Name="dgChitietsanphamTrahang" 
+                                AutoGenerateColumns="False" 
+                                CanUserAddRows="False" 
+                                HorizontalAlignment="Center" 
+                                VerticalContentAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                BorderThickness="1"
+                                ItemsSource="{Binding ChitietDanhsachsanpham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"> 
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="60" Header="Mã sản phẩm" Binding="{Binding Item.idItem}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="100" Header="Tên sản phẩm" Binding="{Binding Item.nameItem}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="50" Header="Đơn vị" Binding="{Binding Item.unit}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="60" Header="Số lượng" Binding="{Binding TraveNumber}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="100" Header="Đơn giá" Binding="{Binding Item.sellPriceItem}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="140" Header="Thành tiền" Binding="{Binding Thanhtien}" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <StackPanel>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Hình thức thanh toán và giao nhận</TextBlock>
+                                <StackPanel Orientation="Horizontal" Height="25">
+                                    <Image Source="/pictures/search.png"/>
+                                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">Xác nhận thanh toán</TextBlock>
+                                    <ComboBox  Margin="15 0 0 0" Text="Thanh toán COD" ></ComboBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Height="25">
+                                    <Image Source="/pictures/search.png"/>
+                                    <TextBlock  Margin="5 0 0 0" VerticalAlignment="Center">Đóng gói và giao hàng</TextBlock>
+                                    <ComboBox  Margin="5 0 0 0" Text="Thanh toán COD" ></ComboBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="3">
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center">Thong tin don hang</TextBlock>
+                            <TextBlock HorizontalAlignment="Left">Ma don hang</TextBlock>
+                            <TextBox IsReadOnly="True" Text="{Binding ChitietMahoadon}"></TextBox>
+                            <TextBlock HorizontalAlignment="Left">Ngay dat hang</TextBlock>
+                            <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"></DatePicker>
+                            <TextBlock HorizontalAlignment="Left">Thoi gian giao hang</TextBlock>
+                            <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"></DatePicker>
+                            <TextBlock HorizontalAlignment="Left">Nhan vien</TextBlock>
+                            <TextBox IsReadOnly="True" Text="{Binding Chitietnhanvien}"></TextBox>
+                            <TextBlock HorizontalAlignment="Left">Ghi chu</TextBlock>
+                            <TextBox IsReadOnly="True" Text="{Binding GhiChu}"></TextBox>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">Thong tin tra hang</TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock>Thoi gian tra hang</TextBlock>
+                                    <DatePicker SelectedDate="{Binding ChitietThoigianTrahang}"></DatePicker>
+                                </StackPanel>
+                                <TextBlock>Li do tra hang</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock>Thoi gian tra hang</TextBlock>
+                                    <TextBox Text="{Binding Chitietnhanvien}" IsReadOnly="True"></TextBox>
+                                </StackPanel>
+                                <TextBlock>Xac nhan kiem du</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <TextBox IsReadOnly="True" Text="{Binding Chitietlido}"></TextBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Button Height="20" Width="40" Content="Thoat"
+                        Command="{Binding btnThoatCommand}"></Button>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

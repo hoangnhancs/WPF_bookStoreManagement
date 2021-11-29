@@ -131,8 +131,26 @@
                                 <DataGridTextColumn Width="100" Header="Tiêu đề mail" Binding="{Binding Mail.subjectMail}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="150" Header="Loại mail" Binding="{Binding Mail.typeMail}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="250" Header="Ngày cập nhật" Binding="{Binding Mail.updateDate}" IsReadOnly="True"/>
-                                <DataGridTextColumn Width="200" Header="Mô tả" Binding="{Binding Mail.descriptionMailType}" IsReadOnly="True"/>
-                                <DataGridTemplateColumn Width="250" Header="Trạng thái">
+                                <DataGridTemplateColumn Width="60" Header="Auto send">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ToggleButton
+                                                  Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                  ToolTip="MaterialDesignSwitchToggleButton"
+                                                  IsChecked="{Binding Check,UpdateSourceTrigger=PropertyChanged}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.toggleClickCommand}"
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                
+                                            </ToggleButton>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="250" Header="Tùy chỉnh">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -146,7 +164,7 @@
                                                         <i:EventTrigger EventName="Click">
                                                             <i:InvokeCommandAction
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteCommand}"
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                     <StackPanel>
@@ -235,8 +253,10 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
@@ -255,10 +275,54 @@
                             <TextBlock Text="Loại mail" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
                             <Border BorderThickness="1"
                                 BorderBrush="Black" 
-                                CornerRadius="10" Height="40" Margin="10 0 0 0">
-                                <TextBox Width="150" VerticalContentAlignment="Center" Height="40"
+                                CornerRadius="0" Height="40" Margin="10 0 0 0">
+                                <!--<TextBox Width="150" VerticalContentAlignment="Center" Height="40"
                                         Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
+                                <ComboBox Width="100" VerticalAlignment="Center" Height="40"
+                                          Text="{Binding Mailtype, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding cbbMailType}"
+                                          VerticalContentAlignment="Center"
+                                          x:Name="cbbMailType">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding cbbMailTypeSelectionChanged}"
+                                                                   CommandParameter="{Binding ElementName=cbbMailType}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Cách gửi" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+                            <Border BorderThickness="1"
+                                BorderBrush="Black" 
+                                CornerRadius="0" Height="40" Margin="10 0 0 0">
+                                <!--<TextBox Width="150" VerticalContentAlignment="Center" Height="40"
+                                        Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
+                                <ComboBox Width="120" VerticalAlignment="Center" Height="40"
+                                          Text="{Binding Senttype, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding cbbSentType}"
+                                          VerticalContentAlignment="Center"
+                                          IsEnabled="{Binding ComboBoxSenttypeEnable, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="3">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Ngày gửi" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+                            <Border BorderThickness="1"
+                                BorderBrush="Black" 
+                                CornerRadius="0" Height="40" Margin="10 0 0 0">
+                                <!--<TextBox Width="150" VerticalContentAlignment="Center" Height="40"
+                                        Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
+                                <DatePicker
+                                    Text="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
+                                </DatePicker>
                             </Border>
                         </StackPanel>
                     </Grid>
