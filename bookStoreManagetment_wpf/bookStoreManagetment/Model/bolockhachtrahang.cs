@@ -12,12 +12,10 @@ namespace bookStoreManagetment.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class studytoolsInformation
+    public partial class bolockhachtrahang
     {
-        public int idInformation { get; set; }
-        public string idStudyTool { get; set; }
-        public string origin { get; set; }
-        public string distributor { get; set; }
-        public string typecontent { get; set; }
+        public int idBoloc { get; set; }
+        public string trangThai { get; set; }
+        public string nhanVien { get; set; }
     }
 }
