@@ -202,6 +202,23 @@
                                 <StackPanel x:Name="subMenuQLBH" Visibility="Collapsed">
                                     <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Danh sách hóa đơn">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
+                                            Command="{Binding DSHoaDonClickCommand}"
+                                            CommandParameter="{Binding ElementName=GridMainForm}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Button>
+                                    <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Tạo hóa đơn">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
+                                            Command="{Binding CreateBillClickCommand}"
+                                            CommandParameter="{Binding ElementName=GridMainForm}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Button>
                                     <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Khách trả hàng">

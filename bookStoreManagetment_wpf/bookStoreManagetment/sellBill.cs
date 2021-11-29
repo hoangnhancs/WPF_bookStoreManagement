@@ -19,11 +19,17 @@ namespace bookStoreManagetment
         public int idEmployee { get; set; }
         public int number { get; set; }
         public System.DateTime sellDate { get; set; }
-        public Nullable<int> idCustomer { get; set; }
+        public int idCustomer { get; set; }
         public string idItem { get; set; }
         public int unitPrice { get; set; }
         public int discount { get; set; }
         public string note { get; set; }
+        public string billStatus { get; set; }
+        public System.DateTime deliveryDate { get; set; }
+        public System.DateTime licenseDate { get; set; }
+        public string tag { get; set; }
+        public string deliveryMethod { get; set; }
+        public string paymentMethod { get; set; }
     
         public virtual bill bill { get; set; }
         public virtual item item { get; set; }
