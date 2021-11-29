@@ -8,7 +8,12 @@
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
 
     <viewmodel:CheckItemsViewModel x:Key="CheckItemsVM"></viewmodel:CheckItemsViewModel>
+
     <viewmodel:ListofProductsViewModel x:Key="ListofProductsVM"></viewmodel:ListofProductsViewModel>
+
+    <viewmodel:DashBoardViewModel x:Key="DashBoardVM"></viewmodel:DashBoardViewModel>
+
+    <viewmodel:ImportGoodsViewModel x:Key="ImportGoodsVM"></viewmodel:ImportGoodsViewModel>
 
     <viewmodel:NhacungcapViewMode x:Key="NhacungcapVM"></viewmodel:NhacungcapViewMode>
 

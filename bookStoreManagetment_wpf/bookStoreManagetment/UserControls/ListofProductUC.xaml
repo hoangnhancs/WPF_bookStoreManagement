@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1030"
              Background="Wheat"
@@ -81,7 +83,7 @@
                                     Command="{Binding comboBoxCatalogofProductCommand}"
                                     CommandParameter="{Binding ElementName=comboBoxCatalogofProducts}" />
                             </i:EventTrigger>
-                        </i:Interaction.Triggers> 
+                        </i:Interaction.Triggers>
                     </ComboBox>
                     <Button
                         Margin="20 0 20 0"
@@ -105,7 +107,8 @@
                         Grid.Row="2"
                         Width="150"
                         ToolTip="Resource name: MaterialDesignPaperLightButton"
-                        Content="Search"/>
+                        Content="Search">
+                        </Button>
                 </StackPanel>
                 <Button
                     Margin="0 0 20 0"
@@ -365,10 +368,10 @@
                                             MaxWidth="500"
                                             MinWidth="300"
                                             HorizontalAlignment="Left"/>
-                                        
+
                                     </WrapPanel>
 
-                                    <WrapPanel Margin=" 0 0 0 10"> 
+                                    <WrapPanel Margin=" 0 0 0 10">
                                         <TextBlock Text="SKU" FontSize="15" Margin="20 0 95 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                         <TextBox
                                             Text="{Binding SKUProductsAdd}"
@@ -462,7 +465,7 @@
                                                 <ImageBrush></ImageBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        
+
                                     </StackPanel>
 
                                     <StackPanel>
@@ -478,7 +481,7 @@
                                             VerticalScrollBarVisibility="Auto"
                                             HorizontalScrollBarVisibility="Auto" 
                                             materialDesign:HintAssist.Hint="Mô tả ..."
-                                            Margin="10"/>       
+                                            Margin="10"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -504,7 +507,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
-                            
+
                             <Button
                             Margin="0 0 20 0"
                             HorizontalAlignment="Right"

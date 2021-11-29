@@ -12,12 +12,16 @@ namespace bookStoreManagetment.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class studytoolsInformation
+    public partial class setting
     {
-        public int idInformation { get; set; }
-        public string idStudyTool { get; set; }
-        public string origin { get; set; }
-        public string distributor { get; set; }
-        public string typecontent { get; set; }
+        public int sttSetting { get; set; }
+        public string idSetting { get; set; }
+        public string nameSetting { get; set; }
+        public string statusSetting { get; set; }
+        public string contentSetting { get; set; }
+        public System.DateTime createdateSetting { get; set; }
+        public int idEmployee { get; set; }
+    
+        public virtual employee employee { get; set; }
     }
 }

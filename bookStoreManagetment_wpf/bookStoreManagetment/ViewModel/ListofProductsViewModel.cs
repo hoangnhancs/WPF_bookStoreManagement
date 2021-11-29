@@ -126,14 +126,14 @@ namespace bookStoreManagetment.ViewModel
                 if (data.typeItem == "book")
                 {
                     var type = DataProvider.Ins.DB.bookInformations.Where(p => p.idBook == data.idItem);
-                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.priceItem });
-                } 
+                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.importPriceItem });
+                }
                 else
                 {
                     var type = DataProvider.Ins.DB.studytoolsInformations.Where(p => p.idStudyTool == data.idItem);
-                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typeContent).FirstOrDefault(), quantity = data.quantity, priceItem = data.priceItem });
+                    ListAllProduct.Add(new Product() { idItem = data.idItem, nameItem = data.nameItem, typeItem = type.Select(p => p.typecontent).FirstOrDefault(), quantity = data.quantity, priceItem = data.importPriceItem });
                 }
-                
+
             }
 
             ListofProduct = new ObservableCollection<Product>(ListAllProduct);
@@ -146,6 +146,9 @@ namespace bookStoreManagetment.ViewModel
             BackupTypeItem.Remove("Tất cả sản phẩm");
             TypeItemAdd = new ObservableCollection<string>(BackupTypeItem);
             CatalogItem = new ObservableCollection<String>(DataProvider.Ins.DB.items.Select(p => p.typeItem).ToList().Distinct().ToList());
+
+            comBoBoxSearch = "";
+            Selected = "Tất cả sản phẩm";
 
             ClickHiddenCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -162,7 +165,7 @@ namespace bookStoreManagetment.ViewModel
 
             ClickAddProductCommand = new RelayCommand<object>((p) => {
                 Console.WriteLine(Int32.Parse(PriceProductsAdd.ToString()));
-                return true; 
+                return true;
             }, (p) =>
             {
                 item Item = new item()
@@ -171,7 +174,8 @@ namespace bookStoreManagetment.ViewModel
                     nameItem = NameProductsAdd,
                     linkItem = "Đang cập nhật",
                     imageItem = "Đang cập nhật",
-                    priceItem = Int32.Parse(PriceProductsAdd.ToString()),
+                    importPriceItem = Int32.Parse(PriceProductsAdd.ToString()),
+                    sellPriceItem = 1000000,
                     descriptionItem = DescriptionProductsAdd,
                     barcode = BarcodeProductsAdd,
                     quantity = 100,
@@ -214,12 +218,12 @@ namespace bookStoreManagetment.ViewModel
                     {
                         idInformation = DataProvider.Ins.DB.studytoolsInformations.Count() + 1,
                         idStudyTool = SKUProductsAdd,
-                        typeContent = TypeProductsAdd,
+                        typecontent = TypeProductsAdd,
                         origin = "",
-                        distributor="",
+                        distributor = "",
                     };
                     DataProvider.Ins.DB.studytoolsInformations.Add(studytoolsinformation);
-                }    
+                }
 
                 DataProvider.Ins.DB.SaveChanges();
                 BackUpListAllProduct.Add(product);
@@ -234,8 +238,8 @@ namespace bookStoreManagetment.ViewModel
                 if (p != null)
                 {
                     string query = (p as TextBox).Text.Trim().ToLower();
-                    
-                    if (query == "")
+
+                    if (query == "" && Selected == "Tất cả sản phẩm")
                     {
                         ListAllProduct = new List<Product>(BackUpListAllProduct);
                         ListofProduct = new ObservableCollection<Product>(ListAllProduct);
@@ -246,8 +250,8 @@ namespace bookStoreManagetment.ViewModel
                         foreach (var cellItems in ListAllProduct)
                         {
                             string nameItem = cellItems.nameItem.Trim().ToLower();
-
-                            if (nameItem.Contains(query))
+                            string nameTypeItem = cellItems.typeItem.Trim().ToLower();
+                            if (nameItem.Contains(query) && nameTypeItem.Contains(Selected.Trim().ToLower()))
                             {
                                 ListofProduct.Add(cellItems);
                             }
@@ -256,12 +260,12 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
-            comboBoxCatalogofProductCommand = new RelayCommand<object>((p) => { return true; }, (p) => 
+            comboBoxCatalogofProductCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (p != null)
                 {
                     string query = (p as ComboBox).SelectedItem as String;
-                    if (query == "Tất cả sản phẩm")
+                    if (query == "Tất cả sản phẩm" && comBoBoxSearch == "")
                     {
                         ListAllProduct = new List<Product>(BackUpListAllProduct);
                         ListofProduct = new ObservableCollection<Product>(ListAllProduct);
@@ -271,13 +275,15 @@ namespace bookStoreManagetment.ViewModel
                         ListofProduct = new ObservableCollection<Product>();
                         foreach (Product cellItems in ListAllProduct)
                         {
+                            string nameItem = cellItems.nameItem.Trim().ToLower();
                             string nameTypeItem = cellItems.typeItem.Trim().ToLower();
-                            if (nameTypeItem.Contains(query.Trim().ToLower()))
+                            if (nameItem.Contains(comBoBoxSearch.Trim().ToLower()) && nameTypeItem.Contains(query.Trim().ToLower()))
                             {
                                 ListofProduct.Add(cellItems);
                             }
                         }
                     }
+
                 }
             });
 
@@ -294,7 +300,7 @@ namespace bookStoreManagetment.ViewModel
                 PriceProductsEdit = selected.priceItem;
                 UnitProductsEdit = cellItem.Select(pa => pa.unit).FirstOrDefault();
                 DescriptionProductsEdit = cellItem.Select(pa => pa.descriptionItem).FirstOrDefault();
-                
+
             });
 
             ClickEditUpdateProductCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -305,7 +311,7 @@ namespace bookStoreManagetment.ViewModel
                 cellItem.typeItem = CatalogProductsEdit;
                 cellItem.nameItem = NameProductsEdit;
                 cellItem.barcode = BarcodeProductsEdit;
-                cellItem.priceItem = PriceProductsEdit;
+                cellItem.importPriceItem = PriceProductsEdit;
                 cellItem.unit = UnitProductsEdit;
                 cellItem.descriptionItem = DescriptionProductsEdit;
 
@@ -321,12 +327,12 @@ namespace bookStoreManagetment.ViewModel
                     cellitemEdit.nameItem = NameProductsEdit;
                     cellitemEdit.priceItem = PriceProductsEdit;
                     sku = SKUProductsEdit;
-                }    
+                }
                 else
                 {
                     var cellItemEdit = DataProvider.Ins.DB.studytoolsInformations.Where(x => x.idStudyTool == sku).SingleOrDefault();
                     //cellItemEdit.idStudyTool = SKUProductsEdit;
-                    cellItemEdit.typeContent = TypeProductsEdit;
+                    cellItemEdit.typecontent = TypeProductsEdit;
 
                     var cellitemEdit = ListofProduct.Where(x => x.idItem == sku).SingleOrDefault();
                     cellitemEdit.typeItem = TypeProductsEdit;

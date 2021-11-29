@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="Azure">
+             Background="Azure"
+             DataContext="{StaticResource DashBoardVM}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -29,7 +33,7 @@
                     <RowDefinition Height="40"></RowDefinition>
                     <RowDefinition Height="80"></RowDefinition>
                     <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0"
                    Text="Kết quả kinh doanh hàng ngày"
@@ -42,7 +46,8 @@
                     Grid.Row="1"
                     Orientation="Horizontal">
                     <StackPanel
-                            Margin="10 0 10 0">
+                        Width="160"
+                        Margin="10 0 10 0">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="CurrencyUsd" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock
@@ -55,15 +60,17 @@
                         </StackPanel>
 
                         <TextBlock
-                            Text="1,000,000Đ"
+                            Text="{Binding Revenue}"
                             FontSize="22"
-                            HorizontalAlignment="Center"/>
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
                         <!--Text="{Binding Description}"-->
                     </StackPanel>
                     <Border
                         BorderBrush="Gray"
                         BorderThickness="2 0 0 0">
                         <StackPanel
+                            Width="160"
                             Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="CardTextOutline" Width="25" Height="25" VerticalAlignment="Center"/>
@@ -77,9 +84,10 @@
                             </StackPanel>
 
                             <TextBlock
-                            Text="1,000,000Đ"
-                            FontSize="22"
-                            HorizontalAlignment="Center"/>
+                                Text="{Binding NewOrder}"
+                                FontSize="22"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
                             <!--Text="{Binding Description}"-->
                         </StackPanel>
                     </Border>
@@ -88,7 +96,8 @@
                         BorderBrush="Gray"
                         BorderThickness="2 0 0 0">
                         <StackPanel
-                                Margin="10 0 10 0">
+                            Width="160"
+                            Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="RotateLeft" Width="25" Height="25" VerticalAlignment="Center" />
                                 <TextBlock
@@ -101,9 +110,10 @@
                             </StackPanel>
 
                             <TextBlock
-                                Text="1,000,000Đ"
+                                Text="{Binding Return}"
                                 FontSize="22"
-                                HorizontalAlignment="Center"/>
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
                             <!--Text="{Binding Description}"-->
                         </StackPanel>
                     </Border>
@@ -111,6 +121,7 @@
                         BorderBrush="Gray"
                         BorderThickness="2 0 0 0">
                         <StackPanel
+                            Width="160"
                             Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="CreditCardOutline" Width="25" Height="25" VerticalAlignment="Center"/>
@@ -123,9 +134,10 @@
                             </StackPanel>
 
                             <TextBlock
-                            Text="1,000,000Đ"
+                            Text="{Binding BillPayment}"
                             FontSize="22"
-                            HorizontalAlignment="Center"/>
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
                             <!--Text="{Binding Description}"-->
                         </StackPanel>
                     </Border>
@@ -137,6 +149,29 @@
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
                 </TextBlock>
+
+                <Grid Grid.Row="3"
+                      Width="auto" 
+                      Height="auto"
+                      Margin="10">
+                    <Wpf:CartesianChart Background="Azure" >
+                        <Wpf:CartesianChart.Series>
+                            <Wpf:ColumnSeries Title="Doanh thu bán hàng" 
+                                  Values="{Binding Results}"
+                                  Configuration="{Binding Mapper}"/>
+                        </Wpf:CartesianChart.Series>
+                        <Wpf:CartesianChart.AxisX>
+                            <Wpf:Axis LabelsRotation="-20" Labels="{Binding Labels}" DisableAnimations="True">
+                                <Wpf:Axis.Separator>
+                                    <Wpf:Separator Step="1"></Wpf:Separator>
+                                </Wpf:Axis.Separator>
+                            </Wpf:Axis>
+                        </Wpf:CartesianChart.AxisX>
+                        <Wpf:CartesianChart.AxisY>
+                            <Wpf:Axis LabelFormatter="{Binding MillionFormatter}"></Wpf:Axis>
+                        </Wpf:CartesianChart.AxisY>
+                    </Wpf:CartesianChart>
+                </Grid>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -149,7 +184,7 @@
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center">
                 </TextBlock>
-                <StackPanel
+                <!--<StackPanel
                     Grid.Row="1"
                     Margin="5">
                     <StackPanel
@@ -158,14 +193,15 @@
                         <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
                         <StackPanel >
                             <TextBlock
-                                Text="Muôn kiếp nhân sinh"
-                                FontSize="22"
+                                Text="{Binding NameTop1}"
+                                TextTrimming="CharacterEllipsis"
+                                FontSize="18"
                                 VerticalAlignment="Center"
                                 Margin="5 5 0 5"/>
                             <TextBlock
-                            Text="1,000,000Đ"
-                            FontSize="25"
-                            HorizontalAlignment="Left"/>
+                                Text="1,000,000Đ"
+                                FontSize="25"
+                                HorizontalAlignment="Left"/>
                         </StackPanel>
 
 
@@ -244,7 +280,51 @@
 
 
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
+                <DataGrid 
+                    Grid.Row="1"
+                    ItemsSource="{Binding TopProducts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ColumnWidth="*"
+                    CanUserSortColumns="True"
+                    CanUserAddRows="False"
+                    AutoGenerateColumns="False"
+                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                    materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8"
+                    x:Name="mydatagrid"
+                    Background="Azure"
+                    Margin=" 10">
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn
+                            Header="    "
+                            Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel
+                                        Margin="5 0 0 0"
+                                        Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
+                                        <StackPanel >
+                                            <TextBlock
+                                                Text="{Binding nameItem}"
+                                                FontSize="18"
+                                                VerticalAlignment="Center"
+                                                Margin="5 5 0 5"/>
+                                            <TextBlock
+                                                Text="{Binding priceItem}"
+                                                FontSize="18"
+                                                HorizontalAlignment="Left"/>
+                                        </StackPanel>
+
+
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Grid>
     </Grid>

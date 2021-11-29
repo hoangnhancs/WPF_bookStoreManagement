@@ -27,6 +27,7 @@ namespace bookStoreManagetment.Model
     
         public virtual DbSet<account> accounts { get; set; }
         public virtual DbSet<bill> bills { get; set; }
+        public virtual DbSet<bolockhachtrahang> bolockhachtrahangs { get; set; }
         public virtual DbSet<bookInformation> bookInformations { get; set; }
         public virtual DbSet<checkItem> checkItems { get; set; }
         public virtual DbSet<custommer> custommers { get; set; }
@@ -34,8 +35,12 @@ namespace bookStoreManagetment.Model
         public virtual DbSet<importBill> importBills { get; set; }
         public virtual DbSet<item> items { get; set; }
         public virtual DbSet<itemSummary> itemSummaries { get; set; }
+        public virtual DbSet<khachtrahang> khachtrahangs { get; set; }
+        public virtual DbSet<mail> mails { get; set; }
         public virtual DbSet<profitSummary> profitSummaries { get; set; }
         public virtual DbSet<sellBill> sellBills { get; set; }
+        public virtual DbSet<sentmail> sentmails { get; set; }
+        public virtual DbSet<setting> settings { get; set; }
         public virtual DbSet<studytoolsInformation> studytoolsInformations { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
     }

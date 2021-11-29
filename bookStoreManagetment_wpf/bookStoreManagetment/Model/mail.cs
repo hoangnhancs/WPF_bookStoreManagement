@@ -12,12 +12,17 @@ namespace bookStoreManagetment.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class studytoolsInformation
+    public partial class mail
     {
-        public int idInformation { get; set; }
-        public string idStudyTool { get; set; }
-        public string origin { get; set; }
-        public string distributor { get; set; }
-        public string typecontent { get; set; }
+        public int idMail { get; set; }
+        public string typeMail { get; set; }
+        public System.DateTime updateDate { get; set; }
+        public string subjectMail { get; set; }
+        public string content { get; set; }
+        public string descriptionMailType { get; set; }
+        public string statusMail { get; set; }
+        public string sender { get; set; }
+        public Nullable<System.DateTime> autosentDate { get; set; }
+        public string typesent { get; set; }
     }
 }
