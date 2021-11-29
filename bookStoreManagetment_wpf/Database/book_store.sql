@@ -1,10 +1,10 @@
-create database bookStoreManagementDTB
+create database bookStoreManagement
 go
 
 --use master
---drop database bookstoremanagementDTB
+--drop database bookstoremanagement
 ------------------------------------
-use bookStoreManagementDTB
+use bookStoreManagement
 
 create table account
 (
@@ -51,7 +51,9 @@ create table studytoolsInformation
 	idStudyTool nvarchar(10) not null,
 	origin nvarchar(30) not null,
 	distributor nvarchar(30) not null,
+	
 )
+alter table studytoolsInformation add typecontent nvarchar(30)
 
 create table bill
 (
@@ -1086,9 +1088,9 @@ insert into sellBill(billCodeSell, idEmployee, number, sellDate, deliveryDate, l
 
 SET IDENTITY_INSERT [dbo].[profitSummary] ON
 INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (7, N'IP001', N'import', 2000, 3000, 1000, NULL, 1, N'01-01-2000 00:00:00', N'Nguyen Van A', N'Nguyen Yen Chi', NULL, N'Tiền Mặt', N'Bán Hàng  ', NULL, 12000)
-INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (11, N'EP001', N'sell', 2000, 2000, 0, N'NCC007    ', 1, N'01-01-2000 00:00:00', N'Cong ty A', N'Nguyen Yen Chi', N'Nhà Cung Cấp', N'Tiền Mặt', N'Nhập Hàng ', NULL, 10000)
+INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (11, N'EP001', N'export', 2000, 2000, 0, N'NCC007    ', 1, N'01-01-2000 00:00:00', N'Cong ty A', N'Nguyen Yen Chi', N'Nhà Cung Cấp', N'Tiền Mặt', N'Nhập Hàng ', NULL, 10000)
 INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (12, N'IP002', N'import', 300, 300, 0, NULL, 1, N'13-11-2021 00:00:00', N'Hoang B', N'Thai Hoang Nhan', NULL, N'Tiền Mặt', N'Bán Hàng  ', NULL, 10300)
-INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (13, N'EP002', N'sell', 2000, 2000, 0, N'2         ', 1, N'20-10-2021 00:00:00', N'Thai Hoang Nhan', N'Nguyen Yen Chi', N'Nhân Viên', N'Thẻ', N'Trả Lương ', NULL, 8300)
+INSERT INTO [dbo].[profitSummary] ([idPayHistory], [billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [codeCustomer], [idEmployee], [sellDay], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) VALUES (13, N'EP002', N'export', 2000, 2000, 0, N'2         ', 1, N'20-10-2021 00:00:00', N'Thai Hoang Nhan', N'Nguyen Yen Chi', N'Nhân Viên', N'Thẻ', N'Trả Lương ', NULL, 8300)
 SET IDENTITY_INSERT [dbo].[profitSummary] OFF
 
 SET IDENTITY_INSERT [dbo].[importBill] ON
