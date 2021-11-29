@@ -114,7 +114,7 @@
                                                VerticalAlignment="Center"></TextBlock>
                                             <TextBox
                                                 IsReadOnly="True"
-                                                Text="{Binding ViewImportSheet.GroupPay}"
+                                                Text="{Binding ViewImportSheet.ProfitSummary.typeGroup}"
                                                 Height="25"
                                                 Margin="0 0 0 5"
                                                 materialDesign:TransitionAssist.DisableTransitions="True" />
@@ -261,7 +261,7 @@
 
                                             <TextBox
                                                 IsReadOnly="True"
-                                                Text="{Binding ViewImportSheet.Payment}"
+                                                Text="{Binding ViewImportSheet.ProfitSummary.payment}"
                                                 Height="25"
                                                 Margin="0 5 0 5"
                                                 materialDesign:TransitionAssist.DisableTransitions="True" />
@@ -344,7 +344,7 @@
                                                 BorderBrush="Black">
                                             <Grid Width="auto">
                                                 <TextBox TextWrapping="Wrap" 
-                                                         Text="{Binding ViewImportSheet.Note}"
+                                                         Text="{Binding ViewImportSheet.ProfitSummary.note}"
                                                          IsReadOnly="True"
                                                          Width="auto"
                                                          MinWidth="250"
@@ -458,17 +458,66 @@
                 <!--thanh tìm kiếm-->
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="340"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" 
                           Margin="20 0 5 0">
-                        <TextBox materialDesign:HintAssist.Hint="Tìm kiếm"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <Border BorderBrush="Black"
+                                BorderThickness="2"
+                                CornerRadius="15">
+                            <DockPanel
+                                        VerticalAlignment="Center"
+                                        Opacity="0.8"
+                                        Margin="4 0 0 0">
+                                <materialDesign:PackIcon Kind="Search" 
+                                                         DockPanel.Dock="Left"
+                                                         Width="20"
+                                                         Height="20"/>
+                                <TextBox Padding="5 0 0 0"
+                                         DockPanel.Dock="Bottom"
+                                         Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         x:Name="textboxSearch"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         materialDesign:HintAssist.Hint="Nhập Tên hoặc Mã phiếu chi"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                    BorderThickness="0">
+                                    <!--tìm kiếm theo tên và mã -->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding TextChangedSearchCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </DockPanel>
+                        </Border>
                     </Grid>
 
                     <Grid Grid.Column="1">
-                        <Button Content="Bộ Lọc"></Button>
+                        <Button Width="120"
+                                x:Name="btnFilter"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenFilterCommand}"
+                                CommandParameter="{Binding ElementName=btnFilter}"
+                                Background="{Binding BackgroudFilter}"
+                                Foreground="{Binding ForegroudFilter}"
+                                BorderBrush="Black"
+                                Margin="20 0 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Filter"
+                                                         HorizontalAlignment="Left"
+                                                         Width="20"
+                                                         Height="20"/>
+                                <TextBlock
+                                     Text="Bộ Lọc"
+                                    Margin="5 0 0 0"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Grid>
 
@@ -489,6 +538,25 @@
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.billCode}"
                                     Header="Mã Phiếu"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                <DataGridTextColumn.HeaderStyle >
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!--Mã Phiếu-->
+                            <DataGridTextColumn
+                                    Binding="{Binding ProfitSummary.nameBill}"
+                                    Header="Tên Phiếu"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -542,7 +610,8 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <!--trạng thái --><!--
+                            <!--trạng thái -->
+                            <!--
                             <DataGridTextColumn
                                     Binding="{Binding }"
                                     Header="Trạng thái"
@@ -578,6 +647,7 @@
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.sellDay}"
                                     Header="Ngày ghi nhận"
+                                    Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -649,7 +719,7 @@
                                                     Foreground="red"/>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
-                                                       <!--xoá phiếu thu-->
+                                                        <!--xoá phiếu thu-->
                                                         <i:InvokeCommandAction 
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteImportSheetCommand}" 
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
@@ -715,6 +785,125 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <Grid x:Name="gridFilter"
+                          Visibility="{Binding IsFilter}"
+                          Height="200"
+                          Opacity="0.95"
+                          Width="300"
+                          Margin="0,91,20,0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top">
+            <Border BorderThickness="2"
+                                CornerRadius="10"
+                                BorderBrush="Black"
+                                Background="#FFE7E7E7">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!--<Grid Grid.Row="0">
+                        <StackPanel Orientation="Vertical"
+                                            Margin="5">
+                            <TextBlock Text="Nhóm Đối Tượng"
+                                                   FontWeight="SemiBold"></TextBlock>
+                            <ComboBox IsEditable="True"
+                                                  ItemsSource="{Binding NhomDoiTuong}"
+                                                  SelectedValue="{Binding DisplayGroupType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Text="{Binding DisplayGroupType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Left"
+                                              Width="184">
+                                --><!--sự kiện thay đổi lựu chọn--><!--
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedNhomNguoiNhanFilterCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>-->
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                            <TextBlock Text="Đối Tượng"
+                                                   FontWeight="SemiBold"></TextBlock>
+                            <ComboBox IsEditable="True"
+                                                  ItemsSource="{Binding ListDoiTuong}"
+                                                  SelectedValue="{Binding DisplayNameCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Text="{Binding DisplayNameCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Left"
+                                              Width="150"></ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                            Margin="5">
+                            <TextBlock Text="Ngày tạo"
+                                                   FontWeight="SemiBold"></TextBlock>
+                            <StackPanel Orientation="Horizontal"
+                                                    Margin="0 2 0 0">
+                                <DatePicker SelectedDate="{Binding displayBeginDay}"
+                                                        HorizontalAlignment="Left"
+                                                    Width="100"
+                                                    materialDesign:HintAssist.Hint="Ngày bắt đầu" 
+                                                        FirstDayOfWeek="Monday" 
+                                            SelectedDateFormat="Short">
+                                </DatePicker>
+                                <materialDesign:PackIcon
+                                                Margin="10 0 10 0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Kind="Minus" 
+                                                                     />
+                                <DatePicker SelectedDate="{Binding displayEndDay}"
+                                                        HorizontalAlignment="Right"
+                                                        DisplayDateStart="{Binding displayBeginDay}"
+                                                    Width="100"
+                                                    materialDesign:HintAssist.Hint="Ngày kết thúc" SelectedDateFormat="Short">
+                                </DatePicker>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
+                            <Button Content="Xoá bộ lọc"
+                                                Command="{Binding DeleteFilterCommand}"
+                                                CommandParameter="{Binding ElementName=btnFilter}"
+                                                Padding="0"
+                                                Height="30"
+                                                Width="100"></Button>
+                            <Button Content="Lọc"
+                                                Command="{Binding CheckFilterCommand}"
+                                                CommandParameter="{Binding ElementName=btnFilter}"
+                                                Height="30"
+                                                Padding="0"
+                                                Margin="20 0 0 0"
+                                                Width="100"></Button>
+                        </StackPanel>
+                    </Grid>
+                    <Button HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource MaterialDesignFlatDarkButton}"
+                                        ToolTip="Đóng Bộ Lọc"
+                                        Command="{Binding CloseFilterCommand}"
+                                        Width="30"
+                                        Height="30"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="Red"
+                                        BorderBrush="Transparent">
+                        <materialDesign:PackIcon Kind="Close" 
+                                                                 Width="20"
+                                                                 Height="20"/>
 
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
