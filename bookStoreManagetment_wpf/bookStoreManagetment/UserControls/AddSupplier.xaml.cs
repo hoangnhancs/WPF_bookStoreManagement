@@ -24,5 +24,6 @@ namespace bookStoreManagetment.UserControls
         {
             InitializeComponent();
         }
+
     }
 }

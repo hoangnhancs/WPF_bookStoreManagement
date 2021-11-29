@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{StaticResource NhacungcapVM}">
@@ -15,41 +16,88 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="9*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalAlignment="Center">
-                <Border 
+        <!--Grid danh sach cac nha cung cap-->
+        <Grid x:Name="gridDSNCC" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" HorizontalAlignment="Center">
+                    <Border 
                     Height="25" Width="200" 
                     BorderBrush="Black" 
                     CornerRadius="12"
                     BorderThickness="1">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="tbSearch" VerticalAlignment="Center" Margin="10 0 0 0" Text="">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding searchTBchangedCommand}"
+                                            CommandParameter="{Binding ElementName=tbSearch}"/>
+                                        <i:InvokeCommandAction
+                                            Command="{Binding searchEngineer}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="1" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
-                        
-                        <TextBox VerticalAlignment="Center" Margin="10 0 0 0" Text="search"></TextBox>
+                        <TextBlock VerticalAlignment="Center">Trạng thái</TextBlock>
+                        <ComboBox  x:Name="cbbStatus" Height="25" Width="125" Margin="10 0 0 0" VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="Tất cả"/>
+                            <ComboBoxItem Content="Đang hợp tác"/>
+                            <ComboBoxItem Content="Ngừng hợp tác"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding cbbStatusChangedCommand}"
+                                        CommandParameter="{Binding ElementName=cbbStatus}"/>
+                                    <i:InvokeCommandAction
+                                            Command="{Binding searchEngineer}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
                     </StackPanel>
-                </Border>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Button 
+                    x:Name="btnAddSuplier" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left" 
+                    Width="100"  
+                    Background="Transparent" 
+                    Foreground="Black" 
+                    BorderBrush="Black"
+                    Content="Thêm">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
+                                    Command="{Binding CollapsedGridCommand}"
+                                    CommandParameter="{Binding ElementName=gridDSNCC}"/>
+                                <i:InvokeCommandAction
+                                    Command="{Binding VisibleGridCommand}"
+                                    CommandParameter="{Binding ElementName=gridAddNCC}"/>
+                                <i:InvokeCommandAction
+                                    Command="{Binding loadFunctionCommand}"
+                                    CommandParameter="{Binding ElementName=btnAddSuplier}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
             </Grid>
-            <Grid Grid.Column="1" HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center">Trạng thái</TextBlock>
-                    <ComboBox Height="25" Width="125" Margin="10 0 0 0" VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="Đang hợp tác"/>
-                        <ComboBoxItem Content="Không còn hợp tác"/>
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-        </Grid>
-        <Grid Grid.Row="1">
-            <DataGrid 
+            <Grid Grid.Row="1">
+                <DataGrid 
                 x:Name="dgNhacungcap" 
                 AutoGenerateColumns="False" 
                 CanUserAddRows="False" 
@@ -57,31 +105,454 @@
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
                 ItemsSource="{Binding InventoryList}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                
                 >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Tên nhà cung cấp" Binding="{Binding Supplier.nameSupplier}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Supplier.addressSupplier}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Email" Binding="{Binding Supplier.emailSupplier}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Supplier.phoneNumberSupplier}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding Supplier.statusSupplier}" IsReadOnly="True"/>
-                    <DataGridTemplateColumn Header="">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="btnDelete" Content="Delete"
-                                            >
-                                        
-                                    </Button>
-                                    <Button x:Name="btnEdit" Content="Edit">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="100" Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Width="150" Header="Tên nhà cung cấp" Binding="{Binding Supplier.nameSupplier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Width="250" Header="Địa chỉ" Binding="{Binding Supplier.addressSupplier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Width="200" Header="Email" Binding="{Binding Supplier.emailSupplier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Width="120" Header="Số điện thoại" Binding="{Binding Supplier.phoneNumberSupplier}" IsReadOnly="True"/>
+                        <DataGridTextColumn Width="150" Header="Trạng thái" Binding="{Binding Supplier.statusSupplier}" IsReadOnly="True"/>
+                        <DataGridTemplateColumn Width="250" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button 
+                                        x:Name="btnDelete" Content="Delete"
+                                        Width="100"
+                                        Background="Transparent" 
+                                        Foreground="Black" 
+                                        BorderBrush="Black">
 
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteNCCClickCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.searchEngineer}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                        </Button>
+                                        <Button 
+                                        x:Name="btnEdit" Content="Edit"
+                                        Width="100"
+                                        Background="Transparent" 
+                                        Foreground="Black" 
+                                        BorderBrush="Black"
+                                        >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.CollapsedGridCommand}"
+                                                        CommandParameter="{Binding ElementName=gridDSNCC}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.VisibleGridCommand}"
+                                                        CommandParameter="{Binding ElementName=gridAddNCC}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnEditNCCClickCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=idSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=nameSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=tinhAddressSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=huyenAddressSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=xaAddressSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=sonhaAddressSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=mailSuptb}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.reloadTextBoxCommand}"
+                                                        CommandParameter="{Binding ElementName=phoneSuptb}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+
+
+        <!--Grid them, edit nha cung cap-->
+        <Grid x:Name="gridAddNCC" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock 
+                    Text="Thông tin cơ bản" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBlock 
+                            Text="Mã nhà cung cấp" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="69*"/>
+                            <ColumnDefinition Width="11*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock 
+                            Text="Tên nhà cung cấp" 
+                            VerticalAlignment="Center"
+                            Margin="10,5,0,5.4" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox x:Name="idSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=idSuptb}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBox x:Name="nameSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=nameSuptb}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBlock 
+                            Text="Email" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <TextBlock 
+                            Text="Số điện thoại" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox x:Name="mailSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=mailSuptb}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBox x:Name="phoneSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=phoneSuptb}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock 
+                    Text="Thông tin cơ bản" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBlock 
+                            Text="Tỉnh thành" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <TextBlock 
+                            Text="Quận huyện" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox x:Name="tinhAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=tinhAddressSuptb}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBox x:Name="huyenAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=huyenAddressSuptb}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBlock 
+                            Text="Phường xã" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <TextBlock 
+                            Text="Số nhà, đường" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox x:Name="xaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=xaAddressSuptb}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBox x:Name="sonhaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=sonhaAddressSuptb}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock 
+                    Text="Thông tin bổ sung" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBlock 
+                            Text="Số fax" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <TextBlock 
+                            Text="Mã số thuế" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBlock 
+                            Text="Website" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="3">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Width="100"  Content="Thoát"
+                            Background="Transparent" 
+                            Foreground="Black" 
+                            BorderBrush="Black">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
+                                    Command="{Binding CollapsedGridCommand}"
+                                    CommandParameter="{Binding ElementName=gridAddNCC}"/>
+                                <i:InvokeCommandAction
+                                    Command="{Binding VisibleGridCommand}"
+                                    CommandParameter="{Binding ElementName=gridDSNCC}"/>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=idSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding canEditCommand}"
+                                CommandParameter="{Binding ElementName=idSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=huyenAddressSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=mailSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=nameSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=phoneSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=sonhaAddressSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=tinhAddressSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=xaAddressSuptb}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Width="100" Background="Transparent" Foreground="Black" BorderBrush="Black" Content="Cập nhật">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
+                                Command="{Binding insertSupplierCommand}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding searchEngineer}"/>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=idSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=huyenAddressSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=mailSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=nameSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=phoneSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=sonhaAddressSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=tinhAddressSuptb}"></i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                Command="{Binding reloadTextBoxCommand}"
+                                CommandParameter="{Binding ElementName=xaAddressSuptb}"></i:InvokeCommandAction>
+                                <!--<i:InvokeCommandAction
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=DataContext.searchEngineer}"
+                                CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" />-->
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
+
 </UserControl>

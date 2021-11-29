@@ -39,5 +39,9 @@ namespace bookStoreManagetment
             //}
         }
 
+        private void btnQLMail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
