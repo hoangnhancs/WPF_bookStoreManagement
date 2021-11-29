@@ -24,5 +24,7 @@ namespace bookStoreManagetment.Model
         public string translator { get; set; }
         public string NXB { get; set; }
         public string NPH { get; set; }
+    
+        public virtual item item { get; set; }
     }
 }

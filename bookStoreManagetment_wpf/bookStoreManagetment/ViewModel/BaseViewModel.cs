@@ -32,7 +32,8 @@ namespace bookStoreManagetment.ViewModel
             _execute = execute;
         }
 
-        public bool CanExecute(object parameter){
+        public bool CanExecute(object parameter)
+        {
             try
             {
                 return _canExecute == null ? true : _canExecute((T)parameter);

@@ -1,7 +1,6 @@
 ﻿using bookStoreManagetment.Model;
 using bookStoreManagetment.UserControls;
 using MaterialDesignThemes.Wpf;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -21,7 +20,6 @@ namespace bookStoreManagetment.ViewModel
 
         public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
-        public ICommand LoadedDashBoardCommand { get; set; }
         public ICommand ClosedMainWindowCommand { get; set; }
         public ICommand AccountMainWindowCommand { get; set; }
         public ICommand DashboardClickCommand { get; set; }
@@ -30,16 +28,10 @@ namespace bookStoreManagetment.ViewModel
         public ICommand QuanlyMailCommand { get; set; }
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
-
-        public ICommand DashBoardClickCommand { get; set; }
-        public ICommand ListofProductsClickCommand { get; set; }
-        public ICommand ImportGoodsClickCommand { get; set; }
-
         public ICommand openPhieuThuUCCommand { get; set; }
         public ICommand openPhieuChiUCCommand { get; set; }
         public ICommand openDSThuChiUCCommand { get; set; }
         public ICommand openCaiDatChungUCCommand { get; set; }
-
         public List<StackPanel> opensubstp = new List<StackPanel>();
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
@@ -108,11 +100,6 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
-            // load Dash Board 
-            LoadedDashBoardCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
-                AddChildUC(p, new DashBoardUC());
-            });
-
             // hàm đóng form => đảm bảo không có form con nào còn mở
             ClosedMainWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -133,22 +120,6 @@ namespace bookStoreManagetment.ViewModel
                     (p as Chip).Icon = (nameAccount[0]).ToString().ToUpper();
                 }
             });
-
-            DashBoardClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
-                
-                AddChildUC(p, new DashBoardUC());
-
-            });
-
-            // danh sách sản phẩm
-            ListofProductsClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
-                AddChildUC(p, new ListofProductUC());
-            });
-
-            ImportGoodsClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
-                AddChildUC(p, new ImportGoodsUC());
-            });
-
 
             // is check box
             KiemhangClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {

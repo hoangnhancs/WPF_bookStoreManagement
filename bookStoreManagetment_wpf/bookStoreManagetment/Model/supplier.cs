@@ -14,14 +14,20 @@ namespace bookStoreManagetment.Model
     
     public partial class supplier
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public supplier()
+        {
+            this.items = new HashSet<item>();
+        }
+    
         public string idSupplier { get; set; }
         public string nameSupplier { get; set; }
         public string addressSupplier { get; set; }
         public string emailSupplier { get; set; }
         public string phoneNumberSupplier { get; set; }
         public string statusSupplier { get; set; }
-        public string website { get; set; }
-        public string fax { get; set; }
-        public string masothue { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<item> items { get; set; }
     }
 }

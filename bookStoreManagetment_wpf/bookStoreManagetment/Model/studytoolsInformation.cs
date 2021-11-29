@@ -18,6 +18,7 @@ namespace bookStoreManagetment.Model
         public string idStudyTool { get; set; }
         public string origin { get; set; }
         public string distributor { get; set; }
-        public string typecontent { get; set; }
+    
+        public virtual item item { get; set; }
     }
 }

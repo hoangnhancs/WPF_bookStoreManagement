@@ -24,5 +24,10 @@ namespace bookStoreManagetment.Model
         public System.DateTime incurredDay { get; set; }
         public Nullable<int> idCustomer { get; set; }
         public int idEmployee { get; set; }
+    
+        public virtual bill bill { get; set; }
+        public virtual custommer custommer { get; set; }
+        public virtual employee employee { get; set; }
+        public virtual item item { get; set; }
     }
 }

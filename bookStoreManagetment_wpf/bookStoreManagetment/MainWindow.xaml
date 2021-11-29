@@ -34,10 +34,6 @@
                 Command="{Binding AccountMainWindowCommand}"
                 CommandParameter="{Binding ElementName= chipAccount}">
             </i:InvokeCommandAction>
-            <i:InvokeCommandAction 
-                Command="{Binding LoadedDashBoardCommand}"
-                CommandParameter="{Binding ElementName=GridMainForm}">
-            </i:InvokeCommandAction>
         </i:EventTrigger>
         
         <i:EventTrigger EventName="Closed">
@@ -123,18 +119,10 @@
                                 x:Name="btnDashboard"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Dashboard">
-
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
-                                        Command="{Binding DashBoardClickCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
                                 </Button>
-                        </StackPanel>
-                        <StackPanel x:Name="stpQLVP">
-                            <Button
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLVP">
+                                <Button
                                 x:Name="btnQLVP"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản Lý Vật Phẩm">
@@ -159,27 +147,12 @@
                                     <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Danh sách sản phẩm">
-
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction
-                                        Command="{Binding ListofProductsClickCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
                                     </Button>
-                                <Button 
+                                    <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Nhập hàng">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction
-                                                    Command="{Binding ImportGoodsClickCommand}"
-                                                    CommandParameter="{Binding ElementName=GridMainForm}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
                                     </Button>
-                                <Button 
+                                    <Button 
                                     Style="{StaticResource btnStyle_MenuFeatures}"
                                     Content="Kiểm hàng">
                                         <i:Interaction.Triggers>

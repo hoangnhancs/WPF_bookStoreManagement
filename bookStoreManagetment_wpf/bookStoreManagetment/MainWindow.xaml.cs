@@ -1,5 +1,4 @@
-﻿using bookStoreManagetment.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,19 +23,6 @@ namespace bookStoreManagetment
         public MainWindow()
         {
             InitializeComponent();
-            //using (var db = new bookStoreManagementEntities())
-            //{
-            //    var select = from s in db.items select s;
-            //    foreach (var data in select)
-            //    {
-            //        Console.WriteLine("ID:{0}", data.typeItem);
-            //        Console.WriteLine("Name:{0}", data.typeItem);
-
-            //    }
-            //    var n = DataProvider.Ins.DB.items.Select((u) => u.typeItem).ToList().Distinct().ToList();
-            //    Console.WriteLine("____________________________________________________________________");
-            //    Console.WriteLine(string.Join(",", n));
-            //}
         }
 
         private void btnQLMail_Click(object sender, RoutedEventArgs e)

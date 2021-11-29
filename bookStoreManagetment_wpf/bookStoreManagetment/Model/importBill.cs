@@ -23,6 +23,8 @@ namespace bookStoreManagetment.Model
         public string idItem { get; set; }
         public int unitPrice { get; set; }
         public string note { get; set; }
-        public string idnhacungcap { get; set; }
+    
+        public virtual bill bill { get; set; }
+        public virtual item item { get; set; }
     }
 }
