@@ -157,7 +157,7 @@ namespace bookStoreManagetment.ViewModel
 
                 ListCheckSheets.Remove(temp);
 
-                var deleteItem = DataProvider.Ins.DB.checkItems.Where(x => x.codeCheckItem == temp.codeCheckItem).ToList();
+                var deleteItem = DataProvider.Ins.DB.checkItems.Where(x => x.idCheckItems == temp.codeCheckItem).ToList();
 
                 foreach(var del in deleteItem)
                 {
@@ -349,7 +349,6 @@ namespace bookStoreManagetment.ViewModel
                 { 
                     if (cellItems.IsSelected)
                     {
-                        var _item = DataProvider.Ins.DB.itemSummaries.Where(x => cellItems.Items.idItem == x.idItem).FirstOrDefault();
                         Inventory _Inventory = new Inventory();
                         _Inventory.Item = cellItems.Items;
 
@@ -384,14 +383,11 @@ namespace bookStoreManagetment.ViewModel
                         checkItem temp = new checkItem()
                         {
                             note = Note,
-                            idCheckItems = i,
-                            codeCheckItem = "PKH" + idCount.ToString(),
+                            idCheckItems = "PKH" + idCount.ToString(),
                             dateCheckItems = DateTime.Now,
                             idEmployee = DataProvider.Ins.DB.employees.Where(x => x.lastName == DisplayNhanVien).FirstOrDefault().idEmployee,
                             idItem = inventory.Item.idItem,
-                            quantityItem = inventory.Count,
-                            employee = DataProvider.Ins.DB.employees.Where(x => x.lastName == DisplayNhanVien).FirstOrDefault(),
-                            item = DataProvider.Ins.DB.items.Where(x => x.idItem == inventory.Item.idItem).FirstOrDefault()
+                            quantityItem = inventory.Count
                         };
 
                         DataProvider.Ins.DB.checkItems.Add(temp);
@@ -458,12 +454,12 @@ namespace bookStoreManagetment.ViewModel
         // thêm check sheet
         private void addCheckSheet(checkItem ckItem)
         {
-            int i = checkHasCheckSheet(ckItem.codeCheckItem);
+            int i = checkHasCheckSheet(ckItem.idCheckItems);
             if (i == -1)
             {
                 ListCheckSheets.Add(new CheckItemSheet()
                 {
-                    codeCheckItem = ckItem.codeCheckItem,
+                    codeCheckItem = ckItem.idCheckItems,
                     idEmployee = ckItem.idEmployee,
                     dateCheckItems = ckItem.dateCheckItems,
                     InforItems = new List<inforItem> { new inforItem

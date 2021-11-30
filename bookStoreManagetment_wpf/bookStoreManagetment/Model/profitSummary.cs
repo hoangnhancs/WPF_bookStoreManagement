@@ -14,15 +14,15 @@ namespace bookStoreManagetment.Model
     
     public partial class profitSummary
     {
-        public int idPayHistory { get; set; }
+        public int sttPayHistory { get; set; }
         public string billCode { get; set; }
         public string billType { get; set; }
         public int rootPrice { get; set; }
         public int payPrice { get; set; }
         public int exchangePrice { get; set; }
-        public string codeCustomer { get; set; }
-        public int idEmployee { get; set; }
-        public System.DateTime sellDay { get; set; }
+        public string idCustomer { get; set; }
+        public string idEmployee { get; set; }
+        public System.DateTime day { get; set; }
         public string nameCustomer { get; set; }
         public string nameEmployee { get; set; }
         public string typeGroup { get; set; }
@@ -30,8 +30,5 @@ namespace bookStoreManagetment.Model
         public string nameBill { get; set; }
         public string note { get; set; }
         public Nullable<int> budget { get; set; }
-    
-        public virtual bill bill { get; set; }
-        public virtual employee employee { get; set; }
     }
 }

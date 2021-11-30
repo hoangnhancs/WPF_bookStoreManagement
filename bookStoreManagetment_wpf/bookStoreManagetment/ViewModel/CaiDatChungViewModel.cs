@@ -284,7 +284,6 @@ namespace bookStoreManagetment.ViewModel
                 {
                     idSetting = codeSetting,
                     createdateSetting = DateTime.Now,
-                    employee = currentAcc,
                     idEmployee = currentAcc.idEmployee,
                 };
                 newViewRule.FullNameEmployee = currentAcc.firstName +" "+ currentAcc.lastName;

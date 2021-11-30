@@ -23,11 +23,11 @@ namespace bookStoreManagetment.Model
             }
         }
 
-        public bookStoreManagementDTBEntities DB { get; set; }
+        public bookStoreManagementEntities DB { get; set; }
 
         private DataProvider()
         {
-            DB = new bookStoreManagementDTBEntities();
+            DB = new bookStoreManagementEntities();
         }
     }
 }
