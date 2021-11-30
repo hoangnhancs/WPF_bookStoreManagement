@@ -14,7 +14,7 @@ namespace bookStoreManagetment.Model
     
     public partial class importBill
     {
-        public int idImport { get; set; }
+        public int sttImport { get; set; }
         public string billCodeImport { get; set; }
         public int idEmployee { get; set; }
         public string nameEmployee { get; set; }
@@ -23,6 +23,7 @@ namespace bookStoreManagetment.Model
         public string idItem { get; set; }
         public int unitPrice { get; set; }
         public string note { get; set; }
-        public string idnhacungcap { get; set; }
+        public string paymentMethod { get; set; }
+        public string idsupplier { get; set; }
     }
 }

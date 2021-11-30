@@ -316,8 +316,8 @@ namespace bookStoreManagetment.ViewModel
                 List<importBill> temp = new List<importBill>();
                 foreach (var bill in newListImportBill)
                 {
-                    if (DateTime.Compare(bill.ProfitSummary.sellDay, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
-                     && DateTime.Compare(bill.ProfitSummary.sellDay, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                    if (DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                     && DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
                     {
                         temp.Add(bill);
                     }

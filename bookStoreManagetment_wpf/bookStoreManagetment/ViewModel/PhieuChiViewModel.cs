@@ -228,15 +228,13 @@ namespace bookStoreManagetment.ViewModel
                     bill saveBill = new bill
                     {
                         billCode = ViewExportSheet.ProfitSummary.billCode,
-                        billType = ViewExportSheet.ProfitSummary.billType,
-                        setBillDay = ViewExportSheet.ProfitSummary.sellDay
+                        billType = ViewExportSheet.ProfitSummary.billType
                     };
                     // thêm dữ liệu vào database
                     DataProvider.Ins.DB.bills.Add(saveBill);
                     DataProvider.Ins.DB.SaveChanges();
 
                     // cập nhật bill trong profit
-                    ViewExportSheet.ProfitSummary.bill = saveBill;
                     var lastRowBackup = backupListExportBill[backupListExportBill.Count - 1];
                     ViewExportSheet.ProfitSummary.budget = lastRowBackup.ProfitSummary.budget - ViewExportSheet.ProfitSummary.rootPrice;
                     DataProvider.Ins.DB.profitSummaries.Add(ViewExportSheet.ProfitSummary);
@@ -499,10 +497,9 @@ namespace bookStoreManagetment.ViewModel
             {
                 billCode = code,
                 billType = "Export",
-                employee = currentAcc,
                 idEmployee = currentAcc.idEmployee,
                 nameEmployee = currentAcc.firstName + " " + currentAcc.lastName,
-                sellDay = DateTime.Now
+                day = DateTime.Now
             };
 
             ViewExportSheet = newViewExportSheet;
@@ -527,8 +524,8 @@ namespace bookStoreManagetment.ViewModel
                 List<exportBill> temp = new List<exportBill>();
                 foreach (var bill in newListExportBill)
                 {
-                    if (DateTime.Compare(bill.ProfitSummary.sellDay, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
-                     && DateTime.Compare(bill.ProfitSummary.sellDay, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                    if (DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                     && DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
                     {
                         temp.Add(bill);
                     }

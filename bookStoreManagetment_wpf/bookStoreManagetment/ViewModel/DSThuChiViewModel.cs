@@ -149,8 +149,8 @@ namespace bookStoreManagetment.ViewModel
                         ObservableCollection<Sheet> newListSheet = new ObservableCollection<Sheet>();
                         foreach (var sheet in ListSheet)
                         {
-                            if (DateTime.Compare(sheet.ProfitSummary.sellDay, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
-                                && DateTime.Compare(sheet.ProfitSummary.sellDay, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                            if (DateTime.Compare(sheet.ProfitSummary.day, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                                && DateTime.Compare(sheet.ProfitSummary.day, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
                             {
                                 newListSheet.Add(sheet);
                             }
@@ -253,7 +253,7 @@ namespace bookStoreManagetment.ViewModel
                 Sheet newSheet = new Sheet();
                 newSheet.ProfitSummary = sheet;
                 newSheet.MaPhieu = sheet.billCode;
-                newSheet.NgayGhiNhan = sheet.sellDay;
+                newSheet.NgayGhiNhan = sheet.day;
                 newSheet.DoiTuong = sheet.typeGroup;
                 newSheet.HinhThucThanhToan = sheet.payment;
                 newSheet.TenPhieu = sheet.nameBill;
