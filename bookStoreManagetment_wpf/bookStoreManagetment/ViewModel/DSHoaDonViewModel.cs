@@ -129,7 +129,7 @@ namespace bookStoreManagetment.ViewModel
                     string customerAddress = "";
                     if (billDetails != null)
                     {
-                        var curentCustomer = DataProvider.Ins.DB.custommers.Where(x => x.idCustomer == billDetails.FirstOrDefault().idCustomer).FirstOrDefault();
+                        var curentCustomer = DataProvider.Ins.DB.custommers.Where(x => x.idCustommer == billDetails.FirstOrDefault().idCustomer).FirstOrDefault();
                         customerFullName = curentCustomer.lastName + " " + curentCustomer.firstName;
                         customerAddress = curentCustomer.custommerAddress;
                         employeeFullName = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == billDetails.FirstOrDefault().idEmployee).Select(x => x.lastName + " " + x.firstName).SingleOrDefault();
@@ -233,7 +233,7 @@ namespace bookStoreManagetment.ViewModel
                             billCodeSell = SellBillCode,
                             billstatus = "Đã thanh toán",
                             idEmployee = SelectedEmployeeCreateBill.idEmployee,
-                            idCustomer = SelectedCustomer.idCustomer,
+                            idCustomer = SelectedCustomer.idCustommer,
                             number = bill_.Amount,
                             sellDate = (DateTime)OrderDate,
                             licenseDate = (DateTime)LicenseDate,
@@ -262,7 +262,7 @@ namespace bookStoreManagetment.ViewModel
                             rootPrice = (int)Total,
                             payPrice = (int)Total,
                             exchangePrice = (int)Total - (int)Total,
-                            idCustomer = SelectedCustomer.idCustomer,
+                            idCustomer = SelectedCustomer.idCustommer,
                             idEmployee = SelectedEmployeeCreateBill.idEmployee,
                             day = (DateTime)OrderDate,
                             nameCustomer =  SelectedCustomerFullName,

@@ -53,7 +53,7 @@
             <PropertyRef Name="sttCustommer" />
           </Key>
           <Property Name="sttCustommer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idCustommer" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="lastName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="phoneNumber" Type="nvarchar" MaxLength="11" Nullable="false" />
@@ -128,7 +128,7 @@
           <Property Name="nameEmployee" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="sellDate" Type="datetime" Nullable="false" />
-          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="unitPrice" Type="int" Nullable="false" />
           <Property Name="discount" Type="int" Nullable="false" />
@@ -162,7 +162,7 @@
           <Property Name="rootPrice" Type="int" Nullable="false" />
           <Property Name="payPrice" Type="int" Nullable="false" />
           <Property Name="exchangePrice" Type="int" Nullable="false" />
-          <Property Name="idCustomer" Type="nchar" MaxLength="30" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" />
           <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="day" Type="datetime" Nullable="false" />
           <Property Name="nameCustomer" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -314,7 +314,7 @@
             <PropertyRef Name="sttCustommer" />
           </Key>
           <Property Name="sttCustommer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idCustommer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
@@ -389,7 +389,7 @@
           <Property Name="nameEmployee" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <Property Name="sellDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
@@ -423,7 +423,7 @@
           <Property Name="rootPrice" Type="Int32" Nullable="false" />
           <Property Name="payPrice" Type="Int32" Nullable="false" />
           <Property Name="exchangePrice" Type="Int32" Nullable="false" />
-          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="day" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="nameCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -579,7 +579,7 @@
             <EntityTypeMapping TypeName="bookStoreManagementModel.custommer">
               <MappingFragment StoreEntitySet="custommer">
                 <ScalarProperty Name="sttCustommer" ColumnName="sttCustommer" />
-                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="idCustommer" ColumnName="idCustommer" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
