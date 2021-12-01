@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace bookStoreManagetment.UserControls
+namespace bookStoreManagetment.Model
 {
     /// <summary>
-    /// Interaction logic for CheckItemsUC.xaml
+    /// Interaction logic for BarcodeScannerWindow.xaml
     /// </summary>
-    public partial class CheckItemsUC : UserControl
+    public partial class BarcodeScannerWindow : Window
     {
-        public CheckItemsUC()
+        public BarcodeScannerWindow()
         {
             InitializeComponent();
-        }
-
-        private void datagridShowCheckSheet_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

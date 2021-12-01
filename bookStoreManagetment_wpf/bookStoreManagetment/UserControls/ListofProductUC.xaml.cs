@@ -16,18 +16,19 @@ using System.Windows.Shapes;
 namespace bookStoreManagetment.UserControls
 {
     /// <summary>
-    /// Interaction logic for CheckItemsUC.xaml
+    /// Interaction logic for ListofProductUC.xaml
     /// </summary>
-    public partial class CheckItemsUC : UserControl
+    public partial class ListofProductUC : UserControl
     {
-        public CheckItemsUC()
+        public ListofProductUC()
         {
             InitializeComponent();
         }
 
-        private void datagridShowCheckSheet_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WrapPanel_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
 
         }
+
     }
 }
