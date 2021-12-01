@@ -243,9 +243,10 @@ namespace bookStoreManagetment.ViewModel
             });
 
 
-            KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+            KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
                 AddChildUC(p as Grid, new KhachtrahangUC());
-
+            });
             DSHoaDonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new DSHoaDonUC());
 

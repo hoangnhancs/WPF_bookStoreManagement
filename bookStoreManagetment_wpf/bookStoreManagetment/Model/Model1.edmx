@@ -38,7 +38,7 @@
         </EntityType>
         <EntityType Name="checkItems">
           <Key>
-            <PropertyRef Name="sttCheckItems" />
+            <PropertyRef Name="idCheckItems" />
           </Key>
           <Property Name="sttCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCheckItems" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -299,7 +299,7 @@
         </EntityType>
         <EntityType Name="checkItem">
           <Key>
-            <PropertyRef Name="sttCheckItems" />
+            <PropertyRef Name="idCheckItems" />
           </Key>
           <Property Name="sttCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCheckItems" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />

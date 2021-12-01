@@ -177,7 +177,7 @@
                                     <i:InvokeCommandAction
                                         Command="{Binding ShowHideMenuCommand}"
                                         CommandParameter="{Binding ElementName= gridMenu}">
-                                    </i:InvokeCommandAction> 
+                                    </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
                                     Command="{Binding OpenSubMenuCommand}"
                                     CommandParameter="{Binding ElementName=subMenuQLVP}"/>
@@ -293,7 +293,7 @@
                                     <i:InvokeCommandAction
                                             Command="{Binding OpenSubMenuCommand}"
                                             CommandParameter="{Binding ElementName=subMenuQLTC}"/>
-                                    
+
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -403,7 +403,7 @@
                         x:Name="test_scv" 
                         VerticalScrollBarVisibility="Auto" 
                         HorizontalScrollBarVisibility="Hidden">
-                            
+
                             <StackPanel x:Name="stackPanelFeatures"
                                         Margin="10 0 0 0"
                                         Background="Transparent">
@@ -504,7 +504,7 @@
                                                 Command="{Binding ChangeColorButtonClickCommand}"
                                                 CommandParameter="{Binding ElementName=btnNhapHang}"
                                                 Style="{StaticResource btnStyle_MenuFeatures}"
-                                                Content="Nhập hàng">    
+                                                Content="Nhập hàng">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
@@ -581,29 +581,6 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
-
-                                   
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel x:Name="stpQLBH">
-                                <Button 
-                                x:Name="btnQLBH"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản Lý Bán Hàng">
-                                    <!--Tạo event click vô button mở submenu và đổi màu btn-->
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLBH}"/>
-                                            <i:InvokeCommandAction
-                                        Command="{Binding ChangeColorOpenedSTP}"
-                                        CommandParameter="{Binding ElementName=btnQLBH}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                  </Button>
-                               
-
                                     <!--submenu-->
                                     <StackPanel x:Name="subMenuQLBH" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
@@ -640,14 +617,13 @@
                                                         Command="{Binding ChangeColorButtonIconClickCommand}"
                                                         CommandParameter="{Binding ElementName=btnIconQLBH}">
                                                     </i:InvokeCommandAction>
-                                                  <i:InvokeCommandAction 
+                                                    <i:InvokeCommandAction 
                                                     Command="{Binding KhachtrahangCommand}"
                                                     CommandParameter="{Binding ElementName=GridMainForm}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
-
                                 </StackPanel>
 
                                 <!--Quản lí khách hàng-->
