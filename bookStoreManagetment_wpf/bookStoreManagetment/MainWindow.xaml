@@ -581,6 +581,29 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
+
+                                   
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpQLBH">
+                                <Button 
+                                x:Name="btnQLBH"
+                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                Content="Quản Lý Bán Hàng">
+                                    <!--Tạo event click vô button mở submenu và đổi màu btn-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                        Command="{Binding OpenSubMenuCommand}"
+                                        CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                            <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorOpenedSTP}"
+                                        CommandParameter="{Binding ElementName=btnQLBH}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                  </Button>
+                               
+
                                     <!--submenu-->
                                     <StackPanel x:Name="subMenuQLBH" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
@@ -617,10 +640,14 @@
                                                         Command="{Binding ChangeColorButtonIconClickCommand}"
                                                         CommandParameter="{Binding ElementName=btnIconQLBH}">
                                                     </i:InvokeCommandAction>
+                                                  <i:InvokeCommandAction 
+                                                    Command="{Binding KhachtrahangCommand}"
+                                                    CommandParameter="{Binding ElementName=GridMainForm}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
+
                                 </StackPanel>
 
                                 <!--Quản lí khách hàng-->

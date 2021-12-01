@@ -463,6 +463,7 @@ namespace bookStoreManagetment.ViewModel
             // hoàn thành thêm sản phẩm
             ClickCompletedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+
                 ObservableCollection<Inventory> temp = new ObservableCollection<Inventory>();
                 foreach (var cellItems in BackupAllItems)
                 {
@@ -486,6 +487,7 @@ namespace bookStoreManagetment.ViewModel
 
                 InventoryList.Clear();
                 InventoryList = temp;
+
             });
 
             // hoàn thành thêm phiếu kiểm hàng

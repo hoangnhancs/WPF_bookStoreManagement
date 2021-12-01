@@ -33,7 +33,11 @@ namespace bookStoreManagetment.ViewModel
         public ICommand KiemhangClickCommand { get; set; }
         public ICommand NhacungcapClickCommand { get; set; }
         public ICommand QuanlyMailCommand { get; set; }
+
+        public ICommand KhachtrahangCommand { get; set; }
+
         public ICommand DSHoaDonClickCommand { get; set; }
+
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
 
@@ -238,8 +242,13 @@ namespace bookStoreManagetment.ViewModel
                 AddChildUC(p as Grid, new mailUC());
             });
 
+
+            KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new KhachtrahangUC());
+
             DSHoaDonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new DSHoaDonUC());
+
             });
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>

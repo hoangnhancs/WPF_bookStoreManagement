@@ -28,9 +28,12 @@
     <viewmodel:AddSupplierViewModel x:Key="AddSupplierVM"></viewmodel:AddSupplierViewModel>
     <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
     <viewmodel:mailViewModel x:Key="mailVM"></viewmodel:mailViewModel>
+
+    <viewmodel:KhachtrahangViewModel x:Key="KhachtrahangVM"></viewmodel:KhachtrahangViewModel>
+
     <viewmodel:DSHoaDonViewModel x:Key="DSHoaDonVM"></viewmodel:DSHoaDonViewModel>
 
-    <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
+        <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
         <view:NhacungcapUC></view:NhacungcapUC>
     </DataTemplate>
 
