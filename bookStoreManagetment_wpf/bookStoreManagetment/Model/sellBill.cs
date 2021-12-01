@@ -14,10 +14,10 @@ namespace bookStoreManagetment.Model
     
     public partial class sellBill
     {
-        public int idSell { get; set; }
+        public int sttSell { get; set; }
         public string billCodeSell { get; set; }
-        public int idEmployee { get; set; }
-        public int idCustomer { get; set; }
+        public string idEmployee { get; set; }
+        public string idCustomer { get; set; }
         public string billstatus { get; set; }
         public System.DateTime sellDate { get; set; }
         public System.DateTime deliveryDate { get; set; }

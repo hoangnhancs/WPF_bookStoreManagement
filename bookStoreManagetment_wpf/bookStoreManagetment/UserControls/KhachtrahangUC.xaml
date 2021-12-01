@@ -44,13 +44,14 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid x:Name="gridDSKhachtrahang" Visibility="{Binding DSKhachtrahangVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <Grid x:Name="gridDSKhachtrahang" Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
+                    <!--
                     <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Left">
                         <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                             <StackPanel Orientation="Horizontal">
@@ -66,6 +67,8 @@
                             </StackPanel>
                         </Border>
                     </StackPanel>
+                    -->
+                    <!--
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center">Tên khách hàng</TextBlock>
                         <Border BorderBrush="Black">
@@ -81,9 +84,72 @@
                             </ComboBox>
                         </Border>
                     </StackPanel>
+                    -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="340"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" 
+                        Margin="20 0 5 0">
+                        <Border BorderBrush="Black"
+                            BorderThickness="2"
+                            CornerRadius="15">
+                            <DockPanel
+                                    VerticalAlignment="Center"
+                                    Opacity="0.8"
+                                    Margin="4 0 0 0">
+                                <materialDesign:PackIcon Kind="Search" 
+                                                        DockPanel.Dock="Left"
+                                                        Width="20"
+                                                        Height="20"/>
+                                <TextBox Padding="5 0 0 0"
+                                        DockPanel.Dock="Bottom"
+                                        Text="{Binding TextBoxSearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        x:Name="textboxSearch"
+                                        materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                        materialDesign:HintAssist.Hint="Nhập mã nhà cung cấp"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        BorderThickness="0">
+                                    <!--tìm kiếm theo tên và mã -->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding SearchEngineer}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Button Width="120"
+                            x:Name="btnFilter"
+                            HorizontalAlignment="Left"
+                            Command="{Binding OpenFilterCommand}"
+                            CommandParameter="{Binding ElementName=btnFilter}"
+                            
+                            BorderBrush="Black"
+                            Margin="20 0 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Filter"
+                                                        HorizontalAlignment="Left"
+                                                        Width="20"
+                                                        Height="20"/>
+                                <TextBlock
+                                    Text="Bộ Lọc"
+                                Margin="5 0 0 0"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid 
+                    <Grid>
+                        <DataGrid 
                         x:Name="dgDSTrahang" 
                         AutoGenerateColumns="False" 
                         CanUserAddRows="False" 
@@ -122,12 +188,104 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    </Grid>
+                    <Grid>
+                        <Grid x:Name="gridFilter"
+                            Visibility="{Binding IsFilter}"
+                            Height="200"
+                            Opacity="0.95"
+                            Width="300"
+                            Margin="0,9,20,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="47*"/>
+                                <ColumnDefinition Width="28*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border BorderThickness="2"
+                                CornerRadius="10"
+                                BorderBrush="Black"
+                                Background="#FFE7E7E7" Grid.ColumnSpan="2">
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="0.8*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <StackPanel Orientation="Vertical"
+                                            Margin="5">
+                                            <TextBlock Text="Tên khách hàng"
+                                                   FontWeight="SemiBold"></TextBlock>
+                                            <ComboBox
+                                                IsEditable="True"
+                                                ItemsSource="{Binding TenkhachhangList, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValue="{Binding ComboBoxTenKhachhang, UpdateSourceTrigger=PropertyChanged}"
+                                                Text="{Binding ComboBoxTenKhachhang, UpdateSourceTrigger=PropertyChanged}"
+                                                HorizontalAlignment="Left"
+                                                Width="184">
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <StackPanel Orientation="Vertical"
+                                            Margin="5">
+                                            <TextBlock Text="Tên nhân viên"
+                                                   FontWeight="SemiBold"></TextBlock>
+                                            <ComboBox
+                                                IsEditable="True"
+                                                ItemsSource="{Binding TennhanvienList, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValue="{Binding ComboBoxNhanvienphutrachValue, UpdateSourceTrigger=PropertyChanged}"
+                                                Text="{Binding ComboBoxNhanvienphutrachValue, UpdateSourceTrigger=PropertyChanged}"
+                                                HorizontalAlignment="Left"
+                                                Width="184">
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                            <Button 
+                                                Content="Xoá bộ lọc"         
+                                                Padding="0"
+                                                Height="30"
+                                                Width="100"
+                                                IsEnabled="True"></Button>
+                                                            <Button 
+                                                Content="Lọc"              
+                                                Height="30"
+                                                Padding="0"
+                                                Margin="20 0 0 0"
+                                                Width="100"
+                                                IsEnabled="True"
+                                                Command="{Binding SearchEngineer}"></Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource MaterialDesignFlatDarkButton}"
+                                        ToolTip="Đóng Bộ Lọc"
+                                        Command="{Binding OpenFilterCommand}"
+                                        Width="30"
+                                        Height="30"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="Red"
+                                        BorderBrush="Transparent">
+                                        <materialDesign:PackIcon Kind="Close" 
+                                                                 Width="20"
+                                                                 Height="20"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="2">
                 
                 </Grid>
             </Grid>
-            <Grid x:Name="gridTaoKhachtrahang" Visibility="{Binding ThemKhachtrahangVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <Grid x:Name="gridTaoKhachtrahang" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="*"/>
@@ -281,7 +439,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Grid x:Name="gridChitietTrahang" Visibility="{Binding ChitietHoadontraVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <Grid x:Name="gridChitietTrahang" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="*"/>

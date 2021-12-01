@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{StaticResource mailVM}">
@@ -18,6 +18,7 @@
                     />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -25,12 +26,12 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <TextBlock VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Margin="20 0 0 0">Quản lý mail</TextBlock>
+                HorizontalAlignment="Left" 
+                Margin="20 0 0 0">Quản lý mail</TextBlock>
         </Grid>
         <Grid Grid.Row="1" x:Name="gridMain">
             <Grid x:Name="gridMailDetail" 
-                  Visibility="{Binding GridDetailMailVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                Visibility="{Binding GridDetailMailVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="2*"/>
@@ -38,13 +39,13 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <StackPanel
-                        Orientation="Horizontal"
-                        Margin="40 0 0 0">
+                    Orientation="Horizontal"
+                    Margin="40 0 0 0">
                         <Button x:Name="btnMailMau" Width="120" Background="{x:Null}" Foreground="Black" Content="Mail mẫu">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowMailCommand}"/>
+                                    Command="{Binding ShowMailCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -52,81 +53,119 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowSentMailCommand}"/>
+                                    Command="{Binding ShowSentMailCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="340"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Border BorderBrush="Black"
+                            BorderThickness="2"
+                            CornerRadius="15">
+                            <DockPanel
+                                    VerticalAlignment="Center"
+                                    Opacity="0.8"
+                                    Margin="4 0 0 0">
+                                <materialDesign:PackIcon Kind="Search" 
+                                                        DockPanel.Dock="Left"
+                                                        Width="20"
+                                                        Height="20"/>
+                                <TextBox Padding="5 0 0 0"
+                                        DockPanel.Dock="Bottom"
+                                        Text="{Binding textBoxSearchValue, UpdateSourceTrigger=PropertyChanged}"
+                                        x:Name="textboxSearch"
+                                        materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                        materialDesign:HintAssist.Hint="Nhập mã nhà cung cấp"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        BorderThickness="0">
+                                    <!--tìm kiếm theo tên và mã -->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding searchEngineer}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Column="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Add" Width="50" HorizontalAlignment="Right" RenderTransformOrigin="0.508,0.5">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction 
-                                        Command="{Binding CloseButton}"
-                                        CommandParameter="{Binding ElementName=btnUpdate}"/>
+                                    Command="{Binding CloseButton}"
+                                    CommandParameter="{Binding ElementName=btnUpdate}"/>
                                     <i:InvokeCommandAction 
-                                        Command="{Binding OpenButton}"
-                                        CommandParameter="{Binding ElementName=btnAdd}"/>
+                                    Command="{Binding OpenButton}"
+                                    CommandParameter="{Binding ElementName=btnAdd}"/>
                                     <i:InvokeCommandAction
-                                        Command="{Binding btnAddMailClick}"/>
+                                    Command="{Binding btnAddMailClick}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
+
                         <!--
-                        <TextBox Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnPageFirst" Content="td"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                        <Button x:Name="btnPagePrev" Content="tt"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                        <Button x:Name="btn3cham1" Content="..."
+                                Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                        <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage1.BackGround}"
+                                Foreground="Black"></Button>
+                        <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage2.BackGround}"
+                                Foreground="Black"></Button>
+                        <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage3.BackGround}"
+                                Foreground="Black"></Button>
+                        <Button x:Name="btn3cham2" Content="..."
+                                Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                        <Button x:Name="btnPageNext" Content="ts"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="btnPageFirst" Content="td"
-                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                            <Button x:Name="btnPagePrev" Content="tt"
-                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                            <Button x:Name="btn3cham1" Content="..."
-                                    Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                            <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage1.BackGround}"
-                                    Foreground="Black"></Button>
-                            <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage2.BackGround}"
-                                    Foreground="Black"></Button>
-                            <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage3.BackGround}"
-                                    Foreground="Black"></Button>
-                            <Button x:Name="btn3cham2" Content="..."
-                                    Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                            <Button x:Name="btnPageNext" Content="ts"
-                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
-                            <Button x:Name="btnPageEnd" Content="tc"
-                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                        </StackPanel>-->
-                    </StackPanel>
+                        </Button>
+                        <Button x:Name="btnPageEnd" Content="tc"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                    </StackPanel>-->
+                        </StackPanel>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid x:Name="gridDataGrid" Visibility="{Binding GridDataGridVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid 
-                            x:Name="dgMail" 
-                            AutoGenerateColumns="False" 
-                            CanUserAddRows="False" 
-                            HorizontalAlignment="Center" 
-                            VerticalContentAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            ItemsSource="{Binding InventoryList}"
-                            SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        x:Name="dgMail" 
+                        AutoGenerateColumns="False" 
+                        CanUserAddRows="False" 
+                        HorizontalAlignment="Center" 
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        ItemsSource="{Binding InventoryList}"
+                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="100" Header="Tiêu đề mail" Binding="{Binding Mail.subjectMail}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="150" Header="Loại mail" Binding="{Binding Mail.typeMail}" IsReadOnly="True"/>
@@ -135,17 +174,17 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <ToggleButton
-                                                  Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                                  ToolTip="MaterialDesignSwitchToggleButton"
-                                                  IsChecked="{Binding Check,UpdateSourceTrigger=PropertyChanged}">
+                                                Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                ToolTip="MaterialDesignSwitchToggleButton"
+                                                IsChecked="{Binding Check,UpdateSourceTrigger=PropertyChanged}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
                                                         <i:InvokeCommandAction
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.toggleClickCommand}"
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.toggleClickCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                                
+
                                             </ToggleButton>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -155,16 +194,16 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button 
-                                                    x:Name="btnDelete"
-                                                    Width="100"
-                                                    Background="Transparent" 
-                                                    Foreground="Black" 
-                                                    BorderBrush="Black">
+                                                x:Name="btnDelete"
+                                                Width="100"
+                                                Background="Transparent" 
+                                                Foreground="Black" 
+                                                BorderBrush="Black">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
                                                             <i:InvokeCommandAction
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteCommand}"
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                     <StackPanel>
@@ -172,22 +211,22 @@
                                                     </StackPanel>
                                                 </Button>
                                                 <Button 
-                                                    x:Name="btnEdit"
-                                                    Width="100"
-                                                    Background="Transparent" 
-                                                    Foreground="Black" 
-                                                    BorderBrush="Black">
-                                                    <i:Interaction.Triggers>    
+                                                x:Name="btnEdit"
+                                                Width="100"
+                                                Background="Transparent" 
+                                                Foreground="Black" 
+                                                BorderBrush="Black">
+                                                    <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
                                                             <i:InvokeCommandAction
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DetailMailCommand}"
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DetailMailCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                                                             <i:InvokeCommandAction
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.CloseButton}"
-                                                            CommandParameter="{Binding ElementName=btnAdd}"/>
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.CloseButton}"
+                                                        CommandParameter="{Binding ElementName=btnAdd}"/>
                                                             <i:InvokeCommandAction
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.OpenButton}"
-                                                            CommandParameter="{Binding ElementName=btnUpdate}"/>   
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.OpenButton}"
+                                                        CommandParameter="{Binding ElementName=btnUpdate}"/>
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                     <StackPanel>
@@ -203,14 +242,14 @@
                     </Grid>
                     <Grid x:Name="gridSentMail" Visibility="{Binding GridSentMailVisible,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid 
-                            x:Name="dgSentMail" 
-                            AutoGenerateColumns="False" 
-                            CanUserAddRows="False" 
-                            HorizontalAlignment="Center" 
-                            VerticalContentAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            ItemsSource="{Binding InventoryListSentMail}"
-                            SelectedItem="{Binding SelectedItemSentMail, Mode=TwoWay}">
+                        x:Name="dgSentMail" 
+                        AutoGenerateColumns="False" 
+                        CanUserAddRows="False" 
+                        HorizontalAlignment="Center" 
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        ItemsSource="{Binding InventoryListSentMail}"
+                        SelectedItem="{Binding SelectedItemSentMail, Mode=TwoWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="100" Header="Tiêu đề mail" Binding="{Binding Sentmail.subjectMail}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="100" Header="Mail nhận" Binding="{Binding Sentmail.receiverMail}" IsReadOnly="True"/>
@@ -222,16 +261,16 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button 
-                                                x:Name="btnChitiet" Content="Chi tiết"
-                                                Width="100"
-                                                Background="Transparent" 
-                                                Foreground="Black" 
-                                                BorderBrush="Black">
+                                            x:Name="btnChitiet" Content="Chi tiết"
+                                            Width="100"
+                                            Background="Transparent" 
+                                            Foreground="Black" 
+                                            BorderBrush="Black">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
                                                             <i:InvokeCommandAction 
-                                                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnChitietSentMailCommand}"
-                                                                CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnChitietSentMailCommand}"
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </Button>
@@ -259,14 +298,14 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Tiêu đề" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Tiêu đề" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
                             <Border BorderThickness="1"
-                                BorderBrush="Black" 
-                                CornerRadius="10" Height="40" Margin="10 0 0 0">
+                            BorderBrush="Black" 
+                            CornerRadius="10" Height="40" Margin="10 0 0 0">
                                 <TextBox Width="150" VerticalContentAlignment="Center" Height="40" Margin="10 0 0 0"
-                                Text="{Binding Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            Text="{Binding Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -274,20 +313,20 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Loại mail" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
                             <Border BorderThickness="1"
-                                BorderBrush="Black" 
-                                CornerRadius="0" Height="40" Margin="10 0 0 0">
+                            BorderBrush="Black" 
+                            CornerRadius="0" Height="40" Margin="10 0 0 0">
                                 <!--<TextBox Width="150" VerticalContentAlignment="Center" Height="40"
-                                        Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
+                                    Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
                                 <ComboBox Width="100" VerticalAlignment="Center" Height="40"
-                                          Text="{Binding Mailtype, UpdateSourceTrigger=PropertyChanged}"
-                                          ItemsSource="{Binding cbbMailType}"
-                                          VerticalContentAlignment="Center"
-                                          x:Name="cbbMailType">
+                                        Text="{Binding Mailtype, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding cbbMailType}"
+                                        VerticalContentAlignment="Center"
+                                        x:Name="cbbMailType">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding cbbMailTypeSelectionChanged}"
-                                                                   CommandParameter="{Binding ElementName=cbbMailType}"/>
+                                                                CommandParameter="{Binding ElementName=cbbMailType}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
@@ -298,16 +337,16 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Cách gửi" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
                             <Border BorderThickness="1"
-                                BorderBrush="Black" 
-                                CornerRadius="0" Height="40" Margin="10 0 0 0">
+                            BorderBrush="Black" 
+                            CornerRadius="0" Height="40" Margin="10 0 0 0">
                                 <!--<TextBox Width="150" VerticalContentAlignment="Center" Height="40"
-                                        Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
+                                    Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
                                 <ComboBox Width="120" VerticalAlignment="Center" Height="40"
-                                          Text="{Binding Senttype, UpdateSourceTrigger=PropertyChanged}"
-                                          ItemsSource="{Binding cbbSentType}"
-                                          VerticalContentAlignment="Center"
-                                          IsEnabled="{Binding ComboBoxSenttypeEnable, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                                        Text="{Binding Senttype, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding cbbSentType}"
+                                        VerticalContentAlignment="Center"
+                                        IsEnabled="{Binding ComboBoxSenttypeEnable, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -315,13 +354,13 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Ngày gửi" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
                             <Border BorderThickness="1"
-                                BorderBrush="Black" 
-                                CornerRadius="0" Height="40" Margin="10 0 0 0">
+                            BorderBrush="Black" 
+                            CornerRadius="0" Height="40" Margin="10 0 0 0">
                                 <!--<TextBox Width="150" VerticalContentAlignment="Center" Height="40"
-                                        Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
+                                    Text="{Binding Mailtype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>-->
                                 <DatePicker
-                                    Text="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
+                                Text="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
                                 </DatePicker>
                             </Border>
                         </StackPanel>
@@ -331,10 +370,10 @@
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Nội dung" Margin="10 0 0 0"/>
                         <Border BorderThickness="1"
-                                BorderBrush="Black" 
-                                CornerRadius="10">
+                            BorderBrush="Black" 
+                            CornerRadius="10">
                             <TextBox Height="180" Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -342,11 +381,11 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Người gửi" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
                         <Border BorderThickness="1"
-                                BorderBrush="Black" 
-                                CornerRadius="10" Height="40" Margin="10 0 0 0">
+                            BorderBrush="Black" 
+                            CornerRadius="10" Height="40" Margin="10 0 0 0">
                             <TextBox Width="150" VerticalContentAlignment="Center" Height="40" Margin="10 0 0 0"
-                                     Text="{Binding Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    Text="{Binding Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -356,29 +395,29 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction 
-                                        Command="{Binding btnHuyClickCommand}"/>
+                                    Command="{Binding btnHuyClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
                         <Button x:Name="btnUpdate" Content="Cập nhật" Visibility="Visible"
-                                IsEnabled="{Binding Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            IsEnabled="{Binding Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding btnCapnhatClickCommand}"/>
+                                    Command="{Binding btnCapnhatClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
                         <Button x:Name="btnAdd" Content="Thêm" Visibility="Collapsed"
-                                IsEnabled="{Binding Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            IsEnabled="{Binding Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding btnAddClickCommand}"/>
+                                    Command="{Binding btnAddClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
-                    </StackPanel>               
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>

@@ -14,7 +14,7 @@ namespace bookStoreManagetment.Model
     
     public partial class bookInformation
     {
-        public int idInformation { get; set; }
+        public int sttInformation { get; set; }
         public string idBook { get; set; }
         public string typeContent { get; set; }
         public string typeMaterial { get; set; }

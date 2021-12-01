@@ -14,7 +14,8 @@ namespace bookStoreManagetment.Model
     
     public partial class custommer
     {
-        public int idCustommer { get; set; }
+        public int sttCustommer { get; set; }
+        public string idCustommer { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string phoneNumber { get; set; }

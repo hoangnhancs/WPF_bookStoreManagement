@@ -4,30 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="35b426c9062e49d0af2b328f923c6f1d" Name="Diagram1">
-        <EntityTypeShape EntityType="bookStoreManagementModel.account" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.bill" Width="1.5" PointX="3.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.bolockhachtrahang" Width="1.5" PointX="7.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.bookInformation" Width="1.5" PointX="8.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.checkItem" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.custommer" Width="1.5" PointX="8.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.employee" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.importBill" Width="1.5" PointX="2.75" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.item" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.itemSummary" Width="1.5" PointX="10.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.khachtrahang" Width="1.5" PointX="10.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.mail" Width="1.5" PointX="4.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.profitSummary" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.sellBill" Width="1.5" PointX="10.75" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.sentmail" Width="1.5" PointX="12.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.setting" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.studytoolsInformation" Width="1.5" PointX="12.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookStoreManagementModel.supplier" Width="1.5" PointX="6.75" PointY="13.25" IsExpanded="true" />
-        <AssociationConnector Association="bookStoreManagementModel.FK__profitSum__billC__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementModel.FK__checkItem__idEmp__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementModel.FK__checkItem__idIte__34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementModel.FK__profitSum__idEmp__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="bookStoreManagementModel.FK__setting__idEmplo__2D27B809" ManuallyRouted="false" />
+      <Diagram DiagramId="5fad19af4b2b43f78d724e00c8c7049c" Name="Diagram1">
+        <EntityTypeShape EntityType="bookStoreManagementModel.account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.bill" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.bookInformation" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.checkItem" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.custommer" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.employee" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.importBill" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.item" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.khachtrahang" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.mail" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.profitSummary" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.sellBill" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.sentmail" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.setting" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.studytoolsInformation" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.supplier" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

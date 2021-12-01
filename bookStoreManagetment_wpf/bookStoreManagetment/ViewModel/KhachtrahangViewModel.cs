@@ -33,6 +33,10 @@ namespace bookStoreManagetment.ViewModel
         public ICommand tbSearchChangedCommand { get; set; }
         public ICommand cbbTenKHChangedCommand { get; set; }
         public ICommand cbbTenNVChangedCommand { get; set; }
+        public ICommand SearchEngineer { get; set; }
+        public ICommand OpenFilterCommand { get; set; }
+        private Visibility _IsFilter;
+        public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
         public int testsltv { get; set; }
         public int begin = DateTime.Now.Minute;
         public int end { get; set; }
@@ -323,7 +327,7 @@ namespace bookStoreManagetment.ViewModel
                 {
 
                     int _tmpnum = i.TraveNumber;
-                    var _tmpidCus = DataProvider.Ins.DB.Database.SqlQuery<int>("Select idCustomer from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
+                    var _tmpidCus = DataProvider.Ins.DB.Database.SqlQuery<string>("Select idCustomer from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
                     var _tmpfirstnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select firstName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
                     var _tmplastnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select lastName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
                     string _tmpnameCus = _tmplastnameCus + " " + _tmpfirstnameCus;
@@ -362,7 +366,7 @@ namespace bookStoreManagetment.ViewModel
                 ThemKhachtrahangVisible = Visibility.Collapsed;
                 ChitietHoadontraVisible = Visibility.Collapsed;
                 clearData();
-                searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, "");
+                searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
             });
             taoDonhangtraCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -504,8 +508,19 @@ namespace bookStoreManagetment.ViewModel
                 {
                     ComboBoxTenKhachhang = (p as ComboBox).SelectedItem.ToString();
                     Console.WriteLine(TextBoxSearchValue, ComboBoxTenKhachhang);
-                    searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, "");
+                    searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
                 }
+            });
+            SearchEngineer = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
+            });
+            OpenFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IsFilter == Visibility.Visible)
+                    IsFilter = Visibility.Collapsed;
+                else
+                    IsFilter = Visibility.Visible;
             });
             void LoadData()
             {
@@ -563,11 +578,11 @@ namespace bookStoreManagetment.ViewModel
             void searchEngineer(string tbs, string nkh, string nnv)
             {
                 InventoryList = new ObservableCollection<TrahangInfor>();
-                if (nnv == "Tất cả")
+                if (nnv == "Tất cả" || nnv == "") 
                     tmpcbbnhanviensearch = "";
                 else
                     tmpcbbnhanviensearch = nnv;
-                if (nkh == "Tất cả")
+                if (nkh == "Tất cả" || nkh == "") 
                     tmpcbbkhachhangsearch = "";
                 else
                     tmpcbbkhachhangsearch = nkh;
@@ -580,11 +595,13 @@ namespace bookStoreManagetment.ViewModel
                     TrahangInfor _Inventory = new TrahangInfor();
                     string billcodesell = item.billCodeSell;
                     string _namecus = DataProvider.Ins.DB.Database.SqlQuery<String>("select nameCustomer from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
+                    string _nameemp = DataProvider.Ins.DB.Database.SqlQuery<String>("select nameEmployee from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     string _status = DataProvider.Ins.DB.Database.SqlQuery<String>("select trangthai from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     string _lido = DataProvider.Ins.DB.Database.SqlQuery<String>("select lido from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     DateTime _ngaytra = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select sellDate from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     //Console.WriteLine(_namecus + ".");
-                    if (_namecus.Contains(tmpcbbkhachhangsearch))
+                    //MessageBox.Show(_namecus + " " + tmpcbbkhachhangsearch);
+                    if (_namecus.Contains(tmpcbbkhachhangsearch) && _nameemp.Contains(tmpcbbnhanviensearch)) 
                     {
                         _Inventory.BillcodeSell = billcodesell;
                         _Inventory.NameCustomer = _namecus;

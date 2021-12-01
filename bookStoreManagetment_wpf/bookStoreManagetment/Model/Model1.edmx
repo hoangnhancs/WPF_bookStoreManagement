@@ -20,21 +20,12 @@
           </Key>
           <Property Name="billCode" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="billType" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="setBillDay" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="bolockhachtrahang">
-          <Key>
-            <PropertyRef Name="idBoloc" />
-          </Key>
-          <Property Name="idBoloc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="trangThai" Type="nvarchar" MaxLength="30" />
-          <Property Name="nhanVien" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="bookInformation">
           <Key>
-            <PropertyRef Name="idInformation" />
+            <PropertyRef Name="sttInformation" />
           </Key>
-          <Property Name="idInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idBook" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="typeContent" Type="nvarchar" MaxLength="50" />
           <Property Name="typeMaterial" Type="nvarchar" MaxLength="50" />
@@ -49,19 +40,20 @@
           <Key>
             <PropertyRef Name="idCheckItems" />
           </Key>
-          <Property Name="idCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
+          <Property Name="sttCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCheckItems" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="quantityItem" Type="int" Nullable="false" />
-          <Property Name="codeCheckItem" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
-            <PropertyRef Name="idCustommer" />
+            <PropertyRef Name="sttCustommer" />
           </Key>
-          <Property Name="idCustommer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttCustommer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCustommer" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="lastName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="phoneNumber" Type="nvarchar" MaxLength="11" Nullable="false" />
@@ -76,9 +68,10 @@
         </EntityType>
         <EntityType Name="employee">
           <Key>
-            <PropertyRef Name="idEmployee" />
+            <PropertyRef Name="sttEmployee" />
           </Key>
-          <Property Name="idEmployee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttEmployee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="lastName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="phoneNumber" Type="nvarchar" MaxLength="11" Nullable="false" />
@@ -94,18 +87,19 @@
         </EntityType>
         <EntityType Name="importBill">
           <Key>
-            <PropertyRef Name="idImport" />
+            <PropertyRef Name="sttImport" />
           </Key>
-          <Property Name="idImport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttImport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="billCodeImport" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="nameEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="importDate" Type="datetime" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="unitPrice" Type="int" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="20" />
-          <Property Name="idnhacungcap" Type="nvarchar" MaxLength="10" />
+          <Property Name="paymentMethod" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idsupplier" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -124,21 +118,6 @@
           <Property Name="supplierItem" Type="nvarchar" MaxLength="10" />
           <Property Name="unit" Type="nvarchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="itemSummary">
-          <Key>
-            <PropertyRef Name="idSummary" />
-          </Key>
-          <Property Name="idSummary" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="billCode" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="billType" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="quantityBefore" Type="int" Nullable="false" />
-          <Property Name="incurred" Type="int" Nullable="false" />
-          <Property Name="quantityAfter" Type="int" Nullable="false" />
-          <Property Name="incurredDay" Type="datetime" Nullable="false" />
-          <Property Name="idCustomer" Type="int" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="khachtrahang">
           <Key>
             <PropertyRef Name="idTrahang" />
@@ -149,7 +128,7 @@
           <Property Name="nameEmployee" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="sellDate" Type="datetime" Nullable="false" />
-          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="unitPrice" Type="int" Nullable="false" />
           <Property Name="discount" Type="int" Nullable="false" />
@@ -175,17 +154,17 @@
         </EntityType>
         <EntityType Name="profitSummary">
           <Key>
-            <PropertyRef Name="idPayHistory" />
+            <PropertyRef Name="sttPayHistory" />
           </Key>
-          <Property Name="idPayHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttPayHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="billCode" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="billType" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="rootPrice" Type="int" Nullable="false" />
           <Property Name="payPrice" Type="int" Nullable="false" />
           <Property Name="exchangePrice" Type="int" Nullable="false" />
-          <Property Name="codeCustomer" Type="nchar" MaxLength="10" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
-          <Property Name="sellDay" Type="datetime" Nullable="false" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="day" Type="datetime" Nullable="false" />
           <Property Name="nameCustomer" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="nameEmployee" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="typeGroup" Type="nvarchar" MaxLength="50" />
@@ -196,12 +175,12 @@
         </EntityType>
         <EntityType Name="sellBill">
           <Key>
-            <PropertyRef Name="idSell" />
+            <PropertyRef Name="sttSell" />
           </Key>
-          <Property Name="idSell" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttSell" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="billCodeSell" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
-          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" />
           <Property Name="billstatus" Type="nvarchar" MaxLength="30" />
           <Property Name="sellDate" Type="datetime" Nullable="false" />
           <Property Name="deliveryDate" Type="datetime" Nullable="false" />
@@ -238,16 +217,17 @@
           <Property Name="statusSetting" Type="nvarchar" MaxLength="10" />
           <Property Name="contentSetting" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="createdateSetting" Type="date" Nullable="false" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="studytoolsInformation">
           <Key>
-            <PropertyRef Name="idInformation" />
+            <PropertyRef Name="sttInformation" />
           </Key>
-          <Property Name="idInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sttInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idStudyTool" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="origin" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="distributor" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="typecontent" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="supplier">
           <Key>
@@ -263,77 +243,15 @@
           <Property Name="fax" Type="nvarchar" MaxLength="30" />
           <Property Name="masothue" Type="nvarchar" MaxLength="30" />
         </EntityType>
-        <Association Name="FK__checkItem__idEmp__33D4B598">
-          <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="checkItems" Type="Self.checkItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="idEmployee" />
-            </Principal>
-            <Dependent Role="checkItems">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__checkItem__idIte__34C8D9D1">
-          <End Role="item" Type="Self.item" Multiplicity="1" />
-          <End Role="checkItems" Type="Self.checkItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="item">
-              <PropertyRef Name="idItem" />
-            </Principal>
-            <Dependent Role="checkItems">
-              <PropertyRef Name="idItem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__profitSum__billC__300424B4">
-          <End Role="bill" Type="Self.bill" Multiplicity="1" />
-          <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bill">
-              <PropertyRef Name="billCode" />
-            </Principal>
-            <Dependent Role="profitSummary">
-              <PropertyRef Name="billCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__profitSum__idEmp__30F848ED">
-          <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="idEmployee" />
-            </Principal>
-            <Dependent Role="profitSummary">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__setting__idEmplo__2D27B809">
-          <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="setting" Type="Self.setting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="idEmployee" />
-            </Principal>
-            <Dependent Role="setting">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="bookStoreManagementModelStoreContainer">
           <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="bolockhachtrahang" EntityType="Self.bolockhachtrahang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bookInformation" EntityType="Self.bookInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="checkItems" EntityType="Self.checkItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="custommer" EntityType="Self.custommer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="importBill" EntityType="Self.importBill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="item" EntityType="Self.item" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="itemSummary" EntityType="Self.itemSummary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="khachtrahang" EntityType="Self.khachtrahang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mail" EntityType="Self.mail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="profitSummary" EntityType="Self.profitSummary" Schema="dbo" store:Type="Tables" />
@@ -342,26 +260,6 @@
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="studytoolsInformation" EntityType="Self.studytoolsInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__checkItem__idEmp__33D4B598" Association="Self.FK__checkItem__idEmp__33D4B598">
-            <End Role="employee" EntitySet="employee" />
-            <End Role="checkItems" EntitySet="checkItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__checkItem__idIte__34C8D9D1" Association="Self.FK__checkItem__idIte__34C8D9D1">
-            <End Role="item" EntitySet="item" />
-            <End Role="checkItems" EntitySet="checkItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__profitSum__billC__300424B4" Association="Self.FK__profitSum__billC__300424B4">
-            <End Role="bill" EntitySet="bill" />
-            <End Role="profitSummary" EntitySet="profitSummary" />
-          </AssociationSet>
-          <AssociationSet Name="FK__profitSum__idEmp__30F848ED" Association="Self.FK__profitSum__idEmp__30F848ED">
-            <End Role="employee" EntitySet="employee" />
-            <End Role="profitSummary" EntitySet="profitSummary" />
-          </AssociationSet>
-          <AssociationSet Name="FK__setting__idEmplo__2D27B809" Association="Self.FK__setting__idEmplo__2D27B809">
-            <End Role="employee" EntitySet="employee" />
-            <End Role="setting" EntitySet="setting" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -383,22 +281,12 @@
           </Key>
           <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="setBillDay" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__billC__300424B4" FromRole="bill" ToRole="profitSummary" />
-        </EntityType>
-        <EntityType Name="bolockhachtrahang">
-          <Key>
-            <PropertyRef Name="idBoloc" />
-          </Key>
-          <Property Name="idBoloc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="trangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="nhanVien" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bookInformation">
           <Key>
-            <PropertyRef Name="idInformation" />
+            <PropertyRef Name="sttInformation" />
           </Key>
-          <Property Name="idInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idBook" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="typeContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="typeMaterial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -413,21 +301,20 @@
           <Key>
             <PropertyRef Name="idCheckItems" />
           </Key>
-          <Property Name="idCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="sttCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCheckItems" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="quantityItem" Type="Int32" Nullable="false" />
-          <Property Name="codeCheckItem" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__checkItem__idEmp__33D4B598" FromRole="checkItems" ToRole="employee" />
-          <NavigationProperty Name="item" Relationship="Self.FK__checkItem__idIte__34C8D9D1" FromRole="checkItems" ToRole="item" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
-            <PropertyRef Name="idCustommer" />
+            <PropertyRef Name="sttCustommer" />
           </Key>
-          <Property Name="idCustommer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttCustommer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCustommer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
@@ -442,9 +329,10 @@
         </EntityType>
         <EntityType Name="employee">
           <Key>
-            <PropertyRef Name="idEmployee" />
+            <PropertyRef Name="sttEmployee" />
           </Key>
-          <Property Name="idEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
@@ -457,24 +345,22 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idEmp__33D4B598" FromRole="employee" ToRole="checkItems" />
-          <NavigationProperty Name="profitSummaries" Relationship="Self.FK__profitSum__idEmp__30F848ED" FromRole="employee" ToRole="profitSummary" />
-          <NavigationProperty Name="settings" Relationship="Self.FK__setting__idEmplo__2D27B809" FromRole="employee" ToRole="setting" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
-            <PropertyRef Name="idImport" />
+            <PropertyRef Name="sttImport" />
           </Key>
-          <Property Name="idImport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttImport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="billCodeImport" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="nameEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <Property Name="importDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="idnhacungcap" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="paymentMethod" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idsupplier" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -492,22 +378,6 @@
           <Property Name="typeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="supplierItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="checkItems" Relationship="Self.FK__checkItem__idIte__34C8D9D1" FromRole="item" ToRole="checkItems" />
-        </EntityType>
-        <EntityType Name="itemSummary">
-          <Key>
-            <PropertyRef Name="idSummary" />
-          </Key>
-          <Property Name="idSummary" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="quantityBefore" Type="Int32" Nullable="false" />
-          <Property Name="incurred" Type="Int32" Nullable="false" />
-          <Property Name="quantityAfter" Type="Int32" Nullable="false" />
-          <Property Name="incurredDay" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="idCustomer" Type="Int32" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="khachtrahang">
           <Key>
@@ -519,7 +389,7 @@
           <Property Name="nameEmployee" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <Property Name="sellDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Int32" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
@@ -545,17 +415,17 @@
         </EntityType>
         <EntityType Name="profitSummary">
           <Key>
-            <PropertyRef Name="idPayHistory" />
+            <PropertyRef Name="sttPayHistory" />
           </Key>
-          <Property Name="idPayHistory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttPayHistory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="rootPrice" Type="Int32" Nullable="false" />
           <Property Name="payPrice" Type="Int32" Nullable="false" />
           <Property Name="exchangePrice" Type="Int32" Nullable="false" />
-          <Property Name="codeCustomer" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
-          <Property Name="sellDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="day" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="nameCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="nameEmployee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="typeGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -563,17 +433,15 @@
           <Property Name="nameBill" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="note" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="budget" Type="Int32" />
-          <NavigationProperty Name="bill" Relationship="Self.FK__profitSum__billC__300424B4" FromRole="profitSummary" ToRole="bill" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__profitSum__idEmp__30F848ED" FromRole="profitSummary" ToRole="employee" />
         </EntityType>
         <EntityType Name="sellBill">
           <Key>
-            <PropertyRef Name="idSell" />
+            <PropertyRef Name="sttSell" />
           </Key>
-          <Property Name="idSell" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttSell" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="billCodeSell" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
-          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="billstatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="sellDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="deliveryDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -610,17 +478,17 @@
           <Property Name="statusSetting" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="contentSetting" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="createdateSetting" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="employee" Relationship="Self.FK__setting__idEmplo__2D27B809" FromRole="setting" ToRole="employee" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="studytoolsInformation">
           <Key>
-            <PropertyRef Name="idInformation" />
+            <PropertyRef Name="sttInformation" />
           </Key>
-          <Property Name="idInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sttInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idStudyTool" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="origin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="distributor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typecontent" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="supplier">
           <Key>
@@ -636,77 +504,15 @@
           <Property Name="fax" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="masothue" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK__profitSum__billC__300424B4">
-          <End Role="bill" Type="Self.bill" Multiplicity="1" />
-          <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bill">
-              <PropertyRef Name="billCode" />
-            </Principal>
-            <Dependent Role="profitSummary">
-              <PropertyRef Name="billCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__checkItem__idEmp__33D4B598">
-          <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="checkItems" Type="Self.checkItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="idEmployee" />
-            </Principal>
-            <Dependent Role="checkItems">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__checkItem__idIte__34C8D9D1">
-          <End Role="item" Type="Self.item" Multiplicity="1" />
-          <End Role="checkItems" Type="Self.checkItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="item">
-              <PropertyRef Name="idItem" />
-            </Principal>
-            <Dependent Role="checkItems">
-              <PropertyRef Name="idItem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__profitSum__idEmp__30F848ED">
-          <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="profitSummary" Type="Self.profitSummary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="idEmployee" />
-            </Principal>
-            <Dependent Role="profitSummary">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__setting__idEmplo__2D27B809">
-          <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="setting" Type="Self.setting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="idEmployee" />
-            </Principal>
-            <Dependent Role="setting">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="bookStoreManagementEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="accounts" EntityType="Self.account" />
           <EntitySet Name="bills" EntityType="Self.bill" />
-          <EntitySet Name="bolockhachtrahangs" EntityType="Self.bolockhachtrahang" />
           <EntitySet Name="bookInformations" EntityType="Self.bookInformation" />
           <EntitySet Name="checkItems" EntityType="Self.checkItem" />
           <EntitySet Name="custommers" EntityType="Self.custommer" />
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="importBills" EntityType="Self.importBill" />
           <EntitySet Name="items" EntityType="Self.item" />
-          <EntitySet Name="itemSummaries" EntityType="Self.itemSummary" />
           <EntitySet Name="khachtrahangs" EntityType="Self.khachtrahang" />
           <EntitySet Name="mails" EntityType="Self.mail" />
           <EntitySet Name="profitSummaries" EntityType="Self.profitSummary" />
@@ -715,26 +521,6 @@
           <EntitySet Name="settings" EntityType="Self.setting" />
           <EntitySet Name="studytoolsInformations" EntityType="Self.studytoolsInformation" />
           <EntitySet Name="suppliers" EntityType="Self.supplier" />
-          <AssociationSet Name="FK__profitSum__billC__300424B4" Association="Self.FK__profitSum__billC__300424B4">
-            <End Role="bill" EntitySet="bills" />
-            <End Role="profitSummary" EntitySet="profitSummaries" />
-          </AssociationSet>
-          <AssociationSet Name="FK__checkItem__idEmp__33D4B598" Association="Self.FK__checkItem__idEmp__33D4B598">
-            <End Role="employee" EntitySet="employees" />
-            <End Role="checkItems" EntitySet="checkItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__checkItem__idIte__34C8D9D1" Association="Self.FK__checkItem__idIte__34C8D9D1">
-            <End Role="item" EntitySet="items" />
-            <End Role="checkItems" EntitySet="checkItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__profitSum__idEmp__30F848ED" Association="Self.FK__profitSum__idEmp__30F848ED">
-            <End Role="employee" EntitySet="employees" />
-            <End Role="profitSummary" EntitySet="profitSummaries" />
-          </AssociationSet>
-          <AssociationSet Name="FK__setting__idEmplo__2D27B809" Association="Self.FK__setting__idEmplo__2D27B809">
-            <End Role="employee" EntitySet="employees" />
-            <End Role="setting" EntitySet="settings" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -757,23 +543,13 @@
               <MappingFragment StoreEntitySet="bill">
                 <ScalarProperty Name="billCode" ColumnName="billCode" />
                 <ScalarProperty Name="billType" ColumnName="billType" />
-                <ScalarProperty Name="setBillDay" ColumnName="setBillDay" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bolockhachtrahangs">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.bolockhachtrahang">
-              <MappingFragment StoreEntitySet="bolockhachtrahang">
-                <ScalarProperty Name="idBoloc" ColumnName="idBoloc" />
-                <ScalarProperty Name="trangThai" ColumnName="trangThai" />
-                <ScalarProperty Name="nhanVien" ColumnName="nhanVien" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="bookInformations">
             <EntityTypeMapping TypeName="bookStoreManagementModel.bookInformation">
               <MappingFragment StoreEntitySet="bookInformation">
-                <ScalarProperty Name="idInformation" ColumnName="idInformation" />
+                <ScalarProperty Name="sttInformation" ColumnName="sttInformation" />
                 <ScalarProperty Name="idBook" ColumnName="idBook" />
                 <ScalarProperty Name="typeContent" ColumnName="typeContent" />
                 <ScalarProperty Name="typeMaterial" ColumnName="typeMaterial" />
@@ -789,12 +565,12 @@
           <EntitySetMapping Name="checkItems">
             <EntityTypeMapping TypeName="bookStoreManagementModel.checkItem">
               <MappingFragment StoreEntitySet="checkItems">
+                <ScalarProperty Name="sttCheckItems" ColumnName="sttCheckItems" />
                 <ScalarProperty Name="idCheckItems" ColumnName="idCheckItems" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
                 <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
-                <ScalarProperty Name="codeCheckItem" ColumnName="codeCheckItem" />
                 <ScalarProperty Name="note" ColumnName="note" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -802,6 +578,7 @@
           <EntitySetMapping Name="custommers">
             <EntityTypeMapping TypeName="bookStoreManagementModel.custommer">
               <MappingFragment StoreEntitySet="custommer">
+                <ScalarProperty Name="sttCustommer" ColumnName="sttCustommer" />
                 <ScalarProperty Name="idCustommer" ColumnName="idCustommer" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
@@ -820,6 +597,7 @@
           <EntitySetMapping Name="employees">
             <EntityTypeMapping TypeName="bookStoreManagementModel.employee">
               <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="sttEmployee" ColumnName="sttEmployee" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
@@ -839,7 +617,7 @@
           <EntitySetMapping Name="importBills">
             <EntityTypeMapping TypeName="bookStoreManagementModel.importBill">
               <MappingFragment StoreEntitySet="importBill">
-                <ScalarProperty Name="idImport" ColumnName="idImport" />
+                <ScalarProperty Name="sttImport" ColumnName="sttImport" />
                 <ScalarProperty Name="billCodeImport" ColumnName="billCodeImport" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="nameEmployee" ColumnName="nameEmployee" />
@@ -848,7 +626,8 @@
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
                 <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
                 <ScalarProperty Name="note" ColumnName="note" />
-                <ScalarProperty Name="idnhacungcap" ColumnName="idnhacungcap" />
+                <ScalarProperty Name="paymentMethod" ColumnName="paymentMethod" />
+                <ScalarProperty Name="idsupplier" ColumnName="idsupplier" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -867,22 +646,6 @@
                 <ScalarProperty Name="typeItem" ColumnName="typeItem" />
                 <ScalarProperty Name="supplierItem" ColumnName="supplierItem" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="itemSummaries">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.itemSummary">
-              <MappingFragment StoreEntitySet="itemSummary">
-                <ScalarProperty Name="idSummary" ColumnName="idSummary" />
-                <ScalarProperty Name="billCode" ColumnName="billCode" />
-                <ScalarProperty Name="billType" ColumnName="billType" />
-                <ScalarProperty Name="idItem" ColumnName="idItem" />
-                <ScalarProperty Name="quantityBefore" ColumnName="quantityBefore" />
-                <ScalarProperty Name="incurred" ColumnName="incurred" />
-                <ScalarProperty Name="quantityAfter" ColumnName="quantityAfter" />
-                <ScalarProperty Name="incurredDay" ColumnName="incurredDay" />
-                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
-                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -925,15 +688,15 @@
           <EntitySetMapping Name="profitSummaries">
             <EntityTypeMapping TypeName="bookStoreManagementModel.profitSummary">
               <MappingFragment StoreEntitySet="profitSummary">
-                <ScalarProperty Name="idPayHistory" ColumnName="idPayHistory" />
+                <ScalarProperty Name="sttPayHistory" ColumnName="sttPayHistory" />
                 <ScalarProperty Name="billCode" ColumnName="billCode" />
                 <ScalarProperty Name="billType" ColumnName="billType" />
                 <ScalarProperty Name="rootPrice" ColumnName="rootPrice" />
                 <ScalarProperty Name="payPrice" ColumnName="payPrice" />
                 <ScalarProperty Name="exchangePrice" ColumnName="exchangePrice" />
-                <ScalarProperty Name="codeCustomer" ColumnName="codeCustomer" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
-                <ScalarProperty Name="sellDay" ColumnName="sellDay" />
+                <ScalarProperty Name="day" ColumnName="day" />
                 <ScalarProperty Name="nameCustomer" ColumnName="nameCustomer" />
                 <ScalarProperty Name="nameEmployee" ColumnName="nameEmployee" />
                 <ScalarProperty Name="typeGroup" ColumnName="typeGroup" />
@@ -947,7 +710,7 @@
           <EntitySetMapping Name="sellBills">
             <EntityTypeMapping TypeName="bookStoreManagementModel.sellBill">
               <MappingFragment StoreEntitySet="sellBill">
-                <ScalarProperty Name="idSell" ColumnName="idSell" />
+                <ScalarProperty Name="sttSell" ColumnName="sttSell" />
                 <ScalarProperty Name="billCodeSell" ColumnName="billCodeSell" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
@@ -996,10 +759,11 @@
           <EntitySetMapping Name="studytoolsInformations">
             <EntityTypeMapping TypeName="bookStoreManagementModel.studytoolsInformation">
               <MappingFragment StoreEntitySet="studytoolsInformation">
-                <ScalarProperty Name="idInformation" ColumnName="idInformation" />
+                <ScalarProperty Name="sttInformation" ColumnName="sttInformation" />
                 <ScalarProperty Name="idStudyTool" ColumnName="idStudyTool" />
                 <ScalarProperty Name="origin" ColumnName="origin" />
                 <ScalarProperty Name="distributor" ColumnName="distributor" />
+                <ScalarProperty Name="typecontent" ColumnName="typecontent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

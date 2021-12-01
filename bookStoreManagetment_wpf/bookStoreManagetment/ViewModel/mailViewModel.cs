@@ -17,194 +17,86 @@ namespace bookStoreManagetment.ViewModel
 {
     public class mailViewModel : BaseViewModel
     {
-
+        #region "mail"
         private ObservableCollection<checkmail> _InventoryList;
         public ObservableCollection<checkmail> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
         private ObservableCollection<checkmail> _DivInventoryList;
         public ObservableCollection<checkmail> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
-        private ObservableCollection<Inventory> _InventoryListSentMail;
-        public ObservableCollection<Inventory> InventoryListSentMail { get => _InventoryListSentMail; set { _InventoryListSentMail = value; OnPropertyChanged(); } }
-        private ObservableCollection<Inventory> _DivInventoryListSentMail;
-        public ObservableCollection<Inventory> DivInventoryListSentMail { get => _DivInventoryListSentMail; set { _DivInventoryListSentMail = value; OnPropertyChanged(); } }
         private ObservableCollection<Inventory> _InventoryCustomerList;
         public ObservableCollection<Inventory> InventoryCustomerList { get => _InventoryCustomerList; set { _InventoryCustomerList = value; OnPropertyChanged(); } }
         private ObservableCollection<Inventory> _InventoryEmployeeList;
         public ObservableCollection<Inventory> InventoryEmployeeList { get => _InventoryEmployeeList; set { _InventoryEmployeeList = value; OnPropertyChanged(); } }
         public checkmail SelectedItem { get; set; }
-        public Inventory SelectedItemSentMail { get; set; }
-        private ObservableCollection<string> _cbbmailtype;
-        public ObservableCollection<String> cbbMailType
-        {
-            get { return _cbbmailtype; }
-            set
-            {
-                _cbbmailtype = value;
-                OnPropertyChanged();
-            }
-        }
-        private ObservableCollection<string> _cbbsenttype;
-        public ObservableCollection<String> cbbSentType
-        {
-            get { return _cbbsenttype; }
-            set
-            {
-                _cbbsenttype = value;
-                OnPropertyChanged();
-            }
-        }
-        private DateTime _datesent;
-        public DateTime DateSent
-        {
-            get { return _datesent; }
-            set
-            {
-                _datesent = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ICommand LoadMailCommand { get; set; }
-        public ICommand ShowMailCommand { get; set; }
+        #endregion
+
+        #region "sent mail"
+        private ObservableCollection<Inventory> _InventoryListSentMail;
+        public ObservableCollection<Inventory> InventoryListSentMail { get => _InventoryListSentMail; set { _InventoryListSentMail = value; OnPropertyChanged(); } }
+        private ObservableCollection<Inventory> _DivInventoryListSentMail;
+        public ObservableCollection<Inventory> DivInventoryListSentMail { get => _DivInventoryListSentMail; set { _DivInventoryListSentMail = value; OnPropertyChanged(); } }
+        public Inventory SelectedItemSentMail { get; set; }
         public ICommand ShowSentMailCommand { get; set; }
+        public ICommand btnChitietSentMailCommand { get; set; }
+
+        #endregion
+
+        #region "add, edit, delete mail"
+        private ObservableCollection<string> _cbbmailtype;
+        public ObservableCollection<String> cbbMailType { get { return _cbbmailtype; } set { _cbbmailtype = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _cbbsenttype;
+        public ObservableCollection<String> cbbSentType { get { return _cbbsenttype; } set { _cbbsenttype = value; OnPropertyChanged(); } }
+        private DateTime _datesent;
+        public DateTime DateSent { get { return _datesent; } set { _datesent = value; OnPropertyChanged(); } }
+        public ICommand ShowMailCommand { get; set; }
         public ICommand DetailMailCommand { get; set; }
-        public ICommand btnHuyClickCommand { get; set; }
         public ICommand btnCapnhatClickCommand { get; set; }
         public ICommand btnAddClickCommand { get; set; }
         public ICommand btnAddMailClick { get; set; }
         public ICommand btnDeleteCommand { get; set; }
-        public ICommand btnChitietSentMailCommand { get; set; }
-        public ICommand OpenButton { get; set; }
-        public ICommand CloseButton { get; set; }
         public ICommand cbbMailTypeSelectionChanged { get; set; }
-        public ICommand toggleClickCommand { get; set; }
         public string textBoxSearchValue { get; set; }
         public bool seen { get; set; }
         private bool _readOnly;
-        public bool ReadOnly
-        {
-            get { return _readOnly; }
-            set
-            {
-                _readOnly = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool ReadOnly { get { return _readOnly; } set { _readOnly = value; OnPropertyChanged(); } }
         private bool _enable;
-        public bool Enable
-        {
-            get { return _enable; }
-            set
-            {
-                _enable = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool Enable { get { return _enable; } set { _enable = value; OnPropertyChanged(); } }
         private bool _cbbsenttypeenable;
-        public bool ComboBoxSenttypeEnable
-        {
-            get { return _cbbsenttypeenable; }
-            set
-            {
-                _cbbsenttypeenable = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility _gridDetailMailVisible;
-        public Visibility GridDetailMailVisible
-        {
-            get { return _gridDetailMailVisible; }
-            set
-            {
-                _gridDetailMailVisible = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility _gridDataGridVisible;
-        public Visibility GridDataGridVisible
-        {
-            get { return _gridDataGridVisible; }
-            set
-            {
-                _gridDataGridVisible = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility _gridSentMailVisible;
-        public Visibility GridSentMailVisible
-        {
-            get { return _gridSentMailVisible; }
-            set
-            {
-                _gridSentMailVisible = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility _gridEditMailVisible;
-        public Visibility GridEditMailVisible
-        {
-            get { return _gridEditMailVisible; }
-            set
-            {
-                _gridEditMailVisible = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool ComboBoxSenttypeEnable { get { return _cbbsenttypeenable; } set { _cbbsenttypeenable = value; OnPropertyChanged(); } }
         private string subject;
-        public string Subject
-        {
-            get { return subject; }
-            set
-            {
-                subject = value;
-                OnPropertyChanged();
-
-            }
-        }
+        public string Subject { get { return subject; } set { subject = value; OnPropertyChanged(); } }
         private string content;
-        public string Content
-        {
-            get { return content; }
-            set
-            {
-                content = value;
-                OnPropertyChanged();
-            }
-        }
+        public string Content { get { return content; } set { content = value; OnPropertyChanged(); } }
         private string sender;
-        public string Sender
-        {
-            get { return sender; }
-            set
-            {
-                sender = value;
-                OnPropertyChanged();
-                Console.WriteLine(sender);
-            }
-        }
+        public string Sender { get { return sender; } set { sender = value; OnPropertyChanged(); Console.WriteLine(sender); } }
         private string mailtype;
-        public string Mailtype
-        {
-            get { return mailtype; }
-            set
-            {
-                mailtype = value;
-                OnPropertyChanged();
-                Console.WriteLine(mailtype);
-            }
-        }
+        public string Mailtype { get { return mailtype; } set { mailtype = value; OnPropertyChanged(); } }
         private string senttype;
-        public string Senttype
-        {
-            get { return senttype; }
-            set
-            {
-                senttype = value;
-                OnPropertyChanged();
-                Console.WriteLine(senttype);
-            }
-        }
+        public string Senttype { get { return senttype; } set { senttype = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region "manipulation"
+        private Visibility _gridDetailMailVisible;
+        public Visibility GridDetailMailVisible { get { return _gridDetailMailVisible; } set { _gridDetailMailVisible = value; OnPropertyChanged(); } }
+        private Visibility _gridDataGridVisible;
+        public Visibility GridDataGridVisible { get { return _gridDataGridVisible; } set { _gridDataGridVisible = value; OnPropertyChanged(); } }
+        private Visibility _gridSentMailVisible;
+        public Visibility GridSentMailVisible { get { return _gridSentMailVisible; } set { _gridSentMailVisible = value; OnPropertyChanged(); } }
+        private Visibility _gridEditMailVisible;
+        public Visibility GridEditMailVisible { get { return _gridEditMailVisible; } set { _gridEditMailVisible = value; OnPropertyChanged(); } }
+        public ICommand btnHuyClickCommand { get; set; }
 
 
+        public ICommand OpenButton { get; set; }
+        public ICommand CloseButton { get; set; }
+        #endregion
+
+        #region "filter"
+        public ICommand toggleClickCommand { get; set; }
+        public ICommand searchEngineer { get; set; }
+        #endregion
+
+        #region "page"
         //Page Property
         /*
         private Visibility _3cham1Visible;
@@ -299,9 +191,9 @@ namespace bookStoreManagetment.ViewModel
         */
 
         //Page Property
-
+        #endregion
         public mailViewModel() {
-
+            #region "mail"
             LoadMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridDataGridVisible = Visibility.Visible;
@@ -309,7 +201,7 @@ namespace bookStoreManagetment.ViewModel
                 GridSentMailVisible = Visibility.Collapsed;
                 GridEditMailVisible = Visibility.Collapsed;
                 textBoxSearchValue = "";
-                
+
                 //NumRowEachPageTextBox = "5";
                 //NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
                 LoadData();
@@ -329,13 +221,6 @@ namespace bookStoreManagetment.ViewModel
                 GridSentMailVisible = Visibility.Collapsed;
                 GridEditMailVisible = Visibility.Collapsed;
             });
-            ShowSentMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                GridDataGridVisible = Visibility.Collapsed;
-                GridDetailMailVisible = Visibility.Visible;
-                GridSentMailVisible = Visibility.Visible;
-                GridEditMailVisible = Visibility.Collapsed;
-            });
             DetailMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 seen = false;
@@ -352,16 +237,139 @@ namespace bookStoreManagetment.ViewModel
                 GridSentMailVisible = Visibility.Collapsed;
                 GridEditMailVisible = Visibility.Visible;
             });
+            #endregion
+
+            #region "sent mail"
+            ShowSentMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridDataGridVisible = Visibility.Collapsed;
+                GridDetailMailVisible = Visibility.Visible;
+                GridSentMailVisible = Visibility.Visible;
+                GridEditMailVisible = Visibility.Collapsed;
+            });
+            btnChitietSentMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                SelectedItemSentMail = new Inventory();
+                SelectedItemSentMail = (p as Inventory);
+
+                Subject = SelectedItemSentMail.Sentmail.subjectMail;
+                Mailtype = SelectedItemSentMail.Sentmail.typeMail;
+                Sender = SelectedItemSentMail.Sentmail.sender;
+                int id = SelectedItemSentMail.Sentmail.idMail;
+                DateSent = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select autosentDate from mail where idMail=" + id.ToString()).FirstOrDefault();
+                Senttype = DataProvider.Ins.DB.Database.SqlQuery<string>("select typesent from mail where idMail=" + id.ToString()).FirstOrDefault();
+                var _res = DataProvider.Ins.DB.mails.Where(i => i.idMail == id);
+                Content = DataProvider.Ins.DB.Database.SqlQuery<String>("select content from mail where idMail=" + id.ToString()).FirstOrDefault();
+                Console.WriteLine("select content from mail where idMail=" + id.ToString());
+                /*
+                foreach(var item in _res)
+                {
+                    Inventory _in = new Inventory();
+                    Content = item.content;
+                }
+                */
+                seen = true;
+                EnableChange(seen);
+                GridEditMailVisible = Visibility.Visible;
+                GridDetailMailVisible = Visibility.Collapsed;
+                GridDataGridVisible = Visibility.Collapsed;
+                GridSentMailVisible = Visibility.Collapsed;
+            });
+            #endregion
+
+            #region "manipulation"
             btnHuyClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (MessageBox.Show("Bạn có muốn thoát?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {    
+                {
                     GridDetailMailVisible = Visibility.Visible;
                     GridDataGridVisible = Visibility.Visible;
                     GridSentMailVisible = Visibility.Collapsed;
                     GridEditMailVisible = Visibility.Collapsed;
                     LoadData();
                     //settingButtonNextPrev();
+                }
+            });
+            OpenButton = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                (p as Button).Visibility = System.Windows.Visibility.Visible;
+            });
+            CloseButton = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                (p as Button).Visibility = System.Windows.Visibility.Collapsed;
+            });
+            #endregion
+
+            #region "filter"
+            toggleClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (MessageBox.Show("Bạn có muốn thay đổi trạng thái? Điều này có thể sẽ lặp lại việc gửi mail?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    SelectedItem = (p as checkmail);
+                    var result = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
+                    if (result != null)
+                    {
+                        if (result.statusMail == "OFF")
+                        {
+                            result.statusMail = "ON";
+                            MessageBox.Show(SelectedItem.Mail.subjectMail + SelectedItem.Mail.typeMail + SelectedItem.Mail.typesent);
+                            autosentmail(SelectedItem, SelectedItem.Mail.typeMail, SelectedItem.Mail.typesent);
+                        }
+                        else
+                            result.statusMail = "OFF";
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+
+                }
+
+                LoadData();
+            });
+            searchEngineer = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                SearchEngineer(textBoxSearchValue);
+            });
+            void SearchEngineer(string query)
+            {
+                InventoryList = new ObservableCollection<checkmail>();
+                var lstMail = DataProvider.Ins.DB.mails.Where(i => (i.subjectMail.Contains(query) || i.typeMail.Contains(query)));
+                foreach (var mail in lstMail)
+                {
+                    checkmail _Inventory = new checkmail();
+                    _Inventory.Mail = mail;
+                    if (mail.statusMail == "ON")
+                        _Inventory.Check = true;
+                    else
+                        _Inventory.Check = false;
+                    InventoryList.Add(_Inventory);
+                }
+
+
+
+            }
+            #endregion
+
+            #region "add,update,delete"
+            cbbMailTypeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                try
+                {
+                    if ((p as ComboBox).SelectedItem != null)
+                    {
+                        string value = (p as ComboBox).SelectedItem.ToString();
+                        if (value == "Sinh nhật")
+                        {
+                            ComboBoxSenttypeEnable = false;
+                            Senttype = "EVERYYEAR";
+                        }
+                        else
+                        {
+                            ComboBoxSenttypeEnable = true;
+                        }
+                    }
+                }
+                catch
+                {
+
                 }
             });
             btnCapnhatClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -372,7 +380,7 @@ namespace bookStoreManagetment.ViewModel
                     //string query = "update mail set content=N'" + Content +"',typeMail=N'"+Mailtype +"',subjectMail=N'" + Subject + "',sender=N'" + Sender + "',updateDate=N'" + now.ToString() + "' where idMail=" + SelectedItem.Mail.idMail;
                     //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
                     var res = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
-                    if(res!=null)
+                    if (res != null)
                     {
                         res.content = Content;
                         res.typeMail = Mailtype;
@@ -402,7 +410,7 @@ namespace bookStoreManagetment.ViewModel
                 DateTime now = DateTime.Now;
                 if (Mailtype.ToLower() != "sinh nhật")
                 {
-                    query = String.Format("insert into mail values (N'{0}',N'{1}', N'{2}', N'{3}', N'Sử dụng để gửi thông báo', N'ON', N'{4}',N'{5}',N'{6}')", Mailtype, now, subject, Content, Sender, DateSent,Senttype);
+                    query = String.Format("insert into mail values (N'{0}',N'{1}', N'{2}', N'{3}', N'Sử dụng để gửi thông báo', N'ON', N'{4}',N'{5}',N'{6}')", Mailtype, now, subject, Content, Sender, DateSent, Senttype);
                 }
                 else
                     query = String.Format("insert into mail values (N'{0}',N'{1}', N'{2}', N'{3}', N'Sử dụng để gửi thông báo', N'ON', N'{4}', null,N'{5}')", Mailtype, now, subject, Content, Sender, Senttype);
@@ -412,7 +420,7 @@ namespace bookStoreManagetment.ViewModel
                     DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
                     MessageBox.Show("Thêm thành công");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
@@ -424,103 +432,29 @@ namespace bookStoreManagetment.ViewModel
             {
                 SelectedItem = (p as checkmail);
                 int id = SelectedItem.Mail.idMail;
-                
+
                 string sbj = SelectedItem.Mail.subjectMail;
-                
+
                 if (MessageBox.Show(String.Format("Bạn có muốn xóa mail {0}?", sbj), "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     string query = "delete from mail where idMail=" + id;
                     DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
-                    
+
                     LoadData();
                     MessageBox.Show(String.Format("Bạn đã xóa thành công mail {0}", sbj));
-                    
-                }
-            });
-            btnChitietSentMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                SelectedItemSentMail = new Inventory();
-                SelectedItemSentMail = (p as Inventory);
-                
-                Subject = SelectedItemSentMail.Sentmail.subjectMail;
-                Mailtype = SelectedItemSentMail.Sentmail.typeMail;
-                Sender = SelectedItemSentMail.Sentmail.sender;
-                int id = SelectedItemSentMail.Sentmail.idMail;
-                DateSent = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select autosentDate from mail where idMail=" + id.ToString()).FirstOrDefault();
-                Senttype = DataProvider.Ins.DB.Database.SqlQuery<string>("select typesent from mail where idMail=" + id.ToString()).FirstOrDefault();
-                var _res = DataProvider.Ins.DB.mails.Where(i => i.idMail == id);
-                Content = DataProvider.Ins.DB.Database.SqlQuery<String>("select content from mail where idMail=" + id.ToString()).FirstOrDefault();
-                Console.WriteLine("select content from mail where idMail=" + id.ToString());
-                /*
-                foreach(var item in _res)
-                {
-                    Inventory _in = new Inventory();
-                    Content = item.content;
-                }
-                */
-                seen = true;
-                EnableChange(seen);
-                GridEditMailVisible = Visibility.Visible;
-                GridDetailMailVisible = Visibility.Collapsed;
-                GridDataGridVisible = Visibility.Collapsed;
-                GridSentMailVisible = Visibility.Collapsed;
-            });
-            OpenButton = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                (p as Button).Visibility = System.Windows.Visibility.Visible;
-            });
-            CloseButton = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                (p as Button).Visibility = System.Windows.Visibility.Collapsed;
-            });
-
-            toggleClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (MessageBox.Show("Bạn có muốn thay đổi trạng thái? Điều này có thể sẽ lặp lại việc gửi mail?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    SelectedItem = (p as checkmail);
-                    var result = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
-                    if (result != null)
-                    {
-                        if (result.statusMail == "OFF")
-                        {
-                            result.statusMail = "ON";
-                            MessageBox.Show(SelectedItem.Mail.subjectMail+SelectedItem.Mail.typeMail+ SelectedItem.Mail.typesent);
-                            autosentmail(SelectedItem,SelectedItem.Mail.typeMail,SelectedItem.Mail.typesent);
-                        }
-                        else
-                            result.statusMail = "OFF";
-                        DataProvider.Ins.DB.SaveChanges();
-                    }
-                    
-                }
-                
-                LoadData();
-            });
-            cbbMailTypeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-
-                try
-                {
-                    if ((p as ComboBox).SelectedItem != null)
-                    {
-                        string value = (p as ComboBox).SelectedItem.ToString();
-                        if (value == "Sinh nhật")
-                        {
-                            ComboBoxSenttypeEnable = false;
-                            Senttype = "EVERYYEAR";
-                        }
-                        else
-                        {
-                            ComboBoxSenttypeEnable = true;
-                        }
-                    }
-                }
-                catch
-                {
 
                 }
             });
+            void EnableChange(bool seen)
+            {
+
+                ReadOnly = seen;
+                Enable = !seen;
+
+            }
+            #endregion
+
+            #region "select num row each page"
             /*
             tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -542,24 +476,8 @@ namespace bookStoreManagetment.ViewModel
                 settingButtonNextPrev();
             });
             */
-            void SearchEngineer(string query)
-            {
-                InventoryList = new ObservableCollection<checkmail>();
-                var lstMail = DataProvider.Ins.DB.mails.Where(i => (i.subjectMail.Contains(query) || i.typeMail.Contains(query)));
-                foreach (var mail in lstMail)
-                {
-                    checkmail _Inventory = new checkmail();
-                    _Inventory.Mail = mail;
-                    if (mail.statusMail == "ON")
-                        _Inventory.Check = true;
-                    else
-                        _Inventory.Check = false;
-                    InventoryList.Add(_Inventory);
-                }
-                
+            #endregion
 
-
-            }
             void LoadData()
             { 
                 DivInventoryList = new ObservableCollection<checkmail>();
@@ -614,6 +532,7 @@ namespace bookStoreManagetment.ViewModel
                 DateSent = DateTime.Now.Date;
 
             }
+            #region "setting button"
             /*
             void settingButtonNextPrev()
             {
@@ -802,7 +721,7 @@ namespace bookStoreManagetment.ViewModel
 
                 }
             }*/
-
+            #endregion
             void clearData()
             {
                 Subject = "";
@@ -810,13 +729,7 @@ namespace bookStoreManagetment.ViewModel
                 Sender = "";
                 Mailtype = "";
             }
-            void EnableChange(bool seen)
-            {
 
-                ReadOnly = seen;
-                Enable = !seen;
-
-            }
             void sentmail(string from, string pass, string to, string subject, string body)
             {
                 try

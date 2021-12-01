@@ -130,26 +130,26 @@ namespace bookStoreManagetment.ViewModel
 
             ClickCompletedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                foreach(var cellItems in backupAllItems)
-                {
-                    if (cellItems.IsSelected)
-                    {
-                        var _item = DataProvider.Ins.DB.itemSummaries.Where(i => cellItems.Items.idItem == i.idItem).FirstOrDefault();
-                        Inventory _Inventory = new Inventory();
-                        _Inventory.Item = cellItems.Items;
+                //foreach(var cellItems in backupAllItems)
+                //{
+                //    if (cellItems.IsSelected)
+                //    {
+                //        var _item = DataProvider.Ins.DB.itemSummaries.Where(i => cellItems.Items.idItem == i.idItem).FirstOrDefault();
+                //        Inventory _Inventory = new Inventory();
+                //        _Inventory.Item = cellItems.Items;
 
-                        if (_item != null)
-                        {
-                            _Inventory.Count = _item.quantityAfter - _item.quantityBefore;
-                        }
-                        else
-                        {
-                            _Inventory.Count = 0;
-                        }
-                        _Inventory.Note = "";
-                        InventoryList.Add(_Inventory);
-                    }
-                }
+                //        if (_item != null)
+                //        {
+                //            _Inventory.Count = _item.quantityAfter - _item.quantityBefore;
+                //        }
+                //        else
+                //        {
+                //            _Inventory.Count = 0;
+                //        }
+                //        _Inventory.Note = "";
+                //        InventoryList.Add(_Inventory);
+                //    }
+                //}
             });
         }
 
