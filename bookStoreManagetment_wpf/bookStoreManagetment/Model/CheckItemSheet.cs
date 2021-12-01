@@ -15,7 +15,7 @@ namespace bookStoreManagetment.Model
     {
         //public string note { get; set; }
         public string codeCheckItem { get; set; }
-        public int idEmployee { get; set; }
+        public string idEmployee { get; set; }
         public string nameEmployee { get; set; }
         public System.DateTime dateCheckItems { get; set; }
         public List<inforItem> InforItems { get; set; }

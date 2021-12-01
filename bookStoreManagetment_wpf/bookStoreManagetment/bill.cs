@@ -14,26 +14,7 @@ namespace bookStoreManagetment
     
     public partial class bill
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public bill()
-        {
-            this.importBills = new HashSet<importBill>();
-            this.itemSummaries = new HashSet<itemSummary>();
-            this.profitSummaries = new HashSet<profitSummary>();
-            this.sellBills = new HashSet<sellBill>();
-        }
-    
         public string billCode { get; set; }
         public string billType { get; set; }
-        public System.DateTime setBillDay { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<importBill> importBills { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<itemSummary> itemSummaries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<profitSummary> profitSummaries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sellBill> sellBills { get; set; }
     }
 }

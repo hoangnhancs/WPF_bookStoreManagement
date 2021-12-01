@@ -19,18 +19,19 @@ namespace bookStoreManagetment.ViewModel
             public bill Bill { get; set; }
             public string EmployeeFullName { get; set; }
             public string CustomerFullName { get; set; }
-            public string CustommerPhoneNumber { get; set; }
-            public string CustommerAddress { get; set; }
+            public string CustomerPhoneNumber { get; set; }
+            public string CustomerAddress { get; set; }
             public int Total { get; set; }
             public List<SellBillItem> OrderItems { get; set; }
             public sellBill SellBill { get; set; }
+            public string billStatus { get; set; }
         }
         
         public class SellBillItem
         {
-            public item Item;
-            public int Amount;
-            public int Discount;
+            public item Item { get; set; }
+            public int Amount { get; set; }
+            public int Discount { get; set; }
         }
 
         public DSHoaDonViewModel()
@@ -45,17 +46,22 @@ namespace bookStoreManagetment.ViewModel
             ResetFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) => ResetFilter());
             #endregion
 
+            // Command in đơn hàng
+            #region PrintBillCommand
+            PrintBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => printBill());
+            #endregion
+
             // Command Load data hóa đơn để xem
-            #region LoadBillDataCommand
-            LoadBillDataCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            #region LoadBillDetailCommand
+            LoadBillDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ViewBillDetail = (p as BillDetail);
+                ViewBillDetail = SelectedBill;//(p as BillDetail);
                 IsBillViewing = Visibility.Visible;
                 IsDSHoaDon = Visibility.Collapsed;
                 IsBillCreating = Visibility.Collapsed;
             });
             #endregion
-            
+
             // Command Load data để tạo đơn hàng
             #region LoadCreateBillCommand
             LoadCreateBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => LoadCreateBill());
@@ -112,23 +118,23 @@ namespace bookStoreManagetment.ViewModel
                 OrderStatusList = new List<string>(OrderStatus);
 
                 Employee.Add(new employee { firstName = "Tất cả" });
-                var BillList = DataProvider.Ins.DB.bills.Where(x => x.billType == "sell");
+                var BillList = DataProvider.Ins.DB.bills.Where(x => x.billType == "export");
                 foreach (bill sellBill in BillList)
                 {
                     var billDetails = DataProvider.Ins.DB.sellBills.Where(x => x.billCodeSell == sellBill.billCode);
                     var total = 0;
-                    string custommerFullName = "";
-                    string custommerPhoneNumber = "";
+                    string customerFullName = "";
+                    string customerPhoneNumber = "";
                     string employeeFullName = "";
-                    string custommerAddress = "";
+                    string customerAddress = "";
                     if (billDetails != null)
                     {
-                        var curentCustommer = DataProvider.Ins.DB.custommers.Where(x => x.idCustommer == billDetails.FirstOrDefault().idCustomer).FirstOrDefault();
-                        custommerFullName = curentCustommer.lastName + " " + curentCustommer.firstName;
-                        custommerAddress = curentCustommer.custommerAddress;
+                        var curentCustomer = DataProvider.Ins.DB.custommers.Where(x => x.idCustomer == billDetails.FirstOrDefault().idCustomer).FirstOrDefault();
+                        customerFullName = curentCustomer.lastName + " " + curentCustomer.firstName;
+                        customerAddress = curentCustomer.custommerAddress;
                         employeeFullName = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == billDetails.FirstOrDefault().idEmployee).Select(x => x.lastName + " " + x.firstName).SingleOrDefault();
                         total = (int)billDetails.Select(x => x.unitPrice * x.number * (1 - x.discount / 100)).Sum();
-                        custommerPhoneNumber = curentCustommer.phoneNumber;
+                        customerPhoneNumber = curentCustomer.phoneNumber;
                     }
                     ListOrderItems = new List<SellBillItem>();
                     foreach (var billdetail in billDetails)
@@ -138,13 +144,13 @@ namespace bookStoreManagetment.ViewModel
                     BillDetail hoadon = new BillDetail
                     {
                         Bill = sellBill,
-                        CustomerFullName = custommerFullName,
+                        CustomerFullName = customerFullName,
                         EmployeeFullName = employeeFullName,
                         Total = total,
-                        CustommerPhoneNumber = custommerPhoneNumber,
+                        CustomerPhoneNumber = customerPhoneNumber,
                         SellBill = billDetails.FirstOrDefault(),
                         OrderItems = ListOrderItems,
-                        CustommerAddress = custommerAddress,
+                        CustomerAddress = customerAddress,
                     };
                     HoadonList.Add(hoadon);
                 }
@@ -160,7 +166,7 @@ namespace bookStoreManagetment.ViewModel
                 IsDSHoaDon = Visibility.Collapsed;
                 IsBillViewing = Visibility.Collapsed;
                 // Load danh sác khách hàng
-                CustommerList = new ObservableCollection<custommer>(DataProvider.Ins.DB.custommers);
+                CustomerList = new ObservableCollection<custommer>(DataProvider.Ins.DB.custommers);
                 // Load danh sách nhân viên
                 EmployeeList = new ObservableCollection<employee>(DataProvider.Ins.DB.employees);
                 // Load danh sách item 
@@ -168,56 +174,120 @@ namespace bookStoreManagetment.ViewModel
                 // Tạo mới thông tin đơn hàng
                 SellBillInfomation = new ObservableCollection<SellBillItem>();
                 // Tự tạo mới bill code tăng dần
-                SellBillCode = "bill" + (DataProvider.Ins.DB.bills.Count() + 1).ToString();
+                SellBillCode = "EP" + getNextCode.getCode(DataProvider.Ins.DB.bills.Where(x => x.billType == "export").ToList().Count);
                 // Đặt mặc định ngày giờ hiện tại cho ngày đặt hàng, ngày giao hàng, ngày chứng từ
                 DateTime CurrentDate = DateTime.Now;
                 OrderDate = CurrentDate;
                 DeliveryDate = CurrentDate;
                 LicenseDate = CurrentDate;
                 // Tạo danh sách phương thức thanh toán và phương thức giao hàng
-                string[] PaymentMethods = { "Thanh toán bằng thẻ", "Thanh toán bằng tiền mặt" };
+                string[] PaymentMethods = { "Thẻ", "Tiền mặt" };
                 string[] DeliveryMethods = { "Mua trực tiếp tại cửa hàng", "Giao hàng" };
                 PaymentMethodList = new List<string>(PaymentMethods);
                 DeliveryMethodList = new List<string>(DeliveryMethods);
+
+                SelectedItem = null;
+                SelectedCustomer = null;
+                SelectedPaymentMethod = null;
+                SelectedDeliveryMethod = null;
+                SelectedEmployee = null;
+                Tag = null;
+                Note = null;
+                PhoneNumber = null;
+                Address = null;
             }
             #endregion
+
+            void printBill()
+            {
+
+            }
 
             // Command thanh toán cho đơn hàng
             #region CheckoutClickCommand
             CheckoutClickCommand = new RelayCommand<object>((p) =>
             {
-                if (SellBillInfomation.Count == 0 || SelectedCustommer == null || SelectedEmployeeCreateBill == null || SelectedDeliveryMethod == null || SelectedPaymentMethod == null)
+                if (SellBillInfomation == null)
+                {
+                    return false;
+                }
+                if (SellBillInfomation.Count == 0 || SelectedCustomer == null || SelectedEmployeeCreateBill == null || SelectedDeliveryMethod == null || SelectedPaymentMethod == null)
                     return false;
                 return true;
             }, (p) =>
             {
                 if (MessageBox.Show("Xác nhận thanh toán?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    bill SaveBill = new bill() { billCode = SellBillCode, billType = "sell", setBillDay = (DateTime)OrderDate };
-                    DataProvider.Ins.DB.bills.Add(SaveBill);
+
+                    //string query = "update supplier set nameSupplier=N'" + nameSup + "',addressSupplier=N'" + addressSup + "',emailSupplier=N'" + emailSup + "',phoneNumberSupplier=N'" + phoneSup + "' where idSupplier=N'" + idSup + "'";
+                    //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                    bill NewBill = new bill { billCode = SellBillCode, billType = "export" };
+                    DataProvider.Ins.DB.bills.Add(NewBill);
                     //DataProvider.Ins.DB.SaveChanges();
+                    bool Saved = false;
+                    sellBill SavedBill = new sellBill();
                     foreach (var bill_ in SellBillInfomation)
                     {
                         sellBill SaveSellBill = new sellBill()
                         {
                             billCodeSell = SellBillCode,
-                            billStatus = "Đã thanh toán",
+                            billstatus = "Đã thanh toán",
                             idEmployee = SelectedEmployeeCreateBill.idEmployee,
-                            idCustomer = SelectedCustommer.idCustommer,
+                            idCustomer = SelectedCustomer.idCustomer,
                             number = bill_.Amount,
                             sellDate = (DateTime)OrderDate,
                             licenseDate = (DateTime)LicenseDate,
                             deliveryDate = (DateTime)DeliveryDate,
                             idItem = bill_.Item.idItem,
-                            unitPrice = bill_.Item.priceItem,
-                            discount = bill_.Discount,
+                            unitPrice = bill_.Item.sellPriceItem,
+                            //discount = bill_.Discount,
                             tag = Tag,
                             note = Note,
+                            deliveryMethod = SelectedDeliveryMethod,
+                            paymentMethod = SelectedPaymentMethod,
                         };
+                        if (Saved == false)
+                        {
+                            SavedBill = SaveSellBill;
+                            Saved = true;
+                        }
                         DataProvider.Ins.DB.sellBills.Add(SaveSellBill);
+                        
+                        int curentAmount = DataProvider.Ins.DB.items.Where(x=> x.idItem == bill_.Item.idItem).Select(x => x.quantity).SingleOrDefault();
+                        //update item set quantity = currentAmount - bill_.Amount where idItem == bill_.Item.idItem
+                        profitSummary SaveprofitSummary = new profitSummary()
+                        {
+                            billCode = SellBillCode,
+                            billType = "export",
+                            rootPrice = (int)Total,
+                            payPrice = (int)Total,
+                            exchangePrice = (int)Total - (int)Total,
+                            idCustomer = SelectedCustomer.idCustomer,
+                            idEmployee = SelectedEmployeeCreateBill.idEmployee,
+                            day = (DateTime)OrderDate,
+                            nameCustomer =  SelectedCustomerFullName,
+                            nameEmployee = SelectedEmployeeCreateBillFullName,
+                        };
+                        DataProvider.Ins.DB.profitSummaries.Add(SaveprofitSummary);
                     }
+
+                    BillDetail hoadon = new BillDetail
+                    {
+                        Bill = NewBill,
+                        CustomerFullName = SelectedCustomerFullName,
+                        EmployeeFullName = SelectedEmployeeCreateBillFullName,
+                        Total = (int)Total,
+                        CustomerPhoneNumber = PhoneNumber,
+                        SellBill = SavedBill,
+                        OrderItems = ListOrderItems,
+                        CustomerAddress = Address,
+                    };
+                    HoadonList.Add(hoadon);
+                    DisplayBillList = HoadonList.ToList();
+
                     DataProvider.Ins.DB.SaveChanges();
                 }
+               
             });
             #endregion 
 
@@ -239,17 +309,25 @@ namespace bookStoreManagetment.ViewModel
             #endregion
 
             // Command back to DSHoaDon
+            #region BacktoDSHoaDonCommand
             BacktoDSHoaDonCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 IsBillViewing = Visibility.Collapsed;
                 IsBillCreating = Visibility.Collapsed;
                 IsDSHoaDon = Visibility.Visible;
             });
+            #endregion
 
         }
 
         private ObservableCollection<BillDetail> _HoadonList;
-        public ObservableCollection<BillDetail> HoadonList { get => _HoadonList; set { _HoadonList = value; OnPropertyChanged(); } }
+        public ObservableCollection<BillDetail> HoadonList { get => _HoadonList;
+            set
+            {
+                _HoadonList = value;
+                OnPropertyChanged();
+            }
+        }
 
         private List<BillDetail> _DisplayBillList;
         public List<BillDetail> DisplayBillList { get => _DisplayBillList; set { _DisplayBillList = value; OnPropertyChanged(); } }
@@ -272,7 +350,7 @@ namespace bookStoreManagetment.ViewModel
                     if (SelectedOrderStatus == "Tất cả")
                         DisplayBillList = HoadonList.ToList();
                     else
-                        DisplayBillList = HoadonList.Where(x => x != null && x.SellBill.billStatus == SelectedOrderStatus).ToList();
+                        DisplayBillList = HoadonList.Where(x => x != null && x.SellBill.billstatus == SelectedOrderStatus).ToList();
                 else
                     DisplayBillList = HoadonList.ToList();
             }
@@ -295,13 +373,14 @@ namespace bookStoreManagetment.ViewModel
                     DisplayBillList = HoadonList.ToList();
             }
         }
+
         public ICommand ResetFilterCommand { get; set; }
 
         public ICommand PrintBillCommand { get; set; }
 
         public ICommand LoadedUserControlCommand { get; set; }
 
-        public ICommand LoadBillDataCommand { get; set; }
+        public ICommand LoadBillDetailCommand { get; set; }
 
         public ICommand BacktoDSHoaDonCommand { get; set; }
 
@@ -317,7 +396,7 @@ namespace bookStoreManagetment.ViewModel
                 OnPropertyChanged();
                 if (SearchString != null && SearchString != "")
                 {
-                    DisplayBillList = HoadonList.Where(x => x.CustomerFullName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.Bill.billCode.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.CustommerPhoneNumber.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                    DisplayBillList = HoadonList.Where(x => x.CustomerFullName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.Bill.billCode.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.CustomerPhoneNumber.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 }
 
                 else
@@ -358,24 +437,8 @@ namespace bookStoreManagetment.ViewModel
 
         public ICommand UpdateTotalCommand { get; set; }
 
-        private ObservableCollection<custommer> _CustommerList;
-        public ObservableCollection<custommer> CustommerList { get => _CustommerList; set { _CustommerList = value; OnPropertyChanged(); } }
-
-        private custommer _SelectedCustommer;
-        public custommer SelectedCustommer
-        {
-            get => _SelectedCustommer;
-            set
-            {
-                _SelectedCustommer = value;
-                OnPropertyChanged();
-                if (SelectedCustommer != null)
-                {
-                    Address = SelectedCustommer.custommerAddress;
-                    PhoneNumber = SelectedCustommer.phoneNumber;
-                }
-            }
-        }
+        private ObservableCollection<custommer> _CustomerList;
+        public ObservableCollection<custommer> CustomerList { get => _CustomerList; set { _CustomerList = value; OnPropertyChanged(); } }
 
         private ObservableCollection<item> _ItemsListSearch;
         public ObservableCollection<item> ItemsListSearch { get => _ItemsListSearch; set { _ItemsListSearch = value; OnPropertyChanged(); } }
@@ -390,7 +453,36 @@ namespace bookStoreManagetment.ViewModel
         public ObservableCollection<employee> EmployeeList { get => _EmployeeList; set { _EmployeeList = value; OnPropertyChanged(); } }
 
         private employee _SelectedEmployeeCreateBill;
-        public employee SelectedEmployeeCreateBill { get => _SelectedEmployeeCreateBill; set { _SelectedEmployeeCreateBill = value; OnPropertyChanged(); } }
+        public employee SelectedEmployeeCreateBill { get => _SelectedEmployeeCreateBill; set {
+                _SelectedEmployeeCreateBill = value; 
+                OnPropertyChanged();
+                if (SelectedEmployeeCreateBill!= null)
+                    SelectedEmployeeCreateBillFullName = SelectedEmployeeCreateBill.lastName + " " + SelectedEmployeeCreateBill.firstName;
+            }
+        }
+        
+        private string _SelectedEmployeeCreateBillFullName;
+        public string SelectedEmployeeCreateBillFullName { get => _SelectedEmployeeCreateBillFullName; set { _SelectedEmployeeCreateBillFullName = value; OnPropertyChanged(); } }
+        
+        private custommer _SelectedCustomer;
+        public custommer SelectedCustomer
+        {
+            get => _SelectedCustomer;
+            set
+            {
+                _SelectedCustomer = value;
+                OnPropertyChanged();
+                if (SelectedCustomer != null)
+                {
+                    Address = SelectedCustomer.custommerAddress;
+                    PhoneNumber = SelectedCustomer.phoneNumber;
+                    SelectedCustomerFullName = SelectedCustomer.lastName + " " + SelectedCustomer.firstName;
+                }
+            }
+        }
+
+        private string _SelectedCustomerFullName;
+        public string SelectedCustomerFullName { get => _SelectedCustomerFullName; set { _SelectedCustomerFullName = value; OnPropertyChanged(); } }
 
         private SellBillItem _SelectedSellBillItem;
         public SellBillItem SelectedSellBillItem { get => _SelectedSellBillItem; set { _SelectedSellBillItem = value; OnPropertyChanged(); } }
@@ -440,7 +532,7 @@ namespace bookStoreManagetment.ViewModel
             Total = 0;
             foreach (var billinfo in SellBillInfomation)
             {
-                Total += billinfo.Item.priceItem * billinfo.Amount * (1 - billinfo.Discount / 100);
+                Total += billinfo.Item.sellPriceItem * billinfo.Amount * (1 - billinfo.Discount / 100);
             }
         }
     }

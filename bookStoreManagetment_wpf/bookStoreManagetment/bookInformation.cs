@@ -14,7 +14,7 @@ namespace bookStoreManagetment
     
     public partial class bookInformation
     {
-        public int idInformation { get; set; }
+        public int sttInformation { get; set; }
         public string idBook { get; set; }
         public string typeContent { get; set; }
         public string typeMaterial { get; set; }
@@ -24,7 +24,5 @@ namespace bookStoreManagetment
         public string translator { get; set; }
         public string NXB { get; set; }
         public string NPH { get; set; }
-    
-        public virtual item item { get; set; }
     }
 }

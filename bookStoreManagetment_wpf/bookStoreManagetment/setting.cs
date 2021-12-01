@@ -20,8 +20,6 @@ namespace bookStoreManagetment
         public string statusSetting { get; set; }
         public string contentSetting { get; set; }
         public System.DateTime createdateSetting { get; set; }
-        public int idEmployee { get; set; }
-    
-        public virtual employee employee { get; set; }
+        public string idEmployee { get; set; }
     }
 }

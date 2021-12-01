@@ -14,11 +14,10 @@ namespace bookStoreManagetment
     
     public partial class studytoolsInformation
     {
-        public int idInformation { get; set; }
+        public int sttInformation { get; set; }
         public string idStudyTool { get; set; }
         public string origin { get; set; }
         public string distributor { get; set; }
-    
-        public virtual item item { get; set; }
+        public string typecontent { get; set; }
     }
 }

@@ -14,13 +14,8 @@ namespace bookStoreManagetment
     
     public partial class custommer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public custommer()
-        {
-            this.itemSummaries = new HashSet<itemSummary>();
-        }
-    
-        public int idCustommer { get; set; }
+        public int sttCustommer { get; set; }
+        public string idCustomer { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string phoneNumber { get; set; }
@@ -32,8 +27,5 @@ namespace bookStoreManagetment
         public string nameAccount { get; set; }
         public Nullable<int> accumulatedPoints { get; set; }
         public string custommerNote { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<itemSummary> itemSummaries { get; set; }
     }
 }

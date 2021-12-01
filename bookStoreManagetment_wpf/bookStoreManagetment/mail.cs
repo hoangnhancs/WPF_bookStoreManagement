@@ -23,5 +23,6 @@ namespace bookStoreManagetment
         public string statusMail { get; set; }
         public string sender { get; set; }
         public Nullable<System.DateTime> autosentDate { get; set; }
+        public string typesent { get; set; }
     }
 }

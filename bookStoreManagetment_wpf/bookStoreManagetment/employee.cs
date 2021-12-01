@@ -14,16 +14,8 @@ namespace bookStoreManagetment
     
     public partial class employee
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public employee()
-        {
-            this.checkItems = new HashSet<checkItem>();
-            this.itemSummaries = new HashSet<itemSummary>();
-            this.profitSummaries = new HashSet<profitSummary>();
-            this.settings = new HashSet<setting>();
-        }
-    
-        public int idEmployee { get; set; }
+        public int sttEmployee { get; set; }
+        public string idEmployee { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string phoneNumber { get; set; }
@@ -36,14 +28,5 @@ namespace bookStoreManagetment
         public string nameAccount { get; set; }
         public Nullable<int> employeeSalary { get; set; }
         public string employeeNote { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<checkItem> checkItems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<itemSummary> itemSummaries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<profitSummary> profitSummaries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<setting> settings { get; set; }
     }
 }

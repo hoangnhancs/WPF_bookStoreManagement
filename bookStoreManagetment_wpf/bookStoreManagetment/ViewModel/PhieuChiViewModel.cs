@@ -8,22 +8,31 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace bookStoreManagetment.ViewModel
 {
     public class exportBill
     {
         public profitSummary ProfitSummary { get; set; }
-        public string FullNameEmployee { get; set; }
-        public string Note { get; set; }
-        public string Payment { get; set; }
-        public string GroupPay { get; set; }
     }
-    public class PhieuChiViewModel:BaseViewModel
+    public class PhieuChiViewModel : BaseViewModel
     {
-        // chỉ xem
+        // query tìm kiếm
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
+        private Visibility _IsFilter;
+        public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
+
+        // title 
         private string _Title;
         public string Title { get => _Title; set { _Title = value; OnPropertyChanged(); } }
+
+        // chỉ xem
+        private bool _IsEdit;
+        public bool IsEdit { get => _IsEdit; set { _IsEdit = value; OnPropertyChanged(); } }
 
         // chỉ xem
         private bool _IsReadOnly;
@@ -36,9 +45,9 @@ namespace bookStoreManagetment.ViewModel
         // ẩn hiện các nút khi chuyển grid
         private Visibility _isSavePhieuChi;
         public Visibility IsSavePhieuChi { get => _isSavePhieuChi; set { _isSavePhieuChi = value; OnPropertyChanged(); } }
+
         // ẩn hiện các nút khi chuyển grid
         private Visibility _isAddPhieuChi;
-
         public Visibility IsAddPhieuChi { get => _isAddPhieuChi; set { _isAddPhieuChi = value; OnPropertyChanged(); } }
 
         // xem phiếu chi
@@ -59,7 +68,29 @@ namespace bookStoreManagetment.ViewModel
         private List<string> _ListNhanVien;
         public List<string> ListNhanVien { get => _ListNhanVien; set { _ListNhanVien = value; OnPropertyChanged(); } }
 
+        // filter
+        // ngày bắt đầu
+        private string _displayBeginDay;
+        public string displayBeginDay { get => _displayBeginDay; set { _displayBeginDay = value; OnPropertyChanged(); } }
+        // ngày kết thúc
+        private string _displayEndDay;
+        public string displayEndDay { get => _displayEndDay; set { _displayEndDay = value; OnPropertyChanged(); } }
+        // nhóm đối tượng filter
+        private string _DisplayGroupType;
+        public string DisplayGroupType { get => _DisplayGroupType; set { _DisplayGroupType = value; OnPropertyChanged(); } }
+        // đối tượng
+        private string _DisplayNameType;
+        public string DisplayNameType { get => _DisplayNameType; set { _DisplayNameType = value; OnPropertyChanged(); } }
+        // background
+        private Brush _BackgroudFilter;
+        public Brush BackgroudFilter { get => _BackgroudFilter; set { _BackgroudFilter = value; OnPropertyChanged(); } }
+        // foreground
+        private Brush _ForegroudFilter;
+        public Brush ForegroudFilter { get => _ForegroudFilter; set { _ForegroudFilter = value; OnPropertyChanged(); } }
+
+
         // danh sách tất cả đơn hàng xuất
+        private ObservableCollection<exportBill> backupListExportBill;
         private ObservableCollection<exportBill> _ListExportBill;
         public ObservableCollection<exportBill> ListExportBill { get => _ListExportBill; set { _ListExportBill = value; OnPropertyChanged(); } }
 
@@ -74,6 +105,13 @@ namespace bookStoreManagetment.ViewModel
         public ICommand SavePhieuChiCommand { get; set; }
         public ICommand TextChangedTienNhanCommand { get; set; }
         public ICommand SelectionChangedNhomNguoiNhanCommand { get; set; }
+        public ICommand SelectionChangedNhomNguoiNhanFilterCommand { get; set; }
+        //filter
+        public ICommand CheckFilterCommand { get; set; }
+        public ICommand DeleteFilterCommand { get; set; }
+        public ICommand CloseFilterCommand { get; set; }
+        public ICommand OpenFilterCommand { get; set; }
+        public ICommand TextChangedSearchCommand { get; set; }
 
         public PhieuChiViewModel()
         {
@@ -81,6 +119,78 @@ namespace bookStoreManagetment.ViewModel
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+            });
+
+            // textchanged tìm kiếm 
+            TextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (Query != "" && Query != null)
+                {
+                    ObservableCollection<exportBill> newListExportBill = new ObservableCollection<exportBill>();
+                    foreach (var bill in ListExportBill)
+                    {
+                        if (bill.ProfitSummary.billCode.ToLower().Contains(Query) || bill.ProfitSummary.nameBill.ToLower().Contains(Query))
+                        {
+                            newListExportBill.Add(bill);
+                        }
+                    }
+                    ListExportBill = newListExportBill;
+                }
+                else
+                {
+                    Filter();
+                }
+
+            });
+
+            // filter
+            CheckFilterCommand = new RelayCommand<object>((p) => {
+                if (displayEndDay != null && displayBeginDay != null)
+                    return true;
+                if (DisplayGroupType != null || DisplayNameType != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                Filter();
+                var bc = new BrushConverter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+            });
+
+            // đóng/mở filter grid
+            OpenFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IsFilter == Visibility.Visible)
+                    IsFilter = Visibility.Collapsed;
+                else
+                    IsFilter = Visibility.Visible;
+            });
+
+            // đóng filter grid
+            CloseFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsFilter = Visibility.Collapsed;
+            });
+
+            // xoá filter
+            DeleteFilterCommand = new RelayCommand<object>((p) => {
+                if (DisplayGroupType != null || DisplayNameType != null || displayEndDay != null || displayBeginDay != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                displayBeginDay = null;
+                displayEndDay = null;
+                DisplayNameType = "";
+                DisplayNameType = null;
+                DisplayGroupType = "";
+                DisplayGroupType = null;
+                ListExportBill = backupListExportBill;
+
+                var bc = new BrushConverter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
             });
 
             // sự kiện ô nhận tiền thay đổi
@@ -104,23 +214,36 @@ namespace bookStoreManagetment.ViewModel
             // Lưu phiếu chi
             SavePhieuChiCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                bill saveBill = new bill
+                if (IsEdit)
                 {
-                    billCode = ViewExportSheet.ProfitSummary.billCode,
-                    billType = ViewExportSheet.ProfitSummary.billType,
-                    setBillDay = ViewExportSheet.ProfitSummary.sellDay
-                };
-                // thêm dữ liệu vào database
-                DataProvider.Ins.DB.bills.Add(saveBill);
-                DataProvider.Ins.DB.SaveChanges();
+                    var lastRowBackup = backupListExportBill[backupListExportBill.Count - 1];
+                    ViewExportSheet.ProfitSummary.budget = lastRowBackup.ProfitSummary.budget - ViewExportSheet.ProfitSummary.rootPrice;
+                    var EditExport = DataProvider.Ins.DB.profitSummaries.Where(x => x.billCode == ViewExportSheet.ProfitSummary.billCode).FirstOrDefault();
+                    EditExport = ViewExportSheet.ProfitSummary;
+                    DataProvider.Ins.DB.SaveChanges();
+                    IsEdit = false;
+                }
+                else
+                {
+                    bill saveBill = new bill
+                    {
+                        billCode = ViewExportSheet.ProfitSummary.billCode,
+                        billType = ViewExportSheet.ProfitSummary.billType
+                    };
+                    // thêm dữ liệu vào database
+                    DataProvider.Ins.DB.bills.Add(saveBill);
+                    DataProvider.Ins.DB.SaveChanges();
 
-                // cập nhật bill trong profit
-                ViewExportSheet.ProfitSummary.bill = saveBill;
-                DataProvider.Ins.DB.profitSummaries.Add(ViewExportSheet.ProfitSummary);
-                DataProvider.Ins.DB.SaveChanges();
+                    // cập nhật bill trong profit
+                    var lastRowBackup = backupListExportBill[backupListExportBill.Count - 1];
+                    ViewExportSheet.ProfitSummary.budget = lastRowBackup.ProfitSummary.budget - ViewExportSheet.ProfitSummary.rootPrice;
+                    DataProvider.Ins.DB.profitSummaries.Add(ViewExportSheet.ProfitSummary);
+                    DataProvider.Ins.DB.SaveChanges();
 
-                // thêm vào list 
-                ListExportBill.Add(ViewExportSheet);
+                    // thêm vào list 
+                    backupListExportBill.Add(ViewExportSheet);
+                }
+
             });
 
 
@@ -165,10 +288,30 @@ namespace bookStoreManagetment.ViewModel
                         if (importSheet.ProfitSummary.billCode == delExportBill.ProfitSummary.billCode)
                         {
                             ListExportBill.Remove(importSheet);
+                            backupListExportBill.Remove(importSheet);
                             break;
                         }
                     }
                 }
+            });
+
+            // sự kiện thay đổi lựu chọn nhóm người nhận filter
+            SelectionChangedNhomNguoiNhanFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                var newListDoiTuong = new List<string>();
+                if (DisplayGroupType == "Nhân Viên")
+                {
+                    newListDoiTuong = ListNhanVien;
+                }
+                else if (DisplayGroupType == "Nhà Cung Cấp")
+                {
+                    foreach (var supplier in DataProvider.Ins.DB.suppliers.ToList())
+                    {
+                        newListDoiTuong.Add(supplier.nameSupplier);
+                    }
+                }
+                ListDoiTuong = newListDoiTuong;
+
             });
 
             // sự kiện thay đổi lựu chọn nhóm người nhận
@@ -181,13 +324,13 @@ namespace bookStoreManagetment.ViewModel
                 }
                 else if (ViewExportSheet.ProfitSummary.typeGroup == "Nhà Cung Cấp")
                 {
-                    foreach(var supplier in DataProvider.Ins.DB.suppliers.ToList())
+                    foreach (var supplier in DataProvider.Ins.DB.suppliers.ToList())
                     {
                         newListDoiTuong.Add(supplier.nameSupplier);
                     }
                 }
                 ListDoiTuong = newListDoiTuong;
-            
+
             });
 
             // Thêm phiếu chi
@@ -216,6 +359,21 @@ namespace bookStoreManagetment.ViewModel
                     else
                     {
                         IsAddPhieuChi = Visibility.Collapsed;
+
+                        // reset filter search
+                        Query = "";
+                        displayBeginDay = null;
+                        displayEndDay = null;
+                        DisplayNameType = "";
+                        DisplayNameType = null;
+                        DisplayGroupType = "";
+                        DisplayGroupType = null;
+                        IsFilter = Visibility.Collapsed;
+                        ListExportBill = backupListExportBill;
+
+                        var bc = new BrushConverter();
+                        BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                        ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
                     }
                 }
                 else
@@ -229,9 +387,10 @@ namespace bookStoreManagetment.ViewModel
             LoadDataViewExportSheetCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ViewExportSheet = (p as exportBill);
-                IsSavePhieuChi = Visibility.Collapsed;
-                IsReadOnly = true;
-                IsEnable = false;
+                IsEdit = true;
+                //IsSavePhieuChi = Visibility.Collapsed;
+                //IsReadOnly = true;
+                //IsEnable = false;
                 Title = "Danh Sách Phiếu Chi > " + ViewExportSheet.ProfitSummary.billCode;
             });
         }
@@ -271,12 +430,13 @@ namespace bookStoreManagetment.ViewModel
                             newExport.ProfitSummary.note = _note.note;
                         }
                     }
-                    
+
                     var currencAcc = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == bill.idEmployee).FirstOrDefault();
-                    newExport.FullNameEmployee = currencAcc.firstName + " " + currencAcc.lastName;
+                    newExport.ProfitSummary.nameEmployee = currencAcc.firstName + " " + currencAcc.lastName;
                     ListExportBill.Add(newExport);
                 }
             }
+            backupListExportBill = ListExportBill;
 
             // list tất cả đối tượng
             NhomDoiTuong = new List<string>()
@@ -298,6 +458,17 @@ namespace bookStoreManagetment.ViewModel
             {
                 ListNhanVien.Add(employee.firstName + " " + employee.lastName);
             }
+
+            // tạo phiếu chi
+            createDataThemPhieuChi();
+
+            // ẩn grid filter
+            IsFilter = Visibility.Collapsed;
+
+            // set màu cho nút filter
+            var bc = new BrushConverter();
+            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
         }
 
         // tạo dữ liệu cho thêm phiếu chi
@@ -307,18 +478,62 @@ namespace bookStoreManagetment.ViewModel
             // load acc đang đăng nhập
             var currentAcc = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
 
+            // tìm id phù hợp
+            int startID = backupListExportBill.Count;
+            string code = "";
+            do
+            {
+                code = "EP" + getNextCode.getCode(startID);
+                var checkCode = DataProvider.Ins.DB.profitSummaries.Where(x => x.billCode == code).FirstOrDefault();
+                if (checkCode == null)
+                {
+                    break;
+                }
+                startID++;
+            } while (true);
+
             // tạo mới các trường 
             newViewExportSheet.ProfitSummary = new profitSummary
             {
-                billCode = "EP" + getNextCode.getCode(ListExportBill.Count),
+                billCode = code,
                 billType = "Export",
-                employee = currentAcc,
                 idEmployee = currentAcc.idEmployee,
                 nameEmployee = currentAcc.firstName + " " + currentAcc.lastName,
-                sellDay = DateTime.Now,
+                day = DateTime.Now
             };
 
             ViewExportSheet = newViewExportSheet;
+        }
+
+        //filter
+        private void Filter()
+        {
+            List<exportBill> newListExportBill = backupListExportBill.ToList();
+            if (DisplayGroupType != null && DisplayGroupType != "")
+            {
+                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.typeGroup == DisplayGroupType).ToList();
+            }
+
+            if (DisplayNameType != null && DisplayNameType != "")
+            {
+                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.nameCustomer == DisplayNameType).ToList();
+            }
+
+            if (displayBeginDay != null)
+            {
+                List<exportBill> temp = new List<exportBill>();
+                foreach (var bill in newListExportBill)
+                {
+                    if (DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                     && DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                    {
+                        temp.Add(bill);
+                    }
+                }
+                newListExportBill = temp;
+            }
+
+            ListExportBill = new ObservableCollection<exportBill>(newListExportBill);
         }
     }
 }

@@ -14,24 +14,21 @@ namespace bookStoreManagetment
     
     public partial class sellBill
     {
-        public int idSell { get; set; }
+        public int sttSell { get; set; }
         public string billCodeSell { get; set; }
-        public int idEmployee { get; set; }
-        public int number { get; set; }
+        public string idEmployee { get; set; }
+        public string idCustomer { get; set; }
+        public string billstatus { get; set; }
         public System.DateTime sellDate { get; set; }
-        public int idCustomer { get; set; }
-        public string idItem { get; set; }
-        public int unitPrice { get; set; }
-        public int discount { get; set; }
-        public string note { get; set; }
-        public string billStatus { get; set; }
         public System.DateTime deliveryDate { get; set; }
         public System.DateTime licenseDate { get; set; }
+        public string idItem { get; set; }
+        public int unitPrice { get; set; }
+        public int number { get; set; }
+        public int discount { get; set; }
+        public string note { get; set; }
         public string tag { get; set; }
         public string deliveryMethod { get; set; }
         public string paymentMethod { get; set; }
-    
-        public virtual bill bill { get; set; }
-        public virtual item item { get; set; }
     }
 }

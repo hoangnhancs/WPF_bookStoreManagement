@@ -94,7 +94,7 @@ namespace bookStoreManagetment.ViewModel
             Title = "Danh Sách Phiếu Kiểm Hàng";
 
             InventoryList = new ObservableCollection<Inventory>();
-            
+
             // load form
             LoadedCheckItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -110,19 +110,19 @@ namespace bookStoreManagetment.ViewModel
                         return false;
                     }
 
-                    foreach(var inventory in InventoryList)
+                    foreach (var inventory in InventoryList)
                     {
                         if (inventory.Count == 0)
                         {
                             return false;
                         }
                     }
-                    
+
                     return true;
-                }, 
+                },
                 (p) =>
                 {
-                    
+
                 });
 
             // load tất cả sản phẩm
@@ -157,9 +157,9 @@ namespace bookStoreManagetment.ViewModel
 
                 ListCheckSheets.Remove(temp);
 
-                var deleteItem = DataProvider.Ins.DB.checkItems.Where(x => x.codeCheckItem == temp.codeCheckItem).ToList();
+                var deleteItem = DataProvider.Ins.DB.checkItems.Where(x => x.idCheckItems == temp.codeCheckItem).ToList();
 
-                foreach(var del in deleteItem)
+                foreach (var del in deleteItem)
                 {
                     DataProvider.Ins.DB.checkItems.Remove(del);
                     DataProvider.Ins.DB.SaveChanges();
@@ -173,7 +173,7 @@ namespace bookStoreManagetment.ViewModel
                 var temp = p as CheckItemSheet;
                 DisplayNhanVien = temp.nameEmployee;
                 InventoryList.Clear();
-                foreach(var infor in temp.InforItems)
+                foreach (var infor in temp.InforItems)
                 {
                     InventoryList.Add(new Inventory()
                     {
@@ -190,15 +190,15 @@ namespace bookStoreManagetment.ViewModel
                 (p) => {
                     if (DisplayNhanVien != null || DisplayNgay != null || DisplayMaPhieu != null)
                         return true;
-                    return false; 
-                }, 
+                    return false;
+                },
                 (p) =>
                 {
                     DisplayNhanVien = null;
                     DisplayNgay = null;
                     DisplayMaPhieu = null;
                     ListCheckSheets = BackupListCheckSheet;
-             });
+                });
 
 
             // ẩn hiện form
@@ -209,7 +209,7 @@ namespace bookStoreManagetment.ViewModel
 
                 var grid = (p as Grid);
                 if (grid.Visibility == Visibility.Collapsed)
-                {    
+                {
                     grid.Visibility = Visibility.Visible;
                     if (grid.Name == "gridAddReport")
                         Title = "Danh Sách Phiếu Kiểm Hàng > Kiểm Hàng";
@@ -242,7 +242,7 @@ namespace bookStoreManagetment.ViewModel
                         foreach (var cellItems in BackupAllItems)
                         {
                             string nameItem = cellItems.Items.nameItem.Trim().ToLower();
-                            
+
                             if (nameItem.Contains(query))
                             {
                                 ShowItems.Add(cellItems);
@@ -251,7 +251,7 @@ namespace bookStoreManagetment.ViewModel
                     }
                 }
             });
-            
+
             // chọn sản phẩm 
             CheckedGridSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -260,7 +260,7 @@ namespace bookStoreManagetment.ViewModel
                     var selected = (p as CellItems);
                     selected.IsSelected = true;
 
-                    for(int i = 0; i < BackupAllItems.Count; i++)
+                    for (int i = 0; i < BackupAllItems.Count; i++)
                     {
                         if (BackupAllItems[i].Items == selected.Items)
                             BackupAllItems[i].IsSelected = true;
@@ -289,7 +289,7 @@ namespace bookStoreManagetment.ViewModel
             ClickAllSelectedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 for (int i = 0; i < BackupAllItems.Count; i++)
-                {                        
+                {
                     BackupAllItems[i].IsSelected = true;
                 }
                 ShowItems = new List<CellItems>();
@@ -319,7 +319,7 @@ namespace bookStoreManagetment.ViewModel
                     return true;
                 }
                 return false;
-            }, 
+            },
             (p) =>
             {
                 List<CheckItemSheet> newListCheckSheet = BackupListCheckSheet.ToList();
@@ -346,15 +346,14 @@ namespace bookStoreManagetment.ViewModel
             {
                 ObservableCollection<Inventory> temp = new ObservableCollection<Inventory>();
                 foreach (var cellItems in BackupAllItems)
-                { 
+                {
                     if (cellItems.IsSelected)
                     {
-                        var _item = DataProvider.Ins.DB.itemSummaries.Where(x => cellItems.Items.idItem == x.idItem).FirstOrDefault();
                         Inventory _Inventory = new Inventory();
                         _Inventory.Item = cellItems.Items;
 
                         int i = checkHasSanPham(cellItems.Items.idItem);
-                        if ( i != -1)
+                        if (i != -1)
                         {
                             _Inventory.Count = InventoryList[i].Count;
                         }
@@ -384,14 +383,11 @@ namespace bookStoreManagetment.ViewModel
                         checkItem temp = new checkItem()
                         {
                             note = Note,
-                            idCheckItems = i,
-                            codeCheckItem = "PKH" + idCount.ToString(),
+                            idCheckItems = "PKH" + idCount.ToString(),
                             dateCheckItems = DateTime.Now,
                             idEmployee = DataProvider.Ins.DB.employees.Where(x => x.lastName == DisplayNhanVien).FirstOrDefault().idEmployee,
                             idItem = inventory.Item.idItem,
-                            quantityItem = inventory.Count,
-                            employee = DataProvider.Ins.DB.employees.Where(x => x.lastName == DisplayNhanVien).FirstOrDefault(),
-                            item = DataProvider.Ins.DB.items.Where(x => x.idItem == inventory.Item.idItem).FirstOrDefault()
+                            quantityItem = inventory.Count
                         };
 
                         DataProvider.Ins.DB.checkItems.Add(temp);
@@ -404,7 +400,7 @@ namespace bookStoreManagetment.ViewModel
                     ShowItems.Clear();
                 });
         }
-        
+
 
         // kiểm tra có tồn tại sản phẩm
         private int checkHasSanPham(string maSP)
@@ -420,7 +416,7 @@ namespace bookStoreManagetment.ViewModel
         // kiểm tra có tồn tại checksheet
         private int checkHasCheckSheet(string code)
         {
-            for(int i = 0; i < ListCheckSheets.Count; i++)
+            for (int i = 0; i < ListCheckSheets.Count; i++)
             {
                 if (ListCheckSheets[i].codeCheckItem == code)
                     return i;
@@ -443,7 +439,7 @@ namespace bookStoreManagetment.ViewModel
             var listEmployee = DataProvider.Ins.DB.employees;
             foreach (var employee in listEmployee)
             {
-                if(AllStaff.Contains(employee.lastName) == false)
+                if (AllStaff.Contains(employee.lastName) == false)
                 {
                     AllStaff.Add(employee.lastName);
                 }
@@ -451,19 +447,19 @@ namespace bookStoreManagetment.ViewModel
 
             // load số trang
             NumItems = ListInterger.CreateListInterger(ListCheckSheets.Count + 1);
-            DisplayNumOfPages = ListCheckSheets.Count +1;
+            DisplayNumOfPages = ListCheckSheets.Count + 1;
         }
 
 
         // thêm check sheet
         private void addCheckSheet(checkItem ckItem)
         {
-            int i = checkHasCheckSheet(ckItem.codeCheckItem);
+            int i = checkHasCheckSheet(ckItem.idCheckItems);
             if (i == -1)
             {
                 ListCheckSheets.Add(new CheckItemSheet()
                 {
-                    codeCheckItem = ckItem.codeCheckItem,
+                    codeCheckItem = ckItem.idCheckItems,
                     idEmployee = ckItem.idEmployee,
                     dateCheckItems = ckItem.dateCheckItems,
                     InforItems = new List<inforItem> { new inforItem

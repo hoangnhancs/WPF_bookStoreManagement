@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace bookStoreManagetment.ViewModel
-{ 
+{
     public class Rule : BaseViewModel
     {
         public setting Setting { get; set; }
@@ -20,8 +21,16 @@ namespace bookStoreManagetment.ViewModel
 
     public class CaiDatChungViewModel : BaseViewModel
     {
+        // query tìm kiếm
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
+        private Visibility _IsFilter;
+        public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
+
         // kiểm tra xem là thêm hay là chỉnh sửa
-        private bool isEdit{ get; set;}
+        private bool isEdit { get; set; }
 
         // ẩn hiện các nút khi chuyển grid
         private Visibility _isAddRule;
@@ -39,6 +48,14 @@ namespace bookStoreManagetment.ViewModel
         private string _displayStaff;
         public string DisplayStaff { get => _displayStaff; set { _displayStaff = value; OnPropertyChanged(); } }
 
+        // ngày bắt đầu
+        private string _displayBeginDay;
+        public string displayBeginDay { get => _displayBeginDay; set { _displayBeginDay = value; OnPropertyChanged(); } }
+
+        // ngày kết thúc
+        private string _displayEndDay;
+        public string displayEndDay { get => _displayEndDay; set { _displayEndDay = value; OnPropertyChanged(); } }
+
         // nhân viên đang được chọn
         private string _Title;
         public string Title { get => _Title; set { _Title = value; OnPropertyChanged(); } }
@@ -48,6 +65,7 @@ namespace bookStoreManagetment.ViewModel
         public Rule ViewRule { get => _ViewRule; set { _ViewRule = value; OnPropertyChanged(); } }
 
         // danh sách tất cả quy định
+        private ObservableCollection<Rule> backupListRules;
         private ObservableCollection<Rule> _ListRules;
         public ObservableCollection<Rule> ListRules { get => _ListRules; set { _ListRules = value; OnPropertyChanged(); } }
 
@@ -60,6 +78,12 @@ namespace bookStoreManagetment.ViewModel
         public ICommand SaveSettingCommand { get; set; }
         public ICommand CheckSaveCommand { get; set; }
         public ICommand EditSettingCommand { get; set; }
+        public ICommand CheckFilterCommand { get; set; }
+        public ICommand DeleteFilterCommand { get; set; }
+        public ICommand CloseFilterCommand { get; set; }
+        public ICommand OpenFilterCommand { get; set; }
+        public ICommand TextChangedSearchCommand { get; set; }
+        public ICommand ExitAddRulesCommand { get; set; }
 
         public CaiDatChungViewModel()
         {
@@ -67,6 +91,101 @@ namespace bookStoreManagetment.ViewModel
             LoadedCheckItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+            });
+
+            // load form
+            ExitAddRulesCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                displayBeginDay = null;
+                displayEndDay = null;
+                DisplayStaff = null;
+                ListRules = backupListRules;
+
+                var bc = new BrushConverter();
+                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
+                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+            });
+
+            // textchanged tìm kiếm 
+            TextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (Query != "" && Query != null)
+                {
+                    ObservableCollection<Rule> newListRules = new ObservableCollection<Rule>();
+                    foreach (var rule in ListRules)
+                    {
+                        if (rule.Setting.nameSetting.ToLower().Contains(Query) || rule.Setting.idSetting.ToLower().Contains(Query))
+                        {
+                            newListRules.Add(rule);
+                        }
+                    }
+                    ListRules = newListRules;
+                }
+                else
+                {
+                    Filter();
+                }
+
+            });
+
+
+            // đóng filter grid
+            OpenFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IsFilter == Visibility.Visible)
+                    IsFilter = Visibility.Collapsed;
+                else
+                    IsFilter = Visibility.Visible;
+            });
+
+            // đóng filter grid
+            CloseFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsFilter = Visibility.Collapsed;
+            });
+
+
+            // xoá filter
+            DeleteFilterCommand = new RelayCommand<object>((p) => {
+                if (DisplayStaff != null || displayEndDay != null || displayBeginDay != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                displayBeginDay = null;
+                displayEndDay = null;
+                DisplayStaff = null;
+                ListRules = backupListRules;
+
+                var bc = new BrushConverter();
+                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
+                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+            });
+
+            // filter 
+            CheckFilterCommand = new RelayCommand<object>((p) => {
+                if (displayEndDay != null && displayBeginDay != null)
+                    return true;
+
+                if (DisplayStaff != null)
+                {
+                    if (displayEndDay == null && displayBeginDay == null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return false;
+            }, (p) =>
+            {
+                Filter();
+                var bc = new BrushConverter();
+                (p as Button).Background = (Brush)bc.ConvertFromString("#FF008000");
+                (p as Button).Foreground = (Brush)bc.ConvertFromString("#DDFFFFFF");
             });
 
             // chỉnh sửa quy định
@@ -95,8 +214,8 @@ namespace bookStoreManagetment.ViewModel
                         return false;
                     }
                     return true;
-                }, 
-                (p) =>{});
+                },
+                (p) => { });
 
             // lưu quy định
             SaveSettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -113,9 +232,21 @@ namespace bookStoreManagetment.ViewModel
                     // thêm vào database
                     DataProvider.Ins.DB.settings.Add(ViewRule.Setting);
                     // thêm vào show list
-                    ListRules.Add(ViewRule);
+                    backupListRules.Add(ViewRule);
                 }
                 DataProvider.Ins.DB.SaveChanges();
+
+                // reset filter
+                DisplayStaff = null;
+                displayBeginDay = null;
+                displayEndDay = null;
+                Query = null;
+
+                // reset màu nút filter
+                var bc = new BrushConverter();
+                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
+                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+
             });
 
             // xem quy định
@@ -133,20 +264,43 @@ namespace bookStoreManagetment.ViewModel
             // xem quy định
             AddSettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                // tìm id phù hợp
+                int startID = backupListRules.Count;
+                string codeSetting = "";
+                do
+                {
+                    codeSetting = "QD" + getNextCode.getCode(startID);
+                    var checkCode = DataProvider.Ins.DB.settings.Where(x => x.idSetting == codeSetting).FirstOrDefault();
+                    if (checkCode == null)
+                    {
+                        break;
+                    }
+                    startID++;
+                } while (true);
+
                 Rule newViewRule = new Rule();
                 var currentAcc = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
                 newViewRule.Setting = new setting()
                 {
-                    idSetting = "QD"+getNextCode.getCode(ListRules.Count),
+                    idSetting = codeSetting,
                     createdateSetting = DateTime.Now,
-                    employee = currentAcc,
                     idEmployee = currentAcc.idEmployee,
                 };
-                newViewRule.FullNameEmployee = currentAcc.firstName +" "+ currentAcc.lastName;
+                newViewRule.FullNameEmployee = currentAcc.firstName + " " + currentAcc.lastName;
                 ViewRule = newViewRule;
 
                 // chỉnh title
                 Title = "Danh Sách Quy Định > Thêm Quy Định";
+
+                // reset
+                displayBeginDay = null;
+                displayEndDay = null;
+                DisplayStaff = null;
+                ListRules = backupListRules;
+
+                var bc = new BrushConverter();
+                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
+                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
             });
 
             // xoá dữ liệu cài đặt
@@ -162,7 +316,7 @@ namespace bookStoreManagetment.ViewModel
                     var delSetting = p as Rule;
 
                     // xoá khỏi database
-                    foreach(var set in DataProvider.Ins.DB.settings.ToList())
+                    foreach (var set in DataProvider.Ins.DB.settings.ToList())
                     {
                         if (set.idSetting == delSetting.Setting.idSetting)
                         {
@@ -172,11 +326,12 @@ namespace bookStoreManagetment.ViewModel
                     DataProvider.Ins.DB.SaveChanges();
 
                     // xoá khỏi list show
-                    foreach(var set in ListRules.ToList())
+                    foreach (var set in ListRules.ToList())
                     {
-                        if (set.Setting.idEmployee == delSetting.Setting.idEmployee)
+                        if (set.Setting.idSetting == delSetting.Setting.idSetting)
                         {
                             ListRules.Remove(set);
+                            backupListRules.Remove(set);
                         }
                     }
                 }
@@ -215,16 +370,16 @@ namespace bookStoreManagetment.ViewModel
 
             // load tất cả nhân viên
             AllStaff = new List<string>();
-            DisplayStaff = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().lastName;
+            //DisplayStaff = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().lastName;
             var staffs = DataProvider.Ins.DB.employees.ToList();
             foreach (var staff in staffs)
             {
-                AllStaff.Add(staff.firstName+ " " + staff.lastName);
+                AllStaff.Add(staff.firstName + " " + staff.lastName);
             }
 
             // load list quy định
             ListRules = new ObservableCollection<Rule>();
-            foreach(var set in DataProvider.Ins.DB.settings.ToList())
+            foreach (var set in DataProvider.Ins.DB.settings.ToList())
             {
                 Rule newRule = new Rule();
                 newRule.Setting = new setting();
@@ -233,6 +388,36 @@ namespace bookStoreManagetment.ViewModel
                 newRule.FullNameEmployee = staff.firstName + " " + staff.lastName;
                 ListRules.Add(newRule);
             }
+            backupListRules = ListRules;
+
+            // ẩn filter
+            IsFilter = Visibility.Collapsed;
+
+        }
+
+        private void Filter()
+        {
+            List<Rule> newListRules = backupListRules.ToList();
+            if (DisplayStaff != null)
+            {
+                newListRules = newListRules.Where(x => x.FullNameEmployee == DisplayStaff).ToList();
+            }
+
+            if (displayBeginDay != null)
+            {
+                List<Rule> temp = new List<Rule>();
+                foreach (var rule in newListRules)
+                {
+                    if (DateTime.Compare(rule.Setting.createdateSetting, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                     && DateTime.Compare(rule.Setting.createdateSetting, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                    {
+                        temp.Add(rule);
+                    }
+                }
+                newListRules = temp;
+            }
+
+            ListRules = new ObservableCollection<Rule>(newListRules);
         }
     }
 }

@@ -282,8 +282,8 @@
                                             <!--ẩn hiện grid-->
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction 
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.LoadBillDataCommand}" 
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.LoadBillDetailCommand}"/>
+                                                <!--CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />-->
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
@@ -292,9 +292,8 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding CustomerFullName}" Width ="Auto" Header="Tên khách hàng" IsReadOnly ="True"/>
                         <DataGridTextColumn Binding="{Binding EmployeeFullName}" Width ="Auto" Header="Tên nhân viên" IsReadOnly ="True"/>
-                        <DataGridTextColumn Binding="{Binding BillStatus}" Width ="Auto" Header="Trạng thái đơn" IsReadOnly ="True"/>
+                        <DataGridTextColumn Binding="{Binding SellBill.billstatus}" Width ="Auto" Header="Trạng thái đơn" IsReadOnly ="True"/>
                         <DataGridTextColumn Binding="{Binding Total}" Width ="Auto" Header="Tiền thanh toán" IsReadOnly ="True"/>
-                        <DataGridTextColumn Binding="{Binding Bill.setBillDay}" Width ="Auto" Header="Ngày tạo" IsReadOnly ="True"/>
                         <DataGridTemplateColumn Header="In hóa đơn">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -412,7 +411,7 @@
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
                                         <Border/>
-                                        <TextBlock Text="{Binding ViewBillDetail.CustommerPhoneNumber}" HorizontalAlignment="Stretch" />
+                                        <TextBlock Text="{Binding ViewBillDetail.CustomerPhoneNumber}" HorizontalAlignment="Stretch" />
                                     </Grid>
 
                                         </Grid>
@@ -426,7 +425,7 @@
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
                                         <Border/>
-                                        <TextBlock Text="{Binding ViewBillDetail.CustommerAddress}" HorizontalAlignment="Stretch" />
+                                        <TextBlock Text="{Binding ViewBillDetail.CustomerAddress}" HorizontalAlignment="Stretch" />
                                     </Grid>
 
                                 </Grid>
@@ -446,7 +445,7 @@
                                     <TextBlock Text="Thông tin sản phẩm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
-                                        <DataGrid ItemsSource="{Binding ViewBillDetail.OrderItems}" 
+                                     <DataGrid ItemsSource="{Binding ViewBillDetail.OrderItems}" 
                                         CanUserAddRows="False"
                                         AutoGenerateColumns="False"
                                         Background="Transparent" 
@@ -457,20 +456,10 @@
                                             <DataGridTextColumn Binding="{Binding Item.nameItem}" Width ="Auto" Header="Tên sản phẩm" IsReadOnly ="True"/>
                                             <DataGridTextColumn Binding="{Binding Item.unit}" Width ="Auto" Header="Đơn vị" IsReadOnly ="True"/>
                                             <DataGridTextColumn Binding="{Binding Amount}" Width ="Auto" Header="Số lượng" IsReadOnly ="True"/>
-                                            <DataGridTextColumn Binding="{Binding Item.priceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
+                                            <DataGridTextColumn Binding="{Binding Item.sellPriceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                            <!--<ListView ItemsSource="{Binding OrderItemsList}" SelectedItem="{Binding SelectedSellBillItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                                <ListView.View>
-                                                    <GridView>
-                                                        <GridViewColumn DisplayMemberBinding="{Binding ViewBillDetail.OrderItems.Item.idItem}" Width ="Auto" Header="Mã sản phẩm" />
-                                                        <GridViewColumn DisplayMemberBinding="{Binding ViewBillDetail.OrderItems.Item.nameItem}" Width ="Auto" Header="Tên sản phẩm" />
-                                                        <GridViewColumn DisplayMemberBinding="{Binding ViewBillDetail.OrderItems.Item.unit}" Width ="Auto" Header="Đơn vị" />
-                                                        <GridViewColumn DisplayMemberBinding="{Binding ViewBillDetail.OrderItems.Amount}" Width ="Auto" Header="Số lượng" />
-                                                    </GridView>
-                                                </ListView.View>
-                                            </ListView>-->
-                                        </Grid>
+                                </Grid>
 
                                 <Grid Grid.Row="3" Margin="20,1,20,1">
 
@@ -538,7 +527,7 @@
                                     <Grid Grid.Column="1" Margin="10,0,20,0">
                                         <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
                                             <Border/>
-                                            <TextBlock Text="{Binding ViewBillDetail.SellBill.deliveryMethod}" HorizontalAlignment="Stretch" />
+                                            <TextBlock Text="{Binding ViewBillDetail.SellBill.deliveryDate}" HorizontalAlignment="Stretch" />
                                         </Grid>
                                     </Grid>
 
@@ -670,23 +659,23 @@
             </Grid>
 
         </Grid>
-        <!--Nút trả hàng (Chuyển billStatus từ Đã giao hàng sang Đã trả hàng thôi :v)-->
+        <!--Nút trả hàng-->
         <Grid Grid.Row="2">
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Content="Trả hàng" Foreground="Black" BorderBrush="Black" >
-                <i:Interaction.Triggers>
+                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction
                              Command="{Binding CheckoutClickCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
             </Button>
         </Grid>
     </Grid>
 
    </Grid>
 
-    <Grid Visibility="{Binding IsBillCreating}"
+        <Grid Visibility="{Binding IsBillCreating}"
             x:Name="gridTaoHoaDon">
         <Grid Margin="10,0,10,0" Background="White">
             <Grid.Resources>
@@ -778,7 +767,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="13"
                                                 DisplayMemberPath="firstName"
-                                                ItemsSource="{Binding CustommerList}" SelectedItem="{Binding SelectedEmployeeCreateBill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 IsEditable="True">
                                             </ComboBox>
                                         </Grid>
@@ -891,7 +880,7 @@
 
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Binding="{Binding Item.priceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
+                                                <DataGridTextColumn Binding="{Binding Item.sellPriceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
                                                 <DataGridTemplateColumn Header="Delete">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
@@ -1083,7 +1072,7 @@
                                         FontSize="13"
                                         DisplayMemberPath="firstName"
                                         ItemsSource="{Binding EmployeeList}" 
-                                        SelectedItem="{Binding SelectedEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedItem="{Binding SelectedEmployeeCreateBill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         IsEditable="True">
                                     </ComboBox>
                                 </Grid>
@@ -1134,14 +1123,10 @@
             </Grid>
             <!--Thanh toán-->
             <Grid Grid.Row="2">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Content="Thanh toán" Foreground="Black" BorderBrush="Black" >
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction
-                            Command="{Binding CheckoutClickCommand}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                <Button HorizontalAlignment="Center"
+                        Command="{Binding CheckoutClickCommand}"
+                        VerticalAlignment="Center" Background="Violet" Content="Thanh toán" Foreground="Black" BorderBrush="Black" >
+                    
                 </Button>
             </Grid>
         </Grid>
