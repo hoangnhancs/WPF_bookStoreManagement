@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="idAccount" />
@@ -91,7 +91,7 @@
           </Key>
           <Property Name="sttImport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="billCodeImport" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="idEmployee" Type="int" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="nameEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="importDate" Type="datetime" Nullable="false" />
@@ -261,7 +261,8 @@
           <EntitySet Name="studytoolsInformation" EntityType="Self.studytoolsInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bookStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -302,7 +303,7 @@
           </Key>
           <Property Name="sttCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCheckItems" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="quantityItem" Type="Int32" Nullable="false" />
@@ -351,7 +352,7 @@
           </Key>
           <Property Name="sttImport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="billCodeImport" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="nameEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="number" Type="Int32" Nullable="false" />
           <Property Name="importDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -477,7 +478,7 @@
           <Property Name="statusSetting" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="contentSetting" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="createdateSetting" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="studytoolsInformation">
           <Key>

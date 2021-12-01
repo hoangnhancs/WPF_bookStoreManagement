@@ -199,7 +199,6 @@ namespace bookStoreManagetment.ViewModel
                 {
                     bookInformation bookinformation = new bookInformation()
                     {
-                        idInformation = DataProvider.Ins.DB.bookInformations.Count() + 1,
                         idBook = SKUProductsAdd,
                         typeContent = TypeProductsAdd,
                         typeMaterial = "giấy",
@@ -216,7 +215,6 @@ namespace bookStoreManagetment.ViewModel
                 {
                     studytoolsInformation studytoolsinformation = new studytoolsInformation()
                     {
-                        idInformation = DataProvider.Ins.DB.studytoolsInformations.Count() + 1,
                         idStudyTool = SKUProductsAdd,
                         typecontent = TypeProductsAdd,
                         origin = "",

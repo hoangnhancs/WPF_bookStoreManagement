@@ -205,12 +205,12 @@ namespace bookStoreManagetment.ViewModel
         public ImportGoodsViewModel()
         {
 
-            var totalprice = DataProvider.Ins.DB.importBills.GroupBy(p => new { p.billCodeImport, p.importDate, p.nameEmployee, p.idnhacungcap})
+            var totalprice = DataProvider.Ins.DB.importBills.GroupBy(p => new { p.billCodeImport, p.importDate, p.nameEmployee, p.idsupplier})
                                                             .Select(pa => new { billcode = pa.Key.billCodeImport,
                                                                                 Sum = pa.Sum(para => para.number * para.unitPrice), 
                                                                                 date = pa.Key.importDate.Day.ToString() + "-" + pa.Key.importDate.Month.ToString() + "-" + pa.Key.importDate.Year.ToString(),
                                                                                 nameeployee = pa.Key.nameEmployee,
-                                                                                namesupplier = pa.Key.idnhacungcap});
+                                                                                namesupplier = pa.Key.idsupplier});
 
             BackupInventoryImportGoods = new List<InventoryGoods>();
             foreach (var data in totalprice)
@@ -851,7 +851,7 @@ namespace bookStoreManagetment.ViewModel
                     var ImportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill).Select(pa => pa.idItem).ToList();
                     foreach(var cell in ImportBill)
                     {
-                        importBill cellimportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill && pa.idItem == cell).FirstOrDefault();
+                        Model.importBill cellimportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill && pa.idItem == cell).FirstOrDefault();
                         DataProvider.Ins.DB.importBills.Remove(cellimportBill);
                         item data = DataProvider.Ins.DB.items.Where(pa => pa.idItem == cell).FirstOrDefault();
                         int quantitys = data.quantity;
@@ -876,26 +876,25 @@ namespace bookStoreManagetment.ViewModel
                     bill Bill = new bill()
                     {
                         billCode = c < 10 ? "BILL00" + c : c < 100 ? "BILL0" + c : "BILL" + c,
-                        billType = "spend",
-                        setBillDay = Daynow
+                        billType = "spend"
                     };
 
                     DataProvider.Ins.DB.bills.Add(Bill);
 
                     foreach (var data in InventoryList)
                     {
-                        importBill ImportBill = new importBill()
+                        bookStoreManagetment.Model.importBill ImportBill = new bookStoreManagetment.Model.importBill()
                         {
-                            idImport = DataProvider.Ins.DB.importBills.Count() + 1,
                             billCodeImport = c < 10 ? "BILL00" + c : c < 100 ? "BILL0" + c : "BILL" + c,
-                            idEmployee = 2,
+                            idEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().idEmployee,
                             nameEmployee = "Thanh Thảo",
                             number = data.Count,
                             importDate = Daynow,
                             idItem = data.Item.idItem,
                             unitPrice = data.Item.importPriceItem,
                             note = "",
-                            idnhacungcap =  DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == NameSupplier).Select(pa => pa.idSupplier).FirstOrDefault()
+                            paymentMethod = "Tiền Mặt",
+                            idsupplier = data.Item.supplierItem
                         };
                         totalall = totalall + data.TotalPriceItem;
 
@@ -913,9 +912,9 @@ namespace bookStoreManagetment.ViewModel
                         rootPrice = totalall,
                         payPrice = totalall,
                         exchangePrice = 0,
-                        codeCustomer = "KH001",
-                        idEmployee = 1,
-                        sellDay = Daynow,
+                        idCustomer = "KH001",
+                        idEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().idEmployee,
+                        day = Daynow,
                         nameCustomer = "KH001",
                         nameEmployee = "NV001",
                         typeGroup = "",
@@ -977,18 +976,17 @@ namespace bookStoreManagetment.ViewModel
                         {
                             DateTime Daynow = DateTime.Now;
 
-                            importBill ImportBill = new importBill()
+                            Model.importBill ImportBill = new Model.importBill()
                             {
-                                idImport = DataProvider.Ins.DB.importBills.Count() + 1,
                                 billCodeImport = backupbillcode,
-                                idEmployee = 2,
+                                idEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().idEmployee,
                                 nameEmployee = "Thanh Thảo",
                                 number = cell_id.Count,
                                 importDate = Daynow,
                                 idItem = cell_id.Item.idItem,
                                 unitPrice = cell_id.Item.importPriceItem,
                                 note = "",
-                                idnhacungcap = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == NameSupplier).Select(pa => pa.idSupplier).FirstOrDefault()
+                                idsupplier = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == NameSupplier).Select(pa => pa.idSupplier).FirstOrDefault()
                             };
                             //totalall = totalall + data.TotalPriceItem;
 
