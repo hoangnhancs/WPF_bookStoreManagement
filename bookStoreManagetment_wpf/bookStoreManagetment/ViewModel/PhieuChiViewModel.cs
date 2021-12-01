@@ -16,7 +16,7 @@ namespace bookStoreManagetment.ViewModel
     {
         public profitSummary ProfitSummary { get; set; }
     }
-    public class PhieuChiViewModel:BaseViewModel
+    public class PhieuChiViewModel : BaseViewModel
     {
         // query tìm kiếm
         private string _Query;
@@ -243,7 +243,6 @@ namespace bookStoreManagetment.ViewModel
                     // thêm vào list 
                     backupListExportBill.Add(ViewExportSheet);
                 }
-                
             });
 
 
@@ -324,13 +323,13 @@ namespace bookStoreManagetment.ViewModel
                 }
                 else if (ViewExportSheet.ProfitSummary.typeGroup == "Nhà Cung Cấp")
                 {
-                    foreach(var supplier in DataProvider.Ins.DB.suppliers.ToList())
+                    foreach (var supplier in DataProvider.Ins.DB.suppliers.ToList())
                     {
                         newListDoiTuong.Add(supplier.nameSupplier);
                     }
                 }
                 ListDoiTuong = newListDoiTuong;
-            
+
             });
 
             // Thêm phiếu chi
@@ -430,7 +429,7 @@ namespace bookStoreManagetment.ViewModel
                             newExport.ProfitSummary.note = _note.note;
                         }
                     }
-                    
+
                     var currencAcc = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == bill.idEmployee).FirstOrDefault();
                     newExport.ProfitSummary.nameEmployee = currencAcc.firstName + " " + currencAcc.lastName;
                     ListExportBill.Add(newExport);

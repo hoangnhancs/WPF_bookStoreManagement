@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 namespace bookStoreManagetment.ViewModel
-{ 
+{
     public class Rule : BaseViewModel
     {
         public setting Setting { get; set; }
@@ -30,7 +30,7 @@ namespace bookStoreManagetment.ViewModel
         public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
 
         // kiểm tra xem là thêm hay là chỉnh sửa
-        private bool isEdit{ get; set;}
+        private bool isEdit { get; set; }
 
         // ẩn hiện các nút khi chuyển grid
         private Visibility _isAddRule;
@@ -125,7 +125,6 @@ namespace bookStoreManagetment.ViewModel
                 {
                     Filter();
                 }
-                
             });
 
 
@@ -178,7 +177,6 @@ namespace bookStoreManagetment.ViewModel
                         return false;
                     }
                 }
-                
                 return false;
             }, (p) =>
             {
@@ -214,8 +212,8 @@ namespace bookStoreManagetment.ViewModel
                         return false;
                     }
                     return true;
-                }, 
-                (p) =>{});
+                },
+                (p) => { });
 
             // lưu quy định
             SaveSettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -276,7 +274,8 @@ namespace bookStoreManagetment.ViewModel
                         break;
                     }
                     startID++;
-                }while (true) ;
+                } while (true);
+
 
                 Rule newViewRule = new Rule();
                 var currentAcc = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
@@ -286,7 +285,7 @@ namespace bookStoreManagetment.ViewModel
                     createdateSetting = DateTime.Now,
                     idEmployee = currentAcc.idEmployee,
                 };
-                newViewRule.FullNameEmployee = currentAcc.firstName +" "+ currentAcc.lastName;
+                newViewRule.FullNameEmployee = currentAcc.firstName + " " + currentAcc.lastName;
                 ViewRule = newViewRule;
 
                 // chỉnh title
@@ -316,7 +315,7 @@ namespace bookStoreManagetment.ViewModel
                     var delSetting = p as Rule;
 
                     // xoá khỏi database
-                    foreach(var set in DataProvider.Ins.DB.settings.ToList())
+                    foreach (var set in DataProvider.Ins.DB.settings.ToList())
                     {
                         if (set.idSetting == delSetting.Setting.idSetting)
                         {
@@ -326,7 +325,7 @@ namespace bookStoreManagetment.ViewModel
                     DataProvider.Ins.DB.SaveChanges();
 
                     // xoá khỏi list show
-                    foreach(var set in ListRules.ToList())
+                    foreach (var set in ListRules.ToList())
                     {
                         if (set.Setting.idSetting == delSetting.Setting.idSetting)
                         {
@@ -374,12 +373,12 @@ namespace bookStoreManagetment.ViewModel
             var staffs = DataProvider.Ins.DB.employees.ToList();
             foreach (var staff in staffs)
             {
-                AllStaff.Add(staff.firstName+ " " + staff.lastName);
+                AllStaff.Add(staff.firstName + " " + staff.lastName);
             }
 
             // load list quy định
             ListRules = new ObservableCollection<Rule>();
-            foreach(var set in DataProvider.Ins.DB.settings.ToList())
+            foreach (var set in DataProvider.Ins.DB.settings.ToList())
             {
                 Rule newRule = new Rule();
                 newRule.Setting = new setting();

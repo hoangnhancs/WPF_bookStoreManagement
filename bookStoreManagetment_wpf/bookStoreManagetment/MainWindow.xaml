@@ -287,9 +287,6 @@
                                                 <i:InvokeCommandAction
                                         Command="{Binding ChangeColorOpenedSTP}"
                                         CommandParameter="{Binding ElementName=btnQLBH}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
                                     <!--submenu-->
                                     <StackPanel x:Name="subMenuQLBH" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
@@ -298,6 +295,13 @@
                                             Command="{Binding ChangeColorButtonClickCommand}"
                                             CommandParameter="{Binding ElementName=btnDSHD}"
                                             HorizontalAlignment="Left">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding DSHoaDonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                         </Button>
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                             x:Name="btnKhachTraHang"
