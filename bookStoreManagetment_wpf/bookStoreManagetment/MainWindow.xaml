@@ -275,18 +275,21 @@
                                 <StackPanel x:Name="stpQLBH">
                                     <Button HorizontalAlignment="Left"
                                         FontWeight="SemiBold"
-                                x:Name="btnQLBH"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản Lý Bán Hàng">
+                                        x:Name="btnQLBH"
+                                        Style="{StaticResource btnStyle_MenuFeatures}"
+                                        Content="Quản Lý Bán Hàng">
                                         <!--Tạo event click vô button mở submenu và đổi màu btn-->
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                                Command="{Binding OpenSubMenuCommand}"
+                                                CommandParameter="{Binding ElementName=subMenuQLBH}"/>
                                                 <i:InvokeCommandAction
-                                        Command="{Binding ChangeColorOpenedSTP}"
-                                        CommandParameter="{Binding ElementName=btnQLBH}"/>
+                                                    Command="{Binding ChangeColorOpenedSTP}"
+                                                    CommandParameter="{Binding ElementName=btnQLBH}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Button>
                                     <!--submenu-->
                                     <StackPanel x:Name="subMenuQLBH" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
@@ -300,8 +303,8 @@
                                                     <i:InvokeCommandAction
                                                         Command="{Binding DSHoaDonClickCommand}"
                                                         CommandParameter="{Binding ElementName=GridMainForm}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                             x:Name="btnKhachTraHang"
@@ -536,7 +539,7 @@
                         </ScrollViewer>
                     </DockPanel>
                 </Grid>
-                <Grid DockPanel.Dock="Bottom">
+                <Grid DockPanel.Dock="Left">
                     <!--Main Form-->
                     <Grid 
                     x:Name="GridMainForm"
