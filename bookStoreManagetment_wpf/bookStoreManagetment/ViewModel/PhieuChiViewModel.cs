@@ -175,7 +175,7 @@ namespace bookStoreManagetment.ViewModel
 
             // xoá filter
             DeleteFilterCommand = new RelayCommand<object>((p) => {
-                if (DisplayGroupType != null || DisplayNameType != null || displayEndDay != null || displayBeginDay != null)
+            if (DisplayGroupType != null || DisplayNameType != null || displayEndDay != null || displayBeginDay != null)
                     return true;
                 return false;
             }, (p) =>
@@ -243,7 +243,6 @@ namespace bookStoreManagetment.ViewModel
                     // thêm vào list 
                     backupListExportBill.Add(ViewExportSheet);
                 }
-
             });
 
 

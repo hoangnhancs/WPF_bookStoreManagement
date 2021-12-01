@@ -125,7 +125,6 @@ namespace bookStoreManagetment.ViewModel
                 {
                     Filter();
                 }
-
             });
 
 
@@ -178,7 +177,6 @@ namespace bookStoreManagetment.ViewModel
                         return false;
                     }
                 }
-
                 return false;
             }, (p) =>
             {
@@ -277,6 +275,7 @@ namespace bookStoreManagetment.ViewModel
                     }
                     startID++;
                 } while (true);
+
 
                 Rule newViewRule = new Rule();
                 var currentAcc = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();

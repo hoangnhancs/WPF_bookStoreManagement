@@ -1,10 +1,10 @@
-create database bookStoreManagementDTB
+create database bookStoreManagement
 go
 
 --use master
---drop database bookstoremanagementDTB
+--drop database bookstoremanagement
 ------------------------------------
-use bookStoreManagementDTB
+use bookStoreManagement
 
 create table account
 (
@@ -33,7 +33,7 @@ create table item
 
 create table bookInformation
 (
-	idInformation int identity (1,1) primary key,
+	sttInformation int identity (1,1) primary key,
 	idBook nvarchar(10) not null,
 	typeContent nvarchar(50),
 	typeMaterial nvarchar(50),
@@ -47,39 +47,43 @@ create table bookInformation
 
 create table studytoolsInformation
 (
-	idInformation int identity (1,1) primary key,
+	sttInformation int identity (1,1) primary key,
 	idStudyTool nvarchar(10) not null,
 	origin nvarchar(30) not null,
 	distributor nvarchar(30) not null,
+	
 )
+alter table studytoolsInformation add typecontent nvarchar(30)
 
 create table bill
 (
 	billCode nvarchar(30) primary key,
 	billType nvarchar(20) not null, --loại hóa đơn mua hay bán hay trả hàng
-	setBillDay datetime not null,
+	--setBillDay datetime not null,
 )
 
 create table importBill --nhập kho
 (
-	idImport int identity (1,1) primary key,
+	sttImport int identity (1,1) primary key,
 	billCodeImport nvarchar(30) not null,
-	idEmployee int not null,
+	idEmployee nvarchar(30) not null,
 	nameEmployee nvarchar(30) not null,
 	number int not null,
 	importDate datetime not null,
 	idItem nvarchar(10) not null,
 	unitPrice int not null,
 	note nvarchar(20),
+	paymentMethod nvarchar(30) not null,
 )
-alter table importbill add idnhacungcap nvarchar(10)
+
+alter table importbill add idsupplier nvarchar(10)
 
 create table sellBill --bán
 (
-	idSell int identity (1,1) primary key,
+	sttSell int identity (1,1) primary key,
 	billCodeSell nvarchar(30) not null,
-	idEmployee int not null,
-	idCustomer int not null,
+	idEmployee nvarchar(30),
+	idCustomer nvarchar(30),
 	billstatus nvarchar(30),
 	sellDate datetime not null, --ngay ban hang
 	deliveryDate datetime not null, --ngay giao hang
@@ -87,10 +91,13 @@ create table sellBill --bán
 	idItem nvarchar(10) not null,
 	unitPrice int not null,
 	number int not null,
-	discount int not null,
+	discount int not null default 0,
 	note nvarchar(20),
 	tag nvarchar(20),
 )
+
+alter table sellbill 
+add deliveryMethod nvarchar(30) not null, paymentMethod nvarchar(30) not null
 
 
 
@@ -102,29 +109,33 @@ create table khachtrahang
 	nameEmployee nvarchar(60) not null,
 	number int not null,
 	sellDate datetime not null,
-	idCustomer int not null,
+	idCustomer nvarchar(30) not null,
 	idItem nvarchar(10) not null,
 	unitPrice int not null,
 	discount int not null,
+	lido nvarchar(1000) not null,
+	trangthai nvarchar(30) not null,
+	nameCustomer nvarchar(30) not null,
+	unit nvarchar(10),
 )
-alter table khachtrahang add lido nvarchar(1000) not null
-alter table khachtrahang add trangthai nvarchar(30) not null
-alter table khachtrahang add nameCustomer nvarchar(30) not null
-alter table khachtrahang add unit nvarchar(10)
 
 
-create table bolockhachtrahang
-(
-	idBoloc int identity (1,1) primary key,
-	trangThai nvarchar(30),
-	nhanVien nvarchar(30),
-)
-select * from khachtrahang
-select * from sellBill
+
+
+
+
+
+
+
+
+
+
+
 
 create table custommer
 (
-	idCustommer int identity (1,1) primary key,
+	sttCustommer int identity (1,1) primary key,
+	idCustommer nvarchar(30) not null,
 	firstName nvarchar(30) not null,
 	lastName nvarchar(30) not null,
 	phoneNumber nvarchar(11) not null,
@@ -138,37 +149,10 @@ create table custommer
 	custommerNote nvarchar(200),
 )
 
-insert into custommer values
-(N'Nhan',N'Thai Hoang',N'0123456789',N'Binh Dinh',N'thaihoangnhantk17lqd@gmail.com',N'Nam',N'78910JQK',N'2000-1-12',N'hoangnhancs',0,N''),
-(N'Son',N'Thai Hoang',N'0987654321',N'Binh Dinh',N'18521182@gm.uit.edu.vn',N'Nam',N'123456',N'2000-1-12',N'staff',0,N'')
-
-
-insert into bill values
-(N'BILL001',N'SELL',N'2021-11-24'),
-(N'BILL002',N'SELL',N'2021-11-24')
-
-insert into sellBill(billCodeSell,idEmployee,idCustomer,billstatus,sellDate,deliveryDate,licenseDate,idItem,unitPrice,number,discount,note,tag)
-values
-(N'BILL001',1,1,N'Đã giao hàng',N'2021-11-24',N'2021-11-24',N'2021-11-24',N'BOOK002',145000,10,0,N'',N''),
-(N'BILL001',1,1,N'Đã giao hàng',N'2021-11-24',N'2021-11-24',N'2021-11-24',N'BOOK001',250000,10,0,N'',N''),
-(N'BILL001',1,1,N'Đã giao hàng',N'2021-11-24',N'2021-11-24',N'2021-11-24',N'BOOK003',145000,10,0,N'',N''),
-(N'BILL002',1,2,N'Đã giao hàng',N'2021-11-24',N'2021-11-24',N'2021-11-24',N'BOOK001',250000,5,0,N'',N''),
-(N'BILL002',1,2,N'Đã giao hàng',N'2021-11-24',N'2021-11-24',N'2021-11-24',N'BOOK002',145000,7,0,N'',N'')
-
-
-select * from sellBill
-
-
-insert into khachtrahang values
-(N'TRA001',N'BILL001',1,5,N'2021-11-25',1,N'BOOK001',250000,0,N'Khong thich',N'done',N'nhancute'),
-(N'TRA001',N'BILL001',1,5,N'2021-11-25',1,N'BOOK002',145000,0,N'Khong thich',N'done',N'nhancute')
-
-
-select * from khachtrahang
-
 create table employee
 (
-	idEmployee int identity (1,1) primary key,
+	sttEmployee int identity (1,1) primary key,
+	idEmployee nvarchar(30) not null,
 	firstName nvarchar(30) not null,
 	lastName nvarchar(30) not null,
 	phoneNumber nvarchar(11) not null,
@@ -182,23 +166,10 @@ create table employee
 	employeeSalary int,
 	employeeNote nvarchar(200),
 )
-insert into employee values
-(N'Cute',N'Nhan',N'0214365879',N'admin',N'Binh Dinh',N'thaihoangnhan12@gmail.com',N'Nam',N'22223333',N'2000-1-12',N'admin',2000000,N'')
 
 
-create table itemSummary
-(
-	idSummary int identity (1,1) primary key,
-	billCode nvarchar(30) not null,
-	billType nvarchar(20) not null,
-	idItem nvarchar(10) not null,
-	quantityBefore int not null,
-	incurred int not null,
-	quantityAfter int not null,
-	incurredDay datetime not null,
-	idCustomer int,
-	idEmployee int not null,
-)
+
+
 
 create table supplier
 (
@@ -209,7 +180,9 @@ create table supplier
 	phoneNumberSupplier nvarchar(12) not null,
 	statusSupplier nvarchar(30) not null,
 )
-
+alter table supplier add website nvarchar(100)
+alter table supplier add fax nvarchar(30)
+alter table supplier add masothue nvarchar(30)
 
 -- Tạo khóa ngoại sau khi tạo bảng
 
@@ -260,7 +233,7 @@ create table mail
 	sender nvarchar(30) not null,
 	autosentDate date 
 )
-
+alter table mail add typesent nvarchar(30)
 
 
 create table sentmail
@@ -276,20 +249,7 @@ create table sentmail
 )
 
 
-DECLARE @MyDateTime datetime = GETDATE();
-insert into mail values 
-(N'Khuyến mãi', @MyDateTime, N'Thư mời tham gia ưu đãi', N'Kính mời tham gia ưu đãi',N'Sử dụng để gửi thông báo KM', N'ON',N'Nhà sách XXX',N'2021-11-25'),
-(N'Hội họp', @MyDateTime, N'Thư mời tham dự cuộc họp', N'Kính mời tham gidựa cuộc họp',N'Sử dụng để gửi thông báo họp nhân viên', N'ON',N'Nhà sách XXX',N'2021-11-25'),
-(N'Khuyến mãi', @MyDateTime, N'Thư mời tham gia ưu đãi', N'Kính mời tham gia ưu đãi sinh nhật',N'Sử dụng để gửi thông báo KM', N'ON',N'Nhà sách XXX',null)
 
-
-
-
-
-DECLARE @new datetime = GETDATE();
-insert into sentmail 
-values
-(2,N'thaihoangnhantk17lqd@gmail.com',N'Đã gửi', @new, N'Nhà sách XXX', N'Thư mời tham dự cuộc họp',N'Hội họp')
 
 
 CREATE TABLE [dbo].[setting] (
@@ -299,20 +259,20 @@ CREATE TABLE [dbo].[setting] (
 [statusSetting] NVARCHAR (10) NULL,
 [contentSetting] NVARCHAR (1000) NOT NULL,
 [createdateSetting] DATE NOT NULL,
-[idEmployee] INT NOT NULL,
+[idEmployee] NVARCHAR(30) NOT NULL,
 PRIMARY KEY CLUSTERED ([idSetting] ASC),
-FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
+--FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
 );
 CREATE TABLE [dbo].[profitSummary] (
-[idPayHistory] INT IDENTITY (1, 1) NOT NULL,
+[sttPayHistory] INT IDENTITY (1, 1) NOT NULL,
 [billCode] NVARCHAR (30) NOT NULL,
 [billType] NVARCHAR (20) NOT NULL,
 [rootPrice] INT NOT NULL,
 [payPrice] INT NOT NULL,
 [exchangePrice] INT NOT NULL,
-[codeCustomer] NCHAR (10) NULL,
-[idEmployee] INT NOT NULL,
-[sellDay] DATETIME NOT NULL,
+[idCustomer] NVARCHAR (30) NULL,
+[idEmployee] NVARCHAR(30) NOT NULL,
+[day] DATETIME NOT NULL,
 [nameCustomer] NVARCHAR (50) NOT NULL,
 [nameEmployee] NVARCHAR (50) NOT NULL,
 [typeGroup] NVARCHAR (50) NULL,
@@ -320,23 +280,23 @@ CREATE TABLE [dbo].[profitSummary] (
 [nameBill] NCHAR (10) NULL,
 [note] NVARCHAR (1000) NULL,
 [budget] INT NULL,
-PRIMARY KEY CLUSTERED ([idPayHistory] ASC),
-FOREIGN KEY ([billCode]) REFERENCES [dbo].[bill] ([billCode]),
-FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
+PRIMARY KEY CLUSTERED ([sttPayHistory] ASC),
+--FOREIGN KEY ([billCode]) REFERENCES [dbo].[bill] ([billCode]),
+--FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee])
 );
 
 
 CREATE TABLE [dbo].[checkItems] (
-[idCheckItems] INT IDENTITY (1, 1) NOT NULL,
-[idEmployee] INT NOT NULL,
+[sttCheckItems] INT IDENTITY (1, 1) NOT NULL,
+[idCheckItems] NVARCHAR(30) NOT NULL,
+[idEmployee] nvarchar(30) NOT NULL,
 [dateCheckItems] DATETIME NOT NULL,
 [idItem] NVARCHAR (10) NOT NULL,
 [quantityItem] INT NOT NULL,
-[codeCheckItem] NCHAR (10) NOT NULL,
 [note] NVARCHAR (MAX) NULL,
 PRIMARY KEY CLUSTERED ([idCheckItems] ASC),
-FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee]),
-FOREIGN KEY ([idItem]) REFERENCES [dbo].[item] ([idItem])
+--FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee]),
+--FOREIGN KEY ([idItem]) REFERENCES [dbo].[item] ([idItem])
 );
 
 insert into item values
@@ -701,7 +661,6 @@ insert into item values
 (N'BOOK359',N'https://nhasachphuongnam.com/vi/tieng-viet-van-viet-nguoi-viet-tai-ban-nam-2021.html',N'https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/207/tieng-viet-van-viet-nguoi-viet-tb-2021.jpg',N'Tiếng Việt - Văn Việt - Người Việt (Tái bản năm 2021)',161100,177210,N'Tiếng Việt - Văn Việt - Người Việt Tập sách Tiếng Việt - Văn Việt - Người Việt tập hợp một số bài vở được đăng rải rác trên báo chí từ 1982 đến 2001 của Giáo sư Cao Xuân Hạo được chia thành ba phần: 1. Tiếng Việt 2. Văn Việt 3. Người Việt và văn hóa Việt Tập sách phản ánh những ý kiến của ông về một số vấn đề liên quan đến ngôn ngữ, văn học và văn hóa của dân tộc. Là một nhà Việt ngữ học lão thành, đương nhiên trung tâm chú ý của ông là những vấn đề của tiếng Việt, nhưng ngoài ra ông cũng quan tâm đến những vấn đề có liên quan xa gần với ngôn ngữ như văn học và văn hóa. Những ý kiến mà Ông phát biểu trên báo chí thường có một nét đặc trưng: nó rất ít khi trung hòa, cho nên thường gây nên trong lòng người đọc một phản ứng hoặc rất tích cực, hoặc rất tiêu cực. Người thì tán thưởng, người thì phản đối, chứ không mấy ai bình thản bỏ qua. Sở dĩ như vậy chắc cũng vì bài vở của ông rất ít khi xuôi theo cái dòng chảy quen thuộc của số đông, những ý kiến được công luận tán đồng. Khá nhiều lời lẽ của ông nghe có phần chướng tai, tuy không bao giờ thô lỗ. ...Hầu hết những văn bản được sưu tập trong cuốn sách này đều là những bài báo không có tính chất chuyên môn, không đòi hỏi một vốn tri thức gì chuyên biệt. Tác giả không có tham vọng trình bày những luận cứ thực sự khoa học. Những bạn đọc nào thấy cần tìm hiểu những luận cứ như vậy có thể tìm đọc những xuất bản phẩm như Tiếng Việt - Sơ thảo ngữ pháp chức năng; Tiếng Việt - Mấy vấn đề ngữ âm, ngữ pháp, ngữ nghĩa, Âm vị học và Tuyến tính hay các tạp chí chuyên ngành như Ngôn ngữ (Viện Ngôn ngữ học), Ngôn ngữ & Đời sống (Hội Ngôn ngữ học Việt Nam). ',N'893200013230',100,N'book',N'NCC005',N'quyển'),
 (N'BOOK360',N'https://nhasachphuongnam.com/vi/yeu-sai-cach-nen-mai-chang-dung-nguoi.html',N'https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/206/yeu-sai-cach-nen-mai-chang-dung-nguoi.jpg',N'Yêu Sai Cách Nên Mãi Chẳng Đúng Người',86000,94600,N'Có người trải qua hàng chục mối tình cũng không đọng lại gì. Lại có kẻ chỉ lướt qua vài mảnh yêu đương đã tích góp đủ cung bậc tình ái. Có người yêu hết người này tới người kia vẫn mạnh mẽ yêu tiếp tràn đầy nhiệt huyết. Lại có kẻ mới thất bại đôi ba lần đã sợ hãi mà chẳng dám mở lòng thêm. Có người kết thúc một mối tình bình thản, nhẹ nhõm. Lại có kẻ tổn thương mãi không sao tự chữa lành. Ai trong chúng ta cũng có cách riêng để trải nghiệm tình yêu, nhưng những kẻ càng mơ mộng ôm nhiều ảo vọng trong mối quan hệ, có lẽ tổn thương sau chia ly sẽ càng lớn. Thế nhưng, dù từng trải qua điều gì, chúng ta vẫn nên tin rằng “tình yêu của mình” sẽ đến vào đúng lúc nó cần đến, và tất cả những thất bại đi qua sẽ trở thành bài học giúp ta biết trân trọng và nâng niu tình yêu hiện tại đúng cách hơn. Sự trở lại của Night-fly- Tác giả 9x đầy tài năng sau thành công của “Đừng sợ mình sai đừng tin mình đúng” chắc chắn sẽ không bao giờ làm mọi người thất vọng. Đây là một cuốn sách mà bạn không nên mở ngẫu nhiên và đọc bất kỳ, cũng không phải là một cuốn sách bi lụy về tình yêu, hãy kiên trì đi từ đầu đến cuối để thấy góc nhìn về tình yêu biến đổi theo từng nấc thang trưởng thành… Trải qua nhiều những nỗi buồn, bi ai, con người ta mới hiểu, hóa ra trên đời không phải cứ yêu say đắm sẽ được đáp lại bằng thứ tình cảm nồng nhiệt. Gặp nhau là duyên, bên nhau là nợ, cái sai chính là thời điểm. Nhưng khi đã trải qua những đổ vỡ trong chuyện tình cảm, đã từng đau khổ, tổn thương, người ta mới biết rằng nếu sai người, sai thời điểm thì nên lý trí dừng lại đừng để những lạc lối làm tổn thương chính mình và người khác. ',N'893532500191',100,N'book',N'NCC005',N'quyển')
 
-
 insert into bookInformation values
 (N'BOOK001',N'Kinh Tế - Kinh Doanh',N'Bìa mềm',N'15.5 x 23.5 cm',384,N'Jacob Morgan',N'Vương Bảo Long',N'NXB Thế Giới',N'Saigon Books'),
 (N'BOOK002',N'Kinh tế',N'Bìa mềm',N'15.5 x 23.5 cm',372,N'Victor O. Schwab',N'Quyết Trần',N'NXB Hà Nội',N'THBooks'),
@@ -1063,3 +1022,85 @@ insert into bookInformation values
 (N'BOOK358',N'Thiếu Nhi',N'Bìa mềm',N'13 x 20 cm',208,N'Bùi Tiểu Quyên',N'Hoàng Thắng',N'NXB Kim Đồng',N'THBooks'),
 (N'BOOK359',N'Văn Học',N'Bìa mềm',N'15.5 x 23.5 cm',341,N'Cao Xuân Hạo',N'Hoàng Thắng',N'NXB Văn Hoá Dân Tộc',N'Phương Nam Book'),
 (N'BOOK360',N'Văn Học',N'Bìa mềm',N'13 x 20.5 cm',224,N'Night-fly',N'Hoàng Thắng',N'NXB Văn Học',N'Người Trẻ Việt')
+
+--INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'EP001', N'export', N'2000-01-01 00:00:00')
+--INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'EP002', N'export', N'2021-10-20 00:00:00')
+--INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'IP001', N'import', N'2000-01-01 00:00:00')
+--INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'IP002', N'import', N'2021-11-13 00:00:00')
+
+
+--INSERT INTO [dbo].[sellBill] ([billCodeSell], [idEmployee], [number], [sellDate], [deliveryDate], [licenseDate], [idCustomer], [idItem], [unitPrice], [discount], [note], [billstatus], [tag]) VALUES (N'IP001', 1, 3, N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', 1, N'BOOK073', 3000, 0, N'không có note', N'Đã giao hàng', N'')
+--INSERT INTO [dbo].[sellBill] ([billCodeSell], [idEmployee], [number], [sellDate], [deliveryDate], [licenseDate], [idCustomer], [idItem], [unitPrice], [discount], [note], [billstatus], [tag]) VALUES (N'IP002', 2, 7, N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', 1, N'BOOK074', 100, 0, N'không có note', N'Đã giao hàng', N'')
+
+SET DATEFORMAT dmy;  
+GO
+
+insert into bill(billCode,billType) values
+(N'EP001', N'export'),
+(N'EP002', N'export'),
+(N'EP003', N'export'),
+(N'EP004', N'export'),
+(N'IP001', N'import'),
+(N'IP002', N'import')
+
+insert into custommer(idCustommer, firstName, lastName, phoneNumber, custommerAddress, custommerEmail, sex, citizenIdentification, dateOfBirth) values
+(N'CUS001', N'Thắng', N'Nguyễn Hoàng', N'0463643789', N'TPHCM', N'thangnh@gmail.com', N'Nam', N'34719451', '01-01-2000'),
+(N'CUS002', N'Anh', N'Lê Võ Ngọc', N'0442913789', N'TPHCM', N'anhlvn@gmail.com', N'Nam', N'12623112', '01-01-2000'),
+(N'CUS003', N'Tấn', N'Phan Quang', N'0442917615', N'TPHCM', N'tanpq@gmail.com', N'Nam', N'98064184', '01-02-2000')
+
+insert into employee(idEmployee, firstName, lastName, phoneNumber, employeeType, employeeAddress, employeeEmail, sex, citizenIdentification, dateOfBirth, nameAccount) values
+(N'EMP001', N'Nhân', N'Thái Hoàng', N'04819350', N'staff', N'nhanth@gmail.com', N'TPHCM', N'Nam', N'45612847', '12-01-2000', N'staff1'),
+(N'EMP002', N'Chi', N'Nguyễn Yến', N'07364016', N'staff', N'chiny@gmail.com', N'TPHCM', N'Nu', N'46571834', '01-04-2000', N'staff2'),
+(N'EMP003', N'Anh', N'Phùng Minh', N'03678123', N'admin', N'anhpm@gmail.com', N'TPHCM', N'Nam', N'57385963', '14-03-2000', N'admin'),
+(N'EMP004', N'Ân', N'Huỳnh Ngọc Thiên', N'04567219', N'staff', N'anhnt@gmail.com', N'TPHCM', N'Nam', N'19087652', '15-01-2000', N'staff3')
+
+insert into sellBill(billCodeSell, idEmployee, number, sellDate, deliveryDate, licenseDate, idCustomer, idItem, unitPrice, billStatus, discount, tag, note, deliveryMethod, paymentMethod) values
+(N'EP001', N'EMP001', 3, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK118', 31000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP001', N'EMP001', 2, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK117', 25000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP001', N'EMP001', 6, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK116', 61000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP001', N'EMP001', 1, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK115', 42000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP002', N'EMP001', 4, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK123', 111000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP002', N'EMP001', 7, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK111', 36000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP002', N'EMP001', 2, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK112', 12000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK141', 27000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK110', 15000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 7, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK112', 34000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP003', N'EMP002', 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK114', 12000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 2, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK138', 22000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK109', 21000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 6, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK118', 17000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK128', 15000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
+(N'EP004', N'EMP002', 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK119', 10000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD')
+
+
+
+INSERT INTO [dbo].[profitSummary] ([billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [idCustomer], [idEmployee], [day], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) 
+VALUES 
+(N'EP001', N'import', 551000, 551000, 0, N'CUS001', N'EMP001', N'01-01-2000 00:00:00', N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 551000),
+(N'EP001', N'export', 720000, 720000, 0, N'CUS001', N'EMP001', N'01-01-2000 00:00:00', N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 10000),
+(N'EP002', N'import', 361000, 361000, 0, N'CUS002', N'EMP002', N'13-11-2021 00:00:00', N'Lê Võ Ngọc Anh', N'Nguyễn Yến Chi', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 10300),
+(N'EP002', N'export', 253000, 253000, 0, N'CUS002', N'EMP002', N'20-10-2021 00:00:00', N'Lê Võ Ngọc Anh', N'Nguyễn Yến Chi',NULL, N'Thẻ', N'Bán Hàng ', NULL, 8300)
+
+
+
+
+INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
+(N'IP001', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Tiền mặt')
+INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
+(N'IP002', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Thẻ')
+
+
+
+
+DECLARE @MyDateTime datetime = GETDATE();
+insert into mail values 
+(N'Khuyến mãi', @MyDateTime, N'Thư mời tham gia ưu đãi', N'Kính mời tham gia ưu đãi',N'Sử dụng để gửi thông báo KM', N'ON',N'Nhà sách XXX',N'2021-11-25',N'EVERYWEEK'),
+(N'Hội họp', @MyDateTime, N'Thư mời tham dự cuộc họp', N'Kính mời tham gidựa cuộc họp',N'Sử dụng để gửi thông báo họp nhân viên', N'ON',N'Nhà sách XXX',N'2021-11-25',N'EVERYMONTH'),
+(N'Sinh nhật', @MyDateTime, N'Thư mời tham gia ưu đãi', N'Kính mời tham gia ưu đãi sinh nhật',N'Sử dụng để gửi thông báo KM', N'ON',N'Nhà sách XXX',null,N'EVERYYEAR')
+
+
+DECLARE @new datetime = GETDATE();
+insert into sentmail 
+values
+(2,N'thaihoangnhantk17lqd@gmail.com',N'Đã gửi', @new, N'Nhà sách XXX', N'Thư mời tham dự cuộc họp',N'Hội họp')
+

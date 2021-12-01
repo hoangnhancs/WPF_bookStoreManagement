@@ -1,6 +1,7 @@
 ﻿using bookStoreManagetment.Model;
 using bookStoreManagetment.UserControls;
 using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -18,8 +19,19 @@ namespace bookStoreManagetment.ViewModel
         private object _selectedViewModel;
         public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
+        // ẩn hiện grid menu
+        private Visibility _IsVisibleMenu;
+        public Visibility IsVisibleMenu { get => _IsVisibleMenu; set { _IsVisibleMenu = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
+        // ẩn hiện grid sub menu
+        private Visibility _IsVisibleSubMenu;
+        public Visibility IsVisibleSubMenu { get => _IsVisibleSubMenu; set { _IsVisibleSubMenu = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
+
+        // button đã mở
+        public Button ButtonClicked { get; set; }
+
         public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
+        public ICommand LoadedDashBoardCommand { get; set; }
         public ICommand ClosedMainWindowCommand { get; set; }
         public ICommand AccountMainWindowCommand { get; set; }
         public ICommand DashboardClickCommand { get; set; }
@@ -29,10 +41,19 @@ namespace bookStoreManagetment.ViewModel
         public ICommand DSHoaDonClickCommand { get; set; }
         public ICommand OpenSubMenuCommand { get; set; }
         public ICommand ChangeColorOpenedSTP { get; set; }
+
+        public ICommand DashBoardClickCommand { get; set; }
+        public ICommand ListofProductsClickCommand { get; set; }
+        public ICommand ImportGoodsClickCommand { get; set; }
+
         public ICommand openPhieuThuUCCommand { get; set; }
         public ICommand openPhieuChiUCCommand { get; set; }
         public ICommand openDSThuChiUCCommand { get; set; }
         public ICommand openCaiDatChungUCCommand { get; set; }
+
+        public ICommand ChangeColorButtonClickCommand { get; set; }
+        public ICommand ShowHideMenuCommand { get; set; }
+
         public List<StackPanel> opensubstp = new List<StackPanel>();
         public List<Button> openbtn = new List<Button>();
         public List<Window> openWindow = new List<Window>();
@@ -81,6 +102,10 @@ namespace bookStoreManagetment.ViewModel
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
+                // hiện grid full menu
+                IsVisibleMenu = Visibility.Visible;
+                IsVisibleSubMenu = Visibility.Collapsed;
+
                 // ẩn form chính
                 p.Hide();
 
@@ -98,16 +123,49 @@ namespace bookStoreManagetment.ViewModel
                 if (loginVM.IsClose)
                 {
                     p.Close();
+                    App.Current.Shutdown();
                 }
+            });
+
+            // chane color button command
+            ShowHideMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                var _grid = (p as Grid);
+                if (_grid.Visibility == Visibility.Collapsed)
+                {
+                    _grid.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _grid.Visibility = Visibility.Collapsed;
+                }
+            });
+
+            // chane color button command
+            ChangeColorButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                
+                if (p != null)
+                {
+                    var converter = new System.Windows.Media.BrushConverter();
+                    if (ButtonClicked != null)
+                    {
+                        ButtonClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
+                    }
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
+                    ButtonClicked = (p as Button);
+                }            
+            });
+
+            // load Dash Board 
+            LoadedDashBoardCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
+                AddChildUC(p, new DashBoardUC());
             });
 
             // hàm đóng form => đảm bảo không có form con nào còn mở
             ClosedMainWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
-                    App.Current.Windows[intCounter].Close();
+                App.Current.Shutdown();
             });
-
+            
             // hàm check đăng nhập thành công => đổi account
             AccountMainWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -121,6 +179,22 @@ namespace bookStoreManagetment.ViewModel
                     (p as Chip).Icon = (nameAccount[0]).ToString().ToUpper();
                 }
             });
+
+            DashBoardClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
+                
+                AddChildUC(p, new DashBoardUC());
+
+            });
+
+            // danh sách sản phẩm
+            ListofProductsClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
+                AddChildUC(p, new ListofProductUC());
+            });
+
+            ImportGoodsClickCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
+                AddChildUC(p, new ImportGoodsUC());
+            });
+
 
             // is check box
             KiemhangClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
@@ -177,14 +251,14 @@ namespace bookStoreManagetment.ViewModel
             {   if (!openbtn.Contains((p as Button)))
                 {
                     var converter = new System.Windows.Media.BrushConverter();
-                    var brush = (Brush)converter.ConvertFromString("#0000EE");
-                    (p as Button).Background = brush;
+                    var brush = (Brush)converter.ConvertFromString("#FFFF0000");
+                    (p as Button).Foreground = brush;
                     openbtn.Add((p as Button));
                 }
                 else
                 {
-                    var brush = System.Windows.Media.Brushes.Transparent;
-                    (p as Button).Background = brush;
+                    var converter = new System.Windows.Media.BrushConverter();
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FF000000");
                     openbtn.Remove((p as Button));
                 }
             });

@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="idAccount" />
+          </Key>
+          <Property Name="idAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameAccount" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="passwordAccount" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="typeAccount" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bill">
+          <Key>
+            <PropertyRef Name="billCode" />
+          </Key>
+          <Property Name="billCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="billType" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bookInformation">
+          <Key>
+            <PropertyRef Name="sttInformation" />
+          </Key>
+          <Property Name="sttInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idBook" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="typeContent" Type="nvarchar" MaxLength="50" />
+          <Property Name="typeMaterial" Type="nvarchar" MaxLength="50" />
+          <Property Name="size" Type="nvarchar" MaxLength="50" />
+          <Property Name="numberOfPages" Type="int" />
+          <Property Name="author" Type="nvarchar" MaxLength="100" />
+          <Property Name="translator" Type="nvarchar" MaxLength="100" />
+          <Property Name="NXB" Type="nvarchar" MaxLength="300" />
+          <Property Name="NPH" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="checkItems">
+          <Key>
+            <PropertyRef Name="idCheckItems" />
+          </Key>
+          <Property Name="sttCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCheckItems" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
+          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="quantityItem" Type="int" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="custommer">
+          <Key>
+            <PropertyRef Name="sttCustommer" />
+          </Key>
+          <Property Name="sttCustommer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="phoneNumber" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="custommerAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="custommerEmail" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="citizenIdentification" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="dateOfBirth" Type="date" Nullable="false" />
+          <Property Name="nameAccount" Type="nvarchar" MaxLength="20" />
+          <Property Name="accumulatedPoints" Type="int" />
+          <Property Name="custommerNote" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="sttEmployee" />
+          </Key>
+          <Property Name="sttEmployee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="phoneNumber" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="employeeType" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="employeeAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="employeeEmail" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="citizenIdentification" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="dateOfBirth" Type="date" Nullable="false" />
+          <Property Name="nameAccount" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="employeeSalary" Type="int" />
+          <Property Name="employeeNote" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="importBill">
+          <Key>
+            <PropertyRef Name="sttImport" />
+          </Key>
+          <Property Name="sttImport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="billCodeImport" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="nameEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="number" Type="int" Nullable="false" />
+          <Property Name="importDate" Type="datetime" Nullable="false" />
+          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="unitPrice" Type="int" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="20" />
+          <Property Name="paymentMethod" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idsupplier" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="idItem" />
+          </Key>
+          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="linkItem" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="imageItem" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="nameItem" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="importPriceItem" Type="int" Nullable="false" />
+          <Property Name="sellPriceItem" Type="int" Nullable="false" />
+          <Property Name="descriptionItem" Type="nvarchar" MaxLength="2000" />
+          <Property Name="barcode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="typeItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="supplierItem" Type="nvarchar" MaxLength="10" />
+          <Property Name="unit" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="khachtrahang">
+          <Key>
+            <PropertyRef Name="idTrahang" />
+          </Key>
+          <Property Name="idTrahang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="billCodeTra" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="billCodeSell" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="nameEmployee" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="number" Type="int" Nullable="false" />
+          <Property Name="sellDate" Type="datetime" Nullable="false" />
+          <Property Name="idCustomer" Type="int" Nullable="false" />
+          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="unitPrice" Type="int" Nullable="false" />
+          <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="lido" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="trangthai" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="nameCustomer" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="unit" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="mail">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeMail" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="updateDate" Type="date" Nullable="false" />
+          <Property Name="subjectMail" Type="nvarchar" MaxLength="500" />
+          <Property Name="content" Type="nvarchar" MaxLength="2000" />
+          <Property Name="descriptionMailType" Type="nvarchar" MaxLength="1000" />
+          <Property Name="statusMail" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="sender" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="autosentDate" Type="date" />
+          <Property Name="typesent" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="profitSummary">
+          <Key>
+            <PropertyRef Name="sttPayHistory" />
+          </Key>
+          <Property Name="sttPayHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="billCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="billType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="rootPrice" Type="int" Nullable="false" />
+          <Property Name="payPrice" Type="int" Nullable="false" />
+          <Property Name="exchangePrice" Type="int" Nullable="false" />
+          <Property Name="idCustomer" Type="nchar" MaxLength="30" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="day" Type="datetime" Nullable="false" />
+          <Property Name="nameCustomer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nameEmployee" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="typeGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="payment" Type="nvarchar" MaxLength="50" />
+          <Property Name="nameBill" Type="nchar" MaxLength="10" />
+          <Property Name="note" Type="nvarchar" MaxLength="1000" />
+          <Property Name="budget" Type="int" />
+        </EntityType>
+        <EntityType Name="sellBill">
+          <Key>
+            <PropertyRef Name="sttSell" />
+          </Key>
+          <Property Name="sttSell" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="billCodeSell" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" />
+          <Property Name="idCustomer" Type="nvarchar" MaxLength="30" />
+          <Property Name="billstatus" Type="nvarchar" MaxLength="30" />
+          <Property Name="sellDate" Type="datetime" Nullable="false" />
+          <Property Name="deliveryDate" Type="datetime" Nullable="false" />
+          <Property Name="licenseDate" Type="datetime" Nullable="false" />
+          <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="unitPrice" Type="int" Nullable="false" />
+          <Property Name="number" Type="int" Nullable="false" />
+          <Property Name="discount" Type="int" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="20" />
+          <Property Name="tag" Type="nvarchar" MaxLength="20" />
+          <Property Name="deliveryMethod" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="paymentMethod" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sentmail">
+          <Key>
+            <PropertyRef Name="idSent" />
+          </Key>
+          <Property Name="idSent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMail" Type="int" Nullable="false" />
+          <Property Name="receiverMail" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="mailStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="dateSent" Type="date" Nullable="false" />
+          <Property Name="sender" Type="nvarchar" MaxLength="30" />
+          <Property Name="subjectMail" Type="nvarchar" MaxLength="500" />
+          <Property Name="typeMail" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="idSetting" />
+          </Key>
+          <Property Name="sttSetting" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSetting" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="nameSetting" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="statusSetting" Type="nvarchar" MaxLength="10" />
+          <Property Name="contentSetting" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="createdateSetting" Type="date" Nullable="false" />
+          <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="studytoolsInformation">
+          <Key>
+            <PropertyRef Name="sttInformation" />
+          </Key>
+          <Property Name="sttInformation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idStudyTool" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="origin" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="distributor" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="typecontent" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="idSupplier" />
+          </Key>
+          <Property Name="idSupplier" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="nameSupplier" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="addressSupplier" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="emailSupplier" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="phoneNumberSupplier" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="statusSupplier" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="website" Type="nvarchar" MaxLength="100" />
+          <Property Name="fax" Type="nvarchar" MaxLength="30" />
+          <Property Name="masothue" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityContainer Name="bookStoreManagementModelStoreContainer">
+          <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bookInformation" EntityType="Self.bookInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="checkItems" EntityType="Self.checkItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="custommer" EntityType="Self.custommer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="importBill" EntityType="Self.importBill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="item" EntityType="Self.item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="khachtrahang" EntityType="Self.khachtrahang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mail" EntityType="Self.mail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profitSummary" EntityType="Self.profitSummary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sellBill" EntityType="Self.sellBill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sentmail" EntityType="Self.sentmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="studytoolsInformation" EntityType="Self.studytoolsInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bookStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="idAccount" />
+          </Key>
+          <Property Name="idAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameAccount" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passwordAccount" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeAccount" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bill">
+          <Key>
+            <PropertyRef Name="billCode" />
+          </Key>
+          <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bookInformation">
+          <Key>
+            <PropertyRef Name="sttInformation" />
+          </Key>
+          <Property Name="sttInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idBook" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="typeMaterial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="numberOfPages" Type="Int32" />
+          <Property Name="author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="translator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NXB" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="NPH" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="checkItem">
+          <Key>
+            <PropertyRef Name="idCheckItems" />
+          </Key>
+          <Property Name="sttCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCheckItems" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantityItem" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="custommer">
+          <Key>
+            <PropertyRef Name="sttCustommer" />
+          </Key>
+          <Property Name="sttCustommer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="custommerAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="custommerEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="citizenIdentification" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="accumulatedPoints" Type="Int32" />
+          <Property Name="custommerNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="sttEmployee" />
+          </Key>
+          <Property Name="sttEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="employeeType" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="employeeAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="employeeEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="citizenIdentification" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="employeeSalary" Type="Int32" />
+          <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="importBill">
+          <Key>
+            <PropertyRef Name="sttImport" />
+          </Key>
+          <Property Name="sttImport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="billCodeImport" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <Property Name="importDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unitPrice" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="paymentMethod" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idsupplier" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="idItem" />
+          </Key>
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="linkItem" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="imageItem" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameItem" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="importPriceItem" Type="Int32" Nullable="false" />
+          <Property Name="sellPriceItem" Type="Int32" Nullable="false" />
+          <Property Name="descriptionItem" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="barcode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="typeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="supplierItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="khachtrahang">
+          <Key>
+            <PropertyRef Name="idTrahang" />
+          </Key>
+          <Property Name="idTrahang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="billCodeTra" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="billCodeSell" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameEmployee" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <Property Name="sellDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idCustomer" Type="Int32" Nullable="false" />
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unitPrice" Type="Int32" Nullable="false" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="lido" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="trangthai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="mail">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeMail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="updateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="subjectMail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="descriptionMailType" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="statusMail" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sender" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="autosentDate" Type="DateTime" Precision="0" />
+          <Property Name="typesent" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="profitSummary">
+          <Key>
+            <PropertyRef Name="sttPayHistory" />
+          </Key>
+          <Property Name="sttPayHistory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="billCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="billType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rootPrice" Type="Int32" Nullable="false" />
+          <Property Name="payPrice" Type="Int32" Nullable="false" />
+          <Property Name="exchangePrice" Type="Int32" Nullable="false" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="day" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nameCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameEmployee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="payment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nameBill" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="budget" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sellBill">
+          <Key>
+            <PropertyRef Name="sttSell" />
+          </Key>
+          <Property Name="sttSell" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="billCodeSell" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="idCustomer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="billstatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="sellDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="deliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="licenseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unitPrice" Type="Int32" Nullable="false" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <Property Name="discount" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="tag" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="deliveryMethod" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="paymentMethod" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sentmail">
+          <Key>
+            <PropertyRef Name="idSent" />
+          </Key>
+          <Property Name="idSent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMail" Type="Int32" Nullable="false" />
+          <Property Name="receiverMail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mailStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateSent" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="sender" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="subjectMail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="typeMail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="idSetting" />
+          </Key>
+          <Property Name="sttSetting" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSetting" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameSetting" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="statusSetting" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="contentSetting" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdateSetting" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="studytoolsInformation">
+          <Key>
+            <PropertyRef Name="sttInformation" />
+          </Key>
+          <Property Name="sttInformation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idStudyTool" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="origin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="distributor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typecontent" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="idSupplier" />
+          </Key>
+          <Property Name="idSupplier" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nameSupplier" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="addressSupplier" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="emailSupplier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNumberSupplier" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="statusSupplier" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="website" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="fax" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="masothue" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="bookStoreManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="bills" EntityType="Self.bill" />
+          <EntitySet Name="bookInformations" EntityType="Self.bookInformation" />
+          <EntitySet Name="checkItems" EntityType="Self.checkItem" />
+          <EntitySet Name="custommers" EntityType="Self.custommer" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="importBills" EntityType="Self.importBill" />
+          <EntitySet Name="items" EntityType="Self.item" />
+          <EntitySet Name="khachtrahangs" EntityType="Self.khachtrahang" />
+          <EntitySet Name="mails" EntityType="Self.mail" />
+          <EntitySet Name="profitSummaries" EntityType="Self.profitSummary" />
+          <EntitySet Name="sellBills" EntityType="Self.sellBill" />
+          <EntitySet Name="sentmails" EntityType="Self.sentmail" />
+          <EntitySet Name="settings" EntityType="Self.setting" />
+          <EntitySet Name="studytoolsInformations" EntityType="Self.studytoolsInformation" />
+          <EntitySet Name="suppliers" EntityType="Self.supplier" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bookStoreManagementModelStoreContainer" CdmEntityContainer="bookStoreManagementEntities">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.account">
+              <MappingFragment StoreEntitySet="account">
+                <ScalarProperty Name="idAccount" ColumnName="idAccount" />
+                <ScalarProperty Name="nameAccount" ColumnName="nameAccount" />
+                <ScalarProperty Name="passwordAccount" ColumnName="passwordAccount" />
+                <ScalarProperty Name="typeAccount" ColumnName="typeAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bills">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.bill">
+              <MappingFragment StoreEntitySet="bill">
+                <ScalarProperty Name="billCode" ColumnName="billCode" />
+                <ScalarProperty Name="billType" ColumnName="billType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bookInformations">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.bookInformation">
+              <MappingFragment StoreEntitySet="bookInformation">
+                <ScalarProperty Name="sttInformation" ColumnName="sttInformation" />
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+                <ScalarProperty Name="typeContent" ColumnName="typeContent" />
+                <ScalarProperty Name="typeMaterial" ColumnName="typeMaterial" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="numberOfPages" ColumnName="numberOfPages" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="translator" ColumnName="translator" />
+                <ScalarProperty Name="NXB" ColumnName="NXB" />
+                <ScalarProperty Name="NPH" ColumnName="NPH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="checkItems">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.checkItem">
+              <MappingFragment StoreEntitySet="checkItems">
+                <ScalarProperty Name="sttCheckItems" ColumnName="sttCheckItems" />
+                <ScalarProperty Name="idCheckItems" ColumnName="idCheckItems" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
+                <ScalarProperty Name="idItem" ColumnName="idItem" />
+                <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="custommers">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.custommer">
+              <MappingFragment StoreEntitySet="custommer">
+                <ScalarProperty Name="sttCustommer" ColumnName="sttCustommer" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="custommerAddress" ColumnName="custommerAddress" />
+                <ScalarProperty Name="custommerEmail" ColumnName="custommerEmail" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="citizenIdentification" ColumnName="citizenIdentification" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="nameAccount" ColumnName="nameAccount" />
+                <ScalarProperty Name="accumulatedPoints" ColumnName="accumulatedPoints" />
+                <ScalarProperty Name="custommerNote" ColumnName="custommerNote" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="sttEmployee" ColumnName="sttEmployee" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="employeeType" ColumnName="employeeType" />
+                <ScalarProperty Name="employeeAddress" ColumnName="employeeAddress" />
+                <ScalarProperty Name="employeeEmail" ColumnName="employeeEmail" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="citizenIdentification" ColumnName="citizenIdentification" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="nameAccount" ColumnName="nameAccount" />
+                <ScalarProperty Name="employeeSalary" ColumnName="employeeSalary" />
+                <ScalarProperty Name="employeeNote" ColumnName="employeeNote" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="importBills">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.importBill">
+              <MappingFragment StoreEntitySet="importBill">
+                <ScalarProperty Name="sttImport" ColumnName="sttImport" />
+                <ScalarProperty Name="billCodeImport" ColumnName="billCodeImport" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="nameEmployee" ColumnName="nameEmployee" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="importDate" ColumnName="importDate" />
+                <ScalarProperty Name="idItem" ColumnName="idItem" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="paymentMethod" ColumnName="paymentMethod" />
+                <ScalarProperty Name="idsupplier" ColumnName="idsupplier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="idItem" ColumnName="idItem" />
+                <ScalarProperty Name="linkItem" ColumnName="linkItem" />
+                <ScalarProperty Name="imageItem" ColumnName="imageItem" />
+                <ScalarProperty Name="nameItem" ColumnName="nameItem" />
+                <ScalarProperty Name="importPriceItem" ColumnName="importPriceItem" />
+                <ScalarProperty Name="sellPriceItem" ColumnName="sellPriceItem" />
+                <ScalarProperty Name="descriptionItem" ColumnName="descriptionItem" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="typeItem" ColumnName="typeItem" />
+                <ScalarProperty Name="supplierItem" ColumnName="supplierItem" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="khachtrahangs">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.khachtrahang">
+              <MappingFragment StoreEntitySet="khachtrahang">
+                <ScalarProperty Name="idTrahang" ColumnName="idTrahang" />
+                <ScalarProperty Name="billCodeTra" ColumnName="billCodeTra" />
+                <ScalarProperty Name="billCodeSell" ColumnName="billCodeSell" />
+                <ScalarProperty Name="nameEmployee" ColumnName="nameEmployee" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="sellDate" ColumnName="sellDate" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="idItem" ColumnName="idItem" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="lido" ColumnName="lido" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="nameCustomer" ColumnName="nameCustomer" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mails">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.mail">
+              <MappingFragment StoreEntitySet="mail">
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+                <ScalarProperty Name="typeMail" ColumnName="typeMail" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="subjectMail" ColumnName="subjectMail" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="descriptionMailType" ColumnName="descriptionMailType" />
+                <ScalarProperty Name="statusMail" ColumnName="statusMail" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="autosentDate" ColumnName="autosentDate" />
+                <ScalarProperty Name="typesent" ColumnName="typesent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profitSummaries">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.profitSummary">
+              <MappingFragment StoreEntitySet="profitSummary">
+                <ScalarProperty Name="sttPayHistory" ColumnName="sttPayHistory" />
+                <ScalarProperty Name="billCode" ColumnName="billCode" />
+                <ScalarProperty Name="billType" ColumnName="billType" />
+                <ScalarProperty Name="rootPrice" ColumnName="rootPrice" />
+                <ScalarProperty Name="payPrice" ColumnName="payPrice" />
+                <ScalarProperty Name="exchangePrice" ColumnName="exchangePrice" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="nameCustomer" ColumnName="nameCustomer" />
+                <ScalarProperty Name="nameEmployee" ColumnName="nameEmployee" />
+                <ScalarProperty Name="typeGroup" ColumnName="typeGroup" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="nameBill" ColumnName="nameBill" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sellBills">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.sellBill">
+              <MappingFragment StoreEntitySet="sellBill">
+                <ScalarProperty Name="sttSell" ColumnName="sttSell" />
+                <ScalarProperty Name="billCodeSell" ColumnName="billCodeSell" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="billstatus" ColumnName="billstatus" />
+                <ScalarProperty Name="sellDate" ColumnName="sellDate" />
+                <ScalarProperty Name="deliveryDate" ColumnName="deliveryDate" />
+                <ScalarProperty Name="licenseDate" ColumnName="licenseDate" />
+                <ScalarProperty Name="idItem" ColumnName="idItem" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="tag" ColumnName="tag" />
+                <ScalarProperty Name="deliveryMethod" ColumnName="deliveryMethod" />
+                <ScalarProperty Name="paymentMethod" ColumnName="paymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sentmails">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.sentmail">
+              <MappingFragment StoreEntitySet="sentmail">
+                <ScalarProperty Name="idSent" ColumnName="idSent" />
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+                <ScalarProperty Name="receiverMail" ColumnName="receiverMail" />
+                <ScalarProperty Name="mailStatus" ColumnName="mailStatus" />
+                <ScalarProperty Name="dateSent" ColumnName="dateSent" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="subjectMail" ColumnName="subjectMail" />
+                <ScalarProperty Name="typeMail" ColumnName="typeMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="sttSetting" ColumnName="sttSetting" />
+                <ScalarProperty Name="idSetting" ColumnName="idSetting" />
+                <ScalarProperty Name="nameSetting" ColumnName="nameSetting" />
+                <ScalarProperty Name="statusSetting" ColumnName="statusSetting" />
+                <ScalarProperty Name="contentSetting" ColumnName="contentSetting" />
+                <ScalarProperty Name="createdateSetting" ColumnName="createdateSetting" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="studytoolsInformations">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.studytoolsInformation">
+              <MappingFragment StoreEntitySet="studytoolsInformation">
+                <ScalarProperty Name="sttInformation" ColumnName="sttInformation" />
+                <ScalarProperty Name="idStudyTool" ColumnName="idStudyTool" />
+                <ScalarProperty Name="origin" ColumnName="origin" />
+                <ScalarProperty Name="distributor" ColumnName="distributor" />
+                <ScalarProperty Name="typecontent" ColumnName="typecontent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suppliers">
+            <EntityTypeMapping TypeName="bookStoreManagementModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="idSupplier" ColumnName="idSupplier" />
+                <ScalarProperty Name="nameSupplier" ColumnName="nameSupplier" />
+                <ScalarProperty Name="addressSupplier" ColumnName="addressSupplier" />
+                <ScalarProperty Name="emailSupplier" ColumnName="emailSupplier" />
+                <ScalarProperty Name="phoneNumberSupplier" ColumnName="phoneNumberSupplier" />
+                <ScalarProperty Name="statusSupplier" ColumnName="statusSupplier" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="masothue" ColumnName="masothue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
