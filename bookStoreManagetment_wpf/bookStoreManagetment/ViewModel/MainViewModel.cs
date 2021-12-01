@@ -105,6 +105,8 @@ namespace bookStoreManagetment.ViewModel
                 if (loginVM.IsClose)
                 {
                     p.Close();
+                    for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                        App.Current.Windows[intCounter].Close();
                 }
             });
 

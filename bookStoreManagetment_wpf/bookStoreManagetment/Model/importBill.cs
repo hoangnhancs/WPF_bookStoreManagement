@@ -16,7 +16,7 @@ namespace bookStoreManagetment.Model
     {
         public int sttImport { get; set; }
         public string billCodeImport { get; set; }
-        public int idEmployee { get; set; }
+        public string idEmployee { get; set; }
         public string nameEmployee { get; set; }
         public int number { get; set; }
         public System.DateTime importDate { get; set; }

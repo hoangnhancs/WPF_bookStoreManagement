@@ -49,14 +49,14 @@ namespace bookStoreManagetment.ViewModel
         public DashBoardViewModel()
         {
 
-            int revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.sellDay.Day == 1 && p.billType == "sell").Select(p => p.rootPrice).Sum();
+            int revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "export").Select(p => p.rootPrice).Sum();
             Revenue = string.Format(new CultureInfo("vi-VN"), "{0:0,0 đ}", revenue);
 
             NewOrder = DataProvider.Ins.DB.sellBills.Where(p => p.sellDate.Day == 11).Count().ToString();
 
             Return = DataProvider.Ins.DB.khachtrahangs.Count().ToString();
 
-            BillPayment = DataProvider.Ins.DB.profitSummaries.Where(p => p.sellDay.Day == 1 && p.billType == "sell").Count().ToString();
+            BillPayment = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "export").Count().ToString();
 
             var TopProduct = DataProvider.Ins.DB.sellBills.GroupBy(p => p.idItem).Select(pa => new { idItem = pa.Key, Sum = pa.Sum(s => s.number) }).OrderByDescending(c => c.Sum).Take(5);
 
@@ -79,7 +79,7 @@ namespace bookStoreManagetment.ViewModel
                 .Y(p => p.Revenue);
 
             //lets take the first 15 records by default;
-            var records = DataProvider.Ins.DB.profitSummaries.GroupBy(p => p.sellDay).Select(pa => new { Day = pa.Key, Sum = pa.Sum(s => s.rootPrice) }).OrderByDescending(c => c.Day).Take(7);
+            var records = DataProvider.Ins.DB.profitSummaries.GroupBy(p => p.day).Select(pa => new { Day = pa.Key, Sum = pa.Sum(s => s.rootPrice) }).OrderByDescending(c => c.Day).Take(7);
 
             Revenues = new ObservableCollection<turnoverinsevendays>();
 
