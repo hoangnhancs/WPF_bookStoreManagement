@@ -42,6 +42,10 @@
                 Command="{Binding LoadedDashBoardCommand}"
                 CommandParameter="{Binding ElementName=GridMainForm}">
             </i:InvokeCommandAction>
+            <i:InvokeCommandAction
+                Command="{Binding ChangeColorButtonIconClickCommand}"
+                CommandParameter="{Binding ElementName=btnIconDashboard}">
+            </i:InvokeCommandAction>
         </i:EventTrigger>
 
         <i:EventTrigger EventName="Closed">
@@ -106,6 +110,7 @@
                       Visibility="Visible"
                       DockPanel.Dock="Left">
                     <StackPanel>
+                        <!--arrow-->
                         <Button Style="{StaticResource btnStyle_MenuFeatures}">
                             <materialDesign:PackIcon Kind="ArrowRight" 
                                                      HorizontalAlignment="Center"
@@ -126,10 +131,267 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
-                        
+
+                        <!--chart-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                Command="{Binding ChangeColorButtonClickCommand}"
+                                CommandParameter="{Binding ElementName=btnDashboard}"
+                                x:Name="btnIconDashboard">
+                            <materialDesign:PackIcon Kind="ChartBar" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"></materialDesign:PackIcon>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                                        Command="{Binding DashBoardClickCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconDashboard}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--items-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                x:Name="btnIconQLVP"
+                                Command="{Binding ChangeColorOpenedSTP}"
+                                CommandParameter="{Binding ElementName=btnQLVP}">
+                            <materialDesign:PackIcon Kind="Book" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                    </i:InvokeCommandAction> 
+                                    <i:InvokeCommandAction
+                                    Command="{Binding OpenSubMenuCommand}"
+                                    CommandParameter="{Binding ElementName=subMenuQLVP}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--sell-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                Command="{Binding ChangeColorOpenedSTP}"
+                                CommandParameter="{Binding ElementName=btnQLBH}"
+                                x:Name="btnIconQLBH">
+                            <materialDesign:PackIcon Kind="Cart" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                                Command="{Binding OpenSubMenuCommand}"
+                                                CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--customer-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                x:Name="btnIconQLKH"
+                                Command="{Binding ChangeColorOpenedSTP}"
+                                CommandParameter="{Binding ElementName=btnQLKH}">
+                            <materialDesign:PackIcon Kind="PeopleGroup" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding OpenSubMenuCommand}"
+                                        CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--employee-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                x:Name="btnIconQLNV"
+                                Command="{Binding ChangeColorOpenedSTP}"
+                                CommandParameter="{Binding ElementName=btnQLNV}">
+                            <materialDesign:PackIcon Kind="PersonBadge" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding OpenSubMenuCommand}"
+                                        CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--import export-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                x:Name="btnIconQLTC"
+                                Command="{Binding ChangeColorOpenedSTP}"
+                                CommandParameter="{Binding ElementName=btnQLTC}">
+                            <materialDesign:PackIcon Kind="ImportExport" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ShowHideMenuCommand}"
+                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                            Command="{Binding OpenSubMenuCommand}"
+                                            CommandParameter="{Binding ElementName=subMenuQLTC}"/>
+                                    
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--report-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                x:Name="btnIconQLReport"
+                                Command="{Binding ChangeColorButtonClickCommand}"
+                                CommandParameter="{Binding ElementName=btnQLReport}">
+                            <materialDesign:PackIcon Kind="FileDocumentBox" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName=btnIconQLReport}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--event-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                 x:Name="btnIconQLSK"
+                                Command="{Binding ChangeColorButtonClickCommand}"
+                                CommandParameter="{Binding ElementName=btnQLSK}">
+                            <materialDesign:PackIcon Kind="Event" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName=btnIconQLSK}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <!--mail-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                 x:Name="btnIconQLMail"
+                                Command="{Binding ChangeColorButtonClickCommand}"
+                                CommandParameter="{Binding ElementName=btnQLMail}">
+                            <materialDesign:PackIcon Kind="Gmail" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName=btnIconQLMail}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                        Command="{Binding QuanlyMailCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <!--setting-->
+                        <Button Style="{StaticResource btnStyle_MenuFeatures}"
+                                x:Name="btnIconCDC"
+                                Command="{Binding ChangeColorButtonClickCommand}"
+                                CommandParameter="{Binding ElementName=btnCDC}">
+                            <materialDesign:PackIcon Kind="Settings" 
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                 Width="36"
+                                                 Height="36"/>
+                            <!--ẩn hiện -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName=btnIconCDC}">
+                                    </i:InvokeCommandAction>
+                                    <i:InvokeCommandAction
+                                            Command="{Binding openCaiDatChungUCCommand}"
+                                            CommandParameter="{Binding ElementName=GridMainForm}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
                     </StackPanel>
                 </Grid>
-                <Grid Width="170"
+                <Grid Width="175"
                       x:Name="gridMenu"
                       Visibility="Collapsed"
                       DockPanel.Dock="Left">
@@ -139,12 +401,13 @@
                         <ScrollViewer
                                   Background="{StaticResource HorizontalAquaLinearGradient}"
                         x:Name="test_scv" 
-                        VerticalScrollBarVisibility="Visible" 
+                        VerticalScrollBarVisibility="Auto" 
                         HorizontalScrollBarVisibility="Hidden">
                             
                             <StackPanel x:Name="stackPanelFeatures"
                                         Margin="10 0 0 0"
                                         Background="Transparent">
+                                <!--arrow-->
                                 <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Width="40"
                                         HorizontalAlignment="Left">
@@ -170,17 +433,18 @@
                                 <!--dashboard-->
                                 <StackPanel x:Name="stpDashBoard">
                                     <Button HorizontalAlignment="Left"
-                                        FontWeight="SemiBold"
-                                        Command="{Binding ChangeColorButtonClickCommand}"
-                                x:Name="btnDashboard"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Dashboard">
-
+                                            Width="145"
+                                            HorizontalContentAlignment="Left"
+                                            FontWeight="SemiBold"
+                                            Command="{Binding ChangeColorButtonClickCommand}"
+                                            x:Name="btnDashboard"
+                                            Style="{StaticResource btnStyle_MenuFeatures}"
+                                            Content="Dashboard" Click="btnDashboard_Click">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                        Command="{Binding DashBoardClickCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                                    Command="{Binding DashBoardClickCommand}"
+                                                    CommandParameter="{Binding ElementName=GridMainForm}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
@@ -190,6 +454,8 @@
                                 <StackPanel x:Name="stpQLVP">
                                     <Button HorizontalAlignment="Left"
                                         FontWeight="SemiBold"
+                                             Width="145"
+                                            HorizontalContentAlignment="Left"
                                 x:Name="btnQLVP"
                                 Style="{StaticResource btnStyle_MenuFeatures}"
                                 Content="Quản Lý Vật Phẩm">
@@ -212,6 +478,8 @@
                                             Margin="10 0 0 0"
                                             Visibility="Collapsed">
                                         <Button HorizontalAlignment="Left"
+                                                 Width="135"
+                                            HorizontalContentAlignment="Left"
                                             x:Name="btnDSSP"
                                             Style="{StaticResource btnStyle_MenuFeatures}"
                                             Content="Danh sách sản phẩm"
@@ -220,51 +488,72 @@
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
-                                                Command="{Binding ListofProductsClickCommand}"
-                                                CommandParameter="{Binding ElementName=GridMainForm}" />
+                                                        Command="{Binding ListofProductsClickCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLVP}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
                                         <Button HorizontalAlignment="Left"
-                                        x:Name="btnNhapHang"
-                                        Command="{Binding ChangeColorButtonClickCommand}"
-                                        CommandParameter="{Binding ElementName=btnNhapHang}"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Nhập hàng">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <i:InvokeCommandAction
-                                                    Command="{Binding ImportGoodsClickCommand}"
-                                                    CommandParameter="{Binding ElementName=GridMainForm}" />
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Button>
-                                        <Button HorizontalAlignment="Left"
-                                        x:Name="btnKiemHang"
-                                        Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnKiemHang}"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Kiểm hàng">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <i:InvokeCommandAction
-                                            Command="{Binding KiemhangClickCommand}"
-                                            CommandParameter="{Binding ElementName=GridMainForm}" />
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Button>
-                                        <Button HorizontalAlignment="Left"
-                                            
-                                    x:Name="btnNhacungcap"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Nhà cung cấp"
-                                    Command="{Binding NhacungcapClickCommand}"
-                                    CommandParameter="{Binding ElementName=GridMainForm}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <i:InvokeCommandAction
+                                                 Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                x:Name="btnNhapHang"
                                                 Command="{Binding ChangeColorButtonClickCommand}"
-                                                CommandParameter="{Binding ElementName=btnNhacungcap}"/>
+                                                CommandParameter="{Binding ElementName=btnNhapHang}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Nhập hàng">    
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ImportGoodsClickCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLVP}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Button>
+                                        <Button HorizontalAlignment="Left"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                x:Name="btnKiemHang"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnKiemHang}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Kiểm hàng">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding KiemhangClickCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}" />
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLVP}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Button>
+                                        <Button HorizontalAlignment="Left"
+                                             Width="135"
+                                            HorizontalContentAlignment="Left"
+                                            x:Name="btnNhacungcap"
+                                            Style="{StaticResource btnStyle_MenuFeatures}"
+                                            Content="Nhà cung cấp"
+                                            Command="{Binding NhacungcapClickCommand}"
+                                            CommandParameter="{Binding ElementName=GridMainForm}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnNhacungcap}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLVP}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
@@ -274,6 +563,8 @@
                                 <!--quản lí bán hàng-->
                                 <StackPanel x:Name="stpQLBH">
                                     <Button HorizontalAlignment="Left"
+                                             Width="145"
+                                            HorizontalContentAlignment="Left"
                                         FontWeight="SemiBold"
                                         x:Name="btnQLBH"
                                         Style="{StaticResource btnStyle_MenuFeatures}"
@@ -294,24 +585,40 @@
                                     <StackPanel x:Name="subMenuQLBH" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                         Content="Danh sách hóa đơn"
-                                            x:Name="btnDSHD"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnDSHD}"
-                                            HorizontalAlignment="Left">
+                                                 Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                x:Name="btnDSHD"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnDSHD}"
+                                                HorizontalAlignment="Left">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
                                                         Command="{Binding DSHoaDonClickCommand}"
                                                         CommandParameter="{Binding ElementName=GridMainForm}" />
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLBH}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
-                                            x:Name="btnKhachTraHang"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnKhachTraHang}"
+                                                x:Name="btnKhachTraHang"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnKhachTraHang}"
                                         Content="Khách trả hàng"
                                             HorizontalAlignment="Left">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLBH}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
@@ -319,37 +626,59 @@
                                 <!--Quản lí khách hàng-->
                                 <StackPanel x:Name="stpQLKH">
                                     <Button HorizontalAlignment="Left"
-                                        FontWeight="SemiBold"
-                                x:Name="btnQLKH"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản lý khách hàng">
+                                            FontWeight="SemiBold"
+                                            x:Name="btnQLKH"
+                                            Width="145"
+                                            HorizontalContentAlignment="Left"
+                                            Style="{StaticResource btnStyle_MenuFeatures}"
+                                            Content="Quản lý khách hàng" Click="btnQLKH_Click">
                                         <!--Tạo event click vô button mở submenu và đổi màu btn-->
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLKH}"/>
+                                                    Command="{Binding OpenSubMenuCommand}"
+                                                    CommandParameter="{Binding ElementName=subMenuQLKH}"/>
                                                 <i:InvokeCommandAction
-                                        Command="{Binding ChangeColorOpenedSTP}"
-                                        CommandParameter="{Binding ElementName=btnQLKH}"/>
+                                                    Command="{Binding ChangeColorOpenedSTP}"
+                                                    CommandParameter="{Binding ElementName=btnQLKH}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
                                     <!--Sub menu-->
                                     <StackPanel x:Name="subMenuQLKH" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button HorizontalAlignment="Left"
-                                            x:Name="btnDSKH"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnDSKH}"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Danh sách khách hàng">
+                                                x:Name="btnDSKH"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnDSKH}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Danh sách khách hàng">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLKH}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                         <Button HorizontalAlignment="Left"
-                                            x:Name="btnNhomKH"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnNhomKH}"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Nhóm khách hàng">
+                                                x:Name="btnNhomKH"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnNhomKH}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Nhóm khách hàng">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLKH}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
@@ -357,160 +686,219 @@
                                 <!--quản lí nhân viên-->
                                 <StackPanel x:Name="stpQLNV">
                                     <Button HorizontalAlignment="Left"
-                                        FontWeight="SemiBold"
-                                x:Name="btnQLNV"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản lý nhân viên">
+                                            FontWeight="SemiBold"
+                                            x:Name="btnQLNV"
+                                            Width="145"
+                                            HorizontalContentAlignment="Left"
+                                            Style="{StaticResource btnStyle_MenuFeatures}"
+                                            Content="Quản lý nhân viên">
                                         <!--Event button click open sub menu-->
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                                    Command="{Binding OpenSubMenuCommand}"
+                                                    CommandParameter="{Binding ElementName=subMenuQLNV}"/>
                                                 <i:InvokeCommandAction
-                                        Command="{Binding ChangeColorOpenedSTP}"
-                                        CommandParameter="{Binding ElementName=btnQLNV}"/>
+                                                    Command="{Binding ChangeColorOpenedSTP}"
+                                                    CommandParameter="{Binding ElementName=btnQLNV}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
                                     <!--Sub menu-->
                                     <StackPanel x:Name="subMenuQLNV" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button HorizontalAlignment="Left"
-                                            x:Name="btnDSNV"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnDSNV}"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Danh sách nhân viên">
+                                                x:Name="btnDSNV"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnDSNV}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Danh sách nhân viên">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLNV}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                         <Button HorizontalAlignment="Left"
-                                            x:Name="btnPhanQuyen"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnPhanQuyen}"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Phân quyền">
+                                                x:Name="btnPhanQuyen"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnPhanQuyen}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Phân quyền">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLNV}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
 
                                 <!--Quản lí thu chi-->
                                 <StackPanel x:Name="stpQLTC">
-                                    <Button x:Name="btnQLTC" HorizontalAlignment="Left" FontWeight="SemiBold"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Quản lý thu chi">
+                                    <Button x:Name="btnQLTC" 
+                                            HorizontalAlignment="Left" 
+                                            FontWeight="SemiBold"
+                                            Style="{StaticResource btnStyle_MenuFeatures}"
+                                            Content="Quản lý thu chi"
+                                            Width="145"
+                                            HorizontalContentAlignment="Left">
                                         <!--Event button click open sub menu-->
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                            Command="{Binding OpenSubMenuCommand}"
-                                            CommandParameter="{Binding ElementName=subMenuQLTC}"/>
+                                                    Command="{Binding OpenSubMenuCommand}"
+                                                    CommandParameter="{Binding ElementName=subMenuQLTC}"/>
                                                 <i:InvokeCommandAction
-                                            Command="{Binding ChangeColorOpenedSTP}"
-                                            CommandParameter="{Binding ElementName=btnQLTC}"/>
+                                                    Command="{Binding ChangeColorOpenedSTP}"
+                                                    CommandParameter="{Binding ElementName=btnQLTC}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
                                     <!--Sub menu-->
                                     <StackPanel x:Name="subMenuQLTC" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button HorizontalAlignment="Left"
-                                            x:Name="btnDSTC"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Content="Danh sách thu chi"
-                                    Command="{Binding openDSThuChiUCCommand}"
-                                    CommandParameter="{Binding ElementName=GridMainForm}">
+                                                x:Name="btnDSTC"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Danh sách thu chi"
+                                                Command="{Binding openDSThuChiUCCommand}"
+                                                CommandParameter="{Binding ElementName=GridMainForm}">
                                             <!--Event button click open sub menu-->
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
-                                                Command="{Binding ChangeColorButtonClickCommand}"
-                                                CommandParameter="{Binding ElementName=btnDSTC}"/>
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnDSTC}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLTC}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
                                         <Button HorizontalAlignment="Left"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                    Command="{Binding openPhieuThuUCCommand}"
-                                    CommandParameter="{Binding ElementName=GridMainForm}"
-                                            x:Name="btnPhieuthu"
-                                    Content="Phiếu thu">
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Command="{Binding openPhieuThuUCCommand}"
+                                                CommandParameter="{Binding ElementName=GridMainForm}"
+                                                x:Name="btnPhieuthu"
+                                                Content="Phiếu thu">
                                             <!--Event button click open sub menu-->
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
-                                                Command="{Binding ChangeColorButtonClickCommand}"
-                                                CommandParameter="{Binding ElementName=btnPhieuthu}"/>
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnPhieuthu}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLTC}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
                                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
-                                        Content="Phiếu chi"
-                                            x:Name="btnPhieuChi"
-                                            HorizontalAlignment="Left"
-                                        Command="{Binding openPhieuChiUCCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                                Content="Phiếu chi"
+                                                Width="135"
+                                                HorizontalContentAlignment="Left"
+                                                x:Name="btnPhieuChi"
+                                                HorizontalAlignment="Left"
+                                                Command="{Binding openPhieuChiUCCommand}"
+                                                CommandParameter="{Binding ElementName=GridMainForm}">
                                             <!--Event button click open sub menu-->
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
-                                                Command="{Binding ChangeColorButtonClickCommand}"
-                                                CommandParameter="{Binding ElementName=btnPhieuChi}"/>
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnPhieuChi}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLTC}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
-                                        <!--Sub menu-->
-                                        <!--<StackPanel x:Name="subMenuQLTC2" Visibility="Collapsed">
-                                        <Button 
-                                        Style="{StaticResource btnStyle_MenuFeatures}"
-                                        Content="Danh sách thu chi">
-                                        </Button>
-                                        <Button 
-                                            Style="{StaticResource btnStyle_MenuFeatures}"
-                                            Content="Phiếu thu">
-                                        </Button>
-                                        <Button 
-                                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                                Content="Phiếu chi">
-                                        </Button>
-                                    </StackPanel>-->
                                     </StackPanel>
 
                                     <!--Quán lí báo cáo-->
                                     <StackPanel x:Name="stpQLRP">
-                                        <Button HorizontalAlignment="Left" FontWeight="SemiBold"
-                                            x:Name="btnQLReport"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnQLReport}"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản lý report">
+                                        <Button HorizontalAlignment="Left"
+                                                FontWeight="SemiBold"
+                                                x:Name="btnQLReport"
+                                                Width="145"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnQLReport}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Quản lý report">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLReport}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
 
                                     <!--Quản lí sự kiện-->
                                     <StackPanel x:Name="stpQLSK">
-                                        <Button HorizontalAlignment="Left" FontWeight="SemiBold"
-                                            x:Name="btnQLSK"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
-                                            CommandParameter="{Binding ElementName=btnQLSK}"
-                                Style="{StaticResource btnStyle_MenuFeatures}"
-                                Content="Quản lý sự kiện">
+                                        <Button HorizontalAlignment="Left"
+                                                FontWeight="SemiBold"
+                                                x:Name="btnQLSK"
+                                                Width="145"
+                                                HorizontalContentAlignment="Left"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
+                                                CommandParameter="{Binding ElementName=btnQLSK}"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Quản lý sự kiện">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLSK}">
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                     </StackPanel>
 
                                     <!--quản lí mail-->
                                     <StackPanel x:Name="stpQLMail">
-                                        <Button HorizontalAlignment="Left" FontWeight="SemiBold"
-                                    Style="{StaticResource btnStyle_MenuFeatures}"
-                                            Command="{Binding ChangeColorButtonClickCommand}"
+                                        <Button HorizontalAlignment="Left" 
+                                                FontWeight="SemiBold"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Command="{Binding ChangeColorButtonClickCommand}"
                                                 CommandParameter="{Binding ElementName=btnQLMail}"
-                                    Content="Quản lý Mail"
-                                    x:Name="btnQLMail" Click="btnQLMail_Click">
+                                                Content="Quản lý Mail"
+                                                Width="145"
+                                                HorizontalContentAlignment="Left"
+                                                 x:Name="btnQLMail"
+                                                Click="btnQLMail_Click">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
-                                                Command="{Binding ChangeColorOpenedSTP}"
-                                                CommandParameter="{Binding ElementName=btnQLMail}"/>
+                                                        Command="{Binding ChangeColorOpenedSTP}"
+                                                        CommandParameter="{Binding ElementName=btnQLMail}"/>
                                                     <i:InvokeCommandAction
-                                                Command="{Binding QuanlyMailCommand}"
-                                                CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                                        Command="{Binding QuanlyMailCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLMail}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
@@ -518,18 +906,25 @@
 
                                     <!--quản lí cài đặt chung-->
                                     <StackPanel x:Name="stpCDC">
-                                        <Button HorizontalAlignment="Left" FontWeight="SemiBold"
-                                            x:Name="btnCDC"
-                                        Style="{StaticResource btnStyle_MenuFeatures}"
-                                        Content="Cài đặt chung"
-                                        Command="{Binding openCaiDatChungUCCommand}"
-                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                        <Button HorizontalAlignment="Left"
+                                                FontWeight="SemiBold"
+                                                x:Name="btnCDC"
+                                                Width="145"
+                                                HorizontalContentAlignment="Left"
+                                                Style="{StaticResource btnStyle_MenuFeatures}"
+                                                Content="Cài đặt chung"
+                                                Command="{Binding openCaiDatChungUCCommand}"
+                                                CommandParameter="{Binding ElementName=GridMainForm}">
                                             <!--Event button click open sub menu-->
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
-                                                Command="{Binding ChangeColorButtonClickCommand}"
-                                                CommandParameter="{Binding ElementName=btnCDC}"/>
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnCDC}"/>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconCDC}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>

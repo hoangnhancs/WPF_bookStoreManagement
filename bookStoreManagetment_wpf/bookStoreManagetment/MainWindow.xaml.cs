@@ -43,5 +43,15 @@ namespace bookStoreManagetment
         {
 
         }
+
+        private void btnDashboard_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnQLKH_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
