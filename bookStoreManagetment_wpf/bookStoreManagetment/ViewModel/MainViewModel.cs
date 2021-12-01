@@ -19,15 +19,10 @@ namespace bookStoreManagetment.ViewModel
         private object _selectedViewModel;
         public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
-        // ẩn hiện grid menu
-        private Visibility _IsVisibleMenu;
-        public Visibility IsVisibleMenu { get => _IsVisibleMenu; set { _IsVisibleMenu = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
-        // ẩn hiện grid sub menu
-        private Visibility _IsVisibleSubMenu;
-        public Visibility IsVisibleSubMenu { get => _IsVisibleSubMenu; set { _IsVisibleSubMenu = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
-
         // button đã mở
         public Button ButtonClicked { get; set; }
+        // button đã mở
+        public Button ButtonIconClicked { get; set; }
 
         public string IDUser { get; set; }
         public ICommand LoadedMainWindowCommand { get; set; }
@@ -52,6 +47,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand openCaiDatChungUCCommand { get; set; }
 
         public ICommand ChangeColorButtonClickCommand { get; set; }
+        public ICommand ChangeColorButtonIconClickCommand { get; set; }
         public ICommand ShowHideMenuCommand { get; set; }
 
         public List<StackPanel> opensubstp = new List<StackPanel>();
@@ -102,9 +98,6 @@ namespace bookStoreManagetment.ViewModel
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                // hiện grid full menu
-                IsVisibleMenu = Visibility.Visible;
-                IsVisibleSubMenu = Visibility.Collapsed;
 
                 // ẩn form chính
                 p.Hide();
@@ -153,6 +146,22 @@ namespace bookStoreManagetment.ViewModel
                     (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
                     ButtonClicked = (p as Button);
                 }            
+            });
+
+            // chane color button command
+            ChangeColorButtonIconClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+
+                if (p != null)
+                {
+                    var converter = new System.Windows.Media.BrushConverter();
+                    if (ButtonIconClicked != null)
+                    {
+                        ButtonIconClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
+                    }
+                    var check = (p as Button).Name;
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
+                    ButtonIconClicked = (p as Button);
+                }
             });
 
             // load Dash Board 
