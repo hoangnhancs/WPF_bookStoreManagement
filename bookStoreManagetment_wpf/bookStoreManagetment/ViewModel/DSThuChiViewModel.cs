@@ -236,11 +236,11 @@ namespace bookStoreManagetment.ViewModel
             Summary newReport = new Summary();
             if (sheets[0].billType.ToLower() == "import")
             {
-                newReport.OldBudget = (int)(sheets[0].budget - sheets[0].rootPrice);
+                newReport.OldBudget = (int)(sheets[0].budget + sheets[0].rootPrice);
             }
             else
             {
-                newReport.OldBudget = (int)(sheets[0].budget + sheets[0].rootPrice);
+                newReport.OldBudget = (int)(sheets[0].budget - sheets[0].rootPrice);
             }
             newReport.Budget = (int)sheets[sheets.Count - 1].budget;
             newReport.Earned = 0;
@@ -259,7 +259,7 @@ namespace bookStoreManagetment.ViewModel
                 newSheet.TenPhieu = sheet.nameBill;
                 newSheet.MaChungTu = "-";
 
-                if (sheet.billType.ToLower() == "import")
+                if (sheet.billType.ToLower() == "export")
                 {
                     newSheet.LoaiPhieu = "Thu";
                     newReport.Earned += sheet.rootPrice;
@@ -309,11 +309,11 @@ namespace bookStoreManagetment.ViewModel
             {
                 if (DisplaySheet == "Thu")
                 {
-                    query = "import";
+                    query = "export";
                 }
                 else
                 {
-                    query = "export";
+                    query = "import";
                 }
                 newListSheet = newListSheet.Where(x => x.ProfitSummary.billType.ToLower() == query).ToList();
             }
@@ -336,7 +336,7 @@ namespace bookStoreManagetment.ViewModel
         {
             // load quỹ
             Summary newReport = new Summary();
-            if (ListSheet[0].ProfitSummary.billType.ToLower() == "import")
+            if (ListSheet[0].ProfitSummary.billType.ToLower() == "export")
             {
                 newReport.OldBudget = (int)(ListSheet[0].ProfitSummary.budget - ListSheet[0].ProfitSummary.rootPrice);
             }
@@ -349,7 +349,7 @@ namespace bookStoreManagetment.ViewModel
 
             foreach (var sheet in ListSheet)
             {
-                if (sheet.ProfitSummary.billType.ToLower() == "import")
+                if (sheet.ProfitSummary.billType.ToLower() == "export")
                 {
                     newReport.Earned += sheet.ProfitSummary.rootPrice;
                 }
