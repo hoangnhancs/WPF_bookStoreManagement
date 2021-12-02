@@ -19,6 +19,10 @@ namespace bookStoreManagetment.ViewModel
         private object _selectedViewModel;
         public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
+        // ẩn hiện grid filter
+        private Visibility _IsLogin;
+        public Visibility IsLogin { get => _IsLogin; set { _IsLogin = value; OnPropertyChanged(); } }
+
         // button đã mở
         public Button ButtonClicked { get; set; }
         // button đã mở
@@ -53,6 +57,11 @@ namespace bookStoreManagetment.ViewModel
         public ICommand ChangeColorButtonClickCommand { get; set; }
         public ICommand ChangeColorButtonIconClickCommand { get; set; }
         public ICommand ShowHideMenuCommand { get; set; }
+
+        public ICommand ShowHideLoginCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
+        public ICommand openDSNhanVienUCCommand { get; set; }
+
 
         public List<StackPanel> opensubstp = new List<StackPanel>();
         public List<Button> openbtn = new List<Button>();
@@ -102,27 +111,24 @@ namespace bookStoreManagetment.ViewModel
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-
-                // ẩn form chính
-                p.Hide();
-
-                // hiện form login
-                LoginWindow newLogin = new LoginWindow();
-                newLogin.ShowDialog();
-
-                // lấy dữ liệu từ form login
-                var loginVM = newLogin.DataContext as LoginViewModel;
-                if (loginVM.IsLogin)
-                {
-                    p.Show();
-                    IDUser = loginVM.IDUser.ToString();
-                }
-                if (loginVM.IsClose)
-                {
-                    p.Close();
-                    App.Current.Shutdown();
-                }
+                RestartApp(p);
             });
+
+            // Đăng xuất 
+            LogoutCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                RestartApp(p);
+            });
+
+            // chane color button command
+            ShowHideLoginCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                if (IsLogin == Visibility.Visible)
+                {
+                    IsLogin = Visibility.Collapsed;
+                }
+                else
+                    IsLogin = Visibility.Visible;
+            });
+
 
             // chane color button command
             ShowHideMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
@@ -184,10 +190,9 @@ namespace bookStoreManagetment.ViewModel
             {
                 if (IDUser != "null")
                 {
-                    var user = DataProvider.Ins.DB.accounts
-                                                  .Where(acc => (acc.idAccount.ToString() == IDUser))
-                                                  .FirstOrDefault();
-                    string nameAccount = user.nameAccount.ToString();
+                    var user = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
+
+                    string nameAccount = user.firstName;
                     (p as Chip).Content = nameAccount;
                     (p as Chip).Icon = (nameAccount[0]).ToString().ToUpper();
                 }
@@ -242,15 +247,21 @@ namespace bookStoreManagetment.ViewModel
                 AddChildUC(p as Grid, new mailUC());
             });
 
-
             KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddChildUC(p as Grid, new KhachtrahangUC());
             });
+
             DSHoaDonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new DSHoaDonUC());
 
             });
+
+            openDSNhanVienUCCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new DSNhanVien());
+
+            });
+
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -291,6 +302,34 @@ namespace bookStoreManagetment.ViewModel
             ChildUserControl = childUC;
             p.Children.Clear();
             p.Children.Add(ChildUserControl);
+        }
+
+        // restart
+        private void RestartApp(Window p)
+        {
+            // ẩn login grid
+            IsLogin = Visibility.Collapsed;
+
+            // ẩn form chính
+            p.Hide();
+
+            // hiện form login
+            LoginWindow newLogin = new LoginWindow();
+            newLogin.ShowDialog();
+
+            // lấy dữ liệu từ form login
+            var loginVM = newLogin.DataContext as LoginViewModel;
+            if (loginVM.IsLogin)
+            {
+                p.Show();
+                IDUser = loginVM.IDUser.ToString();
+            }
+            if (loginVM.IsClose)
+            {
+                p.Close();
+                App.Current.Shutdown();
+            }
+
         }
     }
 }

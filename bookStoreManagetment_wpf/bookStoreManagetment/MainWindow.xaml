@@ -69,19 +69,21 @@
         <Grid Grid.Row="0" Background="{StaticResource VertihicalAquaLinearGradient}">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="238.4"></ColumnDefinition>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <!--Logo-->
-            <Grid Grid.Column="0" 
-                  Background="OrangeRed">
+            <Grid Grid.Column="0" >
+                <Grid.Background>
+                    <ImageBrush ImageSource="pictures/Logo Hani.png" Stretch="UniformToFill"/>
+                </Grid.Background>
                 <!-- Bỏ source ảnh vào đây-->
                 <!--<Image x:Name="Logo" Source="myLogo.png" Stretch="Fill"></Image>-->
             </Grid>
 
             <!--sub header-->
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -90,13 +92,18 @@
                 <!--Account-->
                 <Grid Grid.Column="1">
                     <materialDesign:Chip
-                        x:Name="chipAccount"
-                        Width="auto"
-                        Content="Tài Khoản"
-                        Icon="T" 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                    />
+                            x:Name="chipAccount"
+                            Width="auto"
+                            Content="Tài Khoản"
+                            Icon="T" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ShowHideLoginCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </materialDesign:Chip>
                 </Grid>
             </Grid>
         </Grid>
@@ -263,8 +270,8 @@
                                         CommandParameter="{Binding ElementName= gridMenu}">
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                        Command="{Binding openDSNhanVienUCCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -956,6 +963,55 @@
                 Grid.Row="1"               
                 Content="{Binding SelectedViewModel}"></ContentControl>
             </DockPanel>
+        </Grid>
+
+        <Grid Width="120"
+              Height="80" 
+              Margin="0,66,15,0" 
+              Grid.RowSpan="2" 
+              Visibility="{Binding IsLogin}"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top"
+              >
+            <Border BorderThickness="2"
+                    BorderBrush="Black"
+                    CornerRadius="8"
+                    Background="#19000000">
+                <StackPanel 
+                            Margin="0 5 ">
+                    <Button Content="Thông tin"
+                            Height="30"
+                            Background="Transparent"
+                            Foreground="Black"
+                            BorderBrush="Black"></Button>
+                    <Button Content="Đăng xuất"
+                            Command="{Binding LogoutCommand}"
+                            CommandParameter="{Binding ElementName=_MainWindow}"
+                            Height="30"
+                            Background="Transparent"
+                            Foreground="Black"
+                            BorderBrush="Black"
+                            Margin="0 5 0 0"
+                            >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding LoadedDashBoardCommand}"
+                                                       CommandParameter="{Binding ElementName=GridMainForm}">
+                                </i:InvokeCommandAction>
+                                <i:InvokeCommandAction 
+                                    Command="{Binding ChangeColorButtonClickCommand}"
+                                    CommandParameter="{Binding ElementName= btnDashboard}">
+                                </i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                    Command="{Binding ChangeColorButtonIconClickCommand}"
+                                    CommandParameter="{Binding ElementName=btnIconDashboard}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+            </Border>
+
         </Grid>
     </Grid>
 </Window>
