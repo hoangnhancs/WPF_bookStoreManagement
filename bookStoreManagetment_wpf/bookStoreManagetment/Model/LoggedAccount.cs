@@ -9,5 +9,6 @@ namespace bookStoreManagetment.Model
     public static class LoggedAccount
     {
         public static account Account { get; set; }
+        public static bool viewInformation { get; set; }
     }
 }

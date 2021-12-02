@@ -268,6 +268,9 @@
     <Compile Include="UserControls\NhacungcapUC.xaml.cs">
       <DependentUpon>NhacungcapUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ThongTinNhanVienUC.xaml.cs">
+      <DependentUpon>ThongTinNhanVienUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AddSupplierViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CaiDatChungViewModel.cs" />
@@ -287,6 +290,7 @@
     <Compile Include="ViewModel\NhacungcapViewMode.cs" />
     <Compile Include="ViewModel\PhieuChiViewModel.cs" />
     <Compile Include="ViewModel\PhieuThuViewModel.cs" />
+    <Compile Include="ViewModel\ThongTinNhanVienViewModel.cs" />
     <Page Include="CheckItemsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -381,6 +385,10 @@
     </Page>
     <Page Include="UserControls\TestUC.xaml" />
     <Page Include="UserControls\NhacungcapUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ThongTinNhanVienUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

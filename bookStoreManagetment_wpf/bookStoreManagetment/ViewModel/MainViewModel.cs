@@ -20,6 +20,14 @@ namespace bookStoreManagetment.ViewModel
         public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
         // ẩn hiện grid filter
+        private Visibility _VisibilityGridPassword;
+        public Visibility VisibilityGridPassword { get => _VisibilityGridPassword; set { _VisibilityGridPassword = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
+        private string _DisplayPassword;
+        public string DisplayPassword { get => _DisplayPassword; set { _DisplayPassword = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
         private Visibility _IsLogin;
         public Visibility IsLogin { get => _IsLogin; set { _IsLogin = value; OnPropertyChanged(); } }
 
@@ -62,6 +70,9 @@ namespace bookStoreManagetment.ViewModel
         public ICommand LogoutCommand { get; set; }
         public ICommand openDSNhanVienUCCommand { get; set; }
         public ICommand openDSKhachHangUCCommand { get; set; }
+        public ICommand ViewInformationLogedAccountCommand { get; set; }
+        public ICommand CloseCheckPasswordLogedAccountCommand { get; set; }
+        public ICommand CheckPasswordLogedAccountCommand { get; set; }
 
 
         public List<StackPanel> opensubstp = new List<StackPanel>();
@@ -109,10 +120,39 @@ namespace bookStoreManagetment.ViewModel
             // người đăng nhập hiện tại
             IDUser = "null";
 
+            // đóng ô kiểm tra pass
+            CloseCheckPasswordLogedAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                VisibilityGridPassword = Visibility.Collapsed;
+                DisplayPassword = null;
+            });
+
+            // kiểm tra pass
+            CheckPasswordLogedAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                VisibilityGridPassword = Visibility.Visible;
+                IsLogin = Visibility.Collapsed;
+            });
+
+
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 RestartApp(p);
+            });
+
+            // hàm load form
+            ViewInformationLogedAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (DisplayPassword == LoggedAccount.Account.passwordAccount)
+                {
+                    AddChildUC(p as Grid, new ThongTinNhanVienUC());
+                    VisibilityGridPassword = Visibility.Collapsed;
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng nhập chính xác mật khẩu");
+                }
             });
 
             // Đăng xuất 
@@ -312,6 +352,10 @@ namespace bookStoreManagetment.ViewModel
         // restart
         private void RestartApp(Window p)
         {
+            // ẩn checkpass
+            VisibilityGridPassword = Visibility.Collapsed;
+            DisplayPassword = null;
+
             // ẩn login grid
             IsLogin = Visibility.Collapsed;
 
