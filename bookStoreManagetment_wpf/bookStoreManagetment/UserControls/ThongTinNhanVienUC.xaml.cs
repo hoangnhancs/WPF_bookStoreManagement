@@ -16,21 +16,16 @@ using System.Windows.Shapes;
 namespace bookStoreManagetment.UserControls
 {
     /// <summary>
-    /// Interaction logic for DSNhanVien.xaml
+    /// Interaction logic for ThongTinNhanVienUC.xaml
     /// </summary>
-    public partial class DSNhanVien : UserControl
+    public partial class ThongTinNhanVienUC : UserControl
     {
-        public DSNhanVien()
+        public ThongTinNhanVienUC()
         {
             InitializeComponent();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void datagridDSNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

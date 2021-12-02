@@ -478,7 +478,7 @@
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8">
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8" SelectionChanged="datagridDSNhanVien_SelectionChanged">
                             <DataGrid.Columns>
                                 <!--Mã nhân viên-->
                                 <DataGridTextColumn
