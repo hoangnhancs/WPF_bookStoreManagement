@@ -32,7 +32,7 @@
         <Grid Grid.Row="0">
             <TextBlock
                 Text="HANI"
-                Foreground="#FFF77833"
+                Foreground="#004aad"
                 FontSize="36"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

@@ -28,5 +28,6 @@ namespace bookStoreManagetment.Model
         public string nameAccount { get; set; }
         public Nullable<int> employeeSalary { get; set; }
         public string employeeNote { get; set; }
+        public string employeeImagePath { get; set; }
     }
 }

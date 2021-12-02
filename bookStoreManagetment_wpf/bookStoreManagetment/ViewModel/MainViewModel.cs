@@ -61,6 +61,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand ShowHideLoginCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
         public ICommand openDSNhanVienUCCommand { get; set; }
+        public ICommand openDSKhachHangUCCommand { get; set; }
 
 
         public List<StackPanel> opensubstp = new List<StackPanel>();
@@ -262,6 +263,10 @@ namespace bookStoreManagetment.ViewModel
 
             });
 
+            openDSKhachHangUCCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new DSKhachHangUCxaml());
+
+            });
 
             OpenSubMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
