@@ -58,7 +58,7 @@
                 <!--thêm nhân viên-->
                 <Grid Grid.Row="1"
               x:Name="gridThemNhanVien"
-              Visibility="Visible">
+              Visibility="Collapsed">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="48.8"></RowDefinition>
                         <RowDefinition/>
@@ -234,7 +234,7 @@
                                     <Border BorderBrush="Black"
                                             BorderThickness="2">
                                         <Image
-                                    Source="{Binding ViewNhanVien.SourceImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    Source="{Binding ViewNhanVien.Staff.employeeImagePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </Border>
                                     
                                 </Grid>
@@ -356,7 +356,7 @@
                 <!--show check items-->
                 <Grid Grid.Row="1"
                   x:Name="gridDSNhanVien"
-                  Visibility="Collapsed">
+                  Visibility="Visible">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="36"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>

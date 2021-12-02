@@ -34,6 +34,7 @@
     <viewmodel:DSHoaDonViewModel x:Key="DSHoaDonVM"></viewmodel:DSHoaDonViewModel>
 
     <viewmodel:DSNhanVienViewModel x:Key="DSNhanVienVM" ></viewmodel:DSNhanVienViewModel>
+    <viewmodel:DSKhachHangViewModel x:Key="DSKhachHangVM" ></viewmodel:DSKhachHangViewModel>
 
     <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
         <view:NhacungcapUC></view:NhacungcapUC>

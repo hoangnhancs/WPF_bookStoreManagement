@@ -84,6 +84,7 @@
           <Property Name="nameAccount" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="employeeSalary" Type="int" />
           <Property Name="employeeNote" Type="nvarchar" MaxLength="200" />
+          <Property Name="employeeImagePath" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -345,6 +346,7 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="employeeImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -611,6 +613,7 @@
                 <ScalarProperty Name="nameAccount" ColumnName="nameAccount" />
                 <ScalarProperty Name="employeeSalary" ColumnName="employeeSalary" />
                 <ScalarProperty Name="employeeNote" ColumnName="employeeNote" />
+                <ScalarProperty Name="employeeImagePath" ColumnName="employeeImagePath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -185,6 +185,8 @@ namespace bookStoreManagetment.ViewModel
                     var delNhanVien = p as ShowNhanVien;
 
                     var currentNV = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == delNhanVien.Staff.idEmployee).FirstOrDefault();
+                    var currentAcc = DataProvider.Ins.DB.accounts.Where(x => x.nameAccount == delNhanVien.Staff.nameAccount).FirstOrDefault();
+                    DataProvider.Ins.DB.accounts.Remove(currentAcc);
                     DataProvider.Ins.DB.employees.Remove(currentNV);
                     DataProvider.Ins.DB.SaveChanges();
 
@@ -358,7 +360,10 @@ namespace bookStoreManagetment.ViewModel
                         ViewNhanVien.Staff.sex = sexCurrent;
                         ViewNhanVien.FullName = ViewNhanVien.Staff.lastName + " " + ViewNhanVien.Staff.lastName;
                         ViewNhanVien.Position = "Nhân Viên";
-                        ViewNhanVien.SourceImage = "../pictures/noImage.png";
+                        if (string.IsNullOrEmpty(ViewNhanVien.Staff.employeeImagePath))
+                        {
+                            ViewNhanVien.Staff.employeeImagePath = @"~\..\pictures\noImage.png";
+                        }
                         backupListEmployees.Add(ViewNhanVien);
                     }
 

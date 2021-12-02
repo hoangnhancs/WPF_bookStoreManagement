@@ -10,12 +10,12 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}" 
         Name="_MainWindow"
-        Title="MainWindow" Height="700" Width="1200">
+        Title="MainWindow" Height="700" Width="1200" Icon="pictures/Logo Hani.png">
 
 
     <!--Resouces-->
@@ -66,17 +66,17 @@
         </Grid.RowDefinitions>
 
         <!--Header-->
-        <Grid Grid.Row="0" Background="{StaticResource VertihicalAquaLinearGradient}">
+        <Grid Grid.Row="0" Background="#bcd7f4">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="238.4"></ColumnDefinition>
+                <ColumnDefinition Width="175"></ColumnDefinition>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <!--Logo-->
-            <Grid Grid.Column="0" >
+            <Grid Grid.Column="0">
                 <Grid.Background>
-                    <ImageBrush ImageSource="pictures/Logo Hani.png" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="pictures/Logo Hani (1).png" Stretch="UniformToFill"/>
                 </Grid.Background>
                 <!-- Bỏ source ảnh vào đây-->
                 <!--<Image x:Name="Logo" Source="myLogo.png" Stretch="Fill"></Image>-->
@@ -112,7 +112,7 @@
         <Grid Grid.Row="1">
             <DockPanel>
                 <Grid Width="40"
-                      Background="{StaticResource HorizontalAquaLinearGradient}"
+                      Background="#bcd7f4"
                       x:Name="gridSubMenu"
                       Visibility="Visible"
                       DockPanel.Dock="Left">
@@ -243,7 +243,7 @@
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
                                         Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                        CommandParameter="{Binding ElementName=subMenuQLKH}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -251,7 +251,7 @@
                         <!--employee-->
                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                 x:Name="btnIconQLNV"
-                                Command="{Binding ChangeColorOpenedSTP}"
+                                Command="{Binding ChangeColorButtonClickCommand}"
                                 CommandParameter="{Binding ElementName=btnQLNV}">
                             <materialDesign:PackIcon Kind="PersonBadge" 
                                                      HorizontalAlignment="Center"
@@ -262,12 +262,8 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowHideMenuCommand}"
-                                        CommandParameter="{Binding ElementName= gridSubMenu}">
-                                    </i:InvokeCommandAction>
-                                    <i:InvokeCommandAction
-                                        Command="{Binding ShowHideMenuCommand}"
-                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName= btnIconQLNV}">
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
                                         Command="{Binding openDSNhanVienUCCommand}"
@@ -403,10 +399,10 @@
                       Visibility="Collapsed"
                       DockPanel.Dock="Left">
                     <DockPanel
-                    Background="{StaticResource HorizontalAquaLinearGradient}">
+                    Background="#bcd7f4">
                         <!--Feature sub menu-->
                         <ScrollViewer
-                                  Background="{StaticResource HorizontalAquaLinearGradient}"
+                                  Background="#bcd7f4"
                         x:Name="test_scv" 
                         VerticalScrollBarVisibility="Auto" 
                         HorizontalScrollBarVisibility="Hidden">
@@ -670,6 +666,10 @@
                                                         Command="{Binding ChangeColorButtonIconClickCommand}"
                                                         CommandParameter="{Binding ElementName=btnIconQLKH}">
                                                     </i:InvokeCommandAction>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding openDSKhachHangUCCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
@@ -700,21 +700,26 @@
                                             x:Name="btnQLNV"
                                             Width="145"
                                             HorizontalContentAlignment="Left"
+                  
                                             Style="{StaticResource btnStyle_MenuFeatures}"
                                             Content="Quản lý nhân viên">
-                                        <!--Event button click open sub menu-->
+                                        <!--ẩn hiện -->
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                                    Command="{Binding OpenSubMenuCommand}"
-                                                    CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName= btnIconQLNV}">
+                                                </i:InvokeCommandAction>
                                                 <i:InvokeCommandAction
-                                                    Command="{Binding ChangeColorOpenedSTP}"
-                                                    CommandParameter="{Binding ElementName=btnQLNV}"/>
+                                        Command="{Binding openDSNhanVienUCCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                                <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                        CommandParameter="{Binding ElementName=btnQLNV}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
-                                    <!--Sub menu-->
+                                    <!--Sub menu--><!--
                                     <StackPanel x:Name="subMenuQLNV" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button HorizontalAlignment="Left"
                                                 x:Name="btnDSNV"
@@ -750,7 +755,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
                                 </StackPanel>
 
                                 <!--Quản lí thu chi-->
@@ -948,7 +953,7 @@
                     <!--Main Form-->
                     <Grid 
                     x:Name="GridMainForm"
-                    Background="AntiqueWhite"
+                    Background="White"
                     HorizontalAlignment="Stretch">
 
                         <!--Features-->
