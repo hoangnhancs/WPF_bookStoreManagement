@@ -102,7 +102,7 @@
         </Grid>
 
         <!--Main-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch">
             <DockPanel>
                 <Grid Width="40"
                       Background="{StaticResource HorizontalAquaLinearGradient}"
