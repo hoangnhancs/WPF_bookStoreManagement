@@ -92,7 +92,7 @@
                                             <!--tìm kiếm theo tên và mã -->
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="TextChanged">
-                                                    <i:InvokeCommandAction Command="{Binding btnLoc2Command}" />
+                                                    <i:InvokeCommandAction Command="{Binding searchEngineer}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
@@ -140,7 +140,7 @@
                     HorizontalAlignment="Center" 
                     VerticalContentAlignment="Center"
                     HorizontalContentAlignment="Center"
-                    ItemsSource="{Binding DivInventoryList}"
+                    ItemsSource="{Binding InventoryList}"
                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="auto" Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True">
@@ -291,7 +291,7 @@
                             </DataGrid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <StackPanel
+                                <!--<StackPanel
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right">
@@ -321,7 +321,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Text="hàng mỗi trang"></TextBlock>
-                                    <!--List nexpage-->
+                                    
                                     <StackPanel HorizontalAlignment="Center"
                                 x:Name="panelListBtnPages"
                             VerticalAlignment="Center"
@@ -396,7 +396,7 @@
                                             <materialDesign:PackIcon Kind="PageLast" />
                                         </Button>
                                     </StackPanel>
-                                </StackPanel>
+                                </StackPanel>-->
                             </Grid>
                         </Grid>
                     </Grid>
@@ -718,7 +718,7 @@
                                 Margin="20 0 0 0"
                                 Width="100"
                                 IsEnabled="True"
-                                Command="{Binding btnLoc2Command}"></Button>
+                                Command="{Binding searchEngineer}"></Button>
                                 </StackPanel>
                             </Grid>
                             <Button HorizontalAlignment="Right"

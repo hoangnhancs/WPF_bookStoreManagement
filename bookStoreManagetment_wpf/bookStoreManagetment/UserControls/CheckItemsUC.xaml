@@ -774,15 +774,19 @@
 
             <!--grid view-->
             <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="147*"/>
+                    <ColumnDefinition Width="104*"/>
+                </Grid.ColumnDefinitions>
                 <DataGrid x:Name="datagridShowCheckSheet"
-                            ItemsSource="{Binding DivInventoryList, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding ListCheckSheets, UpdateSourceTrigger=PropertyChanged}"
                             ColumnWidth="*"
-                            Margin="0 8 0 0"
+                            Margin="0,8,0,-0.2"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8" SelectionChanged="datagridShowCheckSheet_SelectionChanged">
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8" SelectionChanged="datagridShowCheckSheet_SelectionChanged" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
 
                         <!--Mã Phiếu-->
@@ -918,7 +922,7 @@
                           Width="300"
                           Margin="0 0 20 0"
                           HorizontalAlignment="Right"
-                          VerticalAlignment="Top">
+                          VerticalAlignment="Top" Grid.Column="1">
                     <Border BorderThickness="2"
                                 CornerRadius="10"
                                 BorderBrush="Black"
@@ -1012,6 +1016,7 @@
             </Grid>
 
             <Grid Grid.Row="2">
+                <!--
                 <StackPanel
                 Orientation="Horizontal"
                 VerticalAlignment="Top"
@@ -1028,17 +1033,7 @@
                             <Setter Property="Width" Value="18"></Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <!--
-                    <ComboBox Padding="0"
-                         ItemsSource="{Binding NumItems}"
-                         FontSize="13"
-                         Height="22"
-                              VerticalAlignment="Center"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center"
-                              SelectedValue="{Binding DisplayNumOfPages}"
-                         Width="35">
-                    </ComboBox>-->
+                    
                     <TextBox Width="22" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                          Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
@@ -1052,7 +1047,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Text="hàng mỗi trang"></TextBlock>
-                    <!--List nexpage-->
+                    
                     <StackPanel HorizontalAlignment="Center"
                                 x:Name="panelListBtnPages"
                             VerticalAlignment="Center"
@@ -1127,7 +1122,7 @@
                             <materialDesign:PackIcon Kind="PageLast" />
                         </Button>
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </Grid>
 
         </Grid>

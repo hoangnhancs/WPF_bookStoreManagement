@@ -226,11 +226,11 @@ namespace bookStoreManagetment.ViewModel
             LoadedCheckItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
-                NumRowEachPageTextBox = "5";
-                NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-                currentpage = 1;
-                pack_page = 1;
-                settingButtonNextPrev();
+                //NumRowEachPageTextBox = "5";
+                //NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+                //currentpage = 1;
+                //pack_page = 1;
+                //settingButtonNextPrev();
             });
 
             // textchanged tìm kiếm 
@@ -268,7 +268,7 @@ namespace bookStoreManagetment.ViewModel
                 var bc = new BrushConverter();
                 BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
                 ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
-                settingButtonNextPrev();
+                //settingButtonNextPrev();
             });
 
             // đóng/mở filter grid
@@ -479,7 +479,7 @@ namespace bookStoreManagetment.ViewModel
                         }
                     }
                 }
-                settingButtonNextPrev();
+                //settingButtonNextPrev();
             });
 
             // chọn sản phẩm 
@@ -661,250 +661,250 @@ namespace bookStoreManagetment.ViewModel
                     InventoryList.Clear();
                     ShowItems.Clear();
                 });
-            #region "select num row each page"
-            tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = 1;
-                //LoadData();
-                Filter();
-                settingButtonNextPrev();
-            });
-            btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (currentpage < maxpage)
-                {
-                    currentpage += 1;
-                    if (currentpage % 3 == 0)
-                        pack_page = currentpage / 3;
-                    else
-                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
-                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-                }
-                settingButtonNextPrev();
-            });
-            btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = maxpage;
-                pack_page = max_pack_page;
-                settingButtonNextPrev();
-            });
-            btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = 1;
-                pack_page = 1;
-                settingButtonNextPrev();
-            });
-            btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (currentpage > 1)
-                {
-                    currentpage -= 1;
-                    if (currentpage % 3 == 0)
-                        pack_page = currentpage / 3;
-                    else
-                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
-                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-                }
-                settingButtonNextPrev();
-            });
-            btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
+            //#region "select num row each page"
+            //tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    currentpage = 1;
+            //    //LoadData();
+            //    Filter();
+            //    settingButtonNextPrev();
+            //});
+            //btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    if (currentpage < maxpage)
+            //    {
+            //        currentpage += 1;
+            //        if (currentpage % 3 == 0)
+            //            pack_page = currentpage / 3;
+            //        else
+            //            pack_page = Convert.ToInt32(currentpage / 3) + 1;
+            //        //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+            //    }
+            //    settingButtonNextPrev();
+            //});
+            //btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    currentpage = maxpage;
+            //    pack_page = max_pack_page;
+            //    settingButtonNextPrev();
+            //});
+            //btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    currentpage = 1;
+            //    pack_page = 1;
+            //    settingButtonNextPrev();
+            //});
+            //btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    if (currentpage > 1)
+            //    {
+            //        currentpage -= 1;
+            //        if (currentpage % 3 == 0)
+            //            pack_page = currentpage / 3;
+            //        else
+            //            pack_page = Convert.ToInt32(currentpage / 3) + 1;
+            //        //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+            //    }
+            //    settingButtonNextPrev();
+            //});
+            //btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
 
-                Filter();
-                settingButtonNextPrev();
-            });
+            //    Filter();
+            //    settingButtonNextPrev();
+            //});
 
-            #endregion //here
+            //#endregion //here
 
-            #region "setting button"
+            //#region "setting button"
 
-            void settingButtonNextPrev()
-            {
-                int ilc = ListCheckSheets.Count();
-                BtnPage1 = new page();
-                BtnPage2 = new page();
-                BtnPage3 = new page();
+            //void settingButtonNextPrev()
+            //{
+            //    int ilc = ListCheckSheets.Count();
+            //    BtnPage1 = new page();
+            //    BtnPage2 = new page();
+            //    BtnPage3 = new page();
 
-                //currentpage = 1;
+            //    //currentpage = 1;
 
-                if (NumRowEachPageTextBox != "")
-                {
-                    //init max page
-                    NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-                    if (ilc % NumRowEachPage == 0)
-                        maxpage = ilc / NumRowEachPage;
-                    else
-                        maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
-                    if (maxpage % 3 == 0)
-                        max_pack_page = maxpage / 3;
-                    else
-                        max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
-
-
-                    //Init max page
-                    DivInventoryList = new ObservableCollection<CheckItemSheet>();
-                    DivInventoryList.Clear();
-                    int startPos = (currentpage - 1) * NumRowEachPage;
-                    int endPos = currentpage * NumRowEachPage - 1;
-                    if (endPos >= ilc)
-                        endPos = ilc - 1;
-
-                    int flag = 0;
-                    foreach (var item in ListCheckSheets)
-                    {
-                        if (flag >= startPos && flag <= endPos)
-                            DivInventoryList.Add(item);
-                        flag++;
-                    }
-                    //MessageBox.Show(DivInventoryList.Count.ToString());
-
-                    //Button "..." visible
-
-                    //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
-                    //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
-                    if (max_pack_page == 1)
-                    {
-                        Bacham1Visible = Visibility.Collapsed;
-                        Bacham2Visible = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        if (pack_page == max_pack_page)
-                        {
-                            Bacham1Visible = Visibility.Visible;
-                            Bacham2Visible = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            if (pack_page == 1)
-                            {
-                                Bacham1Visible = Visibility.Collapsed;
-                                Bacham2Visible = Visibility.Visible;
-                            }
-                            else
-                            {
-                                Bacham1Visible = Visibility.Visible;
-                                Bacham2Visible = Visibility.Visible;
-                            }
-                        }
-                    }
+            //    if (NumRowEachPageTextBox != "")
+            //    {
+            //        //init max page
+            //        NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+            //        if (ilc % NumRowEachPage == 0)
+            //            maxpage = ilc / NumRowEachPage;
+            //        else
+            //            maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
+            //        if (maxpage % 3 == 0)
+            //            max_pack_page = maxpage / 3;
+            //        else
+            //            max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
 
 
-                    //Button "..." visible
+            //        //Init max page
+            //        DivInventoryList = new ObservableCollection<CheckItemSheet>();
+            //        DivInventoryList.Clear();
+            //        int startPos = (currentpage - 1) * NumRowEachPage;
+            //        int endPos = currentpage * NumRowEachPage - 1;
+            //        if (endPos >= ilc)
+            //            endPos = ilc - 1;
+
+            //        int flag = 0;
+            //        foreach (var item in ListCheckSheets)
+            //        {
+            //            if (flag >= startPos && flag <= endPos)
+            //                DivInventoryList.Add(item);
+            //            flag++;
+            //        }
+            //        //MessageBox.Show(DivInventoryList.Count.ToString());
+
+            //        //Button "..." visible
+
+            //        //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
+            //        //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
+            //        if (max_pack_page == 1)
+            //        {
+            //            Bacham1Visible = Visibility.Collapsed;
+            //            Bacham2Visible = Visibility.Collapsed;
+            //        }
+            //        else
+            //        {
+            //            if (pack_page == max_pack_page)
+            //            {
+            //                Bacham1Visible = Visibility.Visible;
+            //                Bacham2Visible = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                if (pack_page == 1)
+            //                {
+            //                    Bacham1Visible = Visibility.Collapsed;
+            //                    Bacham2Visible = Visibility.Visible;
+            //                }
+            //                else
+            //                {
+            //                    Bacham1Visible = Visibility.Visible;
+            //                    Bacham2Visible = Visibility.Visible;
+            //                }
+            //            }
+            //        }
 
 
-                    if (currentpage == 1 && maxpage == 1)
-                    {
-                        LeftVisi = false;
-                        RightVisi = true;
-                    }
-                    else
-                    {
-                        if (currentpage == maxpage)
-                        {
-                            LeftVisi = true;
-                            RightVisi = false;
-                        }
-                        else
-                        {
-                            if (currentpage == 1)
-                            {
-                                LeftVisi = false;
-                                RightVisi = true;
-                            }
-                            else
-                            {
-                                LeftVisi = true;
-                                RightVisi = true;
-                            }
-                        }
-                    }
+            //        //Button "..." visible
 
 
-                    if (maxpage >= 3)
-                    {
-                        BtnPage1.PageVisi = Visibility.Visible;
-                        BtnPage2.PageVisi = Visibility.Visible;
-                        BtnPage3.PageVisi = Visibility.Visible;
+            //        if (currentpage == 1 && maxpage == 1)
+            //        {
+            //            LeftVisi = false;
+            //            RightVisi = true;
+            //        }
+            //        else
+            //        {
+            //            if (currentpage == maxpage)
+            //            {
+            //                LeftVisi = true;
+            //                RightVisi = false;
+            //            }
+            //            else
+            //            {
+            //                if (currentpage == 1)
+            //                {
+            //                    LeftVisi = false;
+            //                    RightVisi = true;
+            //                }
+            //                else
+            //                {
+            //                    LeftVisi = true;
+            //                    RightVisi = true;
+            //                }
+            //            }
+            //        }
 
-                        switch (currentpage % 3)
-                        {
-                            case 1:
-                                BtnPage1.BackGround = Brushes.Blue;
-                                BtnPage2.BackGround = Brushes.White;
-                                BtnPage3.BackGround = Brushes.White;
-                                BtnPage1.PageVal = currentpage;
-                                BtnPage2.PageVal = currentpage + 1;
-                                BtnPage3.PageVal = currentpage + 2;
-                                break;
-                            case 2:
-                                BtnPage1.BackGround = Brushes.White;
-                                BtnPage2.BackGround = Brushes.Blue;
-                                BtnPage3.BackGround = Brushes.White;
-                                BtnPage1.PageVal = currentpage - 1;
-                                BtnPage2.PageVal = currentpage;
-                                BtnPage3.PageVal = currentpage + 1;
-                                break;
-                            case 0:
-                                BtnPage1.BackGround = Brushes.White;
-                                BtnPage2.BackGround = Brushes.White;
-                                BtnPage3.BackGround = Brushes.Blue;
-                                BtnPage1.PageVal = currentpage - 2;
-                                BtnPage2.PageVal = currentpage - 1;
-                                BtnPage3.PageVal = currentpage;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        if (maxpage == 2)
-                        {
-                            BtnPage1.PageVisi = Visibility.Visible;
-                            BtnPage2.PageVisi = Visibility.Visible;
-                            BtnPage3.PageVisi = Visibility.Collapsed;
-                            switch (currentpage)
-                            {
-                                case 1:
-                                    BtnPage1.BackGround = Brushes.Blue;
-                                    BtnPage2.BackGround = Brushes.White;
-                                    BtnPage1.PageVal = currentpage;
-                                    BtnPage2.PageVal = currentpage + 1;
-                                    break;
-                                case 2:
-                                    BtnPage1.BackGround = Brushes.White;
-                                    BtnPage2.BackGround = Brushes.Blue;
-                                    BtnPage1.PageVal = currentpage - 1;
-                                    BtnPage2.PageVal = currentpage;
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            BtnPage1.PageVisi = Visibility.Visible;
-                            BtnPage2.PageVisi = Visibility.Collapsed;
-                            BtnPage3.PageVisi = Visibility.Collapsed;
-                            BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
-                            BtnPage1.BackGround = Brushes.Blue;
-                            BtnPage1.PageVal = currentpage;
-                        }
-                    }
-                    if (pack_page == max_pack_page)
-                    {
-                        switch (pack_page * 3 - maxpage)
-                        {
-                            case 1:
-                                BtnPage3.PageVisi = Visibility.Collapsed;
-                                break;
-                            case 2:
-                                BtnPage2.PageVisi = Visibility.Collapsed;
-                                BtnPage3.PageVisi = Visibility.Collapsed;
-                                break;
-                        }
-                    }
 
-                }
-            }
-            #endregion
+            //        if (maxpage >= 3)
+            //        {
+            //            BtnPage1.PageVisi = Visibility.Visible;
+            //            BtnPage2.PageVisi = Visibility.Visible;
+            //            BtnPage3.PageVisi = Visibility.Visible;
+
+            //            switch (currentpage % 3)
+            //            {
+            //                case 1:
+            //                    BtnPage1.BackGround = Brushes.Blue;
+            //                    BtnPage2.BackGround = Brushes.White;
+            //                    BtnPage3.BackGround = Brushes.White;
+            //                    BtnPage1.PageVal = currentpage;
+            //                    BtnPage2.PageVal = currentpage + 1;
+            //                    BtnPage3.PageVal = currentpage + 2;
+            //                    break;
+            //                case 2:
+            //                    BtnPage1.BackGround = Brushes.White;
+            //                    BtnPage2.BackGround = Brushes.Blue;
+            //                    BtnPage3.BackGround = Brushes.White;
+            //                    BtnPage1.PageVal = currentpage - 1;
+            //                    BtnPage2.PageVal = currentpage;
+            //                    BtnPage3.PageVal = currentpage + 1;
+            //                    break;
+            //                case 0:
+            //                    BtnPage1.BackGround = Brushes.White;
+            //                    BtnPage2.BackGround = Brushes.White;
+            //                    BtnPage3.BackGround = Brushes.Blue;
+            //                    BtnPage1.PageVal = currentpage - 2;
+            //                    BtnPage2.PageVal = currentpage - 1;
+            //                    BtnPage3.PageVal = currentpage;
+            //                    break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (maxpage == 2)
+            //            {
+            //                BtnPage1.PageVisi = Visibility.Visible;
+            //                BtnPage2.PageVisi = Visibility.Visible;
+            //                BtnPage3.PageVisi = Visibility.Collapsed;
+            //                switch (currentpage)
+            //                {
+            //                    case 1:
+            //                        BtnPage1.BackGround = Brushes.Blue;
+            //                        BtnPage2.BackGround = Brushes.White;
+            //                        BtnPage1.PageVal = currentpage;
+            //                        BtnPage2.PageVal = currentpage + 1;
+            //                        break;
+            //                    case 2:
+            //                        BtnPage1.BackGround = Brushes.White;
+            //                        BtnPage2.BackGround = Brushes.Blue;
+            //                        BtnPage1.PageVal = currentpage - 1;
+            //                        BtnPage2.PageVal = currentpage;
+            //                        break;
+            //                }
+            //            }
+            //            else
+            //            {
+            //                BtnPage1.PageVisi = Visibility.Visible;
+            //                BtnPage2.PageVisi = Visibility.Collapsed;
+            //                BtnPage3.PageVisi = Visibility.Collapsed;
+            //                BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
+            //                BtnPage1.BackGround = Brushes.Blue;
+            //                BtnPage1.PageVal = currentpage;
+            //            }
+            //        }
+            //        if (pack_page == max_pack_page)
+            //        {
+            //            switch (pack_page * 3 - maxpage)
+            //            {
+            //                case 1:
+            //                    BtnPage3.PageVisi = Visibility.Collapsed;
+            //                    break;
+            //                case 2:
+            //                    BtnPage2.PageVisi = Visibility.Collapsed;
+            //                    BtnPage3.PageVisi = Visibility.Collapsed;
+            //                    break;
+            //            }
+            //        }
+
+            //    }
+            //}
+            //#endregion
         }
 
 

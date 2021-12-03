@@ -312,7 +312,7 @@ namespace bookStoreManagetment.ViewModel
                         if (result.statusMail == "OFF")
                         {
                             result.statusMail = "ON";
-                            MessageBox.Show(SelectedItem.Mail.subjectMail + SelectedItem.Mail.typeMail + SelectedItem.Mail.typesent);
+                            //MessageBox.Show(SelectedItem.Mail.subjectMail + SelectedItem.Mail.typeMail + SelectedItem.Mail.typesent);
                             autosentmail(SelectedItem, SelectedItem.Mail.typeMail, SelectedItem.Mail.typesent);
                         }
                         else

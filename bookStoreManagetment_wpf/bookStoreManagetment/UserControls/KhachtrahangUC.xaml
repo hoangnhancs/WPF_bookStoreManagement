@@ -149,7 +149,7 @@
                                     HorizontalAlignment="Center" 
                                     VerticalContentAlignment="Center"
                                     HorizontalContentAlignment="Center"
-                                    ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ItemsSource="{Binding InventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="auto" Header="Mã hóa đơn" Binding="{Binding BillcodeSell}" IsReadOnly="True">
@@ -317,7 +317,7 @@
                                                 Margin="20 0 0 0"
                                                 Width="100"
                                                 IsEnabled="True"
-                                                Command="{Binding btnLoc2Command}"></Button>
+                                                Command="{Binding SearchEngineer}"></Button>
                                                 </StackPanel>
                                             </Grid>
                                             <Button HorizontalAlignment="Right"
@@ -341,6 +341,7 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="2">
+                            <!--
                             <StackPanel
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
@@ -371,7 +372,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Text="hàng mỗi trang"></TextBlock>
-                                <!--List nexpage-->
+                           
                                 <StackPanel HorizontalAlignment="Center"
                                 x:Name="panelListBtnPages"
                             VerticalAlignment="Center"
@@ -446,7 +447,7 @@
                                         <materialDesign:PackIcon Kind="PageLast" />
                                     </Button>
                                 </StackPanel>
-                            </StackPanel>
+                            </StackPanel>-->
                         </Grid>
                     </Grid>
                     <Grid x:Name="gridTaoKhachtrahang" Visibility="{Binding ThemKhachtrahangVisible}">
