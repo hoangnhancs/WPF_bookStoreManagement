@@ -9,11 +9,114 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 
-namespace bookStoreManagetment.ViewModel 
+namespace bookStoreManagetment.ViewModel
 {
     public class ImportGoodsViewModel : BaseViewModel
     {
+        #region 
+        //Page Property
+        private ObservableCollection<Inventory> _DivInventoryList;
+        public ObservableCollection<Inventory> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
+
+        private Visibility _3cham1Visible;
+        public Visibility Bacham1Visible
+        {
+            get { return _3cham1Visible; }
+            set
+            {
+                _3cham1Visible = value;
+                OnPropertyChanged();
+            }
+        }
+        private Visibility _3cham2Visible;
+        public Visibility Bacham2Visible
+        {
+            get { return _3cham2Visible; }
+            set
+            {
+                _3cham2Visible = value;
+                OnPropertyChanged();
+            }
+        }
+        public int maxpage { get; set; }
+        public int max_pack_page { get; set; }
+        public int pack_page { get; set; }
+        public int currentpage = 1;
+        private string _numRowEachPageTextBox;
+        public string NumRowEachPageTextBox
+        {
+            get { return _numRowEachPageTextBox; }
+            set
+            {
+                _numRowEachPageTextBox = value;
+                OnPropertyChanged();
+            }
+        }
+        public int NumRowEachPage;
+        private page btnPage1;
+        public page BtnPage1
+        {
+            get { return btnPage1; }
+            set
+            {
+                btnPage1 = value;
+                OnPropertyChanged();
+            }
+        }
+        private page btnPage2;
+        public page BtnPage2
+        {
+            get { return btnPage2; }
+            set
+            {
+                btnPage2 = value;
+                OnPropertyChanged();
+            }
+        }
+        private page btnPage3;
+        public page BtnPage3
+        {
+            get { return btnPage3; }
+            set
+            {
+                btnPage3 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _leftVisi;
+        public bool LeftVisi
+        {
+            get { return _leftVisi; }
+            set
+            {
+                _leftVisi = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _rightVisi;
+        public bool RightVisi
+        {
+            get { return _rightVisi; }
+            set
+            {
+                _rightVisi = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand tbNumRowEachPageCommand { get; set; }
+        public ICommand btnNextClickCommand { get; set; }
+        public ICommand btnendPageCommand { get; set; }
+        public ICommand btnfirstPageCommand { get; set; }
+        public ICommand btnPrevPageCommand { get; set; }
+        public ICommand btnLoc2Command { get; set; }
+        #endregion
+
+
+
         public ICommand ClickHiddenCommand { get; set; }
         public ICommand ClickHiddenButtonCommand { get; set; }
         public ICommand comboBoxListSupplierCommand { get; set; }
@@ -50,12 +153,15 @@ namespace bookStoreManagetment.ViewModel
         public ICommand ClickEdit_UpdateProductImportGoodsCommand { get; set; }
         public ICommand ClickRemoveImportGoodsCommand { get; set; }
         public ICommand CheckedEditGridSearchCommand { get; set; }
-        
-        public ICommand textBoxSearchListofImportCommand { get; set; }
+
+        public ICommand TextChangedSearchCommand { get; set; }
         public ICommand comboBoxselectSupplierCommand { get; set; }
         public ICommand clickRefreshofImportCommand { get; set; }
 
-
+        public ICommand OpenFilterCommand { get; set; }
+        public ICommand CheckFilterCommand { get; set; }
+        public ICommand DeleteFilterCommand { get; set; }
+        public ICommand CloseFilterCommand { get; set; }
 
         private ObservableCollection<Inventory> _InventoryList;
         public ObservableCollection<Inventory> InventoryList { get => _InventoryList; set { _InventoryList = value; OnPropertyChanged(); } }
@@ -194,30 +300,60 @@ namespace bookStoreManagetment.ViewModel
         private int _totalallproducts;
         public int TotalAllProducts { get => _totalallproducts; set { _totalallproducts = value; OnPropertyChanged(); } }
 
-        // 
+        // Bộ lọc
 
+        // background
+        private Brush _BackgroudFilter;
+        public Brush BackgroudFilter { get => _BackgroudFilter; set { _BackgroudFilter = value; OnPropertyChanged(); } }
 
-        //private int _count;
-        //public int Count { get => _count; set { _count = value; OnPropertyChanged(); } }
+        // foreground
+        private Brush _ForegroudFilter;
+        public Brush ForegroudFilter { get => _ForegroudFilter; set { _ForegroudFilter = value; OnPropertyChanged(); } }
+
+        // nhóm Danh mục filter
+        private string _displaynamesupplier;
+        public string DisplayNameSupplier { get => _displaynamesupplier; set { _displaynamesupplier = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
+        private Visibility _IsFilter;
+        public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
+
+        // ngày bắt đầu
+        private string _displayBeginDay;
+        public string displayBeginDay { get => _displayBeginDay; set { _displayBeginDay = value; OnPropertyChanged(); } }
+        // ngày kết thúc
+        private string _displayEndDay;
+        public string displayEndDay { get => _displayEndDay; set { _displayEndDay = value; OnPropertyChanged(); } }
+
+        private string _query;
+        public string Query { get => _query; set { _query = value; OnPropertyChanged(); } }
 
         public string backupbillcode;
 
         public ImportGoodsViewModel()
         {
 
-            var totalprice = DataProvider.Ins.DB.importBills.GroupBy(p => new { p.billCodeImport, p.importDate, p.nameEmployee, p.idsupplier})
-                                                            .Select(pa => new { billcode = pa.Key.billCodeImport,
-                                                                                Sum = pa.Sum(para => para.number * para.unitPrice), 
-                                                                                date = pa.Key.importDate.Day.ToString() + "-" + pa.Key.importDate.Month.ToString() + "-" + pa.Key.importDate.Year.ToString(),
-                                                                                nameeployee = pa.Key.nameEmployee,
-                                                                                namesupplier = pa.Key.idsupplier});
+            var totalprice = Model.DataProvider.Ins.DB.importBills.GroupBy(p => new { p.billCodeImport, p.importDate, p.nameEmployee, p.idsupplier })
+                                                            .Select(pa => new {
+                                                                billcode = pa.Key.billCodeImport,
+                                                                Sum = pa.Sum(para => para.number * para.unitPrice),
+                                                                date = pa.Key.importDate.Day.ToString() + "-" + pa.Key.importDate.Month.ToString() + "-" + pa.Key.importDate.Year.ToString(),
+                                                                nameeployee = pa.Key.nameEmployee,
+                                                                namesupplier = pa.Key.idsupplier
+                                                            });
 
             BackupInventoryImportGoods = new List<InventoryGoods>();
             foreach (var data in totalprice)
             {
-                BackupInventoryImportGoods.Add(new InventoryGoods() {CodeBill = data.billcode, 
-                                                                NameSupplier = DataProvider.Ins.DB.suppliers.Where(p => p.idSupplier == data.namesupplier).Select(pa => pa.nameSupplier).FirstOrDefault(), 
-                                                                TotalPriceGoods = data.Sum, NameEmployee = data.nameeployee, ImportDay = data.date });
+                BackupInventoryImportGoods.Add(new InventoryGoods()
+                {
+                    ProfitSummary = DataProvider.Ins.DB.profitSummaries.Where(p => p.billCode == data.billcode).FirstOrDefault(),
+                    CodeBill = data.billcode,
+                    NameSupplier = DataProvider.Ins.DB.suppliers.Where(p => p.idSupplier == data.namesupplier).Select(pa => pa.nameSupplier).FirstOrDefault(),
+                    TotalPriceGoods = data.Sum,
+                    NameEmployee = data.nameeployee,
+                    ImportDay = data.date
+                });
             }
 
             InventoryImportGoods = new ObservableCollection<InventoryGoods>(BackupInventoryImportGoods);
@@ -229,6 +365,67 @@ namespace bookStoreManagetment.ViewModel
             listSupplier = new ObservableCollection<string>(BackuplistSupplier);
             InventoryList = new ObservableCollection<Inventory>();
             TotalAllProducts = 0;
+
+            // Load bộ lọc
+            displayBeginDay = "";
+            displayEndDay = "";
+            IsFilter = Visibility.Collapsed;
+            var bc = new BrushConverter();
+            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+
+            NumRowEachPageTextBox = "5";
+            NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+            currentpage = 1;
+            pack_page = 1;
+            settingButtonNextPrev();
+
+            // đóng filter grid
+            CloseFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsFilter = Visibility.Collapsed;
+            });
+
+            OpenFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IsFilter == Visibility.Visible)
+                    IsFilter = Visibility.Collapsed;
+                else
+                    IsFilter = Visibility.Visible;
+            });
+
+            CheckFilterCommand = new RelayCommand<object>((p) => {
+                if (displayEndDay != null && displayBeginDay != null)
+                    return true;
+                if (DisplayNameSupplier != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                Filter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                currentpage = 1;
+                pack_page = 1;
+                settingButtonNextPrev();
+            });
+
+            DeleteFilterCommand = new RelayCommand<object>((p) => {
+                if (DisplayNameSupplier != null || displayEndDay != null || displayBeginDay != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                displayBeginDay = null;
+                displayEndDay = null;
+                DisplayNameSupplier = "";
+                DisplayNameSupplier = null;
+                InventoryImportGoods = new ObservableCollection<InventoryGoods>( BackupInventoryImportGoods );
+
+                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            });
+
             // Thêm sản phẩm
             backupAllItems = new List<CellItems>();
 
@@ -276,13 +473,12 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
-            textBoxSearchListofImportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            TextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (p != null)
                 {
-                    string query = (p as TextBox).Text.Trim().ToLower();
 
-                    if (query == "" && Selected == "Tất cả sản phẩm")
+                    if ( Query == "" )
                     {
                         InventoryImportGoods = new ObservableCollection<InventoryGoods>(BackupInventoryImportGoods);
                     }
@@ -291,14 +487,17 @@ namespace bookStoreManagetment.ViewModel
                         InventoryImportGoods = new ObservableCollection<InventoryGoods>();
                         foreach (var cellItems in BackupInventoryImportGoods)
                         {
-                            string nameSupplier = cellItems.NameSupplier.Trim().ToLower();
+                            string code = cellItems.CodeBill.Trim().ToLower();
                             string nameEmployee = cellItems.NameEmployee.Trim().ToLower();
-                            if (nameEmployee.Contains(query.Trim().ToLower()) && nameSupplier.Contains(Selected.Trim().ToLower()))
+                            if (nameEmployee.Contains(Query.Trim().ToLower()) || code.Contains(Query.Trim().ToLower()))
                             {
                                 InventoryImportGoods.Add(cellItems);
                             }
                         }
                     }
+                    currentpage = 1;
+                    pack_page = 1;
+                    settingButtonNextPrev();
                 }
             });
 
@@ -742,12 +941,12 @@ namespace bookStoreManagetment.ViewModel
 
                     var cellimportbill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill).ToList();
 
-                    foreach(var data in cellimportbill)
+                    foreach (var data in cellimportbill)
                     {
                         item cellitem = DataProvider.Ins.DB.items.Where(pa => pa.idItem == data.idItem).FirstOrDefault();
 
                         int total = data.number * data.unitPrice;
-                        InventoryDetail.Add(new Inventory() { Item = cellitem, Count = data.number, TotalPriceItem = data.number * data.unitPrice, QuantityBefore = 0});
+                        InventoryDetail.Add(new Inventory() { Item = cellitem, Count = data.number, TotalPriceItem = data.number * data.unitPrice, QuantityBefore = 0 });
 
                         TotalAllImportGoods = TotalAllImportGoods + total;
                     }
@@ -776,7 +975,7 @@ namespace bookStoreManagetment.ViewModel
                         item cellitem = DataProvider.Ins.DB.items.Where(pa => pa.idItem == data.idItem).FirstOrDefault();
 
                         int total = data.number * data.unitPrice;
-                        BackupInventoryListEdit.Add(new Inventory() { Item = cellitem, Count = data.number, TotalPriceItem = data.number * data.unitPrice, QuantityBefore = data.number    });
+                        BackupInventoryListEdit.Add(new Inventory() { Item = cellitem, Count = data.number, TotalPriceItem = data.number * data.unitPrice, QuantityBefore = data.number });
 
                         EditTotalAllImportGoods = EditTotalAllImportGoods + total;
                         InventoryListEdit = new ObservableCollection<Inventory>(BackupInventoryListEdit);
@@ -791,7 +990,7 @@ namespace bookStoreManagetment.ViewModel
                 {
                     foreach (var data in InventoryListEdit)
                     {
-                        foreach(var cell in backupEditAllItems)
+                        foreach (var cell in backupEditAllItems)
                         {
                             if (data.Item.idItem == cell.Items.idItem)
                             {
@@ -802,7 +1001,7 @@ namespace bookStoreManagetment.ViewModel
                             {
                                 cell.IsSelected = false;
                             }
-                        }    
+                        }
                     }
 
                     EditShowItems = new ObservableCollection<CellItems>(backupEditAllItems);
@@ -837,8 +1036,8 @@ namespace bookStoreManagetment.ViewModel
                 {
                     var select = p as InventoryGoods;
 
-                    bill Bill = DataProvider.Ins.DB.bills.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
-                    DataProvider.Ins.DB.bills.Remove(Bill);
+                    bill Bill = Model.DataProvider.Ins.DB.bills.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
+                    Model.DataProvider.Ins.DB.bills.Remove(Bill);
                     InventoryImportGoods.Remove(select);
                     var profit = DataProvider.Ins.DB.profitSummaries.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
                     var employee = DataProvider.Ins.DB.employees.Where(pa => pa.idEmployee == profit.idEmployee).FirstOrDefault();
@@ -849,14 +1048,14 @@ namespace bookStoreManagetment.ViewModel
 
 
                     var ImportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill).Select(pa => pa.idItem).ToList();
-                    foreach(var cell in ImportBill)
+                    foreach (var cell in ImportBill)
                     {
                         Model.importBill cellimportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill && pa.idItem == cell).FirstOrDefault();
                         DataProvider.Ins.DB.importBills.Remove(cellimportBill);
                         item data = DataProvider.Ins.DB.items.Where(pa => pa.idItem == cell).FirstOrDefault();
                         int quantitys = data.quantity;
                         data.quantity = quantitys - cellimportBill.number;
-                        
+
                     }
                     DataProvider.Ins.DB.SaveChanges();
                     MessageBox.Show("Xoá thành công!");
@@ -869,32 +1068,34 @@ namespace bookStoreManagetment.ViewModel
                 if (p != null)
                 {
                     int c = DataProvider.Ins.DB.bills.Count() + 1;
+                    string code = c < 10 ? "IP00" + c : c < 100 ? "IP0" + c : "IP" + c;
                     int totalall = 0;
 
                     DateTime Daynow = DateTime.Now;
 
                     bill Bill = new bill()
                     {
-                        billCode = c < 10 ? "BILL00" + c : c < 100 ? "BILL0" + c : "BILL" + c,
-                        billType = "spend"
+                        billCode = code,
+                        billType = "import"
                     };
 
                     DataProvider.Ins.DB.bills.Add(Bill);
 
                     foreach (var data in InventoryList)
                     {
-                        bookStoreManagetment.Model.importBill ImportBill = new bookStoreManagetment.Model.importBill()
+                        Model.importBill ImportBill = new Model.importBill()
                         {
-                            billCodeImport = c < 10 ? "BILL00" + c : c < 100 ? "BILL0" + c : "BILL" + c,
-                            idEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().idEmployee,
-                            nameEmployee = "Thanh Thảo",
+
+                            billCodeImport = c < 10 ? "IP00" + c : c < 100 ? "IP0" + c : "IP" + c,
+                            idEmployee = "EMP002",
+                            nameEmployee = "Nguyen Yen Chi",
                             number = data.Count,
                             importDate = Daynow,
                             idItem = data.Item.idItem,
                             unitPrice = data.Item.importPriceItem,
                             note = "",
-                            paymentMethod = "Tiền Mặt",
-                            idsupplier = data.Item.supplierItem
+                            paymentMethod = "Tiền mặt",
+                            idsupplier = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == NameSupplier).Select(pa => pa.idSupplier).FirstOrDefault()
                         };
                         totalall = totalall + data.TotalPriceItem;
 
@@ -907,17 +1108,17 @@ namespace bookStoreManagetment.ViewModel
 
                     profitSummary profit = new profitSummary()
                     {
-                        billCode = c < 10 ? "BILL00" + c : c < 100 ? "BILL0" + c : "BILL" + c,
+                        billCode = c < 10 ? "IP00" + c : c < 100 ? "IP0" + c : "IP" + c,
                         billType = "import",
                         rootPrice = totalall,
                         payPrice = totalall,
-                        exchangePrice = 0,
-                        idCustomer = "KH001",
-                        idEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().idEmployee,
+                        exchangePrice = totalall - totalall,
+                        idCustomer = "CUS001",
+                        idEmployee = "EMP001",
                         day = Daynow,
-                        nameCustomer = "KH001",
-                        nameEmployee = "NV001",
-                        typeGroup = "",
+                        nameCustomer = "Nguyễn Hoàng Thắng",
+                        nameEmployee = "Thái Hoàng Nhân",
+                        typeGroup = "nhà cung cấp",
                         payment = "Tiền mặt",
                         nameBill = "Nhập hàng",
                         note = "",
@@ -928,18 +1129,18 @@ namespace bookStoreManagetment.ViewModel
 
                     InventoryGoods cells = new InventoryGoods()
                     {
-                        CodeBill = c < 10 ? "BILL00" + c : c < 100 ? "BILL0" + c : "BILL" + c,
+                        CodeBill = c < 10 ? "IP00" + c : c < 100 ? "IP0" + c : "IP" + c,
                         NameSupplier = NameSupplier,
                         TotalPriceGoods = totalall,
                         NameEmployee = "Thanh Thảo",
-                        ImportDay = Daynow.Day + "-" +  Daynow.Month + "-" + Daynow.Year                    
+                        ImportDay = Daynow.Day + "-" + Daynow.Month + "-" + Daynow.Year
                     };
 
                     InventoryImportGoods.Add(cells);
                     MessageBox.Show("Cập nhật thành công!");
                     DataProvider.Ins.DB.SaveChanges();
                     InventoryList = new ObservableCollection<Inventory>();
-                    TotalAllProduct = 0;
+                    TotalAllProducts = 0;
                 }
 
             });
@@ -964,7 +1165,7 @@ namespace bookStoreManagetment.ViewModel
 
                             if (cell_id.Count == cell_id.QuantityBefore && cell_id.Item.importPriceItem == cell.importPriceItem)
                             {
-                                
+
                             }
                             else
                             {
@@ -975,12 +1176,11 @@ namespace bookStoreManagetment.ViewModel
                         else
                         {
                             DateTime Daynow = DateTime.Now;
-
                             Model.importBill ImportBill = new Model.importBill()
                             {
                                 billCodeImport = backupbillcode,
-                                idEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().idEmployee,
-                                nameEmployee = "Thanh Thảo",
+                                idEmployee = "EMP002",
+                                nameEmployee = "Nguyễn Yến Chi",
                                 number = cell_id.Count,
                                 importDate = Daynow,
                                 idItem = cell_id.Item.idItem,
@@ -1002,7 +1202,7 @@ namespace bookStoreManagetment.ViewModel
 
                     DataProvider.Ins.DB.SaveChanges();
 
-                    foreach( string data_backupid in backupid)
+                    foreach (string data_backupid in backupid)
                     {
                         if (!id.Contains(data_backupid))
                         {
@@ -1015,12 +1215,266 @@ namespace bookStoreManagetment.ViewModel
                             DataProvider.Ins.DB.SaveChanges();
 
                         }
-                    }    
+                    }
                 }
 
             });
 
+            tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                currentpage = 1;
+                //LoadData();
+                Filter();
+                settingButtonNextPrev();
+            });
+            btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (currentpage < maxpage)
+                {
+                    currentpage += 1;
+                    if (currentpage % 3 == 0)
+                        pack_page = currentpage / 3;
+                    else
+                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
+                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+                }
+                settingButtonNextPrev();
+            });
+            btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                currentpage = maxpage;
+                pack_page = maxpage;
+                settingButtonNextPrev();
+            });
+            btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                currentpage = 1;
+                pack_page = 1;
+                settingButtonNextPrev();
+            });
+            btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (currentpage > 1)
+                {
+                    currentpage -= 1;
+                    if (currentpage % 3 == 0)
+                        pack_page = currentpage / 3;
+                    else
+                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
+                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+                }
+                settingButtonNextPrev();
+            });
+            btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
 
+                Filter();
+                settingButtonNextPrev();
+            });
+
+        }
+
+        void settingButtonNextPrev()
+        {
+            int ilc = InventoryList.Count();
+            BtnPage1 = new page();
+            BtnPage2 = new page();
+            BtnPage3 = new page();
+
+            //currentpage = 1;
+
+            if (NumRowEachPageTextBox != "")
+            {
+                //init max page
+                NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+                if (ilc % NumRowEachPage == 0)
+                    maxpage = ilc / NumRowEachPage;
+                else
+                    maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
+                if (maxpage % 3 == 0)
+                    max_pack_page = maxpage / 3;
+                else
+                    max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
+
+                //Init max page
+                DivInventoryList = new ObservableCollection<Inventory>();
+                DivInventoryList.Clear();
+                int startPos = (currentpage - 1) * NumRowEachPage;
+                int endPos = currentpage * NumRowEachPage - 1;
+                if (endPos >= ilc)
+                    endPos = ilc - 1;
+
+                int flag = 0;
+                foreach (var item in InventoryList)
+                {
+                    if (flag >= startPos && flag <= endPos)
+                        DivInventoryList.Add(item);
+                    flag++;
+                }
+                //MessageBox.Show(DivInventoryList.Count.ToString());
+
+                //Button "..." visible
+
+                //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
+                //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
+                if (max_pack_page == 1)
+                {
+                    Bacham1Visible = Visibility.Collapsed;
+                    Bacham2Visible = Visibility.Collapsed;
+                }
+                else
+                {
+                    if (pack_page == max_pack_page)
+                    {
+                        Bacham1Visible = Visibility.Visible;
+                        Bacham2Visible = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        if (pack_page == 1)
+                        {
+                            Bacham1Visible = Visibility.Collapsed;
+                            Bacham2Visible = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Bacham1Visible = Visibility.Visible;
+                            Bacham2Visible = Visibility.Visible;
+                        }
+                    }
+                }
+
+                //Button "..." visible
+
+                if (currentpage == 1 && maxpage == 1)
+                {
+                    LeftVisi = false;
+                    RightVisi = true;
+                }
+                else
+                {
+                    if (currentpage == maxpage)
+                    {
+                        LeftVisi = true;
+                        RightVisi = false;
+                    }
+                    else
+                    {
+                        if (currentpage == 1)
+                        {
+                            LeftVisi = false;
+                            RightVisi = true;
+                        }
+                        else
+                        {
+                            LeftVisi = true;
+                            RightVisi = true;
+                        }
+                    }
+                }
+
+                if (maxpage >= 3)
+                {
+                    BtnPage1.PageVisi = Visibility.Visible;
+                    BtnPage2.PageVisi = Visibility.Visible;
+                    BtnPage3.PageVisi = Visibility.Visible;
+
+                    switch (currentpage % 3)
+                    {
+                        case 1:
+                            BtnPage1.BackGround = Brushes.Blue;
+                            BtnPage2.BackGround = Brushes.White;
+                            BtnPage3.BackGround = Brushes.White;
+                            BtnPage1.PageVal = currentpage;
+                            BtnPage2.PageVal = currentpage + 1;
+                            BtnPage3.PageVal = currentpage + 2;
+                            break;
+                        case 2:
+                            BtnPage1.BackGround = Brushes.White;
+                            BtnPage2.BackGround = Brushes.Blue;
+                            BtnPage3.BackGround = Brushes.White;
+                            BtnPage1.PageVal = currentpage - 1;
+                            BtnPage2.PageVal = currentpage;
+                            BtnPage3.PageVal = currentpage + 1;
+                            break;
+                        case 0:
+                            BtnPage1.BackGround = Brushes.White;
+                            BtnPage2.BackGround = Brushes.White;
+                            BtnPage3.BackGround = Brushes.Blue;
+                            BtnPage1.PageVal = currentpage - 2;
+                            BtnPage2.PageVal = currentpage - 1;
+                            BtnPage3.PageVal = currentpage;
+                            break;
+                    }
+                }
+                else
+                {
+                    if (maxpage == 2)
+                    {
+                        BtnPage1.PageVisi = Visibility.Visible;
+                        BtnPage2.PageVisi = Visibility.Visible;
+                        BtnPage3.PageVisi = Visibility.Collapsed;
+                        switch (currentpage)
+                        {
+                            case 1:
+                                BtnPage1.BackGround = Brushes.Blue;
+                                BtnPage2.BackGround = Brushes.White;
+                                BtnPage1.PageVal = currentpage;
+                                BtnPage2.PageVal = currentpage + 1;
+                                break;
+                            case 2:
+                                BtnPage1.BackGround = Brushes.White;
+                                BtnPage2.BackGround = Brushes.Blue;
+                                BtnPage1.PageVal = currentpage - 1;
+                                BtnPage2.PageVal = currentpage;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        BtnPage1.PageVisi = Visibility.Visible;
+                        BtnPage2.PageVisi = Visibility.Collapsed;
+                        BtnPage3.PageVisi = Visibility.Collapsed;
+                        BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
+                        BtnPage1.BackGround = Brushes.Blue;
+                        BtnPage1.PageVal = currentpage;
+                    }
+                }
+                if (pack_page == max_pack_page)
+                {
+                    if ((pack_page * 3) > maxpage)
+                        BtnPage3.PageVisi = Visibility.Collapsed;
+                    if ((pack_page * 3 - 1) > maxpage)
+                        BtnPage2.PageVisi = Visibility.Collapsed;
+                }
+
+            }
+        }
+
+        //filter
+        private void Filter()
+        {
+            List<InventoryGoods> newListExportBill = BackupInventoryImportGoods;
+            if (DisplayNameSupplier != null && DisplayNameSupplier != "")
+            {
+                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.typeGroup == DisplayNameSupplier).ToList();
+            }
+
+            if (displayBeginDay != null)
+            {
+                List<InventoryGoods> temp = new List<InventoryGoods>();
+                foreach (var bill in newListExportBill)
+                {
+                    if (DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                     && DateTime.Compare(bill.ProfitSummary.day, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                    {
+                        temp.Add(bill);
+                    }
+                }
+                newListExportBill = temp;
+            }
+
+            InventoryImportGoods = new ObservableCollection<InventoryGoods>(newListExportBill);
         }
 
         public class CellItems
@@ -1039,6 +1493,7 @@ namespace bookStoreManagetment.ViewModel
 
         public class InventoryGoods
         {
+            public profitSummary ProfitSummary { get; set; }
             public string CodeBill { get; set; }
             public string NameSupplier { get; set; }
             public int TotalPriceGoods { get; set; }
@@ -1048,4 +1503,3 @@ namespace bookStoreManagetment.ViewModel
     }
 }
 
-   

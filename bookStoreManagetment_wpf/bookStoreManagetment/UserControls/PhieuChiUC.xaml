@@ -359,7 +359,7 @@
 
                                     <DatePicker SelectedDateFormat="Short"
                                                 IsEnabled="{Binding IsEnable}"
-                                                Text="{Binding ViewExportSheet.ProfitSummary.sellDay}"
+                                                Text="{Binding ViewExportSheet.ProfitSummary.day}"
                                     materialDesign:HintAssist.Hint="Ngày ghi nhận"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                                 IsTodayHighlighted="True">
@@ -700,7 +700,7 @@
 
                             <!--Ngày ghi nhận -->
                             <DataGridTextColumn
-                                    Binding="{Binding ProfitSummary.sellDay}"
+                                    Binding="{Binding ProfitSummary.day}"
                                     Header="Ngày ghi nhận"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
