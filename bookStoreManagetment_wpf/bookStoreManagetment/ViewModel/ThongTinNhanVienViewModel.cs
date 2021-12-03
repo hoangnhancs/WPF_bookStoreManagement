@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using bookStoreManagetment.Model;
 using MaterialDesignThemes.Wpf;
 
@@ -21,6 +24,8 @@ namespace bookStoreManagetment.ViewModel
         public string FullName { get => _FullName; set { _FullName = value; OnPropertyChanged(); } }
         private string _Position;
         public string Position { get => _Position; set { _Position = value; OnPropertyChanged(); } }
+        private ImageSource _SourceImage;
+        public ImageSource SourceImage { get => _SourceImage; set { _SourceImage = value; OnPropertyChanged(); } }
     }
 
     public class ThongTinNhanVienViewModel :BaseViewModel
@@ -36,6 +41,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand CloseGridPasswordCommand { get; set; }
         public ICommand SavePasswordCommand { get; set; }
         public ICommand TextChangedNameAccountCommand { get; set; }
+        public ICommand UploadImageNVCommand { get; set; }
 
         public ThongTinNhanVienViewModel()
         {
@@ -43,6 +49,23 @@ namespace bookStoreManagetment.ViewModel
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+            });
+
+            // load form
+            UploadImageNVCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                OpenFileDialog op = new OpenFileDialog();
+                op.Title = "Select a picture";
+                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+                if (op.ShowDialog() == DialogResult.OK)
+                {
+                    ViewEmployee.SourceImage = null;
+                    var bit = new BitmapImage(new Uri(op.FileName));
+                    ViewEmployee.SourceImage = bit;
+                    ViewEmployee.Staff.employeeImagePath = op.FileName;
+                }
             });
 
             // kiểm tra tài khoản tồn tại
@@ -79,7 +102,7 @@ namespace bookStoreManagetment.ViewModel
                 currentAcc.nameAccount = ViewEmployee.Staff.nameAccount;
                 currentAcc.passwordAccount = ViewEmployee.Password;
                 DataProvider.Ins.DB.SaveChanges();
-                MessageBox.Show("Thay đổi thông tin thành công");
+                System.Windows.MessageBox.Show("Thay đổi thông tin thành công");
             });
 
         }
@@ -105,6 +128,16 @@ namespace bookStoreManagetment.ViewModel
             else
             {
                 newViewEmployee.Position = "Nhân Viên";
+            }
+            try
+            {
+                var uri = new Uri(newViewEmployee.Staff.employeeImagePath);
+                if (uri != null)
+                    newViewEmployee.SourceImage = new BitmapImage(uri);
+            }
+            catch
+            {
+                
             }
             ViewEmployee = newViewEmployee;
         }
