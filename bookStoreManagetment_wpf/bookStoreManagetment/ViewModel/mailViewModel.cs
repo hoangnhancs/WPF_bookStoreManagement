@@ -98,7 +98,7 @@ namespace bookStoreManagetment.ViewModel
 
         #region "page"
         //Page Property
-        /*
+        
         private Visibility _3cham1Visible;
         public Visibility Bacham1Visible
         {
@@ -188,10 +188,10 @@ namespace bookStoreManagetment.ViewModel
 
         public ICommand tbNumRowEachPageCommand { get; set; }
         public ICommand btnNextClickCommand { get; set; }
-        */
+        
 
         //Page Property
-        #endregion
+        #endregion //here  
         public mailViewModel() {
             #region "mail"
             LoadMailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -455,7 +455,7 @@ namespace bookStoreManagetment.ViewModel
             #endregion
 
             #region "select num row each page"
-            /*
+            
             tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 currentpage = 1;
@@ -475,8 +475,8 @@ namespace bookStoreManagetment.ViewModel
                 }
                 settingButtonNextPrev();
             });
-            */
-            #endregion
+            
+            #endregion //here
 
             void LoadData()
             { 
@@ -533,7 +533,7 @@ namespace bookStoreManagetment.ViewModel
 
             }
             #region "setting button"
-            /*
+            
             void settingButtonNextPrev()
             {
                 int ilc = InventoryList.Count();
@@ -720,7 +720,7 @@ namespace bookStoreManagetment.ViewModel
                     }
 
                 }
-            }*/
+            }
             #endregion
             void clearData()
             {

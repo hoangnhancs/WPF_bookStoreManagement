@@ -29,9 +29,9 @@
             </Grid>
             <Grid x:Name="gridChucnang" Grid.Column="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button
+                    <!--<Button
                         Command="{Binding btnXuatfileCommand}">Xuất file</Button>
-                    <Button>Nhập file</Button>
+                    <Button>Nhập file</Button>-->
                     <Button Content="Tạo đơn hàng trả">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
@@ -44,7 +44,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid x:Name="gridDSKhachtrahang" Visibility="Visible">
+            <Grid x:Name="gridDSKhachtrahang" Visibility="{Binding DSKhachtrahangVisible}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="4*"/>
@@ -114,7 +114,7 @@
                                     <!--tìm kiếm theo tên và mã -->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding SearchEngineer}" />
+                                            <i:InvokeCommandAction Command="{Binding btnLoc2Command}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBox>
@@ -148,49 +148,64 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Grid>
-                        <DataGrid 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.1"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <!--căn data-->
+                    <Grid Grid.Row="1">
+                        <DataGrid ColumnWidth="*"
+                      GridLinesVisibility="None">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <!--main Content-->
+                    <Grid Grid.Row = "0">
+                        <Grid>
+                            <DataGrid 
                         x:Name="dgDSTrahang" 
                         AutoGenerateColumns="False" 
                         CanUserAddRows="False" 
                         HorizontalAlignment="Center" 
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center"
-                        ItemsSource="{Binding InventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Width="100" Header="Mã hóa đơn" Binding="{Binding BillcodeSell}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="100" Header="Tên khách hàng" Binding="{Binding NameCustomer}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="150" Header="Trạng thái" Binding="{Binding TrangThai}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="250" Header="Lí do" Binding="{Binding LiDo}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="200" Header="Ngày trả hàng" Binding="{Binding SellDate}" IsReadOnly="True"/>
-                            <DataGridTemplateColumn Width="250" Header="Trạng thái">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button 
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="100" Header="Mã hóa đơn" Binding="{Binding BillcodeSell}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="100" Header="Tên khách hàng" Binding="{Binding NameCustomer}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="150" Header="Trạng thái" Binding="{Binding TrangThai}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="250" Header="Lí do" Binding="{Binding LiDo}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Width="200" Header="Ngày trả hàng" Binding="{Binding SellDate}" IsReadOnly="True"/>
+                                    <DataGridTemplateColumn Width="250" Header="Trạng thái">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button 
                                                 x:Name="btnChitiet" Content="Chi tiết"
                                                 Width="100"
                                                 Background="Transparent" 
                                                 Foreground="Black" 
                                                 BorderBrush="Black">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnChitietClickCommand}"
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    </Grid>
-                    <Grid>
-                        <Grid x:Name="gridFilter"
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Margin="0,-14,0,13.8">
+                            <Grid x:Name="gridFilter"
                             Visibility="{Binding IsFilter}"
                             Height="200"
                             Opacity="0.95"
@@ -198,70 +213,72 @@
                             Margin="0,9,20,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="47*"/>
-                                <ColumnDefinition Width="28*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border BorderThickness="2"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="47*"/>
+                                    <ColumnDefinition Width="28*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderThickness="2"
                                 CornerRadius="10"
                                 BorderBrush="Black"
                                 Background="#FFE7E7E7" Grid.ColumnSpan="2">
-                                <Grid Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="0.8*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <StackPanel Orientation="Vertical"
+                                    <Grid Margin="5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="0.8*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Vertical"
                                             Margin="5">
-                                            <TextBlock Text="Tên khách hàng"
+                                                <TextBlock Text="Tên khách hàng"
                                                    FontWeight="SemiBold"></TextBlock>
-                                            <ComboBox
+                                                <ComboBox
                                                 IsEditable="True"
                                                 ItemsSource="{Binding TenkhachhangList, UpdateSourceTrigger=PropertyChanged}"
                                                 SelectedValue="{Binding ComboBoxTenKhachhang, UpdateSourceTrigger=PropertyChanged}"
                                                 Text="{Binding ComboBoxTenKhachhang, UpdateSourceTrigger=PropertyChanged}"
                                                 HorizontalAlignment="Left"
                                                 Width="184">
-                                            </ComboBox>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <StackPanel Orientation="Vertical"
+                                                </ComboBox>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <StackPanel Orientation="Vertical"
                                             Margin="5">
-                                            <TextBlock Text="Tên nhân viên"
+                                                <TextBlock Text="Tên nhân viên"
                                                    FontWeight="SemiBold"></TextBlock>
-                                            <ComboBox
+                                                <ComboBox
                                                 IsEditable="True"
                                                 ItemsSource="{Binding TennhanvienList, UpdateSourceTrigger=PropertyChanged}"
                                                 SelectedValue="{Binding ComboBoxNhanvienphutrachValue, UpdateSourceTrigger=PropertyChanged}"
                                                 Text="{Binding ComboBoxNhanvienphutrachValue, UpdateSourceTrigger=PropertyChanged}"
                                                 HorizontalAlignment="Left"
                                                 Width="184">
-                                            </ComboBox>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Grid Grid.Row="2">
-                                        <StackPanel Orientation="Horizontal"
+                                                </ComboBox>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
-                                            <Button 
+                                                <Button 
                                                 Content="Xoá bộ lọc"         
                                                 Padding="0"
                                                 Height="30"
                                                 Width="100"
-                                                IsEnabled="True"></Button>
-                                                            <Button 
+                                                
+                                                Command="{Binding clearFilter}"
+                                                IsEnabled="{Binding isEnableFilterButton}"></Button>
+                                                <Button 
                                                 Content="Lọc"              
                                                 Height="30"
                                                 Padding="0"
                                                 Margin="20 0 0 0"
                                                 Width="100"
-                                                IsEnabled="True"
-                                                Command="{Binding SearchEngineer}"></Button>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Button HorizontalAlignment="Right"
+                                                IsEnabled="{Binding isEnableFilterButton}"
+                                                Command="{Binding btnLoc2Command}"></Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Button HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource MaterialDesignFlatDarkButton}"
                                         ToolTip="Đóng Bộ Lọc"
@@ -272,20 +289,82 @@
                                         Background="Transparent"
                                         Foreground="Red"
                                         BorderBrush="Transparent">
-                                        <materialDesign:PackIcon Kind="Close" 
+                                            <materialDesign:PackIcon Kind="Close" 
                                                                  Width="20"
                                                                  Height="20"/>
-                                    </Button>
-                                </Grid>
-                            </Border>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </Grid>
                         </Grid>
                     </Grid>
+
                 </Grid>
                 <Grid Grid.Row="2">
-                
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="40">
+                        <TextBlock Height="40" VerticalAlignment="Center" TextAlignment="Center">Số dòng mỗi trang:</TextBlock>
+                        <Border BorderBrush="Black" BorderThickness="1" Width="40" Height="40">
+                            <TextBox Width="40" Height="40" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                         Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Border>
+                        <Button x:Name="btnPageFirst" Content="&lt;&lt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnfirstPageCommand}"></Button>
+                        <Button x:Name="btnPagePrev" Content='&lt;' VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnPrevPageCommand}"></Button>
+                        <Button x:Name="btn3cham1" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                        <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage1.BackGround}"
+                                    Foreground="Black"></Button>
+                        <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage2.BackGround}"
+                                    Foreground="Black"></Button>
+                        <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage3.BackGround}"
+                                    Foreground="Black"></Button>
+                        <Button x:Name="btn3cham2" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40" 
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                        <Button x:Name="btnPageNext" Content="&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button x:Name="btnPageEnd" Content="&gt;&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnendPageCommand}"></Button>
+                    </StackPanel>
                 </Grid>
             </Grid>
-            <Grid x:Name="gridTaoKhachtrahang" Visibility="Collapsed">
+            <Grid x:Name="gridTaoKhachtrahang" Visibility="{Binding ThemKhachtrahangVisible}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="*"/>
@@ -418,7 +497,7 @@
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <Button Content="Luu">
+                                <Button Content="Lưu">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding saveKhachTrahangCommand}"/>
@@ -427,7 +506,7 @@
                                 </Button>
                             </Grid>
                             <Grid Grid.Column="2">
-                                <Button Content="Huy">
+                                <Button Content="Hủy">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding huyKhachtrahangCommand}"/>
@@ -439,7 +518,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Grid x:Name="gridChitietTrahang" Visibility="Collapsed">
+            <Grid x:Name="gridChitietTrahang" Visibility="{Binding ChitietHoadontraVisible}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="*"/>
@@ -552,7 +631,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="3">
-                    <Button Height="20" Width="40" Content="Thoat"
+                    <Button Height="30" Width="100" Content="Thoat"
                         Command="{Binding btnThoatCommand}"></Button>
                 </Grid>
             </Grid>
