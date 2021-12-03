@@ -1,7 +1,10 @@
-﻿using bookStoreManagetment.Model;
+﻿using AForge.Video;
+using AForge.Video.DirectShow;
+using bookStoreManagetment.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +12,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.IO;
+using ZXing;
+using ZXing.QrCode;
+using ZXing.Client.Result;
+using ZXing.Common;
+using System.Drawing.Imaging;
+using System.Windows.Threading;
+using System.Threading;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace bookStoreManagetment.ViewModel
 {
     class DSHoaDonViewModel : BaseViewModel
     {
+        #region Khai báo class chi tiết hóa đơn
         public class BillDetail
         {
             public bill Bill { get; set; }
@@ -26,98 +40,33 @@ namespace bookStoreManagetment.ViewModel
             public sellBill SellBill { get; set; }
             public string billStatus { get; set; }
         }
-        
+        #endregion
+
+        #region Khai báo class SellBillItem
         public class SellBillItem
         {
             public item Item { get; set; }
             public int Amount { get; set; }
             public int Discount { get; set; }
         }
+        #endregion
 
         public DSHoaDonViewModel()
         {
-            // Load data cho DSHoaDon UC
-            #region LoadedUserControlCommand
+            #region Command load data cho DSHoaDon UC
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) => LoadDSHoaDon());
-            #endregion
-
-            // Command reset filter DSHoaDon 
-            #region ResetFilterCommand
-            ResetFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) => ResetFilter());
-            #endregion
-
-            // Command in đơn hàng
-            #region PrintBillCommand
-            PrintBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => printBill());
-            #endregion
-
-            // Command Load data hóa đơn để xem
-            #region LoadBillDetailCommand
-            LoadBillDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                ViewBillDetail = SelectedBill;//(p as BillDetail);
-                IsBillViewing = Visibility.Visible;
-                IsDSHoaDon = Visibility.Collapsed;
-                IsBillCreating = Visibility.Collapsed;
-            });
-            #endregion
-
-            // Command Load data để tạo đơn hàng
-            #region LoadCreateBillCommand
-            LoadCreateBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => LoadCreateBill());
-            #endregion
-
-            // Command thêm vật phẩm vào đơn hàng
-            #region AddItemIntoSellBillCommand
-            AddItemIntoSellBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (SelectedItem != null && SelectedItem.quantity > 0)
-                {
-                    bool exists = false;
-                    if (SellBillInfomation != null)
-                    {
-                        foreach (var billinfo in SellBillInfomation)
-                        {
-                            if (billinfo.Item == SelectedItem)
-                            {
-                                exists = true;
-                            }
-                        }
-                    }
-                    if (exists == false)
-                    {
-                        var BillDetail = new SellBillItem() { Item = SelectedItem, Amount = 1, Discount = 0 };
-                        SellBillInfomation.Add(BillDetail);
-                    }
-                    UpdateTotal();
-                }
-            });
-            #endregion 
-
-            // Hàm reset filter tìm kiếm của grid DS hóa đơn
-            #region ResetFilter
-            void ResetFilter()
-            {
-                SelectedEmployee = null;
-                SelectedOrderStatus = null;
-                SearchString = null;
-            }
-            #endregion
-
-            // Hàm Load data của danh sách hóa đơn
-            #region LoadDSHoaDon
             void LoadDSHoaDon()
             {
                 IsDSHoaDon = Visibility.Visible;
                 IsBillViewing = Visibility.Collapsed;
                 IsBillCreating = Visibility.Collapsed;
+                IsOrderComfirmation = Visibility.Collapsed;
                 HoadonList = new ObservableCollection<BillDetail>();
                 Employee = new ObservableCollection<employee>(DataProvider.Ins.DB.employees);
                 ListItems = new ObservableCollection<item>(DataProvider.Ins.DB.items);
-                string[] OrderStatus = { "Tất cả", "Đã thanh toán", "Đã giao hàng", "Đã trả hàng" };
+                string[] OrderStatus = { "Đã thanh toán", "Đã giao hàng", "Đã trả hàng" };
                 OrderStatusList = new List<string>(OrderStatus);
 
-                Employee.Add(new employee { firstName = "Tất cả" });
                 var BillList = DataProvider.Ins.DB.bills.Where(x => x.billType == "export");
                 foreach (bill sellBill in BillList)
                 {
@@ -155,16 +104,59 @@ namespace bookStoreManagetment.ViewModel
                     HoadonList.Add(hoadon);
                 }
                 DisplayBillList = HoadonList.ToList();
+
+                NumRowEachPageTextBox = "5";
+                NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+                currentpage = 1;
+                pack_page = 1;
+                settingButtonNextPrev();
+
+
             }
             #endregion
 
-            //Hàm load data để tạo đơn mua hàng
-            #region LoadCreateBill
+            #region Command reset filter DSHoaDon
+            ResetFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) => ResetFilter());
+            void ResetFilter()
+            {
+                SelectedEmployee = null;
+                SelectedOrderStatus = null;
+                SearchString = null;
+            }
+            #endregion
+
+            #region Command in đơn hàng
+            PrintBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => printBill());
+
+            void printBill()
+            {
+
+            }
+
+            #endregion
+
+            #region Command Load data hóa đơn để xem
+            LoadBillDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ViewBillDetail = SelectedBill;//(p as BillDetail);
+                IsBillViewing = Visibility.Visible;
+                IsDSHoaDon = Visibility.Collapsed;
+                IsBillCreating = Visibility.Collapsed;
+            });
+            #endregion
+
+            #region Command Load data để tạo đơn hàng
+            LoadCreateBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => LoadCreateBill());
             void LoadCreateBill()
             {
                 IsBillCreating = Visibility.Visible;
                 IsDSHoaDon = Visibility.Collapsed;
                 IsBillViewing = Visibility.Collapsed;
+
+                GetVideoDevices();
+                BarcodeScanner newBarcodeScanner = new BarcodeScanner();
+                newBarcodeScanner.ShowDialog();
+
                 // Load danh sác khách hàng
                 CustomerList = new ObservableCollection<custommer>(DataProvider.Ins.DB.custommers);
                 // Load danh sách nhân viên
@@ -196,103 +188,219 @@ namespace bookStoreManagetment.ViewModel
                 PhoneNumber = null;
                 Address = null;
             }
+
             #endregion
 
-            void printBill()
+            #region Command thêm vật phẩm vào đơn hàng
+            AddItemIntoSellBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                if (SelectedItem != null && SelectedItem.quantity > 0)
+                {
+                    bool exists = false;
+                    if (SellBillInfomation != null)
+                    {
+                        foreach (var billinfo in SellBillInfomation)
+                        {
+                            if (billinfo.Item == SelectedItem)
+                            {
+                                exists = true;
+                            }
+                        }
+                    }
+                    if (exists == false)
+                    {
+                        var BillDetail = new SellBillItem() { Item = SelectedItem, Amount = 1, Discount = 0 };
+                        SellBillInfomation.Add(BillDetail);
+                    }
+                    UpdateTotal();
+                }
+            });
+            #endregion
 
-            }
+            #region Barcode Scanner
+            StartBarcodeScannerCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
 
-            // Command thanh toán cho đơn hàng
-            #region CheckoutClickCommand
+            }, (p) =>
+            {
+                StartCamera();
+            });
+            StopBarcodeScannerCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+
+            }, (p) =>
+            {
+                StopCamera();
+            });
+
+            #endregion
+
+            #region Command thanh toán cho đơn hàng
             CheckoutClickCommand = new RelayCommand<object>((p) =>
             {
                 if (SellBillInfomation == null)
                 {
                     return false;
                 }
-                if (SellBillInfomation.Count == 0 || SelectedCustomer == null || SelectedEmployeeCreateBill == null || SelectedDeliveryMethod == null || SelectedPaymentMethod == null)
+                if (SellBillInfomation.Count == 0 || SelectedCustomer == null || SelectedEmployeeCreateBill == null || SelectedDeliveryMethod == null || SelectedPaymentMethod == null || IsOrderComfirmation == Visibility.Visible)
                     return false;
                 return true;
             }, (p) =>
             {
-                if (MessageBox.Show("Xác nhận thanh toán?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-
-                    //string query = "update supplier set nameSupplier=N'" + nameSup + "',addressSupplier=N'" + addressSup + "',emailSupplier=N'" + emailSup + "',phoneNumberSupplier=N'" + phoneSup + "' where idSupplier=N'" + idSup + "'";
-                    //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
-                    bill NewBill = new bill { billCode = SellBillCode, billType = "export" };
-                    DataProvider.Ins.DB.bills.Add(NewBill);
-                    //DataProvider.Ins.DB.SaveChanges();
-                    bool Saved = false;
-                    sellBill SavedBill = new sellBill();
-                    foreach (var bill_ in SellBillInfomation)
-                    {
-                        sellBill SaveSellBill = new sellBill()
-                        {
-                            billCodeSell = SellBillCode,
-                            billstatus = "Đã thanh toán",
-                            idEmployee = SelectedEmployeeCreateBill.idEmployee,
-                            idCustomer = SelectedCustomer.idCustommer,
-                            number = bill_.Amount,
-                            sellDate = (DateTime)OrderDate,
-                            licenseDate = (DateTime)LicenseDate,
-                            deliveryDate = (DateTime)DeliveryDate,
-                            idItem = bill_.Item.idItem,
-                            unitPrice = bill_.Item.sellPriceItem,
-                            //discount = bill_.Discount,
-                            tag = Tag,
-                            note = Note,
-                            deliveryMethod = SelectedDeliveryMethod,
-                            paymentMethod = SelectedPaymentMethod,
-                        };
-                        if (Saved == false)
-                        {
-                            SavedBill = SaveSellBill;
-                            Saved = true;
-                        }
-                        DataProvider.Ins.DB.sellBills.Add(SaveSellBill);
-                        
-                        int curentAmount = DataProvider.Ins.DB.items.Where(x=> x.idItem == bill_.Item.idItem).Select(x => x.quantity).SingleOrDefault();
-                        //update item set quantity = currentAmount - bill_.Amount where idItem == bill_.Item.idItem
-                        profitSummary SaveprofitSummary = new profitSummary()
-                        {
-                            billCode = SellBillCode,
-                            billType = "export",
-                            rootPrice = (int)Total,
-                            payPrice = (int)Total,
-                            exchangePrice = (int)Total - (int)Total,
-                            idCustomer = SelectedCustomer.idCustommer,
-                            idEmployee = SelectedEmployeeCreateBill.idEmployee,
-                            day = (DateTime)OrderDate,
-                            nameCustomer =  SelectedCustomerFullName,
-                            nameEmployee = SelectedEmployeeCreateBillFullName,
-                        };
-                        DataProvider.Ins.DB.profitSummaries.Add(SaveprofitSummary);
-                    }
-
-                    BillDetail hoadon = new BillDetail
-                    {
-                        Bill = NewBill,
-                        CustomerFullName = SelectedCustomerFullName,
-                        EmployeeFullName = SelectedEmployeeCreateBillFullName,
-                        Total = (int)Total,
-                        CustomerPhoneNumber = PhoneNumber,
-                        SellBill = SavedBill,
-                        OrderItems = ListOrderItems,
-                        CustomerAddress = Address,
-                    };
-                    HoadonList.Add(hoadon);
-                    DisplayBillList = HoadonList.ToList();
-
-                    DataProvider.Ins.DB.SaveChanges();
-                }
-               
+                IsOrderComfirmation = Visibility.Visible;
+                PaidPrice = (int)Total;
             });
-            #endregion 
 
-            // Command xóa vật phẩm đang chọn khỏi đơn hàng
-            #region RemoveItemFromSellBillCommand
+            CancelClickCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+
+            }, (p) =>
+            {
+                IsOrderComfirmation = Visibility.Collapsed;
+            });
+
+            ConfirmClickCommand = new RelayCommand<object>((p) =>
+            {
+                if (PaidPrice < (int)Total)
+                    return false;
+                return true;
+            }, (p) =>
+            {
+                bill NewBill = new bill { billCode = SellBillCode, billType = "export" };
+                DataProvider.Ins.DB.bills.Add(NewBill);
+                bool Saved = false;
+                sellBill SavedBill = new sellBill();
+                foreach (var bill_ in SellBillInfomation)
+                {
+                    sellBill SaveSellBill = new sellBill()
+                    {
+                        billCodeSell = SellBillCode,
+                        billstatus = "Đã thanh toán",
+                        idEmployee = SelectedEmployeeCreateBill.idEmployee,
+                        idCustomer = SelectedCustomer.idCustommer,
+                        number = bill_.Amount,
+                        sellDate = (DateTime)OrderDate,
+                        licenseDate = (DateTime)LicenseDate,
+                        deliveryDate = (DateTime)DeliveryDate,
+                        idItem = bill_.Item.idItem,
+                        unitPrice = bill_.Item.sellPriceItem,
+                        tag = Tag,
+                        note = Note,
+                        deliveryMethod = SelectedDeliveryMethod,
+                        paymentMethod = SelectedPaymentMethod,
+                    };
+                    if (Saved == false)
+                    {
+                        SavedBill = SaveSellBill;
+                        Saved = true;
+                    }
+                    DataProvider.Ins.DB.sellBills.Add(SaveSellBill);
+
+                    item curentItem = DataProvider.Ins.DB.items.Where(x => x.idItem == bill_.Item.idItem).FirstOrDefault();
+                    curentItem.quantity -= bill_.Amount;
+                }
+
+                List<profitSummary> ListProfit = DataProvider.Ins.DB.profitSummaries.ToList();
+
+                profitSummary SaveprofitSummary = new profitSummary()
+                {
+                    billCode = SellBillCode,
+                    billType = "export",
+                    rootPrice = (int)Total,
+                    payPrice = PaidPrice,
+                    exchangePrice = ExchangePrice,
+                    idCustomer = SelectedCustomer.idCustommer,
+                    idEmployee = SelectedEmployeeCreateBill.idEmployee,
+                    day = (DateTime)OrderDate,
+                    nameCustomer = SelectedCustomerFullName,
+                    nameEmployee = SelectedEmployeeCreateBillFullName,
+                    budget = ListProfit.Count <= 0 ? (int)Total : (ListProfit[ListProfit.Count - 1].budget + (int)Total),
+                };
+                DataProvider.Ins.DB.profitSummaries.Add(SaveprofitSummary);
+
+                custommer CurrentCustomer = DataProvider.Ins.DB.custommers.Where(x => x.idCustommer == SelectedCustomer.idCustommer).FirstOrDefault();
+                CurrentCustomer.accumulatedPoints = CurrentCustomer.accumulatedPoints == null ? (int)Total : CurrentCustomer.accumulatedPoints + (int)Total;
+
+                BillDetail hoadon = new BillDetail
+                {
+                    Bill = NewBill,
+                    CustomerFullName = SelectedCustomerFullName,
+                    EmployeeFullName = SelectedEmployeeCreateBillFullName,
+                    Total = (int)Total,
+                    CustomerPhoneNumber = PhoneNumber,
+                    SellBill = SavedBill,
+                    OrderItems = ListOrderItems,
+                    CustomerAddress = Address,
+                };
+
+                DataProvider.Ins.DB.SaveChanges();
+
+                HoadonList.Add(hoadon);
+                DisplayBillList = HoadonList.ToList();
+                DivInventoryList = HoadonList;
+                IsOrderComfirmation = Visibility.Collapsed;
+            });
+            #endregion
+
+            #region Command cho chuyển page
+            tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                currentpage = 1;
+                //LoadData();
+                SearchEngineer();
+                //MessageBox.Show(DisplayBillList.Count().ToString());
+                settingButtonNextPrev();
+                //MessageBox.Show(DivInventoryList.Count().ToString());
+            });
+            btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (currentpage < maxpage)
+                {
+                    currentpage += 1;
+                    if (currentpage % 3 == 0)
+                        pack_page = currentpage / 3;
+                    else
+                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
+                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+                }
+                settingButtonNextPrev();
+            });
+            btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                currentpage = maxpage;
+                pack_page = max_pack_page;
+                settingButtonNextPrev();
+            });
+            btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                currentpage = 1;
+                pack_page = 1;
+                settingButtonNextPrev();
+            });
+            btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (currentpage > 1)
+                {
+                    currentpage -= 1;
+                    if (currentpage % 3 == 0)
+                        pack_page = currentpage / 3;
+                    else
+                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
+                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+                }
+                settingButtonNextPrev();
+            });
+            btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                SearchEngineer();
+                settingButtonNextPrev();
+            });
+            #endregion
+
+            #region Command xóa vật phẩm đang chọn khỏi đơn hàng
             RemoveItemFromSellBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 SellBillInfomation.Remove(SelectedSellBillItem);
@@ -300,16 +408,14 @@ namespace bookStoreManagetment.ViewModel
             });
             #endregion
 
-            // Command tính tổng tiền của đơn hàng
-            #region UpdateTotalCommand
+            #region Command tính tổng tiền của đơn hàng
             UpdateTotalCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 UpdateTotal();
             });
             #endregion
 
-            // Command back to DSHoaDon
-            #region BacktoDSHoaDonCommand
+            #region Command back to DSHoaDon
             BacktoDSHoaDonCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 IsBillViewing = Visibility.Collapsed;
@@ -317,9 +423,9 @@ namespace bookStoreManagetment.ViewModel
                 IsDSHoaDon = Visibility.Visible;
             });
             #endregion
-
         }
 
+        #region Khai báo biến và command
         private ObservableCollection<BillDetail> _HoadonList;
         public ObservableCollection<BillDetail> HoadonList { get => _HoadonList;
             set
@@ -346,13 +452,8 @@ namespace bookStoreManagetment.ViewModel
             {
                 _SelectedOrderStatus = value;
                 OnPropertyChanged();
-                if (SelectedOrderStatus != null)
-                    if (SelectedOrderStatus == "Tất cả")
-                        DisplayBillList = HoadonList.ToList();
-                    else
-                        DisplayBillList = HoadonList.Where(x => x != null && x.SellBill.billstatus == SelectedOrderStatus).ToList();
-                else
-                    DisplayBillList = HoadonList.ToList();
+                SearchEngineer();
+                settingButtonNextPrev();
             }
         }
 
@@ -364,13 +465,8 @@ namespace bookStoreManagetment.ViewModel
             {
                 _SelectedEmployee = value;
                 OnPropertyChanged();
-                if (SelectedEmployee != null)
-                    if (SelectedEmployee.firstName == "Tất cả")
-                        DisplayBillList = HoadonList.ToList();
-                    else
-                        DisplayBillList = HoadonList.Where(x => x != null && x.SellBill.idEmployee == SelectedEmployee.idEmployee).ToList();
-                else
-                    DisplayBillList = HoadonList.ToList();
+                SearchEngineer();
+                settingButtonNextPrev();
             }
         }
 
@@ -386,6 +482,10 @@ namespace bookStoreManagetment.ViewModel
 
         public ICommand LoadCreateBillCommand { get; set; }
 
+        public ICommand StartBarcodeScannerCommand { get; set; }
+
+        public ICommand StopBarcodeScannerCommand { get; set; }
+
         private string _SearchString;
         public string SearchString
         {
@@ -394,13 +494,8 @@ namespace bookStoreManagetment.ViewModel
             {
                 _SearchString = value;
                 OnPropertyChanged();
-                if (SearchString != null && SearchString != "")
-                {
-                    DisplayBillList = HoadonList.Where(x => x.CustomerFullName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.Bill.billCode.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.CustomerPhoneNumber.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                }
-
-                else
-                    DisplayBillList = HoadonList.ToList();
+                SearchEngineer();
+                settingButtonNextPrev();
             }
         }
 
@@ -416,6 +511,9 @@ namespace bookStoreManagetment.ViewModel
         private Visibility _IsBillCreating;
         public Visibility IsBillCreating { get => _IsBillCreating; set { _IsBillCreating = value; OnPropertyChanged(); } }
 
+        private Visibility _IsOrderComfirmation;
+        public Visibility IsOrderComfirmation { get => _IsOrderComfirmation; set { _IsOrderComfirmation = value; OnPropertyChanged(); } }
+        
         private BillDetail _ViewBillDetail;
         public BillDetail ViewBillDetail { get => _ViewBillDetail; set { _ViewBillDetail = value; OnPropertyChanged(); } }
 
@@ -428,6 +526,10 @@ namespace bookStoreManagetment.ViewModel
 
         //Biến của phần tạo hóa đơn
         public ICommand CheckoutClickCommand { get; set; }
+
+        public ICommand CancelClickCommand { get; set; }
+
+        public ICommand ConfirmClickCommand { get; set; }
 
         public ICommand AddItemIntoSellBillCommand { get; set; }
 
@@ -472,11 +574,11 @@ namespace bookStoreManagetment.ViewModel
             {
                 _SelectedCustomer = value;
                 OnPropertyChanged();
-                if (SelectedCustomer != null)
+                if (SelectedCustomer != null) 
                 {
-                    Address = SelectedCustomer.custommerAddress;
-                    PhoneNumber = SelectedCustomer.phoneNumber;
                     SelectedCustomerFullName = SelectedCustomer.lastName + " " + SelectedCustomer.firstName;
+                    PhoneNumber = SelectedCustomer.phoneNumber;
+                    Address = SelectedCustomer.custommerAddress;
                 }
             }
         }
@@ -492,6 +594,24 @@ namespace bookStoreManagetment.ViewModel
 
         private float _Total;
         public float Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
+
+        private int _PaidPrice;
+        public int PaidPrice
+        {
+            get => _PaidPrice;
+            set
+            {
+                _PaidPrice = value;
+                OnPropertyChanged();
+                if (Total != 0 && Total > 0 && PaidPrice >= Total)
+                {
+                    ExchangePrice = PaidPrice - (int)Total;
+                }
+            }
+        }
+
+        private int _ExchangePrice;
+        public int ExchangePrice { get => _ExchangePrice; set { _ExchangePrice = value; OnPropertyChanged(); } }
 
         private string _PhoneNumber;
         public string PhoneNumber { get => _PhoneNumber; set { _PhoneNumber = value; OnPropertyChanged(); } }
@@ -526,7 +646,9 @@ namespace bookStoreManagetment.ViewModel
         private string _Note;
         public string Note { get => _Note; set { _Note = value; OnPropertyChanged(); } }
 
-        //Hàm tính tổng tiền đơn hàng
+        #endregion
+
+        #region Hàm tính tổng tiền đơn hàng
         public void UpdateTotal()
         {
             Total = 0;
@@ -535,5 +657,425 @@ namespace bookStoreManagetment.ViewModel
                 Total += billinfo.Item.sellPriceItem * billinfo.Amount * (1 - billinfo.Discount / 100);
             }
         }
+        #endregion
+
+        #region Page select
+        //Page Property
+        private ObservableCollection<BillDetail> _DivInventoryList;
+        public ObservableCollection<BillDetail> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
+
+        private Visibility _3cham1Visible;
+        public Visibility Bacham1Visible
+        {
+            get { return _3cham1Visible; }
+            set
+            {
+                _3cham1Visible = value;
+                OnPropertyChanged();
+            }
+        }
+        private Visibility _3cham2Visible;
+        public Visibility Bacham2Visible
+        {
+            get { return _3cham2Visible; }
+            set
+            {
+                _3cham2Visible = value;
+                OnPropertyChanged();
+            }
+        }
+        public int maxpage { get; set; }
+        public int max_pack_page { get; set; }
+        public int pack_page { get; set; }
+        public int currentpage = 1;
+        private string _numRowEachPageTextBox;
+        public string NumRowEachPageTextBox
+        {
+            get { return _numRowEachPageTextBox; }
+            set
+            {
+                _numRowEachPageTextBox = value;
+                OnPropertyChanged();
+            }
+        }
+        public int NumRowEachPage;
+        private page btnPage1;
+        public page BtnPage1
+        {
+            get { return btnPage1; }
+            set
+            {
+                btnPage1 = value;
+                OnPropertyChanged();
+            }
+        }
+        private page btnPage2;
+        public page BtnPage2
+        {
+            get { return btnPage2; }
+            set
+            {
+                btnPage2 = value;
+                OnPropertyChanged();
+            }
+        }
+        private page btnPage3;
+        public page BtnPage3
+        {
+            get { return btnPage3; }
+            set
+            {
+                btnPage3 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _leftVisi;
+        public bool LeftVisi
+        {
+            get { return _leftVisi; }
+            set
+            {
+                _leftVisi = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _rightVisi;
+        public bool RightVisi
+        {
+            get { return _rightVisi; }
+            set
+            {
+                _rightVisi = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand tbNumRowEachPageCommand { get; set; }
+        public ICommand btnNextClickCommand { get; set; }
+        public ICommand btnendPageCommand { get; set; }
+        public ICommand btnfirstPageCommand { get; set; }
+        public ICommand btnPrevPageCommand { get; set; }
+        public ICommand btnLoc2Command { get; set; }
+
+        void settingButtonNextPrev()
+        {
+            int ilc = DisplayBillList.Count();
+            BtnPage1 = new page();
+            BtnPage2 = new page();
+            BtnPage3 = new page();
+
+            //currentpage = 1;
+
+            if (NumRowEachPageTextBox != "")
+            {
+                //init max page
+                NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+                if (ilc % NumRowEachPage == 0)
+                    maxpage = ilc / NumRowEachPage;
+                else
+                    maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
+                if (maxpage % 3 == 0)
+                    max_pack_page = maxpage / 3;
+                else
+                    max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
+
+                //Init max page
+                DivInventoryList = new ObservableCollection<BillDetail>();
+                DivInventoryList.Clear();
+                int startPos = (currentpage - 1) * NumRowEachPage;
+                int endPos = currentpage * NumRowEachPage - 1;
+                if (endPos >= ilc)
+                    endPos = ilc - 1;
+
+                int flag = 0;
+                foreach (var item in DisplayBillList)
+                {
+                    if (flag >= startPos && flag <= endPos)
+                        DivInventoryList.Add(item);
+                    flag++;
+                }
+                //MessageBox.Show(DivInventoryList.Count.ToString());
+
+                //Button "..." visible
+
+                //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
+                //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
+                if (max_pack_page == 1)
+                {
+                    Bacham1Visible = Visibility.Collapsed;
+                    Bacham2Visible = Visibility.Collapsed;
+                }
+                else
+                {
+                    if (pack_page == max_pack_page)
+                    {
+                        Bacham1Visible = Visibility.Visible;
+                        Bacham2Visible = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        if (pack_page == 1)
+                        {
+                            Bacham1Visible = Visibility.Collapsed;
+                            Bacham2Visible = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Bacham1Visible = Visibility.Visible;
+                            Bacham2Visible = Visibility.Visible;
+                        }
+                    }
+                }
+
+                //Button "..." visible
+
+                if (currentpage == 1 && maxpage == 1)
+                {
+                    LeftVisi = false;
+                    RightVisi = true;
+                }
+                else
+                {
+                    if (currentpage == maxpage)
+                    {
+                        LeftVisi = true;
+                        RightVisi = false;
+                    }
+                    else
+                    {
+                        if (currentpage == 1)
+                        {
+                            LeftVisi = false;
+                            RightVisi = true;
+                        }
+                        else
+                        {
+                            LeftVisi = true;
+                            RightVisi = true;
+                        }
+                    }
+                }
+
+                if (maxpage >= 3)
+                {
+                    BtnPage1.PageVisi = Visibility.Visible;
+                    BtnPage2.PageVisi = Visibility.Visible;
+                    BtnPage3.PageVisi = Visibility.Visible;
+
+                    switch (currentpage % 3)
+                    {
+                        case 1:
+                            BtnPage1.BackGround = Brushes.Blue;
+                            BtnPage2.BackGround = Brushes.White;
+                            BtnPage3.BackGround = Brushes.White;
+                            BtnPage1.PageVal = currentpage;
+                            BtnPage2.PageVal = currentpage + 1;
+                            BtnPage3.PageVal = currentpage + 2;
+                            break;
+                        case 2:
+                            BtnPage1.BackGround = Brushes.White;
+                            BtnPage2.BackGround = Brushes.Blue;
+                            BtnPage3.BackGround = Brushes.White;
+                            BtnPage1.PageVal = currentpage - 1;
+                            BtnPage2.PageVal = currentpage;
+                            BtnPage3.PageVal = currentpage + 1;
+                            break;
+                        case 0:
+                            BtnPage1.BackGround = Brushes.White;
+                            BtnPage2.BackGround = Brushes.White;
+                            BtnPage3.BackGround = Brushes.Blue;
+                            BtnPage1.PageVal = currentpage - 2;
+                            BtnPage2.PageVal = currentpage - 1;
+                            BtnPage3.PageVal = currentpage;
+                            break;
+                    }
+                }
+                else
+                {
+                    if (maxpage == 2)
+                    {
+                        BtnPage1.PageVisi = Visibility.Visible;
+                        BtnPage2.PageVisi = Visibility.Visible;
+                        BtnPage3.PageVisi = Visibility.Collapsed;
+                        switch (currentpage)
+                        {
+                            case 1:
+                                BtnPage1.BackGround = Brushes.Blue;
+                                BtnPage2.BackGround = Brushes.White;
+                                BtnPage1.PageVal = currentpage;
+                                BtnPage2.PageVal = currentpage + 1;
+                                break;
+                            case 2:
+                                BtnPage1.BackGround = Brushes.White;
+                                BtnPage2.BackGround = Brushes.Blue;
+                                BtnPage1.PageVal = currentpage - 1;
+                                BtnPage2.PageVal = currentpage;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        BtnPage1.PageVisi = Visibility.Visible;
+                        BtnPage2.PageVisi = Visibility.Collapsed;
+                        BtnPage3.PageVisi = Visibility.Collapsed;
+                        BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
+                        BtnPage1.BackGround = Brushes.Blue;
+                        BtnPage1.PageVal = currentpage;
+                    }
+                }
+                if (pack_page == max_pack_page)
+                {
+                    if ((pack_page * 3) > maxpage)
+                        BtnPage3.PageVisi = Visibility.Collapsed;
+                    if ((pack_page * 3 - 1) > maxpage)
+                        BtnPage2.PageVisi = Visibility.Collapsed;
+                }
+
+            }
+        }
+
+        #endregion
+
+        #region Search Engineer 
+        private void SearchEngineer()
+        {
+            if (SelectedOrderStatus != null || SelectedEmployee != null || (SearchString != null && SearchString != "")) 
+            {
+                DisplayBillList = HoadonList.ToList();
+                if (SelectedOrderStatus != null )
+                    DisplayBillList = DisplayBillList.Where(x => x != null && x.SellBill.billstatus == SelectedOrderStatus).ToList();
+                if (SelectedEmployee != null)
+                    DisplayBillList = DisplayBillList.Where(x => x != null && x.SellBill.idEmployee == SelectedEmployee.idEmployee).ToList();
+                if (SearchString != null && SearchString != "")
+                    DisplayBillList = DisplayBillList.Where(x => x.CustomerFullName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.Bill.billCode.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0 || x.CustomerPhoneNumber.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+            else
+                DisplayBillList = HoadonList.ToList();
+        }
+        #endregion
+
+        #region Barcode Scanner biến và hàm
+        private BitmapImage _qrcode;
+        public BitmapImage QRCode { get { return _qrcode; } set { _qrcode = value; OnPropertyChanged(); } }
+
+        public ObservableCollection<FilterInfo> VideoDevices { get; set; }
+
+        public FilterInfo CurrentDevice
+        {
+            get { return _currentDevice; }
+            set { _currentDevice = value; this.OnPropertyChanged("CurrentDevice"); }
+        }
+        private FilterInfo _currentDevice;
+
+        private string _Barcode;
+        public string Barcode { get => _Barcode; set { _Barcode = value; OnPropertyChanged(""); } }
+
+        private IVideoSource _videoSource;
+
+        private void video_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+        {
+            try
+            {
+                //BitmapImage bi;
+                Bitmap bitmap = (Bitmap)eventArgs.Frame.Clone();
+
+                //var result = DecodeQrCode(bitmap);
+                ZXing.BarcodeReader Reader = new ZXing.BarcodeReader();
+
+                Result result = Reader.Decode(bitmap);
+
+                //Barcode = result.ToString();
+
+                if (result != null)
+                {
+
+                        //MessageBox.Show(result.ToString());
+                    Barcode = result.ToString();
+                    item newitem = DataProvider.Ins.DB.items.Where(x => x.barcode == Barcode).FirstOrDefault();
+                    bool exists = false;
+                    if (SellBillInfomation != null)
+                    {
+                        foreach (var billinfo in SellBillInfomation)
+                        {
+                            if (billinfo.Item == newitem)
+                            {
+                                exists = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SellBillInfomation = new ObservableCollection<SellBillItem>();
+                    }
+                    if (exists == false)
+                    {
+                        var BillDetail = new SellBillItem() { Item = newitem, Amount = 1, Discount = 0 };
+                        SellBillInfomation.Add(BillDetail);
+                    }
+                    UpdateTotal();
+                }
+                
+                QRCode = ToBitmapImage(bitmap);
+                QRCode.Freeze();
+                // // avoid cross thread operations and prevents leaks
+                //Dispatcher.BeginInvoke(new ThreadStart(delegate { videoPlayer.Source = QRCode; }));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error on _videoSource_NewFrame:\n" + exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                StopCamera();
+            }
+        }
+
+        private void GetVideoDevices()
+        {
+            VideoDevices = new ObservableCollection<FilterInfo>();
+            foreach (FilterInfo filterInfo in new FilterInfoCollection(FilterCategory.VideoInputDevice))
+            {
+                VideoDevices.Add(filterInfo);
+            }
+            if (VideoDevices.Any())
+            {
+                CurrentDevice = VideoDevices[0];
+            }
+            else
+            {
+                MessageBox.Show("No video sources found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void StartCamera()
+        {
+            if (CurrentDevice != null)
+            {
+                _videoSource = new VideoCaptureDevice(CurrentDevice.MonikerString);
+                _videoSource.NewFrame += video_NewFrame;
+                _videoSource.Start();
+            }
+        }
+
+        private void StopCamera()
+        {
+            if (_videoSource != null && _videoSource.IsRunning)
+            {
+                _videoSource.SignalToStop();
+                _videoSource.NewFrame -= new NewFrameEventHandler(video_NewFrame);
+            }
+        }
+
+        public static BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            MemoryStream ms = new MemoryStream();
+            bitmap.Save(ms, ImageFormat.Bmp);
+            ms.Seek(0, SeekOrigin.Begin);
+            bi.StreamSource = ms;
+            bi.EndInit();
+            bi.Freeze();
+            return bi;
+        }
+        #endregion
     }
 }
