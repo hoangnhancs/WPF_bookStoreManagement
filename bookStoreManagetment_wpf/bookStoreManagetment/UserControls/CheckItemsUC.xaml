@@ -775,7 +775,7 @@
             <!--grid view-->
             <Grid Grid.Row="1">
                 <DataGrid x:Name="datagridShowCheckSheet"
-                            ItemsSource="{Binding ListCheckSheets, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding DivInventoryList, UpdateSourceTrigger=PropertyChanged}"
                             ColumnWidth="*"
                             Margin="0 8 0 0"
                             CanUserSortColumns="True"
@@ -1028,6 +1028,7 @@
                             <Setter Property="Width" Value="18"></Setter>
                         </Style>
                     </StackPanel.Resources>
+                    <!--
                     <ComboBox Padding="0"
                          ItemsSource="{Binding NumItems}"
                          FontSize="13"
@@ -1037,7 +1038,15 @@
                               VerticalContentAlignment="Center"
                               SelectedValue="{Binding DisplayNumOfPages}"
                          Width="35">
-                    </ComboBox>
+                    </ComboBox>-->
+                    <TextBox Width="22" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                         Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBlock
                     Padding="10 0 10 0"
                     VerticalAlignment="Center"
@@ -1064,40 +1073,57 @@
                             </Style>
                         </StackPanel.Resources>
                         <Button x:Name="btnPageFirst"
-                            Style="{StaticResource styleBtnNextPage}">
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnfirstPageCommand}"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <materialDesign:PackIcon Kind="PageFirst" />
                         </Button>
                         <Button Content="&lt;" 
                                 x:Name="btnPrePage"
-                            FontSize="13"
-                            Padding="0 0 0 4"
-                            FontWeight="DemiBold"   
-                            Style="{StaticResource styleBtnNextPage}"></Button>
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="13"
+                                Padding="0 0 0 4"
+                                FontWeight="DemiBold"   
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnPrevPageCommand}"></Button>
                         <Button Content="..." 
                                 x:Name="btnDotLeft"
-                                IsEnabled="False"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                        <Button Content="1" 
+                                Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                ></Button>
+                        <Button Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage1.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage1.BackGround, UpdateSourceTrigger=PropertyChanged}"
                                 x:Name="btnPage1"
                         Style="{StaticResource styleBtnNextPage}"></Button>
-                        <Button Content="2" 
+                        <Button Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage2.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage2.BackGround, UpdateSourceTrigger=PropertyChanged}"
                                 x:Name="btnPage2"
                         Style="{StaticResource styleBtnNextPage}"></Button>
-                        <Button Content="3" 
+                        <Button Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage3.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage3.BackGround, UpdateSourceTrigger=PropertyChanged}"
                                 x:Name="btnPage3"
                         Style="{StaticResource styleBtnNextPage}"></Button>
                         <Button Content="..." 
                                 x:Name="btnDotRight"
-                                IsEnabled="False"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                
+                                Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                ></Button>
                         <Button Content="&gt;" 
                                 x:Name="NextPage"
                                 FontSize="13"
                                 Padding="0 0 0 4"
                                 FontWeight="DemiBold"
-                            Style="{StaticResource styleBtnNextPage}"></Button>
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnNextClickCommand}"></Button>
                         <Button Style="{StaticResource styleBtnNextPage}"
-                                x:Name="btnPageLast">
+                                x:Name="btnPageLast"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding btnendPageCommand}">
                             <materialDesign:PackIcon Kind="PageLast" />
                         </Button>
                     </StackPanel>

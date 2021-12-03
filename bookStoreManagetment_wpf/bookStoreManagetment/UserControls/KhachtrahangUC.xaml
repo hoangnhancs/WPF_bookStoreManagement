@@ -69,7 +69,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Grid x:Name="gridDSKhachtrahang" Visibility="Visible">
+                    <Grid x:Name="gridDSKhachtrahang" Visibility="{Binding DSKhachtrahangVisible}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="36"/>
                             <RowDefinition Height="6*"/>
@@ -143,14 +143,14 @@
                             <Grid>
                                 <DataGrid 
                                     ColumnWidth="*"
-                        x:Name="dgDSTrahang" 
-                        AutoGenerateColumns="False" 
-                        CanUserAddRows="False" 
-                        HorizontalAlignment="Center" 
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                                    x:Name="dgDSTrahang" 
+                                    AutoGenerateColumns="False" 
+                                    CanUserAddRows="False" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalContentAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="auto" Header="Mã hóa đơn" Binding="{Binding BillcodeSell}" IsReadOnly="True">
                                             <DataGridTextColumn.HeaderStyle >
@@ -227,11 +227,16 @@
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Button 
-                                                x:Name="btnChitiet" Content="Chi tiết"
-                                                Width="100"
-                                                Background="Transparent" 
-                                                Foreground="Black" 
-                                                BorderBrush="Black">
+                                                            x:Name="btnChitiet" 
+                                                            Width="100"
+                                                            Background="Transparent" 
+                                                            Foreground="Black" 
+                                                            BorderBrush="Black">
+                                                            <materialDesign:PackIcon 
+                                                                Kind="Eye"                                             
+                                                                Width="auto"
+                                                                Height="auto"
+                                                                Foreground="Aqua"/>
                                                             <i:Interaction.Triggers>
                                                                 <i:EventTrigger EventName="Click">
                                                                     <i:InvokeCommandAction
@@ -336,70 +341,115 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="40">
-                                <TextBlock Height="40" VerticalAlignment="Center" TextAlignment="Center">Số dòng mỗi trang:</TextBlock>
-                                <Border BorderBrush="Black" BorderThickness="1" Width="40" Height="40">
-                                    <TextBox Width="40" Height="40" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                            <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button" x:Key="btnNextPage">
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                        <Setter Property="Padding" Value="0 0 0 0"></Setter>
+                                        <Setter Property="Background" Value="Transparent"></Setter>
+                                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                                        <Setter Property="Foreground" Value="Black"></Setter>
+                                        <Setter Property="FontSize" Value="9"></Setter>
+                                        <Setter Property="Height" Value="18"></Setter>
+                                        <Setter Property="Width" Value="18"></Setter>
+                                    </Style>
+                                </StackPanel.Resources>
+
+                                <TextBox Width="22" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                          Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="TextChanged">
-                                                <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </TextBox>
-                                </Border>
-                                <Button x:Name="btnPageFirst" Content="&lt;&lt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Command="{Binding btnfirstPageCommand}"></Button>
-                                <Button x:Name="btnPagePrev" Content='&lt;' VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Command="{Binding btnPrevPageCommand}"></Button>
-                                <Button x:Name="btn3cham1" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                                <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage1.BackGround}"
-                                    Foreground="Black"></Button>
-                                <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage2.BackGround}"
-                                    Foreground="Black"></Button>
-                                <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage3.BackGround}"
-                                    Foreground="Black"></Button>
-                                <Button x:Name="btn3cham2" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40" 
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                                <Button x:Name="btnPageNext" Content="&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                </Button>
-                                <Button x:Name="btnPageEnd" Content="&gt;&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Command="{Binding btnendPageCommand}"></Button>
+                                </TextBox>
+                                <TextBlock
+                    Padding="10 0 10 0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="hàng mỗi trang"></TextBlock>
+                                <!--List nexpage-->
+                                <StackPanel HorizontalAlignment="Center"
+                                x:Name="panelListBtnPages"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Button" x:Key="styleBtnNextPage">
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                                            <Setter Property="Foreground" Value="Black"></Setter>
+                                            <Setter Property="Padding" Value="0"></Setter>
+                                            <Setter Property="Height" Value="20"></Setter>
+                                            <Setter Property="Width" Value="20"></Setter>
+                                            <Setter Property="Margin" Value="4 0 2 0 "></Setter>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Button x:Name="btnPageFirst"
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnfirstPageCommand}"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <materialDesign:PackIcon Kind="PageFirst" />
+                                    </Button>
+                                    <Button Content="&lt;" 
+                                x:Name="btnPrePage"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="13"
+                                Padding="0 0 0 4"
+                                FontWeight="DemiBold"   
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnPrevPageCommand}"></Button>
+                                    <Button Content="..." 
+                                x:Name="btnDotLeft"
+                                Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                ></Button>
+                                    <Button Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage1.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage1.BackGround, UpdateSourceTrigger=PropertyChanged}"
+                                x:Name="btnPage1"
+                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                    <Button Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage2.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage2.BackGround, UpdateSourceTrigger=PropertyChanged}"
+                                x:Name="btnPage2"
+                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                    <Button Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage3.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage3.BackGround, UpdateSourceTrigger=PropertyChanged}"
+                                x:Name="btnPage3"
+                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                    <Button Content="..." 
+                                x:Name="btnDotRight"
+                                
+                                Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                ></Button>
+                                    <Button Content="&gt;" 
+                                x:Name="NextPage"
+                                FontSize="13"
+                                Padding="0 0 0 4"
+                                FontWeight="DemiBold"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnNextClickCommand}"></Button>
+                                    <Button Style="{StaticResource styleBtnNextPage}"
+                                x:Name="btnPageLast"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding btnendPageCommand}">
+                                        <materialDesign:PackIcon Kind="PageLast" />
+                                    </Button>
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
                     </Grid>
-                    <Grid x:Name="gridTaoKhachtrahang" Visibility="Collapsed">
+                    <Grid x:Name="gridTaoKhachtrahang" Visibility="{Binding ThemKhachtrahangVisible}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="3*"/>
                             <RowDefinition Height="*"/>
@@ -552,12 +602,13 @@
                                 </Grid>
                             </StackPanel>
                         </Grid>
+                        
                     </Grid>
-                    <Grid x:Name="gridChitietTrahang" Visibility="Collapsed">
+                    <Grid x:Name="gridChitietTrahang" Visibility="{Binding ChitietHoadontraVisible}">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="20*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="24*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="8*"/>
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
@@ -574,8 +625,14 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="4*"/>
                                 </Grid.RowDefinitions>
+                                
                                 <Grid Grid.Row="0">
-                                    <DataGrid 
+                                    <Border BorderBrush="Black" BorderThickness="1">
+                                        <StackPanel>
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">Thông tin sản phẩm trả hàng</TextBlock>
+                                            <DataGrid 
                                 x:Name="dgChitietsanphamTrahang" 
                                 AutoGenerateColumns="False" 
                                 CanUserAddRows="False" 
@@ -593,49 +650,64 @@
                                             <DataGridTextColumn Width="140" Header="Thành tiền" Binding="{Binding Thanhtien}" IsReadOnly="True"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
+                                        </StackPanel>
+                                    </Border>
                                 </Grid>
+                                
                                 <Grid Grid.Row="2">
-                                    <StackPanel>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Hình thức thanh toán và giao nhận</TextBlock>
-                                        <StackPanel Orientation="Horizontal" Height="25">
-                                            <Image Source="/pictures/search.png"/>
-                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">Xác nhận thanh toán</TextBlock>
-                                            <ComboBox  Margin="15 0 0 0" Text="Thanh toán COD" ></ComboBox>
+                                    <Border BorderBrush="Black" BorderThickness="1">
+                                        <StackPanel>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Hình thức thanh toán và giao nhận</TextBlock>
+                                            <StackPanel Orientation="Horizontal" Height="25">
+                                                <Image Source="/pictures/search.png"/>
+                                                <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">Xác nhận thanh toán</TextBlock>
+                                                <ComboBox  Margin="15 0 0 0" Text="Thanh toán COD" SelectedValue="Thanh toán COD"></ComboBox>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Height="25">
+                                                <Image Source="/pictures/search.png"/>
+                                                <TextBlock  Margin="5 0 0 0" VerticalAlignment="Center">Đóng gói và giao hàng</TextBlock>
+                                                <ComboBox  Margin="5 0 0 0" Text="Thanh toán COD" SelectedValue="Thanh toán COD"></ComboBox>
+                                            </StackPanel>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Height="25">
-                                            <Image Source="/pictures/search.png"/>
-                                            <TextBlock  Margin="5 0 0 0" VerticalAlignment="Center">Đóng gói và giao hàng</TextBlock>
-                                            <ComboBox  Margin="5 0 0 0" Text="Thanh toán COD" ></ComboBox>
-                                        </StackPanel>
-                                    </StackPanel>
+                                    </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Column="3">
+                                <Border BorderBrush="Black" BorderThickness="1">
                                 <StackPanel>
-                                    <TextBlock HorizontalAlignment="Center">Thong tin don hang</TextBlock>
-                                    <TextBlock HorizontalAlignment="Left">Ma don hang</TextBlock>
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center">Thông tin đơn hàng</TextBlock>
+                                    <TextBlock HorizontalAlignment="Left"
+                                               VerticalAlignment="Center">Mã đơn hàng</TextBlock>
                                     <TextBox IsReadOnly="True" Text="{Binding ChitietMahoadon}"></TextBox>
-                                    <TextBlock HorizontalAlignment="Left">Ngay dat hang</TextBlock>
+                                    <TextBlock HorizontalAlignment="Left"
+                                               VerticalAlignment="Center">Ngày đặt hàng</TextBlock>
                                     <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"></DatePicker>
-                                    <TextBlock HorizontalAlignment="Left">Thoi gian giao hang</TextBlock>
+                                    <TextBlock HorizontalAlignment="Left"
+                                               VerticalAlignment="Center">Thời gian giao hàng</TextBlock>
                                     <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"></DatePicker>
-                                    <TextBlock HorizontalAlignment="Left">Nhan vien</TextBlock>
+                                    <TextBlock HorizontalAlignment="Left"
+                                               VerticalAlignment="Center">Nhân viên</TextBlock>
                                     <TextBox IsReadOnly="True" Text="{Binding Chitietnhanvien}"></TextBox>
-                                    <TextBlock HorizontalAlignment="Left">Ghi chu</TextBlock>
+                                    <TextBlock HorizontalAlignment="Left"
+                                               VerticalAlignment="Center">Ghi chú</TextBlock>
                                     <TextBox IsReadOnly="True" Text="{Binding GhiChu}"></TextBox>
                                 </StackPanel>
+                                </Border>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="2">
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="2*"/>
                                 <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock
+                                <TextBlock 
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Center">Thong tin tra hang</TextBlock>
+                            HorizontalAlignment="Center">Thông tin trả hàng</TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
@@ -645,28 +717,32 @@
                                 <Grid Grid.Column="0">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock>Thoi gian tra hang</TextBlock>
+                                            <TextBlock VerticalAlignment="Center">Thời gian trả hàng</TextBlock>
                                             <DatePicker SelectedDate="{Binding ChitietThoigianTrahang}"></DatePicker>
                                         </StackPanel>
-                                        <TextBlock>Li do tra hang</TextBlock>
+                                        <TextBlock>Lí do trả hàng</TextBlock>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Column="1">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock>Thoi gian tra hang</TextBlock>
+                                            <TextBlock VerticalAlignment="Center">Thời gian trả hàng</TextBlock>
                                             <TextBox Text="{Binding Chitietnhanvien}" IsReadOnly="True"></TextBox>
                                         </StackPanel>
-                                        <TextBlock>Xac nhan kiem du</TextBlock>
+                                        <TextBlock VerticalAlignment="Center">Xác nhận kiểm đủ</TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="2">
-                                <TextBox IsReadOnly="True" Text="{Binding Chitietlido}"></TextBox>
+                                <TextBox Width="300" IsReadOnly="True" 
+                                         HorizontalAlignment="Left" VerticalAlignment="Center"
+                                         Text="{Binding Chitietlido}"></TextBox>
                             </Grid>
+                                </Grid>
+                            </Border>
                         </Grid>
                         <Grid Grid.Row="3">
-                            <Button Height="20" Width="40" Content="Thoat"
+                            <Button Height="25" Width="140" Content="Thoát"
                         Command="{Binding btnThoatCommand}"></Button>
                         </Grid>
                     </Grid>

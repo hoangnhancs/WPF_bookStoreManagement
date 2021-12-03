@@ -291,66 +291,111 @@
                             </DataGrid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="40">
-                                    <TextBlock Height="40" VerticalAlignment="Center" TextAlignment="Center">Số dòng mỗi trang:</TextBlock>
-                                    <Border BorderBrush="Black" BorderThickness="1" Width="40" Height="40">
-                                        <TextBox Width="40" Height="40" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Button" x:Key="btnNextPage">
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            <Setter Property="Padding" Value="0 0 0 0"></Setter>
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                                            <Setter Property="Foreground" Value="Black"></Setter>
+                                            <Setter Property="FontSize" Value="9"></Setter>
+                                            <Setter Property="Height" Value="18"></Setter>
+                                            <Setter Property="Width" Value="18"></Setter>
+                                        </Style>
+                                    </StackPanel.Resources>
+       
+                                    <TextBox Width="22" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                          Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="TextChanged">
-                                                    <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </TextBox>
-                                    </Border>
-                                    <Button x:Name="btnPageFirst" Content="&lt;&lt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Command="{Binding btnfirstPageCommand}"></Button>
-                                    <Button x:Name="btnPagePrev" Content='&lt;' VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Command="{Binding btnPrevPageCommand}"></Button>
-                                    <Button x:Name="btn3cham1" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                                    <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage1.BackGround}"
-                                    Foreground="Black"></Button>
-                                    <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage2.BackGround}"
-                                    Foreground="Black"></Button>
-                                    <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Background="{Binding BtnPage3.BackGround}"
-                                    Foreground="Black"></Button>
-                                    <Button x:Name="btn3cham2" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40" 
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
-                                    <Button x:Name="btnPageNext" Content="&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                    </Button>
-                                    <Button x:Name="btnPageEnd" Content="&gt;&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                    Width="40" Height="40"
-                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
-                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Command="{Binding btnendPageCommand}"></Button>
+                                    </TextBox>
+                                    <TextBlock
+                    Padding="10 0 10 0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="hàng mỗi trang"></TextBlock>
+                                    <!--List nexpage-->
+                                    <StackPanel HorizontalAlignment="Center"
+                                x:Name="panelListBtnPages"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="Button" x:Key="styleBtnNextPage">
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="Background" Value="Transparent"></Setter>
+                                                <Setter Property="BorderBrush" Value="Black"></Setter>
+                                                <Setter Property="Foreground" Value="Black"></Setter>
+                                                <Setter Property="Padding" Value="0"></Setter>
+                                                <Setter Property="Height" Value="20"></Setter>
+                                                <Setter Property="Width" Value="20"></Setter>
+                                                <Setter Property="Margin" Value="4 0 2 0 "></Setter>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <Button x:Name="btnPageFirst"
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnfirstPageCommand}"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <materialDesign:PackIcon Kind="PageFirst" />
+                                        </Button>
+                                        <Button Content="&lt;" 
+                                x:Name="btnPrePage"
+                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="13"
+                                Padding="0 0 0 4"
+                                FontWeight="DemiBold"   
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnPrevPageCommand}"></Button>
+                                        <Button Content="..." 
+                                x:Name="btnDotLeft"
+                                Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                ></Button>
+                                        <Button Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage1.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage1.BackGround, UpdateSourceTrigger=PropertyChanged}"
+                                x:Name="btnPage1"
+                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                        <Button Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage2.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage2.BackGround, UpdateSourceTrigger=PropertyChanged}"
+                                x:Name="btnPage2"
+                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                        <Button Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding BtnPage3.PageVisi, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{Binding BtnPage3.BackGround, UpdateSourceTrigger=PropertyChanged}"
+                                x:Name="btnPage3"
+                        Style="{StaticResource styleBtnNextPage}"></Button>
+                                        <Button Content="..." 
+                                x:Name="btnDotRight"
+                                
+                                Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                ></Button>
+                                        <Button Content="&gt;" 
+                                x:Name="NextPage"
+                                FontSize="13"
+                                Padding="0 0 0 4"
+                                FontWeight="DemiBold"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource styleBtnNextPage}"
+                                Command="{Binding btnNextClickCommand}"></Button>
+                                        <Button Style="{StaticResource styleBtnNextPage}"
+                                x:Name="btnPageLast"
+                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding btnendPageCommand}">
+                                            <materialDesign:PackIcon Kind="PageLast" />
+                                        </Button>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Grid>
