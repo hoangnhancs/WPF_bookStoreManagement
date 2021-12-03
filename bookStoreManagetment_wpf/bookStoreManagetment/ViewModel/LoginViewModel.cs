@@ -68,6 +68,7 @@ namespace bookStoreManagetment.ViewModel
                 {
                     IDUser = lstAccount[0].idAccount;
                     LoggedAccount.Account = lstAccount[0];
+                    Permission.createPermission();
                     IsLogin = true;
                     if (p != null)
                         p.Close();
