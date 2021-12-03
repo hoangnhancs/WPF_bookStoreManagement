@@ -254,7 +254,7 @@ namespace bookStoreManagetment.ViewModel
                 else
                 {
                     Filter();
-                    settingButtonNextPrev();
+                    //settingButtonNextPrev();
                 }
 
             });
