@@ -32,6 +32,12 @@ namespace bookStoreManagetment.ViewModel
         // kiểm tra xem là thêm hay là chỉnh sửa
         private bool isEdit { get; set; }
 
+        // xem phiếu
+        private bool _IsReadOnly;
+        public bool IsReadOnly { get => _IsReadOnly; set { _IsReadOnly = value; OnPropertyChanged(); } }
+        private bool _IsEnable;
+        public bool IsEnable { get => _IsEnable; set { _IsEnable = value; OnPropertyChanged(); } }
+
         // ẩn hiện các nút khi chuyển grid
         private Visibility _isAddRule;
         public Visibility IsAddRule { get => _isAddRule; set { _isAddRule = value; OnPropertyChanged(); } }
@@ -77,6 +83,9 @@ namespace bookStoreManagetment.ViewModel
         private ObservableCollection<Rule> _ListRules;
         public ObservableCollection<Rule> ListRules { get => _ListRules; set { _ListRules = value; OnPropertyChanged(); } }
 
+        private Visibility _ErrorPhanQuyen;
+        public Visibility ErrorPhanQuyen { get => _ErrorPhanQuyen; set { _ErrorPhanQuyen = value; OnPropertyChanged(); } }
+
         // list commnad
         public ICommand LoadedCheckItemsCommand { get; set; }
         public ICommand ClickShowHideGridCommand { get; set; }
@@ -92,6 +101,8 @@ namespace bookStoreManagetment.ViewModel
         public ICommand OpenFilterCommand { get; set; }
         public ICommand TextChangedSearchCommand { get; set; }
         public ICommand ExitAddRulesCommand { get; set; }
+
+        public ICommand CheckPhanQuyenCommand { get; set; }
 
         public CaiDatChungViewModel()
         {
@@ -196,8 +207,18 @@ namespace bookStoreManagetment.ViewModel
             });
 
             // chỉnh sửa quy định
-            EditSettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            EditSettingCommand = new RelayCommand<object>((p) => {
+                if (Permission.ChinhSuaQuyDinh)
+                {
+                    ErrorPhanQuyen = Visibility.Collapsed;
+                    return true;
+                }
+                ErrorPhanQuyen = Visibility.Visible;
+                return false;
+            }, (p) =>
             {
+                IsReadOnly = false;
+                IsEnable = true;
                 ViewRule = p as Rule;
                 isEdit = true;
             });
@@ -265,11 +286,26 @@ namespace bookStoreManagetment.ViewModel
 
                 // ẩn nút lưu
                 IsSaveRule = Visibility.Collapsed;
+
+                IsReadOnly = true;
+                IsEnable = false;
             });
 
             // xem quy định
-            AddSettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            AddSettingCommand = new RelayCommand<object>((p) => {
+
+                if (Permission.ChinhSuaQuyDinh)
+                {
+                    ErrorPhanQuyen = Visibility.Collapsed;
+                    return true;
+                }
+                ErrorPhanQuyen = Visibility.Visible;
+                return false;
+            }, (p) =>
             {
+                IsReadOnly = false;
+                IsEnable = true;
+
                 // tìm id phù hợp
                 int startID = backupListRules.Count;
                 string codeSetting = "";
@@ -311,7 +347,15 @@ namespace bookStoreManagetment.ViewModel
             });
 
             // xoá dữ liệu cài đặt
-            DeleteRuleCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            DeleteRuleCommand = new RelayCommand<object>((p) => {
+                if (Permission.ChinhSuaQuyDinh)
+                {
+                    ErrorPhanQuyen = Visibility.Collapsed;
+                    return true;
+                }
+                ErrorPhanQuyen = Visibility.Visible;
+                return false;
+            }, (p) =>
             {
                 // xác nhận xoá
                 MessageBoxResult result = MessageBox.Show("Bạn có muốn xoá phiếu thu này không ?",

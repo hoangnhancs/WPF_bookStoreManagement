@@ -50,7 +50,7 @@
                         Visibility="{Binding IsAddRule}"
                             Background="Green"
                             BorderBrush="Green"
-                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
+                            Command="{Binding AddSettingCommand}">
                     <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left">
                         <materialDesign:PackIcon Kind="PlusCircleOutline" 
@@ -69,11 +69,17 @@
                                    CommandParameter="{Binding ElementName=gridAddRule}" />
                             <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
                                    CommandParameter="{Binding ElementName=gridListRule}" />
-                            <!--thêm quy đinh-->
-                            <i:InvokeCommandAction Command="{Binding AddSettingCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <materialDesign:PackIcon Kind="Exclamation"
+                                                 Visibility="{Binding ErrorPhanQuyen}"
+                                                 ToolTip="Không có quyền"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Foreground="Red"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>
 
@@ -281,7 +287,7 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal"
                                                     HorizontalAlignment="Right">
-                                            <!--show--><!--
+                                            <!--show-->
                                             <Button Background="Transparent"
                                                     BorderBrush="Transparent"
                                                     Width="auto"
@@ -294,19 +300,17 @@
                                                     Height="auto"
                                                     Foreground="Aqua"/>
                                                 <i:Interaction.Triggers>
-                                                    --><!--ẩn hiện grid--><!--
                                                     <i:EventTrigger EventName="Click">
                                                         <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridAddRule}" />
                                                         <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridListRule}" />
-                                                        --><!--xem phiếu thu--><!--
                                                         <i:InvokeCommandAction 
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ShowSettingCommand}" 
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                            </Button>-->
+                                            </Button>
 
                                             <!--edit-->
                                             <Button Background="Transparent"
@@ -314,6 +318,8 @@
                                                     Width="auto"
                                                     Height="auto"
                                                     Padding="0"
+                                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.EditSettingCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                     Margin="0 0 5 0">
                                                 <materialDesign:PackIcon 
                                                     Kind="LeadPencil"                                             
@@ -327,10 +333,6 @@
                                                                                CommandParameter="{Binding ElementName=gridAddRule}" />
                                                         <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridListRule}" />
-                                                        <!--xem phiếu thu-->
-                                                        <i:InvokeCommandAction 
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.EditSettingCommand}" 
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Button>
@@ -340,6 +342,8 @@
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
                                                 Width="auto"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteRuleCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                 Height="auto"
                                                 Padding="0">
                                                 <materialDesign:PackIcon 
@@ -347,15 +351,16 @@
                                                     Width="auto"
                                                     Height="auto"
                                                     Foreground="red"/>
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <!--xoá phiếu thu-->
-                                                        <i:InvokeCommandAction 
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteRuleCommand}" 
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
                                             </Button>
+
+                                            <materialDesign:PackIcon Kind="Exclamation"
+                                                 Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.ErrorPhanQuyen}"
+                                                 ToolTip="Không có quyền"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Foreground="Red"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -561,6 +566,7 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
                                         <TextBox Width="120"
+                                                 IsReadOnly="{Binding IsReadOnly, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                              Text="{Binding ViewRule.Setting.idSetting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              Margin="30 0 0 0"
                                              VerticalAlignment="Center"></TextBox>
@@ -574,7 +580,7 @@
                                         <TextBlock Text="Ngày chỉnh sửa"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
-                                        <DatePicker
+                                        <DatePicker IsEnabled="{Binding IsEnable, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                         Width="120"
                                         Text="{Binding ViewRule.Setting.createdateSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         HorizontalAlignment="Center"
@@ -601,6 +607,7 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
                                         <TextBox Width="200"
+                                                 IsReadOnly="{Binding IsReadOnly, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                              Text="{Binding ViewRule.Setting.nameSetting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Margin="30 0 0 0"
                                              VerticalAlignment="Center"></TextBox>
@@ -614,7 +621,7 @@
                                         <TextBlock Text="Người Tạo"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
-                                        <ComboBox
+                                        <ComboBox IsEnabled="{Binding IsEnable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding AllStaff}"
                                         SelectedValue="{Binding DisplayStaff, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         VerticalContentAlignment="Center"
@@ -652,7 +659,7 @@
                                 <StackPanel>
                                     <TextBlock Text="Nội Dung"
                                            Margin="0 10 0 10"></TextBlock>
-                                    <TextBox
+                                    <TextBox IsReadOnly="{Binding IsReadOnly, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding ViewRule.Setting.contentSetting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     TextWrapping="Wrap"
                                     VerticalAlignment="Stretch"
