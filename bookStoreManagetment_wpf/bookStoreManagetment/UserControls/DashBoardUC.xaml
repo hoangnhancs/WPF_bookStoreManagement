@@ -7,184 +7,199 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="Azure"
+             d:DesignHeight="450" d:DesignWidth="1130"
+             Background="White"
              DataContext="{StaticResource DashBoardVM}">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--Content-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="11*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
                    Text="Dashboard"
                    FontSize="30"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
-        </TextBlock>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="300"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="80"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
+            </TextBlock>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.6*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="0.6*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
                    Text="Kết quả kinh doanh hàng ngày"
                    FontSize="30"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
-                </TextBlock>
-                <StackPanel
+                    </TextBlock>
+                    <StackPanel
                     Grid.Row="1"
                     Orientation="Horizontal">
-                    <StackPanel
+                        <StackPanel
                         Width="160"
                         Margin="10 0 10 0">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="CurrencyUsd" Width="25" Height="25" VerticalAlignment="Center"/>
-                            <TextBlock
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CurrencyUsd" Width="25" Height="25" VerticalAlignment="Center"/>
+                                <TextBlock
                                 Text="Doanh thu"
                                 FontSize="18"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="10 5 0 5"
                                 />
-                        </StackPanel>
+                            </StackPanel>
 
-                        <TextBlock
+                            <TextBlock
                             Text="{Binding Revenue}"
                             FontSize="22"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
-                        <!--Text="{Binding Description}"-->
-                    </StackPanel>
-                    <Border
+                            <!--Text="{Binding Description}"-->
+                        </StackPanel>
+                        <Border
                         BorderBrush="Gray"
                         BorderThickness="2 0 0 0">
-                        <StackPanel
+                            <StackPanel
                             Width="160"
                             Margin="10 0 10 0">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="CardTextOutline" Width="25" Height="25" VerticalAlignment="Center"/>
-                                <TextBlock
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CardTextOutline" Width="25" Height="25" VerticalAlignment="Center"/>
+                                    <TextBlock
                                 Text="Đơn hàng mới"
                                 FontSize="18"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="10 5 0 5"
                                 />
-                            </StackPanel>
+                                </StackPanel>
 
-                            <TextBlock
+                                <TextBlock
                                 Text="{Binding NewOrder}"
                                 FontSize="22"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
-                            <!--Text="{Binding Description}"-->
-                        </StackPanel>
-                    </Border>
+                                <!--Text="{Binding Description}"-->
+                            </StackPanel>
+                        </Border>
 
-                    <Border
+                        <Border
                         BorderBrush="Gray"
                         BorderThickness="2 0 0 0">
-                        <StackPanel
+                            <StackPanel
                             Width="160"
                             Margin="10 0 10 0">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="RotateLeft" Width="25" Height="25" VerticalAlignment="Center" />
-                                <TextBlock
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="RotateLeft" Width="25" Height="25" VerticalAlignment="Center" />
+                                    <TextBlock
                                     Text="Đơn hàng trả"
                                     FontSize="18"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Margin="10 5 0 5"
                                     />
-                            </StackPanel>
+                                </StackPanel>
 
-                            <TextBlock
+                                <TextBlock
                                 Text="{Binding Return}"
                                 FontSize="22"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
-                            <!--Text="{Binding Description}"-->
-                        </StackPanel>
-                    </Border>
-                    <Border
+                                <!--Text="{Binding Description}"-->
+                            </StackPanel>
+                        </Border>
+                        <Border
                         BorderBrush="Gray"
                         BorderThickness="2 0 0 0">
-                        <StackPanel
+                            <StackPanel
                             Width="160"
                             Margin="10 0 10 0">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="CreditCardOutline" Width="25" Height="25" VerticalAlignment="Center"/>
-                                <TextBlock
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CreditCardOutline" Width="25" Height="25" VerticalAlignment="Center"/>
+                                    <TextBlock
                                 Text="Phiếu chi"
                                 FontSize="18"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="10 5 0 5"/>
-                            </StackPanel>
+                                </StackPanel>
 
-                            <TextBlock
+                                <TextBlock
                             Text="{Binding BillPayment}"
                             FontSize="22"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
-                            <!--Text="{Binding Description}"-->
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-                <TextBlock Grid.Row="2"
+                                <!--Text="{Binding Description}"-->
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <TextBlock Grid.Row="2"
                    Text="Doanh thu bán hàng"
                    FontSize="30"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
-                </TextBlock>
+                    </TextBlock>
 
-                <Grid Grid.Row="3"
+                    <Grid Grid.Row="3"
                       Width="auto" 
                       Height="auto"
                       Margin="10">
-                    <Wpf:CartesianChart Background="Azure" >
-                        <Wpf:CartesianChart.Series>
-                            <Wpf:ColumnSeries Title="Doanh thu bán hàng" 
+                        <Wpf:CartesianChart Background="White" >
+                            <Wpf:CartesianChart.Series>
+                                <Wpf:ColumnSeries Title="Doanh thu bán hàng" 
                                   Values="{Binding Results}"
                                   Configuration="{Binding Mapper}"/>
-                        </Wpf:CartesianChart.Series>
-                        <Wpf:CartesianChart.AxisX>
-                            <Wpf:Axis LabelsRotation="-20" Labels="{Binding Labels}" DisableAnimations="True">
-                                <Wpf:Axis.Separator>
-                                    <Wpf:Separator Step="1"></Wpf:Separator>
-                                </Wpf:Axis.Separator>
-                            </Wpf:Axis>
-                        </Wpf:CartesianChart.AxisX>
-                        <Wpf:CartesianChart.AxisY>
-                            <Wpf:Axis LabelFormatter="{Binding MillionFormatter}"></Wpf:Axis>
-                        </Wpf:CartesianChart.AxisY>
-                    </Wpf:CartesianChart>
+                            </Wpf:CartesianChart.Series>
+                            <Wpf:CartesianChart.AxisX>
+                                <Wpf:Axis LabelsRotation="-20" Labels="{Binding Labels}" DisableAnimations="True">
+                                    <Wpf:Axis.Separator>
+                                        <Wpf:Separator Step="1"></Wpf:Separator>
+                                    </Wpf:Axis.Separator>
+                                </Wpf:Axis>
+                            </Wpf:CartesianChart.AxisX>
+                            <Wpf:CartesianChart.AxisY>
+                                <Wpf:Axis LabelFormatter="{Binding MillionFormatter}"></Wpf:Axis>
+                            </Wpf:CartesianChart.AxisY>
+                        </Wpf:CartesianChart>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="7*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
                    Text="Top sản phẩm"
                    FontSize="40"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center">
-                </TextBlock>
-                <!--<StackPanel
+                    </TextBlock>
+                    <!--<StackPanel
                     Grid.Row="1"
                     Margin="5">
                     <StackPanel
@@ -281,7 +296,7 @@
 
                     </StackPanel>
                 </StackPanel>-->
-                <DataGrid 
+                    <DataGrid 
                     Grid.Row="1"
                     ItemsSource="{Binding TopProducts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ColumnWidth="*"
@@ -291,41 +306,43 @@
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8"
                     x:Name="mydatagrid"
-                    Background="Azure"
+                    Background="White"
                     Margin=" 10">
 
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn
                             Header="    "
                             Width="auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel
                                         Margin="5 0 0 0"
                                         Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
-                                        <StackPanel >
-                                            <TextBlock
+                                            <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
+                                            <StackPanel >
+                                                <TextBlock
                                                 Text="{Binding nameItem}"
                                                 FontSize="18"
                                                 VerticalAlignment="Center"
                                                 Margin="5 5 0 5"/>
-                                            <TextBlock
+                                                <TextBlock
                                                 Text="{Binding priceItem}"
                                                 FontSize="18"
                                                 HorizontalAlignment="Left"/>
+                                            </StackPanel>
+
+
                                         </StackPanel>
 
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                                    </StackPanel>
-
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                    </DataGrid.Columns>
-                </DataGrid>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
+    
 </UserControl>

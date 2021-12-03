@@ -7,130 +7,131 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1030"
-             Background="Wheat"
+             d:DesignHeight="700" d:DesignWidth="1030"
+             Background="White"
              DataContext="{StaticResource ListofProductsVM}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--Content-->
+        <Grid Grid.Column="0">
 
-        <Grid
+            <Grid
             x:Name="gridListofProduct"
-            Visibility="Visible">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Text="Danh sách sản phẩm"
+            Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Danh sách sản phẩm"
                 FontSize="20"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Margin="10 0 0 0"
                 Grid.Row="0"></TextBlock>
-                <StackPanel Orientation="Horizontal"
-                Grid.Row="1">
-                    <Border
-            BorderBrush= "#263238"
-            BorderThickness="1"
-            CornerRadius="15"
-            Margin="10">
-                        <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center">
-                            <Button
-                    Style="{DynamicResource MaterialDesignToolButton}"
-                    VerticalAlignment="Center">
-                                <materialDesign:PackIcon
-                            Kind="Search"
-                            Opacity=".56"
-                            Margin="2 0 0 0"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="340"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" 
+                          Margin="20 0 5 0">
+                            <Border BorderBrush="Black"
+                                BorderThickness="2"
+                                CornerRadius="15">
+                                <DockPanel
+                                        VerticalAlignment="Center"
+                                        Opacity="0.8"
+                                        Margin="4 0 0 0">
+                                    <materialDesign:PackIcon Kind="Search" 
+                                                         DockPanel.Dock="Left"
+                                                         Width="20"
+                                                         Height="20"/>
+                                    <TextBox Padding="5 0 0 0"
+                                         DockPanel.Dock="Bottom"
+                                         Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         x:Name="textboxSearch"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         materialDesign:HintAssist.Hint="Nhập Tên hoặc Mã phiếu chi"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         BorderThickness="0">
+                                        <!--tìm kiếm theo tên và mã -->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding TextChangedSearchCommand}"
+                                                                       CommandParameter="{Binding ElementName=textboxSearch }"/>
+
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Button Width="120"
+                                x:Name="btnFilter"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenFilterCommand}"
+                                CommandParameter="{Binding ElementName=btnFilter}"
+                                Background="{Binding BackgroudFilter}"
+                                Foreground="{Binding ForegroudFilter}"
+                                BorderBrush="Black"
+                                Margin="20 0 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Filter"
+                                                         HorizontalAlignment="Left"
+                                                         Width="20"
+                                                         Height="20"/>
+                                    <TextBlock
+                                     Text="Bộ Lọc"
+                                    Margin="5 0 0 0"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ></TextBlock>
+                                </StackPanel>
                             </Button>
-                            <TextBox
-                                Text="{Binding comBoBoxSearch}"
-                                Margin="0 -2 0 0"
-                                materialDesign:HintAssist.Hint="Search"
-                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                BorderThickness="0"
-                                MinWidth="200"
-                                x:Name="textBoxSearchListofProduct"
-                                VerticalAlignment="Center">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="TextChanged">
-                                        <i:InvokeCommandAction
-                                        Command="{Binding textBoxSearchListofProductCommand}"
-                                        CommandParameter="{Binding ElementName=textBoxSearchListofProduct}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </TextBox>
-                        </StackPanel>
-                    </Border>
-                    <TextBlock Text=" Danh mục: "
-                        VerticalAlignment="Center"></TextBlock>
-
-                    <ComboBox
-                        x:Name="comboBoxCatalogofProducts"
-                        Text="Tất cả sản phẩm"
-                        ItemsSource="{Binding TypeItem}"
-                        Width="230"
-                        IsEditable="True"
-                        Margin="0 15 0 10"
-                        IsReadOnly="True"
-                        SelectedItem="{Binding Selected}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction
-                                    Command="{Binding comboBoxCatalogofProductCommand}"
-                                    CommandParameter="{Binding ElementName=comboBoxCatalogofProducts}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ComboBox>
+                        </Grid>
+                    </Grid>
                     <Button
-                        Margin="20 0 20 0"
-                        HorizontalAlignment="Right"
-                        Grid.Row="2"
-                        Width="150"
-                        ToolTip="Resource name: MaterialDesignPaperLightButton"
-                        Content="Refresh">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction
-                                    Command="{Binding clickRefreshofProductCommand}"
-                                    CommandParameter="{Binding ElementName=mydatagrid}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-
-                    <Button
-                        Margin="0 0 20 0"
-                        HorizontalAlignment="Right"
-                        Grid.Row="2"
-                        Width="150"
-                        ToolTip="Resource name: MaterialDesignPaperLightButton"
-                        Content="Search">
-                        </Button>
-                </StackPanel>
-                <Button
                     Margin="0 0 20 0"
                     HorizontalAlignment="Right"
                     Grid.Row="2"
                     Width="150"
                     ToolTip="Resource name: MaterialDesignPaperLightButton"
                     Content="Thêm sản phẩm">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridListofProduct}"/>
-                            <i:InvokeCommandAction
+                                <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridAddProduct}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <materialDesign:Card Grid.Row="3">
-                    <DataGrid 
-                            ItemsSource="{Binding ListofProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <materialDesign:Card Grid.Row="3">
+                        <DataGrid 
+                            ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             ColumnWidth="*"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
@@ -138,448 +139,574 @@
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                             materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8"
                             x:Name="mydatagrid"
-                            Background="Wheat">
+                            Background="White">
 
-                        <DataGrid.Columns>
+                            <DataGrid.Columns>
 
-                            <DataGridTextColumn                                
-                                Binding="{Binding idItem}"
+                                <DataGridTextColumn                                
+                                Binding="{Binding Item.idItem}"
                                 Header="Mã Sản Phẩm"
                                 Width="auto"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <DataGridTextColumn                                
-                                Binding="{Binding nameItem}"
+                                <DataGridTextColumn                                
+                                Binding="{Binding Item.nameItem}"
                                 Header="Tên Sản Phẩm"
                                 Width="auto"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <DataGridTextColumn                                
+                                <DataGridTextColumn                                
                                 Binding="{Binding typeItem}"
                                 Header="Loại Sản Phẩm"
                                 Width="auto"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <DataGridTextColumn                                
-                            Binding="{Binding quantity}"
+                                <DataGridTextColumn                                
+                            Binding="{Binding Item.quantity}"
                             Header="Số Lượng"
                             Width="auto"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <DataGridTextColumn                                
-                            Binding="{Binding priceItem}"
+                                <DataGridTextColumn                                
+                            Binding="{Binding Item.sellPriceItem}"
                             Header="Giá Bán"
                             Width="auto"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <DataGridTemplateColumn
+                                <DataGridTemplateColumn
                             Header="    "
                             Width="auto">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ToggleButton
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ToggleButton
                                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                         ToolTip="MaterialDesignSwitchToggleButton"
                                         IsChecked="True"
                                         Margin="0 0 0 0"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                            <DataGridTemplateColumn
+                                <DataGridTemplateColumn
                             Header="    "
                             Width="auto">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button
                                                 Width="20"
                                                 Height="20"
                                                 Style="{StaticResource MaterialDesignIconButton}"
                                                 ToolTip="MaterialDesignIconButton" >
-                                                <materialDesign:PackIcon Kind="LeadPencil" Width="20" Height="20"/>
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
+                                                    <materialDesign:PackIcon Kind="LeadPencil" Width="20" Height="20"/>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickHiddenCommand}"
                                                             CommandParameter="{Binding ElementName=gridListofProduct}"/>
-                                                        <i:InvokeCommandAction
+                                                            <i:InvokeCommandAction
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickHiddenCommand}"
                                                             CommandParameter="{Binding ElementName=gridEditProduct}"/>
-                                                        <i:InvokeCommandAction 
+                                                            <i:InvokeCommandAction 
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickEditProductCommand}" 
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
 
-                                            <Button
+                                                <Button
                                                 Width="20"
                                                 Height="20"
                                                 Style="{StaticResource MaterialDesignIconButton}"
                                                 ToolTip="MaterialDesignIconButton">
-                                                <materialDesign:PackIcon Kind="DeleteEmpty" 
+                                                    <materialDesign:PackIcon Kind="DeleteEmpty" 
                                                                 Width="20"
                                                                 Height="20"/>
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction 
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction 
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickRemoveProductCommand}" 
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                        </StackPanel>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
+                                            </StackPanel>
 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </materialDesign:Card>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </materialDesign:Card>
 
-                <Grid Grid.Row="4">
-
+                    <Grid Grid.Row="4">
+                        <TextBox Width="50" Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btnPageFirst" Content="td"
+IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Command="{Binding btnfirstPageCommand}"></Button>
+                            <Button x:Name="btnPagePrev" Content="tt"
+IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Command="{Binding btnPrevPageCommand}"></Button>
+                            <Button x:Name="btn3cham1" Content="..."
+Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                            <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Background="{Binding BtnPage1.BackGround}"
+Foreground="Black"></Button>
+                            <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Background="{Binding BtnPage2.BackGround}"
+Foreground="Black"></Button>
+                            <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Background="{Binding BtnPage3.BackGround}"
+Foreground="Black"></Button>
+                            <Button x:Name="btn3cham2" Content="..."
+Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                            <Button x:Name="btnPageNext" Content="ts"
+IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                            <Button x:Name="btnPageEnd" Content="tc"
+IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Command="{Binding btnendPageCommand}"></Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
 
-        <Grid 
+            <Grid 
             x:Name="gridAddProduct"
-            Visibility="Collapsed">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
+            Visibility="Visible">
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
                                    HorizontalAlignment="Stretch" Margin="0,0,0.4,0.6" Width="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="20"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="20"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
                                    FontStyle="Normal">
                             <Underline>Quản lý sản phẩm</Underline>
-                            </TextBlock>
-                            <materialDesign:PackIcon Kind="ChevronRight" 
+                                </TextBlock>
+                                <materialDesign:PackIcon Kind="ChevronRight" 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                            <TextBlock Text="Thêm sản phẩm" FontSize="20"
+                                <TextBlock Text="Thêm sản phẩm" FontSize="20"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
-                        </StackPanel>
-                    </Grid>
+                            </StackPanel>
+                        </Grid>
 
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" ></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" ></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                <TextBlock Text="Thông tin sản phẩm" FontSize="20" Margin="10 0 0 0"></TextBlock>
-                            </Border>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                                    <TextBlock Text="Thông tin sản phẩm" FontSize="20" Margin="10 0 0 0"></TextBlock>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                                 BorderThickness="2" Margin="0,0,-0.4,-0.2">
-                                <StackPanel>
-                                    <WrapPanel Width="auto" >
-                                        <TextBlock Text="Danh mục" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 " Width="auto"></TextBlock>
-                                        <ComboBox
-                                            materialDesign:HintAssist.Hint="All"
-                                            materialDesign:TextFieldAssist.HasClearButton="True"
-                                            ItemsSource="{Binding CatalogItem}"
-                                            Text="{Binding CatalogProductsAdd}"
-                                            IsEditable="True"
-                                            FontSize="20"
-                                            Width="auto"
-                                            MaxWidth="500"
-                                            MinWidth="300"
-                                            Margin="5"
-                                            IsReadOnly="True"
-                                            HorizontalAlignment="Center">
-                                        </ComboBox>
-                                        <TextBlock Text="Loại" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="auto" Margin=" 25 0 55 0"></TextBlock>
-                                        <ComboBox
-                                            Text="{Binding TypeProductsAdd}"
-                                            materialDesign:HintAssist.Hint="All"
-                                            materialDesign:TextFieldAssist.HasClearButton="True"
-                                            ItemsSource="{Binding TypeItemAdd}"
-                                            IsEditable="True"
-                                            Margin="5"
-                                            FontSize="20"
-                                            Width="auto"
-                                            MaxWidth="500"
-                                            MinWidth="300"
-                                            HorizontalAlignment="Center">
-                                        </ComboBox>
-                                    </WrapPanel>
-                                    <WrapPanel Width="auto">
-                                        <TextBlock Text="Tên sản phẩm" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 30 0"></TextBlock>
-                                        <TextBox
-                                            Text="{Binding NameProductsAdd}"
-                                            Margin="0 15 0 10"
-                                            materialDesign:HintAssist.Hint=""
-                                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                            BorderThickness="2"
-                                            VerticalAlignment="Center"
-                                            FontSize="20"
-                                            Width="auto"
-                                            MaxWidth="500"
-                                            MinWidth="300"
-                                            HorizontalAlignment="Left"/>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
 
-                                    </WrapPanel>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Danh mục" FontSize="15" VerticalAlignment="Center" Margin="20,12,58.6,12.8" Width="auto"/>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <ComboBox
+                                                    materialDesign:HintAssist.Hint="All"
+                                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                                    ItemsSource="{Binding CatalogItem}"
+                                                    Text="{Binding CatalogProductsAdd}"
+                                                    IsEditable="True"
+                                                    FontSize="20"
+                                                    Width="auto"
+                                                    MaxWidth="500"
+                                                    MinWidth="300"
+                                                    IsReadOnly="True"
+                                                    HorizontalAlignment="Left">
+                                                </ComboBox>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="Loại" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" Width="auto" Margin=" 25 0 0 0"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="3">
+                                                <ComboBox
+                                                    Text="{Binding TypeProductsAdd}"
+                                                    materialDesign:HintAssist.Hint="All"
+                                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                                    ItemsSource="{Binding TypeItemAdd}"
+                                                    IsEditable="True"
+                                                    Margin="0 0 15 0"
+                                                    FontSize="20"
+                                                    Width="300"
+                                                    HorizontalAlignment="Left">
+                                                </ComboBox>
+                                            </Grid>
+                                        </Grid>
 
-                                    <WrapPanel Margin=" 0 0 0 10">
-                                        <TextBlock Text="SKU" FontSize="15" Margin="20 0 95 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        <TextBox
-                                            Text="{Binding SKUProductsAdd}"
-                                            materialDesign:HintAssist.Hint=""
-                                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                            BorderThickness="2"
-                                            Width="auto"
-                                            MaxWidth="500"
-                                            MinWidth="300"
-                                            VerticalAlignment="Center" 
-                                            FontSize="20"/>
-                                        <TextBlock Text="Mã Vạch" FontSize="15" Margin="30 0 30 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        <TextBox
-                                            Text="{Binding BarcodeProductsAdd}"
-                                            materialDesign:HintAssist.Hint=""
-                                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                            BorderThickness="2"
-                                            Width="auto"
-                                            MaxWidth="500"
-                                            MinWidth="300"
-                                            VerticalAlignment="Center" 
-                                            FontSize="20"/>
-                                    </WrapPanel>
-                                </StackPanel>
-                            </Border>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="19*"/>
+                                                    <ColumnDefinition Width="6*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Tên sản phẩm " FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,21,0,21.4" Grid.ColumnSpan="2"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBox
+                                                    Text="{Binding NameProductsAdd}"
+                                                    Margin="0 15 0 10"
+                                                    materialDesign:HintAssist.Hint=""
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="2"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="20"
+                                                    Width="auto"
+                                                    MaxWidth="500"
+                                                    MinWidth="300"
+                                                    HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition ></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="SKU" FontSize="15" Margin="20 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBox
+                                                    Text="{Binding SKUProductsAdd}"
+                                                    materialDesign:HintAssist.Hint=""
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="2"
+                                                    Width="auto"
+                                                    MaxWidth="500"
+                                                    MinWidth="300"
+                                                    VerticalAlignment="Center" 
+                                                    FontSize="20"
+                                                    HorizontalAlignment="Left"
+                                                    Margin="-2,0,0,10.2"/>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="Mã Vạch" FontSize="15" Margin="25 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="3" Margin="0 0 0 10">
+                                                <TextBox
+                                                    Text="{Binding BarcodeProductsAdd}"
+                                                    materialDesign:HintAssist.Hint=""
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="2"
+                                                    Width="auto"
+                                                    MaxWidth="500"
+                                                    MinWidth="300"
+                                                    VerticalAlignment="Center" 
+                                                    FontSize="20"
+                                                    Margin="0 0 0 0"
+                                                    HorizontalAlignment="Left"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50" ></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" ></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
-                            </Border>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                                    <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                                 BorderThickness="2">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Giá" FontSize="15" Margin="20 0 100 5" VerticalAlignment="Center"></TextBlock>
-                                        <TextBox
-                                            Text="{Binding PriceProductsAdd}"
-                                            Margin="0 0 0 0"
-                                            materialDesign:HintAssist.Hint=""
-                                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                            BorderThickness="2"
-                                            MinWidth="300"
-                                            MaxWidth="500"
-                                            Width="auto"
-                                            VerticalAlignment="Center"
-                                            FontSize="20"/>
-                                        <TextBlock Text="Đơn vị" FontSize="15" Margin="30 0 50 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        <TextBox
-                                            Margin="0 5 0 5"
-                                            materialDesign:HintAssist.Hint=""
-                                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                            BorderThickness="2"
-                                            MinWidth="300"
-                                            MaxWidth="500"
-                                            Width="auto"
-                                            VerticalAlignment="Center"
-                                            Text="{Binding UnitProductAdd}"
-                                            FontSize="20"/>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
 
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Hình ảnh" FontSize="15" Margin="20 40 60 30"></TextBlock>
-                                        <Button
-                                            Width="30"
-                                            Height="30"
-                                            Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="MaterialDesignIconButton"
-                                            Margin="0 0 30 0">
-                                            <materialDesign:PackIcon Kind="Upload"
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition  Width="150"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition  Width="150"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Giá" FontSize="15" Margin="20 0 0 0" VerticalAlignment="Center"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBox
+                                                    Text="{Binding PriceProductsAdd}"
+                                                    Margin="0 10 0 0"
+                                                    materialDesign:HintAssist.Hint=""
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="2"
+                                                    MinWidth="300"
+                                                    MaxWidth="500"
+                                                    Width="auto"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"
+                                                    FontSize="20"/>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="Đơn vị" FontSize="15" Margin="25 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="3">
+                                                <TextBox
+                                                    Margin="0 10 0 0"
+                                                    materialDesign:HintAssist.Hint=""
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="2"
+                                                    MinWidth="300"
+                                                    MaxWidth="500"
+                                                    Width="auto"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"
+                                                    Text="{Binding UnitProductAdd}"
+                                                    FontSize="20"/>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition  Width="150"></ColumnDefinition>
+                                                <ColumnDefinition Width="0.05*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Hình ảnh" FontSize="15" Margin="20 40 60 30"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Button
+                                                    Width="30"
+                                                    Height="30"
+                                                    Style="{StaticResource MaterialDesignIconButton}"
+                                                    ToolTip="MaterialDesignIconButton"
+                                                    Margin="0 0 0 0"
+                                                    HorizontalAlignment="Center"
+                                                    >
+                                                    <materialDesign:PackIcon Kind="Upload"
                                                                      Width="30"
                                                                      Height="30"
                                                                      Foreground="Black"/>
-                                        </Button>
-                                        <Rectangle Width="80"
-                                                Height="80"
-                                                Margin=" 5">
-                                            <Rectangle.Fill>
-                                                <ImageBrush></ImageBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
+                                                </Button>
+                                            </Grid>
 
-                                    </StackPanel>
-
-                                    <StackPanel>
-                                        <TextBlock Text="Mô tả sản phẩm:" FontSize="15" Margin="20 0 0 0"></TextBlock>
-                                        <TextBox
-                                            Text="{Binding DescriptionProductsAdd}"
-                                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                            VerticalAlignment="Top"
-                                            Height="100"
-                                            MaxWidth="875"
-                                            AcceptsReturn="True"
-                                            TextWrapping="Wrap"
-                                            VerticalScrollBarVisibility="Auto"
-                                            HorizontalScrollBarVisibility="Auto" 
-                                            materialDesign:HintAssist.Hint="Mô tả ..."
-                                            Margin="10"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                            <Grid Grid.Column="2">
+                                                <Rectangle Width="80"
+                                                    Height="80"
+                                                    Margin="3,5,0,5.4" HorizontalAlignment="Left">
+                                                    <Rectangle.Fill>
+                                                        <ImageBrush></ImageBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <TextBlock Text="Mô tả sản phẩm:" FontSize="15" Margin="20 0 0 0"></TextBlock>
+                                        </Grid>
+                                        <Grid Grid.Row="3">
+                                            <TextBox
+                                                Text="{Binding DescriptionProductsAdd}"
+                                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                                VerticalAlignment="Top"
+                                                Height="100"
+                                                MaxWidth="875"
+                                                AcceptsReturn="True"
+                                                TextWrapping="Wrap"
+                                                VerticalScrollBarVisibility="Auto"
+                                                HorizontalScrollBarVisibility="Auto" 
+                                                materialDesign:HintAssist.Hint="Mô tả ..."
+                                                Margin="10"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Grid Grid.Row="3">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-                            <Button
+                        <Grid Grid.Row="3">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                                <Button
                             Margin="0 0 20 0"
                             HorizontalAlignment="Right"
                             Grid.Row="2"
                             Width="150"
                             ToolTip="Resource name: MaterialDesignPaperLightButton"
                             Content="Thoát">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridListofProduct}"/>
-                                        <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridAddProduct}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
 
-                            <Button
+                                <Button
                             Margin="0 0 20 0"
                             HorizontalAlignment="Right"
                             Grid.Row="2"
                             Width="150"
                             ToolTip="Resource name: MaterialDesignPaperLightButton"
                             Content="Cập Nhật">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickAddProductCommand}"
                                             CommandParameter="{Binding ElementName=mydatagrid}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
-                        </StackPanel>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
+                </ScrollViewer>
+            </Grid>
 
-        <Grid
+            <Grid
             x:Name="gridEditProduct"
             Visibility="Collapsed">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
                                    HorizontalAlignment="Stretch" Margin="0,0,0.4,0.6" Width="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="20"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="20"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
                                    FontStyle="Normal">
                             <Underline>Quản lý sản phẩm</Underline>
-                            </TextBlock>
-                            <materialDesign:PackIcon Kind="ChevronRight" 
+                                </TextBlock>
+                                <materialDesign:PackIcon Kind="ChevronRight" 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                            <TextBlock Text="Chỉnh sửa" FontSize="20"
+                                <TextBlock Text="Chỉnh sửa" FontSize="20"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
-                        </StackPanel>
-                    </Grid>
+                            </StackPanel>
+                        </Grid>
 
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" ></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" ></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                <TextBlock Text="Thông tin sản phẩm" FontSize="20" Margin="10 0 0 0"></TextBlock>
-                            </Border>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                                    <TextBlock Text="Thông tin sản phẩm" FontSize="20" Margin="10 0 0 0"></TextBlock>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                                 BorderThickness="2" Margin="0,0,-0.4,-0.2">
-                                <StackPanel>
-                                    <WrapPanel Width="auto" >
-                                        <TextBlock Text="Danh mục" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 " Width="auto"></TextBlock>
-                                        <ComboBox
+                                    <StackPanel>
+                                        <WrapPanel Width="auto" >
+                                            <TextBlock Text="Danh mục" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 " Width="auto"></TextBlock>
+                                            <ComboBox
                                             materialDesign:HintAssist.Hint="All"
                                             materialDesign:TextFieldAssist.HasClearButton="True"
                                             ItemsSource="{Binding CatalogItem}"
@@ -591,9 +718,9 @@
                                             MinWidth="300"
                                             Margin="5"
                                             HorizontalAlignment="Center">
-                                        </ComboBox>
-                                        <TextBlock Text="Loại" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="auto" Margin=" 25 0 55 0"></TextBlock>
-                                        <ComboBox
+                                            </ComboBox>
+                                            <TextBlock Text="Loại" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="auto" Margin=" 25 0 55 0"></TextBlock>
+                                            <ComboBox
                                             Text="{Binding TypeProductsEdit}"
                                             materialDesign:HintAssist.Hint="All"
                                             materialDesign:TextFieldAssist.HasClearButton="True"
@@ -605,11 +732,11 @@
                                             MaxWidth="500"
                                             MinWidth="300"
                                             HorizontalAlignment="Center">
-                                        </ComboBox>
-                                    </WrapPanel>
-                                    <WrapPanel Width="auto">
-                                        <TextBlock Text="Tên sản phẩm" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 30 0"></TextBlock>
-                                        <TextBox
+                                            </ComboBox>
+                                        </WrapPanel>
+                                        <WrapPanel Width="auto">
+                                            <TextBlock Text="Tên sản phẩm" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 30 0"></TextBlock>
+                                            <TextBox
                                             Text="{Binding NameProductsEdit}"
                                             Margin="0 15 0 10"
                                             materialDesign:HintAssist.Hint=""
@@ -622,11 +749,11 @@
                                             MinWidth="300"
                                             HorizontalAlignment="Left"/>
 
-                                    </WrapPanel>
+                                        </WrapPanel>
 
-                                    <WrapPanel Margin=" 0 0 0 10">
-                                        <TextBlock Text="SKU" FontSize="15" Margin="20 0 95 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        <TextBox
+                                        <WrapPanel Margin=" 0 0 0 10">
+                                            <TextBlock Text="SKU" FontSize="15" Margin="20 0 95 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBox
                                             Text="{Binding SKUProductsEdit}"
                                             materialDesign:HintAssist.Hint=""
                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
@@ -637,8 +764,8 @@
                                             VerticalAlignment="Center" 
                                             FontSize="20"
                                             IsReadOnly="True"/>
-                                        <TextBlock Text="Mã Vạch" FontSize="15" Margin="30 0 30 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        <TextBox
+                                            <TextBlock Text="Mã Vạch" FontSize="15" Margin="30 0 30 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBox
                                             Text="{Binding BarcodeProductsEdit}"
                                             materialDesign:HintAssist.Hint=""
                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
@@ -648,32 +775,32 @@
                                             MinWidth="300"
                                             VerticalAlignment="Center" 
                                             FontSize="20"/>
-                                    </WrapPanel>
-                                </StackPanel>
-                            </Border>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50" ></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" ></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
-                            </Border>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
+                                    <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="50 0 50 0">
+                                <Border BorderBrush="#424242"
                                 BorderThickness="2">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Giá" FontSize="15" Margin="20 0 100 5" VerticalAlignment="Center"></TextBlock>
-                                        <TextBox
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Giá" FontSize="15" Margin="20 0 100 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBox
                                             Text="{Binding PriceProductsEdit}"
                                             Margin="0 0 0 0"
                                             materialDesign:HintAssist.Hint=""
@@ -684,8 +811,8 @@
                                             Width="auto"
                                             VerticalAlignment="Center"
                                             FontSize="20"/>
-                                        <TextBlock Text="Đơn vị" FontSize="15" Margin="30 0 50 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        <TextBox
+                                            <TextBlock Text="Đơn vị" FontSize="15" Margin="30 0 50 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBox
                                             Margin="0 5 0 5"
                                             materialDesign:HintAssist.Hint=""
                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
@@ -697,34 +824,34 @@
                                             Text="{Binding UnitProductsEdit}"
                                             FontSize="20"/>
 
-                                    </StackPanel>
+                                        </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Hình ảnh" FontSize="15" Margin="20 40 60 30"></TextBlock>
-                                        <Button
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Hình ảnh" FontSize="15" Margin="20 40 60 30"></TextBlock>
+                                            <Button
                                             Width="30"
                                             Height="30"
                                             Style="{StaticResource MaterialDesignIconButton}"
                                             ToolTip="MaterialDesignIconButton"
                                             Margin="0 0 30 0">
-                                            <materialDesign:PackIcon Kind="Upload"
+                                                <materialDesign:PackIcon Kind="Upload"
                                                                      Width="30"
                                                                      Height="30"
                                                                      Foreground="Black"/>
-                                        </Button>
-                                        <Rectangle Width="80"
+                                            </Button>
+                                            <Rectangle Width="80"
                                                 Height="80"
                                                 Margin=" 5">
-                                            <Rectangle.Fill>
-                                                <ImageBrush></ImageBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
+                                                <Rectangle.Fill>
+                                                    <ImageBrush></ImageBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
 
-                                    </StackPanel>
+                                        </StackPanel>
 
-                                    <StackPanel>
-                                        <TextBlock Text="Mô tả sản phẩm:" FontSize="15" Margin="20 0 0 0"></TextBlock>
-                                        <TextBox
+                                        <StackPanel>
+                                            <TextBlock Text="Mô tả sản phẩm:" FontSize="15" Margin="20 0 0 0"></TextBlock>
+                                            <TextBox
                                             Text="{Binding DescriptionProductsEdit}"
                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                             VerticalAlignment="Top"
@@ -736,58 +863,61 @@
                                             materialDesign:HintAssist.Hint="Mô tả ..."
                                             MaxWidth="875"
                                             Margin="10"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                </Border>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Grid Grid.Row="3">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button
+                        <Grid Grid.Row="3">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button
                             Margin="0 0 20 0"
                             HorizontalAlignment="Right"
                             Grid.Row="2"
                             Width="150"
                             ToolTip="Resource name: MaterialDesignPaperLightButton"
                             Content="Thoát">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridListofProduct}"/>
-                                        <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridEditProduct}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
 
-                            <Button
+                                <Button
                             Margin="0 0 20 0"
                             HorizontalAlignment="Right"
                             Grid.Row="2"
                             Width="150"
                             ToolTip="Resource name: MaterialDesignPaperLightButton"
                             Content="Cập Nhật">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickEditUpdateProductCommand}"
                                             CommandParameter="{Binding ElementName=mydatagrid}"/>
-                                        <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridListofProduct}"/>
-                                        <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridEditProduct}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
-                        </StackPanel>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
+                </ScrollViewer>
+            </Grid>
 
+            
+        </Grid>
     </Grid>
+
 </UserControl>
