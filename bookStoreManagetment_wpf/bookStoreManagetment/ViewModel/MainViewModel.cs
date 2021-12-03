@@ -148,6 +148,7 @@ namespace bookStoreManagetment.ViewModel
                 {
                     AddChildUC(p as Grid, new ThongTinNhanVienUC());
                     VisibilityGridPassword = Visibility.Collapsed;
+                    DisplayPassword = null;
                 }
                 else
                 {

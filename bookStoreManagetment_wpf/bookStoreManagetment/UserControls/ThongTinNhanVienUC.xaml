@@ -75,17 +75,30 @@
                           HorizontalAlignment="Left"
                           Width="140"
                           Margin="20 0 0 0">
+                                
                                 <Border BorderBrush="Black"
                                 BorderThickness="2">
                                     <Grid>
-                                        <materialDesign:PackIcon Kind="ImagePlus" 
-                                                         Width="20"
-                                                         Height="20"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Top"/>
-                                        <Image Source="{Binding ViewEmployee.Staff.employeeImagePath, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></Image>
+                                        <Image Source="{Binding ViewEmployee.SourceImage, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></Image>
+                                        
                                     </Grid>
                                 </Border>
+                                <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                                Width="25"
+                                                Height="25"
+                                                Background="Transparent"
+                                                Foreground="Red"
+                                                Command="{Binding UploadImageNVCommand}"
+                                                Padding="0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Top"
+                                                BorderBrush="Transparent">
+                                    <materialDesign:PackIcon Kind="ImagePlus" 
+                                                         Width="25"
+                                                         Height="25"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"/>
+                                </Button>
                             </Grid>
                         </Grid>
 

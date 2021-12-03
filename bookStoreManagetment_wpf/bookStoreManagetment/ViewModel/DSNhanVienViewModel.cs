@@ -1,4 +1,5 @@
 ﻿using bookStoreManagetment.Model;
+using bookStoreManagetment.Properties;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace bookStoreManagetment.ViewModel
 {
@@ -23,14 +26,19 @@ namespace bookStoreManagetment.ViewModel
         private bool _isNu;
         public bool isNu { get => _isNu; set { _isNu = value; OnPropertyChanged(); } }
         public string Password { get; set; }
-        private string _SourceImage;
-        public string SourceImage { get => _SourceImage; set { _SourceImage = value; OnPropertyChanged(); } }
+        private ImageSource _SourceImage;
+        public ImageSource SourceImage { get => _SourceImage; set { _SourceImage = value; OnPropertyChanged(); } }
     }
     public class DSNhanVienViewModel:BaseViewModel
     {
         // lỗi không có quyền
         private Visibility _ErrorPhanQuyen;
         public Visibility ErrorPhanQuyen { get => _ErrorPhanQuyen; set { _ErrorPhanQuyen = value; OnPropertyChanged(); } }
+
+        // lỗi không có quyền
+        private Visibility _ShowUploadButton;
+        public Visibility ShowUploadButton { get => _ShowUploadButton; set { _ShowUploadButton = value; OnPropertyChanged(); } }
+
 
         //is has account
         private bool isHasAccount;
@@ -93,6 +101,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand CheckedSexMaleCommand { get; set; }
         public ICommand CheckedSexFemaleCommand { get; set; }
         public ICommand TextChangedNameAccountCommand { get; set; }
+        public ICommand UploadImageNVCommand { get; set; }
 
         //filter
         public ICommand CheckFilterCommand { get; set; }
@@ -106,6 +115,23 @@ namespace bookStoreManagetment.ViewModel
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+            });
+
+            // load form
+            UploadImageNVCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                OpenFileDialog op = new OpenFileDialog();
+                op.Title = "Select a picture";
+                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+                if (op.ShowDialog() == DialogResult.OK)
+                {
+                    var bit = new BitmapImage(new Uri(op.FileName));
+                    ViewNhanVien.SourceImage = bit;
+                    ShowUploadButton = Visibility.Collapsed;
+                    ViewNhanVien.Staff.employeeImagePath = op.FileName;
+                }
             });
 
             // textchanged tìm kiếm 
@@ -189,7 +215,7 @@ namespace bookStoreManagetment.ViewModel
 
             }, (p) =>
             {
-                MessageBoxResult result = MessageBox.Show("Bạn có muốn nhân viên này không ?",
+                MessageBoxResult result = System.Windows.MessageBox.Show("Bạn có muốn nhân viên này không ?",
                                           "Xác nhận",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Question);
@@ -255,11 +281,15 @@ namespace bookStoreManagetment.ViewModel
                 return false;
 
             }, (p) =>
-            {
+            { 
+
                 IsEdit = true;
                 ViewNhanVien = p as ShowNhanVien;
                 Title = "Danh Sách Nhân Viên > " + ViewNhanVien.Staff.idEmployee;
                 IdOldAcc = DataProvider.Ins.DB.accounts.Where(x => x.nameAccount == ViewNhanVien.Staff.nameAccount).FirstOrDefault().idAccount;
+
+                if (ViewNhanVien.SourceImage == null)
+                    ShowUploadButton = Visibility.Visible;
             });
 
             // load dữ liệu thêm mới
@@ -282,6 +312,7 @@ namespace bookStoreManagetment.ViewModel
                 };
                 ViewNhanVien = newViewNhanVien;
                 Title = "Danh Sách Nhân Viên > Thêm Nhân Viên";
+                ShowUploadButton = Visibility.Visible;
             });
 
             // thêm mới hoặc lưu edit
@@ -376,7 +407,8 @@ namespace bookStoreManagetment.ViewModel
                             firstName = ViewNhanVien.Staff.firstName,
                             lastName = ViewNhanVien.Staff.lastName,
                             phoneNumber = ViewNhanVien.Staff.phoneNumber,
-                            sex = sexCurrent
+                            sex = sexCurrent,
+                            employeeImagePath = ViewNhanVien.Staff.employeeImagePath
                         });
 
                         DataProvider.Ins.DB.accounts.Add(new account
@@ -398,7 +430,7 @@ namespace bookStoreManagetment.ViewModel
                         backupListEmployees.Add(ViewNhanVien);
                     }
 
-                    (p as DataGrid).Items.Refresh();
+                    (p as System.Windows.Controls.DataGrid).Items.Refresh();
             });
 
             // check sex
@@ -462,7 +494,17 @@ namespace bookStoreManagetment.ViewModel
                     newStaff.isNu = true;
                 }
                 newStaff.Password = DataProvider.Ins.DB.accounts.Where(x => x.nameAccount == staff.nameAccount).FirstOrDefault().passwordAccount;
-                newStaff.SourceImage = "../pictures/noImage.png";
+                try
+                {
+                    var uri = new Uri(staff.employeeImagePath);
+                    if (uri != null)
+                        newStaff.SourceImage = new BitmapImage(uri);
+                    ShowUploadButton = Visibility.Collapsed;
+                }
+                catch
+                {
+                    ShowUploadButton = Visibility.Visible;
+                }
                 ListEmployees.Add(newStaff);
             }
             backupListEmployees = ListEmployees;

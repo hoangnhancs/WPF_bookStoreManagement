@@ -217,28 +217,32 @@
                             </Grid>
 
                             <Grid Grid.Column="1">
+                                
+                                <Grid Margin="10">
+                                    <Border BorderBrush="Black"
+                                            BorderThickness="2">
+                                        <Image x:Name="imageNhanVien"
+                                    Source="{Binding ViewNhanVien.SourceImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Border>
+                                    
+                                </Grid>
+
                                 <Button Background="Transparent"
                                 Foreground="Black"
                                 BorderBrush="Transparent"
+                                        Command="{Binding UploadImageNVCommand}"
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Width="50"
                                 Height="50"
                                 Padding="0">
-                                    <materialDesign:PackIcon Kind="Upload" 
+                                    <materialDesign:PackIcon Kind="Upload"
+                                                             Visibility="{Binding ShowUploadButton}"
                                                      VerticalAlignment="Center"
                                                      HorizontalAlignment="Center"
                                                      Width="40"
                                                      Height="40"/>
                                 </Button>
-                                <Grid Margin="10">
-                                    <Border BorderBrush="Black"
-                                            BorderThickness="2">
-                                        <Image
-                                    Source="{Binding ViewNhanVien.Staff.employeeImagePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </Border>
-                                    
-                                </Grid>
-                                
+
                             </Grid>
                         </Grid>
 
