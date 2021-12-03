@@ -1122,7 +1122,7 @@ namespace bookStoreManagetment.ViewModel
                         payment = "Tiền mặt",
                         nameBill = "Nhập hàng",
                         note = "",
-                        budget = 10000
+                        budget = DataProvider.Ins.DB.profitSummaries.Where(billtype => billtype.billType == "import").Last().budget - TotalAllProducts
                     };
 
                     DataProvider.Ins.DB.profitSummaries.Add(profit);

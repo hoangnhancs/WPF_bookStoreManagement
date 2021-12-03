@@ -195,6 +195,7 @@
     <Compile Include="Model\Nhacungcap.cs" />
     <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\page.cs" />
+    <Compile Include="Model\Permission.cs" />
     <Compile Include="Model\profitSummary.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

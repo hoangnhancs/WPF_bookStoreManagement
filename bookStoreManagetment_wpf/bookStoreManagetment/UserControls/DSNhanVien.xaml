@@ -437,33 +437,43 @@
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <Button HorizontalAlignment="Right"
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+                                <Button HorizontalAlignment="Right"
                             Background="ForestGreen"
                             BorderBrush="Transparent"
                             VerticalAlignment="Bottom"
+                                        Command="{Binding LoadAddNhanVienCommand}"
                             Width="30"
                             Height="30"
                             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                             ToolTip="MaterialDesignFloatingActionMiniAccentButton">
-                                <materialDesign:PackIcon Kind="Plus"
+                                    <materialDesign:PackIcon Kind="Plus"
                                                  Height="24"
                                                  Width="24" />
-                                <!--click add command-->
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <!--ẩn hiện grid-->
-                                        <i:InvokeCommandAction
+                                    <!--click add command-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <!--ẩn hiện grid-->
+                                            <i:InvokeCommandAction
                                     Command="{Binding ClickShowHideGridCommand}"
                                     CommandParameter="{Binding ElementName=gridDSNhanVien}" />
-                                        <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                     Command="{Binding ClickShowHideGridCommand}"
                                     CommandParameter="{Binding ElementName=gridThemNhanVien}" />
-                                        <!--load tất cả sản phẩm-->
-                                        <i:InvokeCommandAction
-                                            Command="{Binding LoadAddNhanVienCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <materialDesign:PackIcon Kind="Exclamation"
+                                                 Visibility="{Binding ErrorPhanQuyen}"
+                                                 ToolTip="Không có quyền"
+                                                 Width="20"
+                                                 Height="20"
+                                                 x:Name="iconNumOfBillError"
+                                                 Foreground="Red"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                            </StackPanel>
                         </Grid>
                     </Grid>
 
@@ -601,6 +611,8 @@
                                                     Width="auto"
                                                     Height="auto"
                                                     Padding="0"
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.LoadDataViewNhanVienCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                     Margin="0 0 5 0">
                                                     <materialDesign:PackIcon 
                                                     Kind="Edit"                                             
@@ -614,10 +626,6 @@
                                                                                CommandParameter="{Binding ElementName=gridDSNhanVien}" />
                                                             <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridThemNhanVien}" />
-                                                            <!--xem phiếu chi-->
-                                                            <i:InvokeCommandAction 
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.LoadDataViewNhanVienCommand}" 
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </Button>
@@ -628,21 +636,24 @@
                                                 BorderBrush="Transparent"
                                                 Width="auto"
                                                 Height="auto"
+                                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteNhanVienCommand}" 
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                 Padding="0">
                                                     <materialDesign:PackIcon 
                                                     Kind="Delete"
                                                     Width="auto"
                                                     Height="auto"
                                                     Foreground="red"/>
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="Click">
-                                                            <!--xoá phiếu thu-->
-                                                            <i:InvokeCommandAction 
-                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteNhanVienCommand}" 
-                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
                                                 </Button>
+
+                                                <materialDesign:PackIcon Kind="Exclamation"
+                                                 Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.ErrorPhanQuyen}"
+                                                 ToolTip="Không có quyền"
+                                                 Width="20"
+                                                 Height="20"
+                                                 Foreground="Red"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>

@@ -28,6 +28,10 @@ namespace bookStoreManagetment.ViewModel
     }
     public class DSNhanVienViewModel:BaseViewModel
     {
+        // lỗi không có quyền
+        private Visibility _ErrorPhanQuyen;
+        public Visibility ErrorPhanQuyen { get => _ErrorPhanQuyen; set { _ErrorPhanQuyen = value; OnPropertyChanged(); } }
+
         //is has account
         private bool isHasAccount;
 
@@ -174,7 +178,16 @@ namespace bookStoreManagetment.ViewModel
             });
 
             // xoá nhân viên
-            DeleteNhanVienCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            DeleteNhanVienCommand = new RelayCommand<object>((p) => {
+                if (Permission.ChinhSuaNhanVien)
+                {
+                    ErrorPhanQuyen = Visibility.Collapsed;
+                    return true;
+                }
+                ErrorPhanQuyen = Visibility.Visible;
+                return false;
+
+            }, (p) =>
             {
                 MessageBoxResult result = MessageBox.Show("Bạn có muốn nhân viên này không ?",
                                           "Xác nhận",
@@ -232,7 +245,16 @@ namespace bookStoreManagetment.ViewModel
             });
 
             // load dữ liệu xem / edit
-            LoadDataViewNhanVienCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            LoadDataViewNhanVienCommand = new RelayCommand<object>((p) => {
+                if (Permission.ChinhSuaNhanVien)
+                {
+                    ErrorPhanQuyen = Visibility.Collapsed;
+                    return true;
+                }
+                ErrorPhanQuyen = Visibility.Visible;
+                return false;
+
+            }, (p) =>
             {
                 IsEdit = true;
                 ViewNhanVien = p as ShowNhanVien;
@@ -241,7 +263,16 @@ namespace bookStoreManagetment.ViewModel
             });
 
             // load dữ liệu thêm mới
-            LoadAddNhanVienCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            LoadAddNhanVienCommand = new RelayCommand<object>((p) => {
+                if (Permission.ChinhSuaNhanVien)
+                {
+                    ErrorPhanQuyen = Visibility.Collapsed;
+                    return true;
+                }
+                ErrorPhanQuyen = Visibility.Visible;
+                return false;
+
+            }, (p) =>
             {
                 ShowNhanVien newViewNhanVien = new ShowNhanVien();
                 newViewNhanVien.Staff = new employee() { 

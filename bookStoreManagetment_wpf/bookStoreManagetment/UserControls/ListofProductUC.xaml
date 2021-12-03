@@ -29,7 +29,7 @@
 
             <Grid
             x:Name="gridListofProduct"
-            Visibility="Collapsed">
+            Visibility="Visible">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
@@ -208,20 +208,6 @@
                             Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ToggleButton
-                                        Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                        ToolTip="MaterialDesignSwitchToggleButton"
-                                        IsChecked="True"
-                                        Margin="0 0 0 0"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
-                                <DataGridTemplateColumn
-                            Header="    "
-                            Width="auto">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button
                                                 Width="20"
@@ -319,7 +305,7 @@ Command="{Binding btnendPageCommand}"></Button>
 
             <Grid 
             x:Name="gridAddProduct"
-            Visibility="Visible">
+            Visibility="Collapsed">
                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
                                    HorizontalAlignment="Stretch" Margin="0,0,0.4,0.6" Width="Auto">
                     <Grid>
@@ -580,15 +566,21 @@ Command="{Binding btnendPageCommand}"></Button>
                                                                      Width="30"
                                                                      Height="30"
                                                                      Foreground="Black"/>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction
+                                                                Command="{Binding ClickUploadImageCommand}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
                                                 </Button>
                                             </Grid>
 
                                             <Grid Grid.Column="2">
                                                 <Rectangle Width="80"
                                                     Height="80"
-                                                    Margin="3,5,0,5.4" HorizontalAlignment="Left">
+                                                    Margin="0,5,645.8,5.4" HorizontalAlignment="Right">
                                                     <Rectangle.Fill>
-                                                        <ImageBrush></ImageBrush>
+                                                        <ImageBrush ImageSource="{Binding ImageViewer}"></ImageBrush>
                                                     </Rectangle.Fill>
                                                 </Rectangle>
                                             </Grid>
@@ -916,7 +908,7 @@ Command="{Binding btnendPageCommand}"></Button>
                 </ScrollViewer>
             </Grid>
 
-            
+
         </Grid>
     </Grid>
 

@@ -2,13 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace bookStoreManagetment.ViewModel
 {
@@ -135,6 +139,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand DeleteFilterCommand { get; set; }
         public ICommand CloseFilterCommand { get; set; }
         public ICommand SelectionChangedNhomTheLoaiFilterCommand { get; set; }
+        public ICommand ClickUploadImageCommand { get; set; }
 
         // ẩn hiện grid filter
         private Visibility _IsFilter;
@@ -253,7 +258,11 @@ namespace bookStoreManagetment.ViewModel
         public Brush ForegroudFilter { get => _ForegroudFilter; set { _ForegroudFilter = value; OnPropertyChanged(); } }
 
 
+        //uoload ảnh
+        private BitmapImage _imageviewer;
+        public BitmapImage ImageViewer { get => _imageviewer; set { _imageviewer = value; OnPropertyChanged(); } }
 
+        public string FileNameImage;
 
         public ListofProductsViewModel()
         {
@@ -272,6 +281,7 @@ namespace bookStoreManagetment.ViewModel
                 }
 
             }
+
 
             List<string> backupDanhmuc = new List<string>();
 
@@ -298,6 +308,30 @@ namespace bookStoreManagetment.ViewModel
             currentpage = 1;
             pack_page = 1;
             settingButtonNextPrev();
+
+
+
+
+            ClickUploadImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+                dlg.InitialDirectory = "c:\\";
+                dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+                dlg.RestoreDirectory = true;
+
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string selectedFileName = dlg.FileName;
+                    FileNameImage = selectedFileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(selectedFileName);
+                    bitmap.EndInit();
+                    ImageViewer = bitmap;
+                    //ImageViewer1.Source = bitmap;
+                }
+            });
+
             // đóng filter grid
             CloseFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -387,7 +421,7 @@ namespace bookStoreManagetment.ViewModel
                     idItem = SKUProductsAdd,
                     nameItem = NameProductsAdd,
                     linkItem = "Đang cập nhật",
-                    imageItem = "Đang cập nhật",
+                    imageItem = "FileNameImage",
                     importPriceItem = 0,
                     sellPriceItem = Int32.Parse(PriceProductsAdd.ToString()),
                     descriptionItem = DescriptionProductsAdd,
