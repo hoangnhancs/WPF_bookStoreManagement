@@ -30,5 +30,9 @@ namespace bookStoreManagetment.UserControls
 
         }
 
+        private void TextBox_ColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+
+        }
     }
 }
