@@ -50,7 +50,10 @@ namespace bookStoreManagetment.ViewModel
         {
             // Doanh thu hàng này
             //int revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "export").Select(p => p.rootPrice).Sum();
-            var revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == DateTime.Now.Day && p.billType == "export").Select(p => p.rootPrice).ToList();
+            int day = DateTime.Now.Day;
+            int month = DateTime.Now.Month;
+            int years = DateTime.Now.Year;
+            var revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == day && p.day.Month == month && p.day.Year == years && p.billType == "export").Select(p => p.rootPrice).ToList();
             if (revenue != null)
             {
                 Revenue = string.Format(new CultureInfo("vi-VN"), "{0:0,000 đ}", revenue.Sum());
@@ -61,13 +64,13 @@ namespace bookStoreManagetment.ViewModel
                 Revenue = string.Format(new CultureInfo("vi-VN"), "{0:0, đ}", 0);
             }    
             // đơn hàng mới
-            NewOrder = DataProvider.Ins.DB.sellBills.Where(p => p.sellDate.Day == 11).Count().ToString();
+            NewOrder = DataProvider.Ins.DB.sellBills.Where(p => p.sellDate.Day == day && p.sellDate.Month == month && p.sellDate.Year == years).Count().ToString();
 
             //đơn trả
-            Return = DataProvider.Ins.DB.khachtrahangs.Count().ToString();
+            Return = DataProvider.Ins.DB.khachtrahangs.Where(p => p.sellDate.Day == day && p.sellDate.Month == month && p.sellDate.Year == years).Count().ToString();
 
             // phiếu chi
-            BillPayment = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "import").Count().ToString();
+            BillPayment = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == day && p.day.Month == month && p.day.Year == years && p.billType == "import").Count().ToString();
 
             var TopProduct = DataProvider.Ins.DB.sellBills.GroupBy(p => p.idItem).Select(pa => new { idItem = pa.Key, Sum = pa.Sum(s => s.number) }).OrderByDescending(c => c.Sum).Take(5);
 
