@@ -203,7 +203,7 @@ namespace bookStoreManagetment.ViewModel
                 Filter();
                 var bc = new BrushConverter();
                 BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // chỉnh sửa quy định

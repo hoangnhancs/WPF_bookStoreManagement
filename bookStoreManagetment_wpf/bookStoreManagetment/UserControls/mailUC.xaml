@@ -206,6 +206,7 @@
                                                 <DataTemplate>
                                                     <ToggleButton
                                                 Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                        Background="ForestGreen"
                                                 ToolTip="MaterialDesignSwitchToggleButton"
                                                 IsChecked="{Binding Check,UpdateSourceTrigger=PropertyChanged}">
                                                         <i:Interaction.Triggers>
