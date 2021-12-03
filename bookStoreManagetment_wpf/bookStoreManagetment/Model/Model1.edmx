@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bookStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="idAccount" />
@@ -38,16 +38,17 @@
         </EntityType>
         <EntityType Name="checkItems">
           <Key>
-            <PropertyRef Name="sttCheckItems" />
+            <PropertyRef Name="idCheckItems" />
           </Key>
           <Property Name="sttCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCheckItems" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="oldQuantityItem" Type="int" Nullable="false" />
+          <Property Name="quantityItem" Type="int" Nullable="false" />
           <Property Name="note" Type="nvarchar(max)" />
-          <Property Name="newQuantityItem" Type="int" Nullable="false" />
+          <Property Name="newQuantityItem" Type="int" />
+          <Property Name="oldQuantityItem" Type="int" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -263,8 +264,7 @@
           <EntitySet Name="studytoolsInformation" EntityType="Self.studytoolsInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bookStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -301,16 +301,17 @@
         </EntityType>
         <EntityType Name="checkItem">
           <Key>
-            <PropertyRef Name="sttCheckItems" />
+            <PropertyRef Name="idCheckItems" />
           </Key>
           <Property Name="sttCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCheckItems" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="oldQuantityItem" Type="Int32" Nullable="false" />
+          <Property Name="quantityItem" Type="Int32" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="newQuantityItem" Type="Int32" Nullable="false" />
+          <Property Name="newQuantityItem" Type="Int32" />
+          <Property Name="oldQuantityItem" Type="Int32" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -569,12 +570,13 @@
           <EntitySetMapping Name="checkItems">
             <EntityTypeMapping TypeName="bookStoreManagementModel.checkItem">
               <MappingFragment StoreEntitySet="checkItems">
+                <ScalarProperty Name="oldQuantityItem" ColumnName="oldQuantityItem" />
                 <ScalarProperty Name="sttCheckItems" ColumnName="sttCheckItems" />
                 <ScalarProperty Name="idCheckItems" ColumnName="idCheckItems" />
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
-                <ScalarProperty Name="oldQuantityItem" ColumnName="oldQuantityItem" />
+                <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="newQuantityItem" ColumnName="newQuantityItem" />
               </MappingFragment>
