@@ -11,7 +11,7 @@
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              x:Name="UCSetting"
-             Background="{DynamicResource MaterialDesignPaper}"
+             Background="Transparent"
              FontFamily="{DynamicResource MaterialDesignFont}"
              DataContext="{StaticResource CaiDatChungVM}"
              d:DesignHeight="575" d:DesignWidth="1024">
@@ -48,8 +48,8 @@
                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
                             Width="150"
                         Visibility="{Binding IsAddRule}"
-                            Background="Green"
-                            BorderBrush="Green"
+                            Background="#1e98d7"
+                            BorderBrush="#1e98d7"
                             Command="{Binding AddSettingCommand}">
                     <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left">
@@ -89,7 +89,6 @@
               x:Name="gridListRule">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="56"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -107,7 +106,7 @@
                     <Grid Grid.Column="0" 
                           Margin="20 0 5 0">
                         <Border BorderBrush="Black"
-                                BorderThickness="2"
+                                BorderThickness="1"
                                 CornerRadius="15">
                             <DockPanel
                                         VerticalAlignment="Center"
@@ -137,22 +136,25 @@
                         </Border>
                     </Grid>
 
+                    <!--Background="{Binding BackgroudFilter}"-->
                     <Grid Grid.Column="1">
                         <Button Width="120"
                                 x:Name="btnFilter"
                                 HorizontalAlignment="Left"
                                 Command="{Binding OpenFilterCommand}"
                                 CommandParameter="{Binding ElementName=btnFilter}"
-                                Background="{Binding BackgroudFilter}"
+                                Background="#d78a1e"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                BorderBrush="Transparent"
                                 Foreground="{Binding ForegroudFilter}"
-                                BorderBrush="Black"
                                 Margin="20 0 0 0">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Filter"
+                                                         Foreground="White"
                                                          HorizontalAlignment="Left"
                                                          Width="20"
                                                          Height="20"/>
-                                <TextBlock
+                                <TextBlock  Foreground="White"
                                      Text="Bộ Lọc"
                                     Margin="5 0 0 0"
                                     FontWeight="SemiBold"
@@ -166,154 +168,155 @@
 
                 <!--main listview-->
                 <Grid Grid.Row="1">
-                    <DataGrid MinHeight="400"
+                    <materialDesign:Card Margin="20 5 20 10">
+                        <DataGrid MinHeight="400"
+                              Background="White"
                             ItemsSource="{Binding ListRules}"
                             ColumnWidth="2*"
                               IsReadOnly="True"
-                            Margin="10 8 10 0"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                             materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8" SelectionChanged="DataGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <!--Mã Quy Định-->
-                            <DataGridTextColumn
+                            <DataGrid.Columns>
+                                <!--Mã Quy Định-->
+                                <DataGridTextColumn
                                     Binding="{Binding Setting.idSetting, UpdateSourceTrigger=PropertyChanged}"
                                     Header="Mã Quy Định"
                                     Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.HeaderStyle >
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.HeaderStyle >
+                                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <!--Tên Quy Định-->
-                            <DataGridTextColumn
+                                <!--Tên Quy Định-->
+                                <DataGridTextColumn
                                     Binding="{Binding Setting.nameSetting}"
                                     Header="Tên Quy Định"
                                     Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.HeaderStyle >
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.HeaderStyle >
+                                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <!--Người tạo-->
-                            <DataGridTextColumn
+                                <!--Người tạo-->
+                                <DataGridTextColumn
                                     Binding="{Binding FullNameEmployee}"
                                     Header="Người Tạo"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.HeaderStyle >
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <!--Nội dung-->
-                            <DataGridTextColumn
+                                    <DataGridTextColumn.HeaderStyle >
+                                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <!--Nội dung-->
+                                <DataGridTextColumn
                                     Binding="{Binding Setting.contentSetting}"
                                     Header="Nội Dung"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.HeaderStyle >
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.HeaderStyle >
+                                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <!--Ngày Tạo -->
-                            <DataGridTextColumn
+                                <!--Ngày Tạo -->
+                                <DataGridTextColumn
                                     Binding="{Binding Setting.createdateSetting}"
                                     Header="Ngày Tạo"
                                     Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.HeaderStyle >
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                    <DataGridTextColumn.HeaderStyle >
+                                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
 
-                            <!--tools-->
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-                                        <Setter Property="BorderThickness" Value="0"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTemplateColumn.HeaderStyle>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal"
+                                <!--tools-->
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                        </Style>
+                                    </DataGridTemplateColumn.HeaderStyle>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
                                                     HorizontalAlignment="Right">
-                                            <!--show-->
-                                            <Button Background="Transparent"
+                                                <!--show-->
+                                                <Button Background="Transparent"
                                                     BorderBrush="Transparent"
                                                     Width="auto"
                                                     Height="auto"
                                                     Padding="0"
                                                     Margin="0 0 10 0">
-                                                <materialDesign:PackIcon 
+                                                    <materialDesign:PackIcon 
                                                     Kind="Eye"                                             
                                                     Width="auto"
                                                     Height="auto"
                                                     Foreground="Aqua"/>
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridAddRule}" />
-                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridListRule}" />
-                                                        <i:InvokeCommandAction 
+                                                            <i:InvokeCommandAction 
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ShowSettingCommand}" 
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
 
-                                            <!--edit-->
-                                            <Button Background="Transparent"
+                                                <!--edit-->
+                                                <Button Background="Transparent"
                                                     BorderBrush="Transparent"
                                                     Width="auto"
                                                     Height="auto"
@@ -321,24 +324,24 @@
                                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.EditSettingCommand}" 
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                     Margin="0 0 5 0">
-                                                <materialDesign:PackIcon 
+                                                    <materialDesign:PackIcon 
                                                     Kind="LeadPencil"                                             
                                                     Width="auto"
                                                     Height="auto"
                                                     Foreground="Green"/>
-                                                <i:Interaction.Triggers>
-                                                    <!--ẩn hiện grid-->
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                    <i:Interaction.Triggers>
+                                                        <!--ẩn hiện grid-->
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridAddRule}" />
-                                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
+                                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
                                                                                CommandParameter="{Binding ElementName=gridListRule}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
 
-                                            <!--delete-->
-                                            <Button 
+                                                <!--delete-->
+                                                <Button 
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
                                                 Width="auto"
@@ -346,14 +349,14 @@
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                 Height="auto"
                                                 Padding="0">
-                                                <materialDesign:PackIcon 
+                                                    <materialDesign:PackIcon 
                                                     Kind="Delete"
                                                     Width="auto"
                                                     Height="auto"
                                                     Foreground="red"/>
-                                            </Button>
+                                                </Button>
 
-                                            <materialDesign:PackIcon Kind="Exclamation"
+                                                <materialDesign:PackIcon Kind="Exclamation"
                                                  Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.ErrorPhanQuyen}"
                                                  ToolTip="Không có quyền"
                                                  Width="20"
@@ -361,12 +364,14 @@
                                                  Foreground="Red"
                                                  HorizontalAlignment="Center"
                                                  VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </materialDesign:Card>
+
                     <Grid x:Name="gridFilter"
                           Visibility="{Binding IsFilter}"
                           Height="180"
@@ -431,12 +436,18 @@
                                     <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
                                         <Button Content="Xoá bộ lọc"
+                                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                                Background="Red"
+                                                BorderBrush="Transparent"
                                                 Command="{Binding DeleteFilterCommand}"
                                                 CommandParameter="{Binding ElementName=btnFilter}"
                                                 Padding="0"
                                                 Height="30"
                                                 Width="100"></Button>
                                         <Button Content="Lọc"
+                                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                                Background="#1e98d7"
+                                                BorderBrush="Transparent"
                                                 Command="{Binding CheckFilterCommand}"
                                                 CommandParameter="{Binding ElementName=btnFilter}"
                                                 Height="30"
@@ -459,62 +470,12 @@
                                     <materialDesign:PackIcon Kind="Close" 
                                                                  Width="20"
                                                                  Height="20"/>
-                                    
+
                                 </Button>
                             </Grid>
                         </Border>
                     </Grid>
                 </Grid>
-
-            </Grid>
-
-            <!--qua trang-->
-            <Grid Grid.Row="1">
-                <StackPanel
-                Orientation="Horizontal"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Right">
-                    <StackPanel.Resources>
-                        <Style TargetType="Button" x:Key="btnNextPage">
-                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                            <Setter Property="Padding" Value="0 0 0 0"></Setter>
-                            <Setter Property="Background" Value="Transparent"></Setter>
-                            <Setter Property="BorderBrush" Value="Black"></Setter>
-                            <Setter Property="Foreground" Value="Black"></Setter>
-                            <Setter Property="FontSize" Value="9"></Setter>
-                            <Setter Property="Height" Value="18"></Setter>
-                            <Setter Property="Width" Value="18"></Setter>
-                        </Style>
-                    </StackPanel.Resources>
-                    <ComboBox
-                        Padding="0 0 0 0"
-                        FontSize="9"
-                        SelectedValue="10"
-                        SelectedItem="10"
-                        Text="1"
-                        Height="22"
-                        Width="30">
-                    </ComboBox>
-                    <TextBlock
-                    Padding="10 0 10 0"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Text="items per page"></TextBlock>
-                    <Button
-                    Content="1"
-                    Background="AliceBlue"
-                    Style="{StaticResource btnNextPage}">
-                    </Button>
-                    <Button
-                    Content="2"
-                    Margin="3 0 3 0"
-                    Style="{StaticResource btnNextPage}">
-                    </Button>
-                    <Button
-                    Content="3"
-                    Style="{StaticResource btnNextPage}">
-                    </Button>
-                </StackPanel>
             </Grid>
         </Grid>
 

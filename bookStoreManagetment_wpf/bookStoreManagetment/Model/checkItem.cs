@@ -19,9 +19,8 @@ namespace bookStoreManagetment.Model
         public string idEmployee { get; set; }
         public System.DateTime dateCheckItems { get; set; }
         public string idItem { get; set; }
-        public int quantityItem { get; set; }
+        public int oldQuantityItem { get; set; }
         public string note { get; set; }
-        public Nullable<int> newQuantityItem { get; set; }
-        public Nullable<int> oldQuantityItem { get; set; }
+        public int newQuantityItem { get; set; }
     }
 }

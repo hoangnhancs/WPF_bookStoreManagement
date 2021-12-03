@@ -7,8 +7,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1130"
-             Background="White"
+             d:DesignHeight="575" d:DesignWidth="1024"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="Transparent"
+             FontFamily="{DynamicResource MaterialDesignFont}"
              DataContext="{StaticResource DashBoardVM}">
 
     <Grid>
@@ -57,15 +62,17 @@
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
                     </TextBlock>
-                    <StackPanel
+                    <StackPanel Background="#2195F2"
+                                Margin="20 0 70 0"
                     Grid.Row="1"
                     Orientation="Horizontal">
                         <StackPanel
                         Width="160"
                         Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="CurrencyUsd" Width="25" Height="25" VerticalAlignment="Center"/>
-                                <TextBlock
+                                <materialDesign:PackIcon Foreground="White" Kind="CurrencyUsd" Width="25" Height="25" VerticalAlignment="Center"/>
+                                <TextBlock FontWeight="SemiBold"
+                                    Foreground="White"
                                 Text="Doanh thu"
                                 FontSize="18"
                                 VerticalAlignment="Center"
@@ -74,7 +81,7 @@
                                 />
                             </StackPanel>
 
-                            <TextBlock
+                            <TextBlock Foreground="White"
                             Text="{Binding Revenue}"
                             FontSize="22"
                             HorizontalAlignment="Center"
@@ -88,8 +95,8 @@
                             Width="160"
                             Margin="10 0 10 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="CardTextOutline" Width="25" Height="25" VerticalAlignment="Center"/>
-                                    <TextBlock
+                                    <materialDesign:PackIcon Foreground="White" Kind="CardTextOutline" Width="25" Height="25" VerticalAlignment="Center"/>
+                                    <TextBlock Foreground="White"
                                 Text="Đơn hàng mới"
                                 FontSize="18"
                                 VerticalAlignment="Center"
@@ -98,7 +105,7 @@
                                 />
                                 </StackPanel>
 
-                                <TextBlock
+                                <TextBlock  Foreground="White"
                                 Text="{Binding NewOrder}"
                                 FontSize="22"
                                 HorizontalAlignment="Center"
@@ -114,8 +121,8 @@
                             Width="160"
                             Margin="10 0 10 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="RotateLeft" Width="25" Height="25" VerticalAlignment="Center" />
-                                    <TextBlock
+                                    <materialDesign:PackIcon Foreground="White" Kind="RotateLeft" Width="25" Height="25" VerticalAlignment="Center" />
+                                    <TextBlock Foreground="White"
                                     Text="Đơn hàng trả"
                                     FontSize="18"
                                     VerticalAlignment="Center"
@@ -124,7 +131,7 @@
                                     />
                                 </StackPanel>
 
-                                <TextBlock
+                                <TextBlock  Foreground="White"
                                 Text="{Binding Return}"
                                 FontSize="22"
                                 HorizontalAlignment="Center"
@@ -139,8 +146,8 @@
                             Width="160"
                             Margin="10 0 10 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="CreditCardOutline" Width="25" Height="25" VerticalAlignment="Center"/>
-                                    <TextBlock
+                                    <materialDesign:PackIcon  Foreground="White" Kind="CreditCardOutline" Width="25" Height="25" VerticalAlignment="Center"/>
+                                    <TextBlock Foreground="White"
                                 Text="Phiếu chi"
                                 FontSize="18"
                                 VerticalAlignment="Center"
@@ -148,7 +155,7 @@
                                 Margin="10 5 0 5"/>
                                 </StackPanel>
 
-                                <TextBlock
+                                <TextBlock  Foreground="White"
                             Text="{Binding BillPayment}"
                             FontSize="22"
                             HorizontalAlignment="Center"

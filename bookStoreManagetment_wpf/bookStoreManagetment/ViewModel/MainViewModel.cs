@@ -195,7 +195,7 @@ namespace bookStoreManagetment.ViewModel
                     {
                         ButtonClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
                     }
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1E98D7");
                     ButtonClicked = (p as Button);
                 }            
             });
@@ -211,7 +211,7 @@ namespace bookStoreManagetment.ViewModel
                         ButtonIconClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
                     }
                     var check = (p as Button).Name;
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1E98D7");
                     ButtonIconClicked = (p as Button);
                 }
             });
@@ -233,10 +233,10 @@ namespace bookStoreManagetment.ViewModel
                 if (IDUser != "null")
                 {
                     var user = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
-
-                    string nameAccount = user.firstName;
+                    var listLastname = user.lastName.Split(' ');
+                    string nameAccount =  listLastname[listLastname.Length-1] + " " + user.firstName ;
                     (p as Chip).Content = nameAccount;
-                    (p as Chip).Icon = (nameAccount[0]).ToString().ToUpper();
+                    (p as Chip).Icon = (user.firstName[0]).ToString().ToUpper();
                 }
             });
 

@@ -241,16 +241,20 @@ namespace bookStoreManagetment.ViewModel
                     ObservableCollection<CheckItemSheet> newListCheckSheet = new ObservableCollection<CheckItemSheet>();
                     foreach (var checkSheet in ListCheckSheets)
                     {
+                        var check = checkSheet.codeCheckItem.ToLower();
+                        var check2 = check.Contains(Query);
                         if (checkSheet.codeCheckItem.ToLower().Contains(Query))
                         {
                             newListCheckSheet.Add(checkSheet);
                         }
                     }
                     ListCheckSheets = newListCheckSheet;
+                    DivInventoryList = newListCheckSheet;
                 }
                 else
                 {
                     Filter();
+                    settingButtonNextPrev();
                 }
 
             });
@@ -458,7 +462,7 @@ namespace bookStoreManagetment.ViewModel
             txtBoxTextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (p != null)
-                {
+                { 
                     string query = (p as TextBox).Text.Trim().ToLower();
                     if (query == "")
                     {
@@ -934,10 +938,10 @@ namespace bookStoreManagetment.ViewModel
         {
             // load tất cả check sheet
             ListCheckSheets = new ObservableCollection<CheckItemSheet>();
-            var listCheckItems = DataProvider.Ins.DB.checkItems.GroupBy(x => x.idCheckItems).Select(y => y.FirstOrDefault());
+            var listCheckItems = DataProvider.Ins.DB.checkItems.GroupBy(x => x.idCheckItems).Select(y => y.FirstOrDefault()).ToList();
             foreach (var ckitems in listCheckItems)
             {
-                addCheckSheet(ckitems);
+                addCheckSheet(ckitems); 
             }
             BackupListCheckSheet = ListCheckSheets;
 
@@ -1029,6 +1033,7 @@ namespace bookStoreManagetment.ViewModel
             }
 
             ListCheckSheets = new ObservableCollection<CheckItemSheet>(newListCheckSheet);
+            
         }
 
     }
