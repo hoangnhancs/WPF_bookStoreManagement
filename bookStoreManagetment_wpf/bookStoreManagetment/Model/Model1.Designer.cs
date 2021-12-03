@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\HocTap\HK1 2021-2022\Nhap Mon CNPM\DoAn\newfinal5\WPF_bookStoreManagement\bookStoreManagetment_wpf\bookStoreManagetment\Model\Model1.edmx'. 
+
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

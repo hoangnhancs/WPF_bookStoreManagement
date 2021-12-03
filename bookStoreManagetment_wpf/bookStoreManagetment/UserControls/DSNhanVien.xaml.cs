@@ -16,21 +16,21 @@ using System.Windows.Shapes;
 namespace bookStoreManagetment.UserControls
 {
     /// <summary>
-    /// Interaction logic for ListofProductUC.xaml
+    /// Interaction logic for DSNhanVien.xaml
     /// </summary>
-    public partial class ListofProductUC : UserControl
+    public partial class DSNhanVien : UserControl
     {
-        public ListofProductUC()
+        public DSNhanVien()
         {
             InitializeComponent();
         }
 
-        private void WrapPanel_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void TextBox_ColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        private void datagridDSNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

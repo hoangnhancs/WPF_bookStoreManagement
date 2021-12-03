@@ -19,6 +19,18 @@ namespace bookStoreManagetment.ViewModel
         private object _selectedViewModel;
         public object SelectedViewModel { get => _selectedViewModel; set { _selectedViewModel = value; OnPropertyChanged(nameof(SelectedViewModel)); } }
 
+        // ẩn hiện grid filter
+        private Visibility _VisibilityGridPassword;
+        public Visibility VisibilityGridPassword { get => _VisibilityGridPassword; set { _VisibilityGridPassword = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
+        private string _DisplayPassword;
+        public string DisplayPassword { get => _DisplayPassword; set { _DisplayPassword = value; OnPropertyChanged(); } }
+
+        // ẩn hiện grid filter
+        private Visibility _IsLogin;
+        public Visibility IsLogin { get => _IsLogin; set { _IsLogin = value; OnPropertyChanged(); } }
+
         // button đã mở
         public Button ButtonClicked { get; set; }
         // button đã mở
@@ -53,6 +65,15 @@ namespace bookStoreManagetment.ViewModel
         public ICommand ChangeColorButtonClickCommand { get; set; }
         public ICommand ChangeColorButtonIconClickCommand { get; set; }
         public ICommand ShowHideMenuCommand { get; set; }
+
+        public ICommand ShowHideLoginCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
+        public ICommand openDSNhanVienUCCommand { get; set; }
+        public ICommand openDSKhachHangUCCommand { get; set; }
+        public ICommand ViewInformationLogedAccountCommand { get; set; }
+        public ICommand CloseCheckPasswordLogedAccountCommand { get; set; }
+        public ICommand CheckPasswordLogedAccountCommand { get; set; }
+
 
         public List<StackPanel> opensubstp = new List<StackPanel>();
         public List<Button> openbtn = new List<Button>();
@@ -99,30 +120,57 @@ namespace bookStoreManagetment.ViewModel
             // người đăng nhập hiện tại
             IDUser = "null";
 
+            // đóng ô kiểm tra pass
+            CloseCheckPasswordLogedAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                VisibilityGridPassword = Visibility.Collapsed;
+                DisplayPassword = null;
+            });
+
+            // kiểm tra pass
+            CheckPasswordLogedAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                VisibilityGridPassword = Visibility.Visible;
+                IsLogin = Visibility.Collapsed;
+            });
+
+
             // hàm load form
             LoadedMainWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
+                RestartApp(p);
+            });
 
-                // ẩn form chính
-                p.Hide();
-
-                // hiện form login
-                LoginWindow newLogin = new LoginWindow();
-                newLogin.ShowDialog();
-
-                // lấy dữ liệu từ form login
-                var loginVM = newLogin.DataContext as LoginViewModel;
-                if (loginVM.IsLogin)
+            // hàm load form
+            ViewInformationLogedAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (DisplayPassword == LoggedAccount.Account.passwordAccount)
                 {
-                    p.Show();
-                    IDUser = loginVM.IDUser.ToString();
+                    AddChildUC(p as Grid, new ThongTinNhanVienUC());
+                    VisibilityGridPassword = Visibility.Collapsed;
+                    DisplayPassword = null;
                 }
-                if (loginVM.IsClose)
+                else
                 {
-                    p.Close();
-                    App.Current.Shutdown();
+                    MessageBox.Show("Vui lòng nhập chính xác mật khẩu");
                 }
             });
+
+            // Đăng xuất 
+            LogoutCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                RestartApp(p);
+            });
+
+            // chane color button command
+            ShowHideLoginCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                if (IsLogin == Visibility.Visible)
+                {
+                    IsLogin = Visibility.Collapsed;
+                }
+                else
+                    IsLogin = Visibility.Visible;
+            });
+
 
             // chane color button command
             ShowHideMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
@@ -147,7 +195,7 @@ namespace bookStoreManagetment.ViewModel
                     {
                         ButtonClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
                     }
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1E98D7");
                     ButtonClicked = (p as Button);
                 }            
             });
@@ -163,7 +211,7 @@ namespace bookStoreManagetment.ViewModel
                         ButtonIconClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
                     }
                     var check = (p as Button).Name;
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FFBA55D3");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1E98D7");
                     ButtonIconClicked = (p as Button);
                 }
             });
@@ -184,12 +232,11 @@ namespace bookStoreManagetment.ViewModel
             {
                 if (IDUser != "null")
                 {
-                    var user = DataProvider.Ins.DB.accounts
-                                                  .Where(acc => (acc.idAccount.ToString() == IDUser))
-                                                  .FirstOrDefault();
-                    string nameAccount = user.nameAccount.ToString();
+                    var user = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
+                    var listLastname = user.lastName.Split(' ');
+                    string nameAccount =  listLastname[listLastname.Length-1] + " " + user.firstName ;
                     (p as Chip).Content = nameAccount;
-                    (p as Chip).Icon = (nameAccount[0]).ToString().ToUpper();
+                    (p as Chip).Icon = (user.firstName[0]).ToString().ToUpper();
                 }
             });
 
@@ -242,13 +289,23 @@ namespace bookStoreManagetment.ViewModel
                 AddChildUC(p as Grid, new mailUC());
             });
 
-
             KhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddChildUC(p as Grid, new KhachtrahangUC());
             });
+
             DSHoaDonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 AddChildUC(p as Grid, new DSHoaDonUC());
+
+            });
+
+            openDSNhanVienUCCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new DSNhanVien());
+
+            });
+
+            openDSKhachHangUCCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                AddChildUC(p as Grid, new DSKhachHangUCxaml());
 
             });
 
@@ -291,6 +348,38 @@ namespace bookStoreManagetment.ViewModel
             ChildUserControl = childUC;
             p.Children.Clear();
             p.Children.Add(ChildUserControl);
+        }
+
+        // restart
+        private void RestartApp(Window p)
+        {
+            // ẩn checkpass
+            VisibilityGridPassword = Visibility.Collapsed;
+            DisplayPassword = null;
+
+            // ẩn login grid
+            IsLogin = Visibility.Collapsed;
+
+            // ẩn form chính
+            p.Hide();
+
+            // hiện form login
+            LoginWindow newLogin = new LoginWindow();
+            newLogin.ShowDialog();
+
+            // lấy dữ liệu từ form login
+            var loginVM = newLogin.DataContext as LoginViewModel;
+            if (loginVM.IsLogin)
+            {
+                p.Show();
+                IDUser = loginVM.IDUser.ToString();
+            }
+            if (loginVM.IsClose)
+            {
+                p.Close();
+                App.Current.Shutdown();
+            }
+
         }
     }
 }

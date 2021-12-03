@@ -38,15 +38,16 @@
         </EntityType>
         <EntityType Name="checkItems">
           <Key>
-            <PropertyRef Name="idCheckItems" />
+            <PropertyRef Name="sttCheckItems" />
           </Key>
           <Property Name="sttCheckItems" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCheckItems" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="quantityItem" Type="int" Nullable="false" />
+          <Property Name="oldQuantityItem" Type="int" Nullable="false" />
           <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="newQuantityItem" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -84,6 +85,7 @@
           <Property Name="nameAccount" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="employeeSalary" Type="int" />
           <Property Name="employeeNote" Type="nvarchar" MaxLength="200" />
+          <Property Name="employeeImagePath" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -299,15 +301,16 @@
         </EntityType>
         <EntityType Name="checkItem">
           <Key>
-            <PropertyRef Name="idCheckItems" />
+            <PropertyRef Name="sttCheckItems" />
           </Key>
           <Property Name="sttCheckItems" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCheckItems" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="quantityItem" Type="Int32" Nullable="false" />
+          <Property Name="oldQuantityItem" Type="Int32" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newQuantityItem" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -345,6 +348,7 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="employeeImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -570,8 +574,9 @@
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
-                <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
+                <ScalarProperty Name="oldQuantityItem" ColumnName="oldQuantityItem" />
                 <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="newQuantityItem" ColumnName="newQuantityItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -611,6 +616,7 @@
                 <ScalarProperty Name="nameAccount" ColumnName="nameAccount" />
                 <ScalarProperty Name="employeeSalary" ColumnName="employeeSalary" />
                 <ScalarProperty Name="employeeNote" ColumnName="employeeNote" />
+                <ScalarProperty Name="employeeImagePath" ColumnName="employeeImagePath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -16,21 +16,26 @@ using System.Windows.Shapes;
 namespace bookStoreManagetment.UserControls
 {
     /// <summary>
-    /// Interaction logic for ListofProductUC.xaml
+    /// Interaction logic for DSKhachHangUCxaml.xaml
     /// </summary>
-    public partial class ListofProductUC : UserControl
+    public partial class DSKhachHangUCxaml : UserControl
     {
-        public ListofProductUC()
+        public DSKhachHangUCxaml()
         {
             InitializeComponent();
         }
 
-        private void WrapPanel_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        private void datagridDSKhachHang_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void TextBox_ColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Name="LoginForm"
         DataContext="{StaticResource LoginVM}"
-        Title="LoginWindow" Height="300" Width="500" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center">
+        Title="Đăng Nhập" Height="300" Width="500" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" Icon="pictures/Logo Hani.png">
     <!--Bắt sự kiện đóng login form để đóng main form-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -19,29 +19,32 @@
                 CommandParameter="{Binding ElementName=LoginForm}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
     <!--main login form-->
     <Grid x:Name="GridLoginForm"
           Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
         <!--Tên phầm mềm-->
         <Grid Grid.Row="0">
             <TextBlock
-                Text="PHẦN MỀM XXX"
-                FontSize="20"
+                Text="HANI"
+                Foreground="#1e98d7"
+                FontSize="36"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontWeight="Bold">
-            </TextBlock>
+                FontWeight="Bold" 
+                FontFamily="Bradley Hand ITC"
+                FontStyle="Italic" 
+                TextDecorations="{x:Null}"/>
         </Grid>
 
         <!--Login-->
         <Grid Grid.Row="1">
-            <StackPanel>
+            <StackPanel Background="Transparent">
 
                 <!--Dòng tên đăng nhập-->
                 <Grid
@@ -58,7 +61,7 @@
                             FontWeight="DemiBold"
                             Margin="40 0 0 0"
                             Text="Tên Đăng Nhập:"
-                            HorizontalAlignment="Left">
+                            HorizontalAlignment="Left" Foreground="#FF495B67">
                         </TextBlock>
                     </Grid>
 
@@ -68,6 +71,7 @@
                             x:Name="txtBoxUserName"
                             Padding="10 0 0 2"
                             Width="200"
+                            Foreground="#495b67"
                             HorizontalAlignment="Center" >
                             <!--Bắt sự kiện thay đổi kí tự trong user-->
                             <i:Interaction.Triggers>
@@ -96,19 +100,19 @@
                             FontWeight="DemiBold"
                             Margin="40 0 0 0"
                             Text="Mật Khẩu:"
-                            HorizontalAlignment="Left">
+                            HorizontalAlignment="Left" Foreground="#FF495B67">
                         </TextBlock>
                     </Grid>
 
                     <!--Ô nhập mật khẩu-->
                     <Grid Grid.Column="1">
 
-                        <PasswordBox
+                        <PasswordBox Foreground="#495b67"
                             x:Name="passwordBoxLogin"
                             Padding="10 0 0 2"
                             Width="200"
                             HorizontalAlignment="Center">
-                            
+
                             <!--Bắt sự kiện thay đổi kí tự trong ô password box-->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PasswordChanged">
@@ -128,6 +132,7 @@
                                    ElementName=passwordBoxLogin,
                                    UpdateSourceTrigger=PropertyChanged,
                                    Mode=TwoWay}"
+                            Foreground="#495b67"
                             Visibility="Collapsed"
                             Padding="10 0 0 2"
                             Width="200"
@@ -137,6 +142,7 @@
                 </Grid>
                 <StackPanel>
                     <CheckBox
+                        Foreground="#495b67"
                         x:Name="checkBoxShowPass"
                         Margin="0 10 65 0"
                         Content="Hiện mật khẩu"
@@ -164,9 +170,9 @@
                         Content="Đăng Nhập"
                         Margin="0 20 40 0"
                         Width="150"
-                        Background="#FF00C6F7"
-                        BorderBrush="#FF2AE3FD">
-                        
+                        Background="#1E98D7"
+                        BorderBrush="#1E98D7">
+
                         <!--Bắt sự kiện nhấn nút đăng nhập-->
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">

@@ -48,15 +48,29 @@ namespace bookStoreManagetment.ViewModel
 
         public DashBoardViewModel()
         {
+            // Doanh thu hàng này
+            //int revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "export").Select(p => p.rootPrice).Sum();
+            int day = DateTime.Now.Day;
+            int month = DateTime.Now.Month;
+            int years = DateTime.Now.Year;
+            var revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == day && p.day.Month == month && p.day.Year == years && p.billType == "export").Select(p => p.rootPrice).ToList();
+            if (revenue != null)
+            {
+                Revenue = string.Format(new CultureInfo("vi-VN"), "{0:0,000 đ}", revenue.Sum());
 
-            int revenue = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "export").Select(p => p.rootPrice).Sum();
-            Revenue = string.Format(new CultureInfo("vi-VN"), "{0:0,0 đ}", revenue);
+            }
+            else
+            {
+                Revenue = string.Format(new CultureInfo("vi-VN"), "{0:0, đ}", 0);
+            }    
+            // đơn hàng mới
+            NewOrder = DataProvider.Ins.DB.sellBills.Where(p => p.sellDate.Day == day && p.sellDate.Month == month && p.sellDate.Year == years).Count().ToString();
 
-            NewOrder = DataProvider.Ins.DB.sellBills.Where(p => p.sellDate.Day == 11).Count().ToString();
+            //đơn trả
+            Return = DataProvider.Ins.DB.khachtrahangs.Where(p => p.sellDate.Day == day && p.sellDate.Month == month && p.sellDate.Year == years).Count().ToString();
 
-            Return = DataProvider.Ins.DB.khachtrahangs.Count().ToString();
-
-            BillPayment = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == 1 && p.billType == "export").Count().ToString();
+            // phiếu chi
+            BillPayment = DataProvider.Ins.DB.profitSummaries.Where(p => p.day.Day == day && p.day.Month == month && p.day.Year == years && p.billType == "import").Count().ToString();
 
             var TopProduct = DataProvider.Ins.DB.sellBills.GroupBy(p => p.idItem).Select(pa => new { idItem = pa.Key, Sum = pa.Sum(s => s.number) }).OrderByDescending(c => c.Sum).Take(5);
 
@@ -78,13 +92,13 @@ namespace bookStoreManagetment.ViewModel
                 .X((p, index) => index)
                 .Y(p => p.Revenue);
 
-            //lets take the first 15 records by default;
-            var records = DataProvider.Ins.DB.profitSummaries.GroupBy(p => p.day).Select(pa => new { Day = pa.Key, Sum = pa.Sum(s => s.rootPrice) }).OrderByDescending(c => c.Day).Take(7);
+            var record = DataProvider.Ins.DB.profitSummaries.Where(p => p.billType == "export").GroupBy(p => p.day).Select(pa => new { Day = pa.Key, Sum = pa.Sum(s => s.rootPrice) }).OrderByDescending(c => c.Day).Take(7);
 
             Revenues = new ObservableCollection<turnoverinsevendays>();
 
-            foreach (var data in records)
+            foreach (var data in record)
             {
+                //Revenues.Add(new turnoverinsevendays() { Day = data.Day.Day.ToString() + "-" + data.Day.Month.ToString(), Revenue = data.Sum });
                 Revenues.Add(new turnoverinsevendays() { Day = data.Day.Day.ToString() + "-" + data.Day.Month.ToString(), Revenue = data.Sum });
             }
 

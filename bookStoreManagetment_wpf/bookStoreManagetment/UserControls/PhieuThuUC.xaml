@@ -325,7 +325,7 @@
                                                VerticalAlignment="Center"></TextBlock>
 
                                     <TextBox Margin="0 5 0 0"
-                                             Text="{Binding ViewImportSheet.ProfitSummary.sellDay}"
+                                             Text="{Binding ViewImportSheet.ProfitSummary.day}"
                                          IsReadOnly="True"></TextBox>
                                 </StackPanel>
                             </Grid>
@@ -645,7 +645,7 @@
 
                             <!--Ngày ghi nhận -->
                             <DataGridTextColumn
-                                    Binding="{Binding ProfitSummary.sellDay}"
+                                    Binding="{Binding ProfitSummary.day}"
                                     Header="Ngày ghi nhận"
                                     Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
@@ -803,26 +803,6 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="0.8*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <!--<Grid Grid.Row="0">
-                        <StackPanel Orientation="Vertical"
-                                            Margin="5">
-                            <TextBlock Text="Nhóm Đối Tượng"
-                                                   FontWeight="SemiBold"></TextBlock>
-                            <ComboBox IsEditable="True"
-                                                  ItemsSource="{Binding NhomDoiTuong}"
-                                                  SelectedValue="{Binding DisplayGroupType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  Text="{Binding DisplayGroupType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  HorizontalAlignment="Left"
-                                              Width="184">
-                                --><!--sự kiện thay đổi lựu chọn--><!--
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding SelectionChangedNhomNguoiNhanFilterCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>-->
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Vertical"
                                     VerticalAlignment="Center"

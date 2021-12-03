@@ -114,6 +114,107 @@ namespace bookStoreManagetment.ViewModel
         public ICommand CloseFilterCommand { get; set; }
         public ICommand OpenFilterCommand { get; set; }
         public ICommand TextChangedSearchCommand { get; set; }
+        #region "page"
+        //Page Property
+        private ObservableCollection<CheckItemSheet> _DivInventoryList;
+        public ObservableCollection<CheckItemSheet> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
+
+        private Visibility _3cham1Visible;
+        public Visibility Bacham1Visible
+        {
+            get { return _3cham1Visible; }
+            set
+            {
+                _3cham1Visible = value;
+                OnPropertyChanged();
+            }
+        }
+        private Visibility _3cham2Visible;
+        public Visibility Bacham2Visible
+        {
+            get { return _3cham2Visible; }
+            set
+            {
+                _3cham2Visible = value;
+                OnPropertyChanged();
+            }
+        }
+        public int maxpage { get; set; }
+        public int max_pack_page { get; set; }
+        public int pack_page { get; set; }
+        public int currentpage = 1;
+        private string _numRowEachPageTextBox;
+        public string NumRowEachPageTextBox
+        {
+            get { return _numRowEachPageTextBox; }
+            set
+            {
+                _numRowEachPageTextBox = value;
+                OnPropertyChanged();
+            }
+        }
+        public int NumRowEachPage;
+        private page btnPage1;
+        public page BtnPage1
+        {
+            get { return btnPage1; }
+            set
+            {
+                btnPage1 = value;
+                OnPropertyChanged();
+            }
+        }
+        private page btnPage2;
+        public page BtnPage2
+        {
+            get { return btnPage2; }
+            set
+            {
+                btnPage2 = value;
+                OnPropertyChanged();
+            }
+        }
+        private page btnPage3;
+        public page BtnPage3
+        {
+            get { return btnPage3; }
+            set
+            {
+                btnPage3 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _leftVisi;
+        public bool LeftVisi
+        {
+            get { return _leftVisi; }
+            set
+            {
+                _leftVisi = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _rightVisi;
+        public bool RightVisi
+        {
+            get { return _rightVisi; }
+            set
+            {
+                _rightVisi = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand tbNumRowEachPageCommand { get; set; }
+        public ICommand btnNextClickCommand { get; set; }
+        public ICommand btnendPageCommand { get; set; }
+        public ICommand btnfirstPageCommand { get; set; }
+        public ICommand btnPrevPageCommand { get; set; }
+        public ICommand btnLoc2Command { get; set; }
+
+        //Page Property
+        #endregion //here  
         public CheckItemsViewModel()
         {
 
@@ -125,6 +226,11 @@ namespace bookStoreManagetment.ViewModel
             LoadedCheckItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+                //NumRowEachPageTextBox = "5";
+                //NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+                //currentpage = 1;
+                //pack_page = 1;
+                //settingButtonNextPrev();
             });
 
             // textchanged tìm kiếm 
@@ -135,16 +241,20 @@ namespace bookStoreManagetment.ViewModel
                     ObservableCollection<CheckItemSheet> newListCheckSheet = new ObservableCollection<CheckItemSheet>();
                     foreach (var checkSheet in ListCheckSheets)
                     {
+                        var check = checkSheet.codeCheckItem.ToLower();
+                        var check2 = check.Contains(Query);
                         if (checkSheet.codeCheckItem.ToLower().Contains(Query))
                         {
                             newListCheckSheet.Add(checkSheet);
                         }
                     }
                     ListCheckSheets = newListCheckSheet;
+                    DivInventoryList = newListCheckSheet;
                 }
                 else
                 {
                     Filter();
+                    settingButtonNextPrev();
                 }
 
             });
@@ -162,6 +272,7 @@ namespace bookStoreManagetment.ViewModel
                 var bc = new BrushConverter();
                 BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
                 ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                //settingButtonNextPrev();
             });
 
             // đóng/mở filter grid
@@ -208,7 +319,7 @@ namespace bookStoreManagetment.ViewModel
 
                     foreach (var inventory in InventoryList)
                     {
-                        if (inventory.Count == 0)
+                        if (inventory.NewQuantity == 0)
                         {
                             return false;
                         }
@@ -275,14 +386,17 @@ namespace bookStoreManagetment.ViewModel
                 var temp = p as CheckItemSheet;
                 DisplayNhanVien = temp.nameEmployee;
                 InventoryList.Clear();
-                foreach (var infor in temp.InforItems)
+                var listItem = DataProvider.Ins.DB.checkItems.Where(x => x.idCheckItems == temp.codeCheckItem).ToList();
+                foreach (var infor in listItem)
                 {
                     InventoryList.Add(new Inventory()
                     {
                         Item = DataProvider.Ins.DB.items.Where(x => x.idItem == infor.idItem).FirstOrDefault(),
-                        Count = infor.quantityItem
+                        NewQuantity = (int)infor.newQuantityItem,
+                        OldQuantity = (int)infor.oldQuantityItem
                     });
                 }
+                Note = listItem[0].note;
                 State = Visibility.Collapsed;
                 isReadOnly = false;
                 Title = "Danh Sách Phiếu Kiểm Hàng > " + temp.codeCheckItem;
@@ -348,7 +462,7 @@ namespace bookStoreManagetment.ViewModel
             txtBoxTextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (p != null)
-                {
+                { 
                     string query = (p as TextBox).Text.Trim().ToLower();
                     if (query == "")
                     {
@@ -369,6 +483,7 @@ namespace bookStoreManagetment.ViewModel
                         }
                     }
                 }
+                //settingButtonNextPrev();
             });
 
             // chọn sản phẩm 
@@ -471,15 +586,15 @@ namespace bookStoreManagetment.ViewModel
                     {
                         Inventory _Inventory = new Inventory();
                         _Inventory.Item = cellItems.Items;
-
+                        _Inventory.OldQuantity = cellItems.Items.quantity;
                         int i = checkHasSanPham(cellItems.Items.idItem);
                         if (i != -1)
                         {
-                            _Inventory.Count = InventoryList[i].Count;
+                            _Inventory.NewQuantity = InventoryList[i].NewQuantity;
                         }
                         else
                         {
-                            _Inventory.Count = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItems.Items.idItem).FirstOrDefault().quantity;
+                            _Inventory.NewQuantity = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItems.Items.idItem).FirstOrDefault().quantity;
                         }
                         temp.Add(_Inventory);
                     }
@@ -533,10 +648,11 @@ namespace bookStoreManagetment.ViewModel
                                                                                   x.firstName == firstName
                                                                                 ).FirstOrDefault().idEmployee,
                             idItem = inventory.Item.idItem,
-                            quantityItem = inventory.Item.quantity
+                            oldQuantityItem = inventory.OldQuantity,
+                            newQuantityItem = inventory.NewQuantity
                         };
                         var currentItem = DataProvider.Ins.DB.items.Where(x => x.idItem == inventory.Item.idItem).FirstOrDefault();
-                        currentItem.quantity = inventory.Count;
+                        currentItem.quantity = inventory.NewQuantity;
 
                         DataProvider.Ins.DB.checkItems.Add(temp);
                         DataProvider.Ins.DB.SaveChanges();
@@ -549,6 +665,250 @@ namespace bookStoreManagetment.ViewModel
                     InventoryList.Clear();
                     ShowItems.Clear();
                 });
+            //#region "select num row each page"
+            //tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    currentpage = 1;
+            //    //LoadData();
+            //    Filter();
+            //    settingButtonNextPrev();
+            //});
+            //btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    if (currentpage < maxpage)
+            //    {
+            //        currentpage += 1;
+            //        if (currentpage % 3 == 0)
+            //            pack_page = currentpage / 3;
+            //        else
+            //            pack_page = Convert.ToInt32(currentpage / 3) + 1;
+            //        //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+            //    }
+            //    settingButtonNextPrev();
+            //});
+            //btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    currentpage = maxpage;
+            //    pack_page = max_pack_page;
+            //    settingButtonNextPrev();
+            //});
+            //btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    currentpage = 1;
+            //    pack_page = 1;
+            //    settingButtonNextPrev();
+            //});
+            //btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    if (currentpage > 1)
+            //    {
+            //        currentpage -= 1;
+            //        if (currentpage % 3 == 0)
+            //            pack_page = currentpage / 3;
+            //        else
+            //            pack_page = Convert.ToInt32(currentpage / 3) + 1;
+            //        //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
+            //    }
+            //    settingButtonNextPrev();
+            //});
+            //btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+
+            //    Filter();
+            //    settingButtonNextPrev();
+            //});
+
+            //#endregion //here
+
+            //#region "setting button"
+
+            //void settingButtonNextPrev()
+            //{
+            //    int ilc = ListCheckSheets.Count();
+            //    BtnPage1 = new page();
+            //    BtnPage2 = new page();
+            //    BtnPage3 = new page();
+
+            //    //currentpage = 1;
+
+            //    if (NumRowEachPageTextBox != "")
+            //    {
+            //        //init max page
+            //        NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
+            //        if (ilc % NumRowEachPage == 0)
+            //            maxpage = ilc / NumRowEachPage;
+            //        else
+            //            maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
+            //        if (maxpage % 3 == 0)
+            //            max_pack_page = maxpage / 3;
+            //        else
+            //            max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
+
+
+            //        //Init max page
+            //        DivInventoryList = new ObservableCollection<CheckItemSheet>();
+            //        DivInventoryList.Clear();
+            //        int startPos = (currentpage - 1) * NumRowEachPage;
+            //        int endPos = currentpage * NumRowEachPage - 1;
+            //        if (endPos >= ilc)
+            //            endPos = ilc - 1;
+
+            //        int flag = 0;
+            //        foreach (var item in ListCheckSheets)
+            //        {
+            //            if (flag >= startPos && flag <= endPos)
+            //                DivInventoryList.Add(item);
+            //            flag++;
+            //        }
+            //        //MessageBox.Show(DivInventoryList.Count.ToString());
+
+            //        //Button "..." visible
+
+            //        //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
+            //        //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
+            //        if (max_pack_page == 1)
+            //        {
+            //            Bacham1Visible = Visibility.Collapsed;
+            //            Bacham2Visible = Visibility.Collapsed;
+            //        }
+            //        else
+            //        {
+            //            if (pack_page == max_pack_page)
+            //            {
+            //                Bacham1Visible = Visibility.Visible;
+            //                Bacham2Visible = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                if (pack_page == 1)
+            //                {
+            //                    Bacham1Visible = Visibility.Collapsed;
+            //                    Bacham2Visible = Visibility.Visible;
+            //                }
+            //                else
+            //                {
+            //                    Bacham1Visible = Visibility.Visible;
+            //                    Bacham2Visible = Visibility.Visible;
+            //                }
+            //            }
+            //        }
+
+
+            //        //Button "..." visible
+
+
+            //        if (currentpage == 1 && maxpage == 1)
+            //        {
+            //            LeftVisi = false;
+            //            RightVisi = true;
+            //        }
+            //        else
+            //        {
+            //            if (currentpage == maxpage)
+            //            {
+            //                LeftVisi = true;
+            //                RightVisi = false;
+            //            }
+            //            else
+            //            {
+            //                if (currentpage == 1)
+            //                {
+            //                    LeftVisi = false;
+            //                    RightVisi = true;
+            //                }
+            //                else
+            //                {
+            //                    LeftVisi = true;
+            //                    RightVisi = true;
+            //                }
+            //            }
+            //        }
+
+
+            //        if (maxpage >= 3)
+            //        {
+            //            BtnPage1.PageVisi = Visibility.Visible;
+            //            BtnPage2.PageVisi = Visibility.Visible;
+            //            BtnPage3.PageVisi = Visibility.Visible;
+
+            //            switch (currentpage % 3)
+            //            {
+            //                case 1:
+            //                    BtnPage1.BackGround = Brushes.Blue;
+            //                    BtnPage2.BackGround = Brushes.White;
+            //                    BtnPage3.BackGround = Brushes.White;
+            //                    BtnPage1.PageVal = currentpage;
+            //                    BtnPage2.PageVal = currentpage + 1;
+            //                    BtnPage3.PageVal = currentpage + 2;
+            //                    break;
+            //                case 2:
+            //                    BtnPage1.BackGround = Brushes.White;
+            //                    BtnPage2.BackGround = Brushes.Blue;
+            //                    BtnPage3.BackGround = Brushes.White;
+            //                    BtnPage1.PageVal = currentpage - 1;
+            //                    BtnPage2.PageVal = currentpage;
+            //                    BtnPage3.PageVal = currentpage + 1;
+            //                    break;
+            //                case 0:
+            //                    BtnPage1.BackGround = Brushes.White;
+            //                    BtnPage2.BackGround = Brushes.White;
+            //                    BtnPage3.BackGround = Brushes.Blue;
+            //                    BtnPage1.PageVal = currentpage - 2;
+            //                    BtnPage2.PageVal = currentpage - 1;
+            //                    BtnPage3.PageVal = currentpage;
+            //                    break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (maxpage == 2)
+            //            {
+            //                BtnPage1.PageVisi = Visibility.Visible;
+            //                BtnPage2.PageVisi = Visibility.Visible;
+            //                BtnPage3.PageVisi = Visibility.Collapsed;
+            //                switch (currentpage)
+            //                {
+            //                    case 1:
+            //                        BtnPage1.BackGround = Brushes.Blue;
+            //                        BtnPage2.BackGround = Brushes.White;
+            //                        BtnPage1.PageVal = currentpage;
+            //                        BtnPage2.PageVal = currentpage + 1;
+            //                        break;
+            //                    case 2:
+            //                        BtnPage1.BackGround = Brushes.White;
+            //                        BtnPage2.BackGround = Brushes.Blue;
+            //                        BtnPage1.PageVal = currentpage - 1;
+            //                        BtnPage2.PageVal = currentpage;
+            //                        break;
+            //                }
+            //            }
+            //            else
+            //            {
+            //                BtnPage1.PageVisi = Visibility.Visible;
+            //                BtnPage2.PageVisi = Visibility.Collapsed;
+            //                BtnPage3.PageVisi = Visibility.Collapsed;
+            //                BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
+            //                BtnPage1.BackGround = Brushes.Blue;
+            //                BtnPage1.PageVal = currentpage;
+            //            }
+            //        }
+            //        if (pack_page == max_pack_page)
+            //        {
+            //            switch (pack_page * 3 - maxpage)
+            //            {
+            //                case 1:
+            //                    BtnPage3.PageVisi = Visibility.Collapsed;
+            //                    break;
+            //                case 2:
+            //                    BtnPage2.PageVisi = Visibility.Collapsed;
+            //                    BtnPage3.PageVisi = Visibility.Collapsed;
+            //                    break;
+            //            }
+            //        }
+
+            //    }
+            //}
+            //#endregion
         }
 
 
@@ -578,10 +938,10 @@ namespace bookStoreManagetment.ViewModel
         {
             // load tất cả check sheet
             ListCheckSheets = new ObservableCollection<CheckItemSheet>();
-            var listCheckItems = DataProvider.Ins.DB.checkItems.GroupBy(x => x.idCheckItems).Select(y => y.FirstOrDefault());
+            var listCheckItems = DataProvider.Ins.DB.checkItems.GroupBy(x => x.idCheckItems).Select(y => y.FirstOrDefault()).ToList();
             foreach (var ckitems in listCheckItems)
             {
-                addCheckSheet(ckitems);
+                addCheckSheet(ckitems); 
             }
             BackupListCheckSheet = ListCheckSheets;
 
@@ -622,7 +982,8 @@ namespace bookStoreManagetment.ViewModel
                     InforItems = new List<inforItem> { new inforItem
                     {
                             idItem = ckItem.idItem,
-                            quantityItem = ckItem.quantityItem
+                            OldQuantityItem = (int)ckItem.oldQuantityItem,
+                            NewQuantityItem = (int)ckItem.newQuantityItem
                     }},
 
                     nameEmployee = getFullNameEmployyee(ckItem.idEmployee)
@@ -633,7 +994,8 @@ namespace bookStoreManagetment.ViewModel
                 ListCheckSheets[i].InforItems.Add(new inforItem
                 {
                     idItem = ckItem.idItem,
-                    quantityItem = ckItem.quantityItem
+                    OldQuantityItem = (int)ckItem.oldQuantityItem,
+                    NewQuantityItem = (int)ckItem.newQuantityItem
                 });
             }
 
@@ -671,6 +1033,7 @@ namespace bookStoreManagetment.ViewModel
             }
 
             ListCheckSheets = new ObservableCollection<CheckItemSheet>(newListCheckSheet);
+            
         }
 
     }
