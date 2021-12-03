@@ -14,152 +14,147 @@
             <i:InvokeCommandAction Command="{Binding LoadedUserControlCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid Margin="10,0,10,0" Background="White">
-        <Grid Visibility="{Binding IsDSHoaDon}"
-              x:Name="gridDSHoaDon">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="10*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+				  GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--main Content-->
+        <Grid Grid.Row = "0">
+            <Grid Margin="10,0,10,0" Background="White">
+                <Grid Visibility="{Binding IsDSHoaDon}" x:Name="gridDSHoaDon">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-            <!--Các button thao tác-->
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="10,0,0,0">
-                    <TextBlock  Text="Danh Sách Hóa Đơn"
+                    <!--Các button thao tác-->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="10,0,0,0">
+                            <TextBlock  Text="Danh Sách Hóa Đơn"
                             FontWeight="Bold"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
                             FontSize="20">
-                    </TextBlock>
-                </Grid>
-                <Grid Grid.Column="1" Margin="0,0,30,0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="0,0,30,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
 
-                        <!--Set style cho button trong stackpanel-->
-                        <StackPanel.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Width" Value="90"/>
-                                <Setter Property="Height" Value="30"/>
-                                <Setter Property="Height" Value="30"/>
-                                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="Margin" Value="5,0,5,0"/>
-                            </Style>
-                        </StackPanel.Resources>
+                                <!--Set style cho button trong stackpanel-->
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Width" Value="90"/>
+                                        <Setter Property="Height" Value="30"/>
+                                        <Setter Property="Height" Value="30"/>
+                                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="5,0,5,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
 
-                        <!--Xuất file Excel-->
-                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                            Width="150"
-                            Background="Green"
-                            BorderBrush="Green"
-                            Padding="0"
-                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
-                            Margin="0,0,10,0">
-                            <StackPanel Orientation="Horizontal"
+                                <!--Xuất file Excel-->
+                                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                        Width="150"
+                                        Background="Green"
+                                        BorderBrush="Green"
+                                        Padding="0"
+                                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                                        Margin="0,0,10,0">
+                                    <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center">
-                                <materialDesign:PackIcon Kind="FileExport" 
+                                        <materialDesign:PackIcon Kind="FileExport" 
                                                      Width="20"
                                                      Height="20"
                                                      Margin="0 0 10 0"/>
-                                <TextBlock Text="Xuất file Excel"
+                                        <TextBlock Text="Xuất file Excel"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                    </StackPanel>
+                                </Button>
 
-                        <!--Nhập file-->
-                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                            Width="150"
-                            Background="Green"
-                            BorderBrush="Green"
-                            Padding="0"
-                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
-                            Margin="0,0,10,0">
-                            <StackPanel Orientation="Horizontal"
+                                
+                                <!--Tạo đơn hàng-->
+                                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                Width="150"
+                                Background="Green"
+                                BorderBrush="Green"
+                                Command="{Binding LoadCreateBillCommand}"
+                                Padding="0"
+                                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                                Margin="0,0,10,0">  
+                                    <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center">
-                                <materialDesign:PackIcon Kind="FileImport" 
+                                        <materialDesign:PackIcon Kind="Plus" 
                                                      Width="20"
                                                      Height="20"
                                                      Margin="0 0 10 0"/>
-                                <TextBlock Text="Nhập file"
+                                        <TextBlock Text="Tạo đơn hàng"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
-                        </Button>
+                        </Grid>
+                    </Grid>
 
-                        <!--Tạo đơn hàng-->
-                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                            Width="150"
-                            Background="Green"
-                            BorderBrush="Green"
-                            Command="{Binding LoadCreateBillCommand}"
-                            Padding="0"
-                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
-                            Margin="0,0,10,0">
-                            <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                                <materialDesign:PackIcon Kind="Plus" 
-                                                     Width="20"
-                                                     Height="20"
-                                                     Margin="0 0 10 0"/>
-                                <TextBlock Text="Tạo đơn hàng"
-                                       HorizontalAlignment="Right"
-                                       VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </Grid>
+                    <Grid Grid.Row="1" Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="6.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="1" Margin="10,0,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="6.5*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <!--Thanh tìm kiếm-->
-                <Grid Grid.Column="0" Margin="0, 5, 20, 5" Height="30" Width="350" HorizontalAlignment="Left">
-                    <Border BorderBrush="Black" CornerRadius="15" BorderThickness="1">
-                        <DockPanel HorizontalAlignment="Stretch"
+                        <!--Thanh tìm kiếm-->
+                        <Grid Grid.Column="0" Margin="0, 5, 20, 5" Height="30" Width="350" HorizontalAlignment="Left">
+                            <Border BorderBrush="Black" CornerRadius="15" BorderThickness="1">
+                                <DockPanel HorizontalAlignment="Stretch"
                                VerticalAlignment="Center">
-                            <materialDesign:PackIcon Kind="Search" MinHeight="30" MinWidth="30"/>
-                            <TextBox materialDesign:HintAssist.Hint="Tìm kiếm theo mã đơn hàng, tên, SĐT khách hàng, ..." 
+                                    <materialDesign:PackIcon Kind="Search" MinHeight="30" MinWidth="30"/>
+                                    <TextBox materialDesign:HintAssist.Hint="Tìm kiếm theo mã đơn hàng, tên, SĐT khách hàng, ..." 
                                  Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  BorderBrush="Transparent"
                                  CaretBrush="Transparent"/>
-                        </DockPanel>
-                    </Border>
+                                </DockPanel>
+                            </Border>
 
-                </Grid>
+                        </Grid>
 
-                <Grid Grid.Column="1" Margin="25, 5, 25, 5">
-                    <Grid.Resources>
+                        <Grid Grid.Column="1" Margin="25, 5, 25, 5">
+                            <Grid.Resources>
 
-                        <!--Set style cho button-->
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="FontSize" Value="13"/>
-                            <Setter Property="Padding" Value="5"/>
-                        </Style>
+                                <!--Set style cho button-->
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                </Style>
 
-                    </Grid.Resources>
+                            </Grid.Resources>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
 
-                        <!--Trạng thái đơn hàng-->
-                        <ComboBox materialDesign:HintAssist.Hint="Trạng thái"
+                                <!--Trạng thái đơn hàng-->
+                                <ComboBox materialDesign:HintAssist.Hint="Trạng thái"
                               BorderBrush="Black"
                               BorderThickness="1"
                               Width="150"
@@ -170,11 +165,11 @@
                               FontSize="13"
                               SelectedItem="{Binding SelectedOrderStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               ItemsSource="{Binding OrderStatusList}">
-                            <!--<ComboBoxItem Content="Đang giao dịch"/>-->
-                        </ComboBox>
+                                    <!--<ComboBoxItem Content="Đang giao dịch"/>-->
+                                </ComboBox>
 
-                        <!--Nhân viên phụ trách đơn hàng-->
-                        <ComboBox materialDesign:HintAssist.Hint="Nhân viên phụ trách"
+                                <!--Nhân viên phụ trách đơn hàng-->
+                                <ComboBox materialDesign:HintAssist.Hint="Nhân viên phụ trách"
                               BorderBrush="Black"
                               BorderThickness="1"
                               Width="150"
@@ -187,10 +182,10 @@
                               DisplayMemberPath="firstName"
                               ItemsSource ="{Binding Employee}"
                               SelectedItem="{Binding SelectedEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        </ComboBox>
+                                </ComboBox>
 
-                        <!--Lưu bộ lọc-->
-                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                <!--Lưu bộ lọc-->
+                                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
                             Width="110"
                             Height="30"
                             Background="Green"
@@ -198,568 +193,589 @@
                             Padding="0"
                             ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
                             Margin="15,0,0,0">
-                            <StackPanel Orientation="Horizontal"
+                                    <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center">
-                                <materialDesign:PackIcon Kind="FilterRemove" 
+                                        <materialDesign:PackIcon Kind="FilterRemove" 
                                                      Width="20"
                                                      Height="20"
                                                      Margin="0 0 10 0"/>
-                                <TextBlock Text="Xóa bộ lọc"
+                                        <TextBlock Text="Xóa bộ lọc"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction
+                                    </StackPanel>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                                 Command="{Binding ResetFilterCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
 
-                        <!--Lưu bộ lọc-->
-                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                            Width="110"
-                            Height="30"
-                            Background="Green"
-                            BorderBrush="Green"
-                            Padding="0"
-                            ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
-                            Margin="15,0,0,0">
-                            <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                                <materialDesign:PackIcon Kind="Star" 
-                                                     Width="20"
-                                                     Height="20"
-                                                     Margin="0 0 10 0"/>
-                                <TextBlock Text="Lưu bộ lọc"
-                                       HorizontalAlignment="Right"
-                                       VerticalAlignment="Center"/>
                             </StackPanel>
-                        </Button>
-                    </StackPanel>
 
-                </Grid>
-            </Grid>
+                        </Grid>
+                    </Grid>
 
-            <!--data grid hiển thị thông tin hóa đơn-->
-            <Grid Grid.Row="2">
-                <DataGrid ItemsSource="{Binding DisplayBillList}" 
+                    <!--data grid hiển thị thông tin hóa đơn-->
+                    <Grid Grid.Row="2">
+                        <DataGrid ItemsSource="{Binding DivInventoryList}" 
                       SelectedItem="{Binding SelectedBill, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       CanUserAddRows="False"
                       AutoGenerateColumns="False"
                       Background="Transparent" 
                       Margin="5, 0, 5, 0">
-                    <DataGrid.Resources>
-                        <Style TargetType="{x:Type DataGridCell}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                        <Grid Background="{TemplateBinding Background}">
-                                            <ContentPresenter VerticalAlignment="Center" />
-                                            <ContentPresenter HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <!--<DataGridTextColumn Binding="{Binding Bill.billCode}" Width ="Auto" Header="Mã hóa đơn" IsReadOnly ="True"/>-->
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                <Grid Background="{TemplateBinding Background}">
+                                                    <ContentPresenter VerticalAlignment="Center" />
+                                                    <ContentPresenter HorizontalAlignment="Center" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <!--<DataGridTextColumn Binding="{Binding Bill.billCode}" Width ="Auto" Header="Mã hóa đơn" IsReadOnly ="True"/>-->
 
-                        <DataGridTemplateColumn Header="Mã hóa đơn"  Width ="Auto" IsReadOnly ="True" CanUserSort="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                <DataGridTemplateColumn Header="Mã hóa đơn"  Width ="Auto" IsReadOnly ="True" CanUserSort="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                                         Path=DataContext.PrintBillCommand}"
                                         CommandParameter="{Binding}"
                                         Content="{Binding Bill.billCode}"
                                         Background="Transparent"
                                         BorderBrush="Transparent"
                                         Foreground="Blue">
-                                        <i:Interaction.Triggers>
-                                            <!--ẩn hiện grid-->
-                                            <i:EventTrigger EventName="Click">
-                                                <i:InvokeCommandAction 
+                                                <i:Interaction.Triggers>
+                                                    <!--ẩn hiện grid-->
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction 
                                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.LoadBillDetailCommand}"/>
-                                                <!--CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />-->
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Binding="{Binding CustomerFullName}" Width ="Auto" Header="Tên khách hàng" IsReadOnly ="True"/>
-                        <DataGridTextColumn Binding="{Binding EmployeeFullName}" Width ="Auto" Header="Tên nhân viên" IsReadOnly ="True"/>
-                        <DataGridTextColumn Binding="{Binding SellBill.billstatus}" Width ="Auto" Header="Trạng thái đơn" IsReadOnly ="True"/>
-                        <DataGridTextColumn Binding="{Binding Total}" Width ="Auto" Header="Tiền thanh toán" IsReadOnly ="True"/>
-                        <DataGridTemplateColumn Header="In hóa đơn">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                                        <!--CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />-->
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding CustomerFullName}" Width ="Auto" Header="Tên khách hàng" IsReadOnly ="True"/>
+                                <DataGridTextColumn Binding="{Binding EmployeeFullName}" Width ="Auto" Header="Tên nhân viên" IsReadOnly ="True"/>
+                                <DataGridTextColumn Binding="{Binding SellBill.billstatus}" Width ="Auto" Header="Trạng thái đơn" IsReadOnly ="True"/>
+                                <DataGridTextColumn Binding="{Binding Total}" Width ="Auto" Header="Tiền thanh toán" IsReadOnly ="True"/>
+                                <DataGridTemplateColumn Header="In hóa đơn">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                                         Path=DataContext.PrintBillCommand}"
                                         CommandParameter="{Binding}"
                                         Background="Transparent"
                                         BorderBrush="Transparent">
-                                        <materialDesign:PackIcon Kind="Printer" Width="20" Height="20" Foreground="Black"/>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+                                                <materialDesign:PackIcon Kind="Printer" Width="20" Height="20" Foreground="Black"/>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
 
-            <!--số lượng hóa đơn hiển thị trên 1 trang và số trang-->
-        </Grid>
-
-        <Grid Visibility="{Binding IsBillViewing}"
-              x:Name="gridXemHoaDon">
-                <Grid Margin="10,0,10,0" Background="White">
-        <Grid.Resources>
-            <Style TargetType="Border">
-                <Setter Property="BorderBrush" Value="Black"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="1"/>
-            </Style>
-        </Grid.Resources>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <!--Các button thao tác-->
-        <Grid Grid.Row="0" Margin="10,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="10,0,0,0">
-                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                    <WrapPanel.Resources>
-                        <Style TargetType="Button">
-                            <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                            <Setter Property="Background" Value="White"></Setter>
-                            <Setter Property="FontSize" Value="15"></Setter>
-                        </Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                            <Setter Property="FontSize" Value="15"></Setter>
-                        </Style>
-                    </WrapPanel.Resources>
-                            <Button Content="Danh sách hóa đơn" Foreground="Blue" VerticalAlignment="Center" Command="{Binding BacktoDSHoaDonCommand}"/>
-
-                            <TextBlock Text=">" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding ViewBillDetail.Bill.billCode}" VerticalAlignment="Center"></TextBlock>
-                </WrapPanel>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0" Margin="20, 20, 20, 20">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"></RowDefinition>
-                            <RowDefinition Height="6*"></RowDefinition>
-                            <RowDefinition Height="3*"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <!--Bảng thông tin khách hàng-->
-                        <Grid Grid.Row="0" Margin="10, 0, 10, 0">
-                            <Border/>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0" Margin="50,0,0,0">
-                                        <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Stretch"  VerticalAlignment="Center" FontSize="15"/>
-                                    </Grid>
-                                    <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
-                                        <Border/>
-                                        <TextBlock Text="{Binding ViewBillDetail.CustomerFullName}" HorizontalAlignment="Stretch" />
-                                    </Grid>
-
-                                </Grid>
-                                <Grid Grid.Row="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0" Margin="50,0,0,0">
-                                        <TextBlock Text="Số điện thoại" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
-                                    </Grid>
-                                    <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
-                                        <Border/>
-                                        <TextBlock Text="{Binding ViewBillDetail.CustomerPhoneNumber}" HorizontalAlignment="Stretch" />
-                                    </Grid>
-
-                                        </Grid>
-                                <Grid Grid.Row="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0" Margin="50,0,0,0">
-                                        <TextBlock Text="Địa chỉ giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
-                                    </Grid>
-                                    <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
-                                        <Border/>
-                                        <TextBlock Text="{Binding ViewBillDetail.CustomerAddress}" HorizontalAlignment="Stretch" />
-                                    </Grid>
-
-                                </Grid>
-                            </Grid>
-                        </Grid>
-
-                        <!--Bảng thông tin sản phẩm-->
-                        <Grid Grid.Row="1" Margin="10, 5, 10, 0" >
-                            <Border/>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition Height="3*"></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Thông tin sản phẩm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                     <DataGrid ItemsSource="{Binding ViewBillDetail.OrderItems}" 
-                                        CanUserAddRows="False"
-                                        AutoGenerateColumns="False"
-                                        Background="Transparent" 
-                                        Margin="5, 0, 5, 0" CanUserSortColumns="False"> 
-                                        <!--Binding DS sản phẩm của hóa đơn-->
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Item.idItem}" Width ="Auto" Header="Mã sản phẩm" IsReadOnly ="True"/>
-                                            <DataGridTextColumn Binding="{Binding Item.nameItem}" Width ="Auto" Header="Tên sản phẩm" IsReadOnly ="True"/>
-                                            <DataGridTextColumn Binding="{Binding Item.unit}" Width ="Auto" Header="Đơn vị" IsReadOnly ="True"/>
-                                            <DataGridTextColumn Binding="{Binding Amount}" Width ="Auto" Header="Số lượng" IsReadOnly ="True"/>
-                                            <DataGridTextColumn Binding="{Binding Item.sellPriceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </Grid>
-
-                                <Grid Grid.Row="3" Margin="20,1,20,1">
-
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Margin="0,0,10,0" FontSize="13" Text="Tổng tiền" VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding ViewBillDetail.Total}" FontSize="13" VerticalAlignment="Center" MinWidth="100"/>
-                                    </StackPanel>
-                                </Grid>
-
-                            </Grid>
-
-                        </Grid>
-
-                        <!--Bảng hình thức thanh toán-->
-                        <Grid Grid.Row="2" Margin="10, 5, 10, 0">
-                            <Border/>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Hình thức thanh toán và giao hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                                </Grid>
-
-                                <!--Phương thức thanh toán-->
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0" Margin="50,0,0,0">
-
-                                        <StackPanel Orientation="Horizontal" Width="300" Height="25">
-                                            <materialDesign:PackIcon Kind="CreditCard" Width="25" Height="30"/>
-
-                                            <TextBlock Text="Phương thức thanh toán" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                        </StackPanel>
-
-                                    </Grid>
-                                    <Grid Grid.Column="1" Margin="10,0,20,0">
-                                        <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
-                                            <Border/>
-                                            <TextBlock Text="{Binding ViewBillDetail.SellBill.paymentMethod}" HorizontalAlignment="Stretch" />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-                                <!--Đóng gói và giao hàng-->
-                                <Grid Grid.Row="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid Grid.Column="0" Margin="50,0,0,0"  Width="300" Height="25">
-
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="TruckDelivery" Width="25" Height="30"/>
-                                            <TextBlock Text="Đóng gói và giao hàng" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                        </StackPanel>
-
-                                    </Grid>
-                                    <Grid Grid.Column="1" Margin="10,0,20,0">
-                                        <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
-                                            <Border/>
-                                            <TextBlock Text="{Binding ViewBillDetail.SellBill.deliveryDate}" HorizontalAlignment="Stretch" />
-                                        </Grid>
-                                    </Grid>
-
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                    <!--số lượng hóa đơn hiển thị trên 1 trang và số trang-->
+                    <Grid Grid.Row="3">
+                        <TextBox Width="50" Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btnPageFirst" Content="td"
+                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnfirstPageCommand}"></Button>
+                                                                <Button x:Name="btnPagePrev" Content="tt"
+                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnPrevPageCommand}"></Button>
+                                                                <Button x:Name="btn3cham1" Content="..."
+                                    Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                                                                <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage1.BackGround}"
+                                    Foreground="Black"></Button>
+                                                                <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage2.BackGround}"
+                                    Foreground="Black"></Button>
+                                                                <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage3.BackGround}"
+                                    Foreground="Black"></Button>
+                                                                <Button x:Name="btn3cham2" Content="..."
+                                    Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                                                                <Button x:Name="btnPageNext" Content="ts"
+                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="Click">
+                                                                            <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Button>
+                                                                <Button x:Name="btnPageEnd" Content="tc"
+                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnendPageCommand}"></Button>
+                        </StackPanel>
                     </Grid>
                 </Grid>
 
-                <!--Bảng thông tin đơn hàng-->
-                <Grid Grid.Column="1" Margin="20, 20, 20, 20">
-                    <Border/>
-                    <Grid>
+                <Grid Visibility="{Binding IsBillViewing}" x:Name="gridXemHoaDon">
+                    <Grid Margin="10,0,10,0" Background="White">
+                        <Grid.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                            </Style>
+                        </Grid.Resources>
+
                         <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Viewbox Stretch="Uniform" Margin="40, 5, 40, 5">
-                                <TextBlock Text="Thông tin đơn hàng" HorizontalAlignment="Right"/>
-                            </Viewbox>
-                        </Grid>
-                        <!--Mã đơn hàng-->
-                        <Grid Grid.Row="1" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Mã đơn hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Grid.Row="1" Background="LightGray">
-                                <Border/>
-                                <TextBlock Text="{Binding ViewBillDetail.Bill.billCode}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                        <!--Ngày đặt hàng-->
-                        <Grid Grid.Row="2" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Ngày đặt hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Grid.Row="1" HorizontalAlignment="Stretch">
-                                <Border/>
-                                <DatePicker SelectedDate="{Binding ViewBillDetail.SellBill.sellDate}" HorizontalAlignment="Stretch"/>
+
+                        <!--Các button thao tác-->
+                        <Grid Grid.Row="0" Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="10,0,0,0">
+                                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                    <WrapPanel.Resources>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            <Setter Property="Background" Value="White"></Setter>
+                                            <Setter Property="FontSize" Value="15"></Setter>
+                                        </Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                                            <Setter Property="FontSize" Value="15"></Setter>
+                                        </Style>
+                                    </WrapPanel.Resources>
+                                    <Button Content="Danh sách hóa đơn" Foreground="Blue" VerticalAlignment="Center" Command="{Binding BacktoDSHoaDonCommand}"/>
+
+                                    <TextBlock Text=">" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding ViewBillDetail.Bill.billCode}" VerticalAlignment="Center"></TextBlock>
+                                </WrapPanel>
                             </Grid>
                         </Grid>
-                        <!--Ngày giao hàng-->
-                        <Grid Grid.Row="3" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Ngày giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <Border/>
-                                <DatePicker SelectedDate="{Binding ViewBillDetail.SellBill.deliveryDate}" HorizontalAlignment="Stretch"></DatePicker>
-                            </Grid>
-                        </Grid>
-                        <!--Nhân viên-->
-                        <Grid Grid.Row="4" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Nhân viên" HorizontalAlignment="Left"/>
-                            </Grid>
-                                <Grid Grid.Row="1" Background="LightGray">
+
+                        <Grid Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="20, 20, 20, 20">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="4*"></RowDefinition>
+                                            <RowDefinition Height="6*"></RowDefinition>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <!--Bảng thông tin khách hàng-->
+                                        <Grid Grid.Row="0" Margin="10, 0, 10, 0">
+                                            <Border/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+                                                        <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Stretch"  VerticalAlignment="Center" FontSize="15"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
+                                                        <Border/>
+                                                        <TextBlock Text="{Binding ViewBillDetail.CustomerFullName}" HorizontalAlignment="Stretch" />
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+                                                        <TextBlock Text="Số điện thoại" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
+                                                        <Border/>
+                                                        <TextBlock Text="{Binding ViewBillDetail.CustomerPhoneNumber}" HorizontalAlignment="Stretch" />
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid Grid.Row="3">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+                                                        <TextBlock Text="Địa chỉ giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
+                                                        <Border/>
+                                                        <TextBlock Text="{Binding ViewBillDetail.CustomerAddress}" HorizontalAlignment="Stretch" />
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+
+                                        <!--Bảng thông tin sản phẩm-->
+                                        <Grid Grid.Row="1" Margin="10, 5, 10, 0" >
+                                            <Border/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition Height="3*"></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <TextBlock Text="Thông tin sản phẩm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <DataGrid ItemsSource="{Binding ViewBillDetail.OrderItems}" 
+                                        CanUserAddRows="False"
+                                        AutoGenerateColumns="False"
+                                        Background="Transparent" 
+                                        Margin="5, 0, 5, 0" CanUserSortColumns="False">
+                                                        <!--Binding DS sản phẩm của hóa đơn-->
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Binding="{Binding Item.idItem}" Width ="Auto" Header="Mã sản phẩm" IsReadOnly ="True"/>
+                                                            <DataGridTextColumn Binding="{Binding Item.nameItem}" Width ="Auto" Header="Tên sản phẩm" IsReadOnly ="True"/>
+                                                            <DataGridTextColumn Binding="{Binding Item.unit}" Width ="Auto" Header="Đơn vị" IsReadOnly ="True"/>
+                                                            <DataGridTextColumn Binding="{Binding Amount}" Width ="Auto" Header="Số lượng" IsReadOnly ="True"/>
+                                                            <DataGridTextColumn Binding="{Binding Item.sellPriceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </Grid>
+
+                                                <Grid Grid.Row="3" Margin="20,1,20,1">
+
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                        <TextBlock Margin="0,0,10,0" FontSize="13" Text="Tổng tiền" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding ViewBillDetail.Total}" FontSize="13" VerticalAlignment="Center" MinWidth="100"/>
+                                                    </StackPanel>
+                                                </Grid>
+
+                                            </Grid>
+
+                                        </Grid>
+
+                                        <!--Bảng hình thức thanh toán-->
+                                        <Grid Grid.Row="2" Margin="10, 5, 10, 0">
+                                            <Border/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <TextBlock Text="Hình thức thanh toán và giao hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                                </Grid>
+
+                                                <!--Phương thức thanh toán-->
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+
+                                                        <StackPanel Orientation="Horizontal" Width="300" Height="25">
+                                                            <materialDesign:PackIcon Kind="CreditCard" Width="25" Height="30"/>
+
+                                                            <TextBlock Text="Phương thức thanh toán" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                        </StackPanel>
+
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
+                                                            <Border/>
+                                                            <TextBlock Text="{Binding ViewBillDetail.SellBill.paymentMethod}" HorizontalAlignment="Stretch" />
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+
+                                                <!--Đóng gói và giao hàng-->
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0"  Width="300" Height="25">
+
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon Kind="TruckDelivery" Width="25" Height="30"/>
+                                                            <TextBlock Text="Đóng gói và giao hàng" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                        </StackPanel>
+
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <Grid Grid.Column="1" Margin="10,5,20,5" Background="LightGray" >
+                                                            <Border/>
+                                                            <TextBlock Text="{Binding ViewBillDetail.SellBill.deliveryDate}" HorizontalAlignment="Stretch" />
+                                                        </Grid>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <!--Bảng thông tin đơn hàng-->
+                                <Grid Grid.Column="1" Margin="20, 20, 20, 20">
                                     <Border/>
-                                     <TextBlock Text="{Binding ViewBillDetail.EmployeeFullName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Viewbox Stretch="Uniform" Margin="40, 5, 40, 5">
+                                                <TextBlock Text="Thông tin đơn hàng" HorizontalAlignment="Right"/>
+                                            </Viewbox>
+                                        </Grid>
+                                        <!--Mã đơn hàng-->
+                                        <Grid Grid.Row="1" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Mã đơn hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1" Background="LightGray">
+                                                <Border/>
+                                                <TextBlock Text="{Binding ViewBillDetail.Bill.billCode}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Grid>
+                                        <!--Ngày đặt hàng-->
+                                        <Grid Grid.Row="2" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ngày đặt hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                                                <Border/>
+                                                <DatePicker SelectedDate="{Binding ViewBillDetail.SellBill.sellDate}" HorizontalAlignment="Stretch"/>
+                                            </Grid>
+                                        </Grid>
+                                        <!--Ngày giao hàng-->
+                                        <Grid Grid.Row="3" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ngày giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <DatePicker SelectedDate="{Binding ViewBillDetail.SellBill.deliveryDate}" HorizontalAlignment="Stretch"></DatePicker>
+                                            </Grid>
+                                        </Grid>
+                                        <!--Nhân viên-->
+                                        <Grid Grid.Row="4" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Nhân viên" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1" Background="LightGray">
+                                                <Border/>
+                                                <TextBlock Text="{Binding ViewBillDetail.EmployeeFullName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Grid>
+                                        <!--Ngày chứng từ-->
+                                        <Grid Grid.Row="5" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ngày chứng từ" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,4"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <DatePicker SelectedDate="{Binding ViewBillDetail.SellBill.licenseDate}" HorizontalAlignment="Stretch"></DatePicker>
+                                            </Grid>
+                                        </Grid>
+                                        <!--Một cái tag gì đấy-->
+                                        <Grid Grid.Row="6" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Tag" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <TextBox Text ="{Binding ViewBillDetail.SellBill.tag}" materialDesign:HintAssist.Hint="tag" BorderBrush="Black" HorizontalAlignment="Stretch"/>
+                                            </Grid>
+                                        </Grid>
+                                        <!--Ghi chú-->
+                                        <Grid Grid.Row="7" Margin="20, 0, 20, 5" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="3*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ghi chú" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <TextBox Text ="{Binding ViewBillDetail.SellBill.note}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Ghi chú" HorizontalAlignment="Stretch" />
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        <!--Ngày chứng từ-->
-                        <Grid Grid.Row="5" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Ngày chứng từ" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,4"/>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <Border/>
-                                <DatePicker SelectedDate="{Binding ViewBillDetail.SellBill.licenseDate}" HorizontalAlignment="Stretch"></DatePicker>
-                            </Grid>
-                        </Grid>
-                        <!--Một cái tag gì đấy-->
-                        <Grid Grid.Row="6" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Tag" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <Border/>
-                                <TextBox Text ="{Binding ViewBillDetail.SellBill.tag}" materialDesign:HintAssist.Hint="tag" BorderBrush="Black" HorizontalAlignment="Stretch"/>
-                            </Grid>
-                        </Grid>
-                        <!--Ghi chú-->
-                        <Grid Grid.Row="7" Margin="20, 0, 20, 5" HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="3*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <TextBlock Text="Ghi chú" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <Border/>
-                                <TextBox Text ="{Binding ViewBillDetail.SellBill.note}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Ghi chú" HorizontalAlignment="Stretch" />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>                    
-            </Grid>
 
-        </Grid>
-        <!--Nút trả hàng-->
-        <Grid Grid.Row="2">
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Content="Trả hàng" Foreground="Black" BorderBrush="Black" >
-                <!--<i:Interaction.Triggers>
+                        </Grid>
+                        <!--Nút trả hàng-->
+                        <Grid Grid.Row="2">
+                            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Content="Trả hàng" Foreground="Black" BorderBrush="Black" >
+                                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction
                              Command="{Binding CheckoutClickCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>-->
-            </Button>
-        </Grid>
-    </Grid>
+                            </Button>
+                        </Grid>
+                    </Grid>
 
-   </Grid>
-
-        <Grid Visibility="{Binding IsBillCreating}"
-            x:Name="gridTaoHoaDon">
-        <Grid Margin="10,0,10,0" Background="White">
-            <Grid.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="BorderBrush" Value="Black"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                </Style>
-            </Grid.Resources>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="8*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <!--Các button thao tác-->
-            <Grid Grid.Row="0" Margin="10,0,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="10,0,0,0">
-                    <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <WrapPanel.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                <Setter Property="Background" Value="White"></Setter>
-                                <Setter Property="FontSize" Value="15"></Setter>
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                                <Setter Property="FontSize" Value="15"></Setter>
-                            </Style>
-                        </WrapPanel.Resources>
-                        <Button Content="Danh sách hóa đơn" Foreground="Blue" VerticalAlignment="Center" Command="{Binding BacktoDSHoaDonCommand}"/>
-
-                        <TextBlock Text=">" VerticalAlignment="Center"/>
-                        <TextBlock Text="Tạo hóa đơn" VerticalAlignment="Center"/>
-                        <TextBlock Text=">" VerticalAlignment="Center"></TextBlock>
-                        <TextBlock Text="{Binding SellBillCode}" VerticalAlignment="Center"></TextBlock>
-                    </WrapPanel>
                 </Grid>
-            </Grid>
 
-            <Grid Grid.Row="1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                <Grid Visibility="{Binding IsBillCreating}" x:Name="gridTaoHoaDon">
+                    <Grid Margin="10,0,10,0" Background="White">
+                        <Grid.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                            </Style>
+                        </Grid.Resources>
 
-                    <Grid Grid.Column="0" Margin="20, 20, 20, 20">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"></RowDefinition>
-                                <RowDefinition Height="6*"></RowDefinition>
-                                <RowDefinition Height="3*"></RowDefinition>
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                            <!--Bảng thông tin khách hàng-->
-                            <Grid Grid.Row="0" Margin="10, 0, 10, 0">
-                                <Border/>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="350"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Margin="50,0,0,0">
-                                            <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Stretch"  VerticalAlignment="Center" FontSize="15"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1" Margin="10,0,20,0">
-                                            <ComboBox   materialDesign:HintAssist.Hint="Tên khách hàng"
+                        <!--Các button thao tác-->
+                        <Grid Grid.Row="0" Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="10,0,0,0">
+                                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                    <WrapPanel.Resources>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            <Setter Property="Background" Value="White"></Setter>
+                                            <Setter Property="FontSize" Value="15"></Setter>
+                                        </Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                                            <Setter Property="FontSize" Value="15"></Setter>
+                                        </Style>
+                                    </WrapPanel.Resources>
+                                    <Button Content="Danh sách hóa đơn" Foreground="Blue" VerticalAlignment="Center" Command="{Binding BacktoDSHoaDonCommand}"/>
+
+                                    <TextBlock Text=">" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Tạo hóa đơn" VerticalAlignment="Center"/>
+                                    <TextBlock Text=">" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding SellBillCode}" VerticalAlignment="Center"></TextBlock>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="20, 20, 20, 20">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="4*"></RowDefinition>
+                                            <RowDefinition Height="6*"></RowDefinition>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <!--Bảng thông tin khách hàng-->
+                                        <Grid Grid.Row="0" Margin="10, 0, 10, 0">
+                                            <Border/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+                                                        <TextBlock Text="Thông tin khách hàng" HorizontalAlignment="Stretch"  VerticalAlignment="Center" FontSize="15"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <ComboBox   materialDesign:HintAssist.Hint="Tên khách hàng"
                                                 BorderBrush="Black"
                                                 BorderThickness="1"
                                                 Height="25"
@@ -769,62 +785,62 @@
                                                 DisplayMemberPath="firstName"
                                                 ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 IsEditable="True">
-                                            </ComboBox>
+                                                        </ComboBox>
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+                                                        <TextBlock Text="Số điện thoại" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <Border Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                                            <TextBox materialDesign:HintAssist.Hint="Số điện thoại" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="Transparent" Text="{Binding PhoneNumber}"></TextBox>
+                                                        </Border>
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid Grid.Row="3">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+                                                        <TextBlock Text="Địa chỉ giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <Border Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                                            <TextBox materialDesign:HintAssist.Hint="Địa chỉ giao hàng" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="Transparent" Text="{Binding Address}"></TextBox>
+                                                        </Border>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
 
-                                    </Grid>
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="350"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Margin="50,0,0,0">
-                                            <TextBlock Text="Số điện thoại" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1" Margin="10,0,20,0">
-                                            <Border Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                                <TextBox materialDesign:HintAssist.Hint="Số điện thoại" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="Transparent" Text="{Binding PhoneNumber}"></TextBox>
-                                            </Border>
-                                        </Grid>
+                                        <!--Bảng thông tin sản phẩm-->
+                                        <Grid Grid.Row="1" Margin="10, 5, 10, 0" >
+                                            <Border/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition Height="3*"></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <TextBlock Text="Thông tin sản phẩm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
 
-                                    </Grid>
-                                    <Grid Grid.Row="3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="350"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Margin="50,0,0,0">
-                                            <TextBlock Text="Địa chỉ giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1" Margin="10,0,20,0">
-                                            <Border Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                                <TextBox materialDesign:HintAssist.Hint="Địa chỉ giao hàng" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="Transparent" Text="{Binding Address}"></TextBox>
-                                            </Border>
-                                        </Grid>
-
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-
-                            <!--Bảng thông tin sản phẩm-->
-                            <Grid Grid.Row="1" Margin="10, 5, 10, 0" >
-                                <Border/>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="3*"></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <TextBlock Text="Thông tin sản phẩm" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-
-                                    </Grid>
-                                    <Grid Grid.Row="1" Margin="50,0,20,0" Height="25" Width="280" HorizontalAlignment="Left">
-                                        <Border BorderBrush="Black" CornerRadius="15" BorderThickness="1">
-                                            <DockPanel>
-                                                <materialDesign:PackIcon Kind="Search" MinHeight="30" MinWidth="30"/>
-                                                <ComboBox   materialDesign:HintAssist.Hint="Tìm kiếm sản phẩm"
+                                                </Grid>
+                                                <Grid Grid.Row="1" Margin="50,0,20,0" Height="25" Width="280" HorizontalAlignment="Left">
+                                                    <Border BorderBrush="Black" CornerRadius="15" BorderThickness="1">
+                                                        <DockPanel>
+                                                            <materialDesign:PackIcon Kind="Search" MinHeight="30" MinWidth="30"/>
+                                                            <ComboBox   materialDesign:HintAssist.Hint="Tìm kiếm sản phẩm"
                                                 BorderBrush="Transparent"
                                                 BorderThickness="1"
                                                 Width="250"
@@ -835,121 +851,121 @@
                                                 DisplayMemberPath="nameItem"
                                                 ItemsSource="{Binding ItemsListSearch}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 IsEditable="True">
-                                                </ComboBox>
-                                            </DockPanel>
-                                        </Border>
-                                    </Grid>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                    </Border>
+                                                </Grid>
 
-                                    <Grid Grid.Row="2">
-                                        <DataGrid ItemsSource="{Binding SellBillInfomation}" 
+                                                <Grid Grid.Row="2">
+                                                    <DataGrid ItemsSource="{Binding SellBillInfomation}" 
                                             SelectedItem="{Binding SelectedSellBillItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                             CanUserAddRows="False"
                                             AutoGenerateColumns="False"
                                             Background="Transparent" 
                                             Margin="5, 0, 5, 0" CanUserSortColumns="False">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="CurrentCellChanged">
-                                                    <i:InvokeCommandAction Command="{Binding UpdateTotalCommand}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                            <DataGrid.Resources>
-                                                <Style TargetType="{x:Type DataGridCell}">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                                                <Grid Background="{TemplateBinding Background}">
-                                                                    <ContentPresenter VerticalAlignment="Center" />
-                                                                </Grid>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Style>
-                                            </DataGrid.Resources>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="CurrentCellChanged">
+                                                                <i:InvokeCommandAction Command="{Binding UpdateTotalCommand}"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                        <DataGrid.Resources>
+                                                            <Style TargetType="{x:Type DataGridCell}">
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                                            <Grid Background="{TemplateBinding Background}">
+                                                                                <ContentPresenter VerticalAlignment="Center" />
+                                                                            </Grid>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </DataGrid.Resources>
 
 
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Binding="{Binding Item.idItem}" Width ="Auto" Header="Mã sản phẩm" IsReadOnly ="True"/>
-                                                <DataGridTextColumn Binding="{Binding Item.nameItem}" Width ="Auto" Header="Tên sản phẩm" IsReadOnly ="True"/>
-                                                <DataGridTextColumn Binding="{Binding Item.unit}" Width ="Auto" Header="Đơn vị" IsReadOnly ="True"/>
-                                                <!--<DataGridTextColumn Binding="{Binding Amount}" Width ="Auto" Header="Số lượng" IsReadOnly ="False"/>-->
-                                                <DataGridTemplateColumn Header="Số lượng">
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBox Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                        </DataTemplate>
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Binding="{Binding Item.idItem}" Width ="Auto" Header="Mã sản phẩm" IsReadOnly ="True"/>
+                                                            <DataGridTextColumn Binding="{Binding Item.nameItem}" Width ="Auto" Header="Tên sản phẩm" IsReadOnly ="True"/>
+                                                            <DataGridTextColumn Binding="{Binding Item.unit}" Width ="Auto" Header="Đơn vị" IsReadOnly ="True"/>
+                                                            <!--<DataGridTextColumn Binding="{Binding Amount}" Width ="Auto" Header="Số lượng" IsReadOnly ="False"/>-->
+                                                            <DataGridTemplateColumn Header="Số lượng">
+                                                                <DataGridTemplateColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBox Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                    </DataTemplate>
 
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTextColumn Binding="{Binding Item.sellPriceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
-                                                <DataGridTemplateColumn Header="Delete">
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                                                </DataGridTemplateColumn.CellTemplate>
+                                                            </DataGridTemplateColumn>
+                                                            <DataGridTextColumn Binding="{Binding Item.sellPriceItem}" Width ="Auto" Header="Đơn giá" IsReadOnly ="True"/>
+                                                            <DataGridTemplateColumn Header="Delete">
+                                                                <DataGridTemplateColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                                                             Path=DataContext.RemoveItemFromSellBillCommand}"
                                                             CommandParameter="{Binding}"
                                                             Background="Transparent"
                                                             BorderBrush="Transparent">
-                                                                <materialDesign:PackIcon Kind="MinusCircle" Foreground="Black"/>
-                                                            </Button>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </Grid>
+                                                                            <materialDesign:PackIcon Kind="MinusCircle" Foreground="Black"/>
+                                                                        </Button>
+                                                                    </DataTemplate>
+                                                                </DataGridTemplateColumn.CellTemplate>
+                                                            </DataGridTemplateColumn>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </Grid>
 
-                                    <Grid Grid.Row="3" Margin="20,1,20,1">
+                                                <Grid Grid.Row="3" Margin="20,1,20,1">
 
-                                        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Content="Thêm mới" Foreground="Black" BorderBrush="Black" Margin="0,2,0,2" Height="24">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <i:InvokeCommandAction
+                                                    <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Content="Thêm mới" Foreground="Black" BorderBrush="Black" Margin="0,2,0,2" Height="24">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction
                                                 Command="{Binding AddItemIntoSellBillCommand}">
-                                                    </i:InvokeCommandAction>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Button>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Margin="0,0,10,0" FontSize="13" Text="Tổng tiền" VerticalAlignment="Center" />
-                                            <TextBlock Text="{Binding Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="13" VerticalAlignment="Center" MinWidth="100"/>
-                                        </StackPanel>
-                                    </Grid>
+                                                                </i:InvokeCommandAction>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Button>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                        <TextBlock Margin="0,0,10,0" FontSize="13" Text="Tổng tiền" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="13" VerticalAlignment="Center" MinWidth="100"/>
+                                                    </StackPanel>
+                                                </Grid>
 
-                                </Grid>
-
-                            </Grid>
-
-                            <!--Bảng hình thức thanh toán-->
-                            <Grid Grid.Row="2" Margin="10, 5, 10, 0">
-                                <Border/>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <TextBlock Text="Hình thức thanh toán và giao hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                                    </Grid>
-
-                                    <!--Phương thức thanh toán-->
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="350"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Margin="50,0,0,0">
-
-                                            <StackPanel Orientation="Horizontal" Width="300" Height="25">
-                                                <!--<Image Source="../pictures/creditCard.png" Stretch="Uniform" />-->
-                                                <materialDesign:PackIcon Kind="CreditCard" Width="25" Height="30"/>
-
-                                                <TextBlock Text="Phương thức thanh toán" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                            </StackPanel>
+                                            </Grid>
 
                                         </Grid>
-                                        <Grid Grid.Column="1" Margin="10,0,20,0">
-                                            <ComboBox   materialDesign:HintAssist.Hint="Phương thức thanh toán"
+
+                                        <!--Bảng hình thức thanh toán-->
+                                        <Grid Grid.Row="2" Margin="10, 5, 10, 0">
+                                            <Border/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <TextBlock Text="Hình thức thanh toán và giao hàng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                                                </Grid>
+
+                                                <!--Phương thức thanh toán-->
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0">
+
+                                                        <StackPanel Orientation="Horizontal" Width="300" Height="25">
+                                                            <!--<Image Source="../pictures/creditCard.png" Stretch="Uniform" />-->
+                                                            <materialDesign:PackIcon Kind="CreditCard" Width="25" Height="30"/>
+
+                                                            <TextBlock Text="Phương thức thanh toán" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                        </StackPanel>
+
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <ComboBox   materialDesign:HintAssist.Hint="Phương thức thanh toán"
                                                 BorderBrush="Black"
                                                 BorderThickness="1"
                                                 Height="25"
@@ -957,30 +973,30 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="13"
                                                 ItemsSource="{Binding PaymentMethodList}" SelectedItem="{Binding SelectedPaymentMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            </ComboBox>
+                                                        </ComboBox>
 
-                                        </Grid>
+                                                    </Grid>
 
-                                    </Grid>
+                                                </Grid>
 
-                                    <!--Đóng gói và giao hàng-->
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="350"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
+                                                <!--Đóng gói và giao hàng-->
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Column="0" Margin="50,0,0,0"  Width="300" Height="25">
+                                                    <Grid Grid.Column="0" Margin="50,0,0,0"  Width="300" Height="25">
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <!--<Image Source="../pictures/deliveryIcon.png" Stretch="Uniform" />-->
-                                                <materialDesign:PackIcon Kind="TruckDelivery" Width="25" Height="30"/>
-                                                <TextBlock Text="Đóng gói và giao hàng" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                            </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <!--<Image Source="../pictures/deliveryIcon.png" Stretch="Uniform" />-->
+                                                            <materialDesign:PackIcon Kind="TruckDelivery" Width="25" Height="30"/>
+                                                            <TextBlock Text="Đóng gói và giao hàng" FontSize="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                        </StackPanel>
 
-                                        </Grid>
-                                        <Grid Grid.Column="1" Margin="10,0,20,0">
-                                            <ComboBox   materialDesign:HintAssist.Hint="Đóng gói và giao hàng"
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Margin="10,0,20,0">
+                                                        <ComboBox   materialDesign:HintAssist.Hint="Đóng gói và giao hàng"
                                                 BorderBrush="Black"
                                                 BorderThickness="1"
                                                 Height="25"
@@ -988,83 +1004,83 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="13"
                                                 ItemsSource="{Binding DeliveryMethodList}" SelectedItem="{Binding SelectedDeliveryMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            </ComboBox>
-                                        </Grid>
+                                                        </ComboBox>
+                                                    </Grid>
 
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
 
-                    <!--Bảng thông tin đơn hàng-->
-                    <Grid Grid.Column="1" Margin="20, 20, 20, 20">
-                        <Border/>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition Height="2*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Viewbox Stretch="Uniform" Margin="40, 5, 40, 5">
-                                    <TextBlock Text="Thông tin đơn hàng" HorizontalAlignment="Right"/>
-                                </Viewbox>
-                            </Grid>
-                            <Grid Grid.Row="1" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Mã đơn hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Row="1" Background="LightGray">
+                                <!--Bảng thông tin đơn hàng-->
+                                <Grid Grid.Column="1" Margin="20, 20, 20, 20">
                                     <Border/>
-                                    <TextBlock Text="{Binding SellBillCode}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="2" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Ngày đặt hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Row="1" HorizontalAlignment="Stretch">
-                                    <Border/>
-                                    <DatePicker SelectedDate="{Binding OrderDate}" HorizontalAlignment="Stretch"/>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="3" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Ngày giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <Border/>
-                                    <DatePicker SelectedDate="{Binding DeliveryDate}" HorizontalAlignment="Stretch"></DatePicker>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="4" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Nhân viên" HorizontalAlignment="Left"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <ComboBox   materialDesign:HintAssist.Hint="Tên nhân viên"
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Viewbox Stretch="Uniform" Margin="40, 5, 40, 5">
+                                                <TextBlock Text="Thông tin đơn hàng" HorizontalAlignment="Right"/>
+                                            </Viewbox>
+                                        </Grid>
+                                        <Grid Grid.Row="1" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Mã đơn hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1" Background="LightGray">
+                                                <Border/>
+                                                <TextBlock Text="{Binding SellBillCode}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="2" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ngày đặt hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                                                <Border/>
+                                                <DatePicker SelectedDate="{Binding OrderDate}" HorizontalAlignment="Stretch"/>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="3" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ngày giao hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <DatePicker SelectedDate="{Binding DeliveryDate}" HorizontalAlignment="Stretch"></DatePicker>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="4" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Nhân viên" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <ComboBox   materialDesign:HintAssist.Hint="Tên nhân viên"
                                         BorderBrush="Black"
                                         BorderThickness="1"
                                         HorizontalAlignment="Stretch"
@@ -1074,63 +1090,170 @@
                                         ItemsSource="{Binding EmployeeList}" 
                                         SelectedItem="{Binding SelectedEmployeeCreateBill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         IsEditable="True">
-                                    </ComboBox>
+                                                </ComboBox>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="5" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ngày chứng từ" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,4"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <DatePicker SelectedDate="{Binding LicenseDate}" HorizontalAlignment="Stretch"></DatePicker>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="6" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Tag" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <TextBox Text ="{Binding Tag}" materialDesign:HintAssist.Hint="tag" BorderBrush="Black" HorizontalAlignment="Stretch"/>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="7" Margin="20, 0, 20, 5" HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="3*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Text="Ghi chú" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Border/>
+                                                <TextBox Text ="{Binding Note}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Ghi chú" HorizontalAlignment="Stretch" />
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid Grid.Row="5" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Ngày chứng từ" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,4"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <Border/>
-                                    <DatePicker SelectedDate="{Binding LicenseDate}" HorizontalAlignment="Stretch"></DatePicker>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="6" Margin="20, 0, 20, 0" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Tag" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <Border/>
-                                    <TextBox Text ="{Binding Tag}" materialDesign:HintAssist.Hint="tag" BorderBrush="Black" HorizontalAlignment="Stretch"/>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="7" Margin="20, 0, 20, 5" HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="3*"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Ghi chú" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <Border/>
-                                    <TextBox Text ="{Binding Note}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Ghi chú" HorizontalAlignment="Stretch" />
-                                </Grid>
-                            </Grid>
+
+                        </Grid>
+                        <!--Thanh toán-->
+                        <Grid Grid.Row="2">
+                            <Button HorizontalAlignment="Center"
+                                Command="{Binding CheckoutClickCommand}"
+                                VerticalAlignment="Center" Background="Violet" Content="Thanh toán" Foreground="Black" BorderBrush="Black" >
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
 
-            </Grid>
-            <!--Thanh toán-->
-            <Grid Grid.Row="2">
-                <Button HorizontalAlignment="Center"
-                        Command="{Binding CheckoutClickCommand}"
-                        VerticalAlignment="Center" Background="Violet" Content="Thanh toán" Foreground="Black" BorderBrush="Black" >
-                    
-                </Button>
+                <Grid Visibility="{Binding IsOrderComfirmation}" x:Name="gridConfirmOrder" Background="Violet" Height="200" Width="350">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15">
+                            <Run Text="Xác nhận thanh toán cho đơn hàng"/>
+                            <Run Text="{Binding SellBillCode}"/>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="5, 5, 5, 5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Tổng tiền đơn hàng" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Row="1" Background="White">
+                                    <Border/>
+                                    <TextBlock Text="{Binding Total, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="5, 5, 5, 5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Tiền khách thanh toán" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Row="1" Background="White">
+                                    <Border/>
+                                    <TextBox Text="{Binding PaidPrice, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="5, 5, 5, 5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Tiền thừa trả lại" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Row="1" Background="White">
+                                    <Border/>
+                                    <TextBlock Text="{Binding ExchangePrice}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="5, 5, 5, 5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBlock Text="Tham chiếu" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Row="1" Background="White">
+                                    <Border/>
+                                    <TextBlock Text="Chỗ này tham chiếu cái gì nhỉ?" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Button Content="Xác nhận" Width="120" Height="30">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction
+                                        Command="{Binding ConfirmClickCommand}"/>
+                                        <i:InvokeCommandAction
+                                        Command="{Binding BacktoDSHoaDonCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Button Command="{Binding CancelClickCommand}" Content="Hủy" Width="120" Height="30"></Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
     </Grid>
 
 </UserControl>
