@@ -6,7 +6,13 @@
              xmlns:local="clr-namespace:bookStoreManagetment.UserControls" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="575" d:DesignWidth="1024"
              DataContext="{StaticResource NhacungcapVM}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -16,41 +22,65 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <Grid>
-            <!--Grid danh sach cac nha cung cap-->
-            <Grid x:Name="gridDSNCC" Visibility="{Binding DSNhacungcapVisible,UpdateSourceTrigger=PropertyChanged}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="10*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <StackPanel Orientation="Horizontal">
-                    <TextBlock>Danh sach nha cung cap</TextBlock>
-                    <Button
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--main Content-->
+        <Grid Grid.Row = "0" Margin="10">
+            <Grid>
+                <Grid>
+                    <!--Grid danh sach cac nha cung cap-->
+                    <!---->
+                    <Grid x:Name="gridDSNCC" Visibility="{Binding DSNhacungcapVisible,UpdateSourceTrigger=PropertyChanged}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="36"/>
+                            <RowDefinition Height="10*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Danh Sách Nhà Cung Cấp"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"></TextBlock>
+                                
+                            </StackPanel>
+                            <Button Content="Thêm Nhà Cung Cấp"
+                                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
                         Command="{Binding btnAddSupCommand}"></Button>
-                    
-                    </StackPanel>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="340"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" 
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="340"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" 
                         Margin="20 0 5 0">
-                        <Border BorderBrush="Black"
+                                <Border BorderBrush="Black"
                             BorderThickness="2"
                             CornerRadius="15">
-                            <DockPanel
+                                    <DockPanel
                                     VerticalAlignment="Center"
                                     Opacity="0.8"
                                     Margin="4 0 0 0">
-                                <materialDesign:PackIcon Kind="Search" 
+                                        <materialDesign:PackIcon Kind="Search" 
                                                         DockPanel.Dock="Left"
                                                         Width="20"
                                                         Height="20"/>
-                                <TextBox Padding="5 0 0 0"
+                                        <TextBox Padding="5 0 0 0"
                                         DockPanel.Dock="Bottom"
                                         Text="{Binding textBoxSearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         x:Name="textboxSearch"
@@ -59,19 +89,19 @@
                                         VerticalAlignment="Center"
                                         VerticalContentAlignment="Center"
                                         BorderThickness="0">
-                                    <!--tìm kiếm theo tên và mã -->
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding searchEngineer}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                            </DockPanel>
-                        </Border>
-                    </Grid>
+                                            <!--tìm kiếm theo tên và mã -->
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding searchEngineer}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                            </Grid>
 
-                    <Grid Grid.Column="1">
-                        <Button Width="120"
+                            <Grid Grid.Column="1">
+                                <Button Width="120"
                             x:Name="btnFilter"
                             HorizontalAlignment="Left"
                             Command="{Binding OpenFilterCommand}"
@@ -80,25 +110,25 @@
                             Foreground="{Binding ForegroudFilter}"
                             BorderBrush="Black"
                             Margin="20 0 0 0">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Filter"
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Filter"
                                                         HorizontalAlignment="Left"
                                                         Width="20"
                                                         Height="20"/>
-                                <TextBlock
+                                        <TextBlock
                                     Text="Bộ Lọc"
                                 Margin="5 0 0 0"
                                 FontWeight="SemiBold"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 ></TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-                </Grid>
-                
-                <Grid Grid.Row="2">
-                    <DataGrid 
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <DataGrid ColumnWidth="*"
                     x:Name="dgNhacungcap" 
                     AutoGenerateColumns="False" 
                     CanUserAddRows="False" 
@@ -107,318 +137,421 @@
                     HorizontalContentAlignment="Center"
                     ItemsSource="{Binding InventoryList}"
                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Width="100" Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="150" Header="Tên nhà cung cấp" Binding="{Binding Supplier.nameSupplier}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="250" Header="Địa chỉ" Binding="{Binding Supplier.addressSupplier}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="200" Header="Email" Binding="{Binding Supplier.emailSupplier}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="120" Header="Số điện thoại" Binding="{Binding Supplier.phoneNumberSupplier}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="150" Header="Trạng thái" Binding="{Binding Supplier.statusSupplier}" IsReadOnly="True"/>
-                            <DataGridTemplateColumn Width="250" Header="">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button 
-                                        x:Name="btnDelete" Content="Delete"
-                                        Width="100"
-                                        Background="Transparent" 
-                                        Foreground="Black" 
-                                        BorderBrush="Black">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
-                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteSupplierCommand}"
-                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                        <i:InvokeCommandAction
-                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.searchEngineer}"
-                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                            <Button 
-                                        x:Name="btnEdit" Content="Edit"
-                                        Width="100"
-                                        Background="Transparent" 
-                                        Foreground="Black" 
-                                        BorderBrush="Black"
-                                        >
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="auto" Header="ID" Binding="{Binding Supplier.idSupplier}" IsReadOnly="True">
+                                        <DataGridTextColumn.HeaderStyle >
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="auto" Header="Tên nhà cung cấp" Binding="{Binding Supplier.nameSupplier}" IsReadOnly="True">
+                                        <DataGridTextColumn.HeaderStyle >
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="*" Header="Địa chỉ" Binding="{Binding Supplier.addressSupplier}" IsReadOnly="True">
+                                        <DataGridTextColumn.HeaderStyle >
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Supplier.emailSupplier}" IsReadOnly="True">
+                                        <DataGridTextColumn.HeaderStyle >
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="auto" Header="Số điện thoại" Binding="{Binding Supplier.phoneNumberSupplier}" IsReadOnly="True">
+                                        <DataGridTextColumn.HeaderStyle >
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="auto" Header="Trạng thái" Binding="{Binding Supplier.statusSupplier}" IsReadOnly="True">
+                                        <DataGridTextColumn.HeaderStyle >
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn Width="auto" Header="">
+                                        <DataGridTemplateColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            </Style>
+                                        </DataGridTemplateColumn.HeaderStyle>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right">
+                                                    <!--edit-->
+                                                    <Button Background="Transparent"
+                                                            x:Name="btnEdit"
+                                                    BorderBrush="Transparent"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Padding="0"
+                                                    Margin="0 0 5 0">
+                                                        <materialDesign:PackIcon 
+                                                    Kind="Eye"                                             
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="Aqua"/>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction
                                                         Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnEditSuplierCommand}"
                                                         CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </Grid>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Button>
+
+                                                    <!--delete-->
+                                                    <Button  x:Name="btnDelete"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                Width="auto"
+                                                Height="auto"
+                                                Padding="0">
+                                                        <materialDesign:PackIcon 
+                                                    Kind="Delete"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="red"/>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteSupplierCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                                <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.searchEngineer}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Grid>
 
 
-            <!--Grid them, edit nha cung cap-->
-            <Grid x:Name="gridAddNCC" Visibility="{Binding EditNhacungcapVisible,UpdateSourceTrigger=PropertyChanged}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <TextBlock 
+                    <!--Grid them, edit nha cung cap-->
+                    <!---->
+                    <Grid x:Name="gridAddNCC" Visibility="{Binding EditNhacungcapVisible,UpdateSourceTrigger=PropertyChanged}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock FontSize="18"
+                                           FontWeight="SemiBold"
                     Text="Thông tin cơ bản" 
                     VerticalAlignment="Center"
                     Margin="10 0 0 0"/>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="69*"/>
-                                <ColumnDefinition Width="11*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock 
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="69*"/>
+                                        <ColumnDefinition Width="11*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock 
                             Text="Tên nhà cung cấp" 
                             VerticalAlignment="Center"
                             Margin="10,5,0,5.4" Grid.ColumnSpan="2"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBox x:Name="nameSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <TextBox x:Name="nameSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding nameSup,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <TextBlock 
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <TextBlock 
                             Text="Email" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <TextBlock 
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="1">
+                                    <TextBlock 
                             Text="Số điện thoại" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBox x:Name="mailSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <TextBox x:Name="mailSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding emailSup,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <TextBox x:Name="phoneSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                    </TextBox>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <TextBox x:Name="phoneSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding phoneSup,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <TextBlock 
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock FontSize="18"
+                                           FontWeight="SemiBold"
                     Text="Thông tin cơ bản" 
                     VerticalAlignment="Center"
                     Margin="10 0 0 0"/>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <TextBlock 
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <TextBlock 
                             Text="Tỉnh thành" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <TextBlock 
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="1">
+                                    <TextBlock 
                             Text="Quận huyện" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBox x:Name="tinhAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <TextBox x:Name="tinhAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding tinh,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <TextBox x:Name="huyenAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                    </TextBox>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <TextBox x:Name="huyenAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding huyen,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <TextBlock 
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <TextBlock 
                             Text="Phường xã" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <TextBlock 
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="1">
+                                    <TextBlock 
                             Text="Số nhà, đường" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBox x:Name="xaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <TextBox x:Name="xaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding xa,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <TextBox x:Name="sonhaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                    </TextBox>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <TextBox x:Name="sonhaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding sonha,UpdateSourceTrigger=PropertyChanged}">
-                            </TextBox>
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <TextBlock 
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock FontSize="18"
+                                           FontWeight="SemiBold"
                     Text="Thông tin bổ sung" 
                     VerticalAlignment="Center"
                     Margin="10 0 0 0"/>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <TextBlock 
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <TextBlock 
                             Text="Số fax" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <TextBlock 
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="1">
+                                    <TextBlock 
                             Text="Mã số thuế" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding fax,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding masothue,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <TextBlock 
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <TextBlock 
                             Text="Website" 
                             VerticalAlignment="Center"
                             Margin="10 0 0 0"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding website,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="3">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-                        <Button Width="100"  Content="Thoát"
+                        <Grid Grid.Row="3">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button Width="100"  Content="Thoát" Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                             Background="Transparent" 
                             Foreground="Black" 
                             BorderBrush="Black">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnExitCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Background="Transparent" 
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding btnExitCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button Width="100" Background="Transparent" Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Margin="10 0 0 0"
                                 Foreground="Black" BorderBrush="Black" 
                                 Content="Cập nhật" Visibility="{Binding ButtonUpdateVisible}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                 Command="{Binding updateSupplierCommand}"></i:InvokeCommandAction>
-                                    <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                 Command="{Binding searchEngineer}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Background="Transparent" 
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button Width="100" Background="Transparent" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="10 0 0 0"
                                 Foreground="Black" BorderBrush="Black" 
                                 Content="Thêm" Visibility="{Binding ButtonInsertVisible}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
                                 Command="{Binding insertSupplierCommand}"></i:InvokeCommandAction>
-                                    <i:InvokeCommandAction
+                                            <i:InvokeCommandAction
                                 Command="{Binding searchEngineer}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                    </StackPanel>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Grid>
-        <Grid x:Name="gridFilter"
+                <Grid x:Name="gridFilter"
                           Visibility="{Binding IsFilter}"
                           Height="100"
                           Opacity="0.95"
@@ -426,45 +559,45 @@
                           Margin="0,91,20,0"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="47*"/>
-                <ColumnDefinition Width="28*"/>
-            </Grid.ColumnDefinitions>
-            <Border BorderThickness="2"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="47*"/>
+                        <ColumnDefinition Width="28*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderThickness="2"
                                 CornerRadius="10"
                                 BorderBrush="Black"
                                 Background="#FFE7E7E7" Grid.ColumnSpan="2">
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition Height="0.8*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Vertical"
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="0.8*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <StackPanel Orientation="Vertical"
                                             Margin="5">
-                            <TextBlock Text="Trạng thái"
+                                    <TextBlock Text="Trạng thái"
                                                    FontWeight="SemiBold"></TextBlock>
-                            <ComboBox
+                                    <ComboBox
                                 IsEditable="True"
                                 ItemsSource="{Binding ListStatus, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValue="{Binding CurrentStatus, UpdateSourceTrigger=PropertyChanged}"
                                 Text="{Binding CurrentStatus, UpdateSourceTrigger=PropertyChanged}"
                                 HorizontalAlignment="Left"
-                                Width="184">
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
+                                Width="200">
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
 
-                    <Grid Grid.Row="1">
-                        <StackPanel Orientation="Horizontal"
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
-                            <Button 
+                                    <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Content="Xoá bộ lọc"         
                                 Padding="0"
                                 Height="30"
                                 Width="100"
                                 IsEnabled="True"></Button>
-                            <Button 
+                                    <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 Content="Lọc"              
                                 Height="30"
                                 Padding="0"
@@ -472,9 +605,9 @@
                                 Width="100"
                                 IsEnabled="True"
                                 Command="{Binding searchEngineer}"></Button>
-                        </StackPanel>
-                    </Grid>
-                    <Button HorizontalAlignment="Right"
+                                </StackPanel>
+                            </Grid>
+                            <Button HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource MaterialDesignFlatDarkButton}"
                                         ToolTip="Đóng Bộ Lọc"
@@ -485,13 +618,15 @@
                                         Background="Transparent"
                                         Foreground="Red"
                                         BorderBrush="Transparent">
-                        <materialDesign:PackIcon Kind="Close" 
+                                <materialDesign:PackIcon Kind="Close" 
                                                                  Width="20"
                                                                  Height="20"/>
 
-                    </Button>
+                            </Button>
+                        </Grid>
+                    </Border>
                 </Grid>
-            </Border>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

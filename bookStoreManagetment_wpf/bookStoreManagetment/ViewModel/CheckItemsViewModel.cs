@@ -208,7 +208,7 @@ namespace bookStoreManagetment.ViewModel
 
                     foreach (var inventory in InventoryList)
                     {
-                        if (inventory.Count == 0)
+                        if (inventory.NewQuantity == 0)
                         {
                             return false;
                         }
@@ -275,14 +275,17 @@ namespace bookStoreManagetment.ViewModel
                 var temp = p as CheckItemSheet;
                 DisplayNhanVien = temp.nameEmployee;
                 InventoryList.Clear();
-                foreach (var infor in temp.InforItems)
+                var listItem = DataProvider.Ins.DB.checkItems.Where(x => x.idCheckItems == temp.codeCheckItem).ToList();
+                foreach (var infor in listItem)
                 {
                     InventoryList.Add(new Inventory()
                     {
                         Item = DataProvider.Ins.DB.items.Where(x => x.idItem == infor.idItem).FirstOrDefault(),
-                        Count = infor.quantityItem
+                        NewQuantity = infor.newQuantityItem,
+                        OldQuantity = infor.oldQuantityItem
                     });
                 }
+                Note = listItem[0].note;
                 State = Visibility.Collapsed;
                 isReadOnly = false;
                 Title = "Danh Sách Phiếu Kiểm Hàng > " + temp.codeCheckItem;
@@ -471,15 +474,15 @@ namespace bookStoreManagetment.ViewModel
                     {
                         Inventory _Inventory = new Inventory();
                         _Inventory.Item = cellItems.Items;
-
+                        _Inventory.OldQuantity = cellItems.Items.quantity;
                         int i = checkHasSanPham(cellItems.Items.idItem);
                         if (i != -1)
                         {
-                            _Inventory.Count = InventoryList[i].Count;
+                            _Inventory.NewQuantity = InventoryList[i].NewQuantity;
                         }
                         else
                         {
-                            _Inventory.Count = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItems.Items.idItem).FirstOrDefault().quantity;
+                            _Inventory.NewQuantity = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItems.Items.idItem).FirstOrDefault().quantity;
                         }
                         temp.Add(_Inventory);
                     }
@@ -533,10 +536,11 @@ namespace bookStoreManagetment.ViewModel
                                                                                   x.firstName == firstName
                                                                                 ).FirstOrDefault().idEmployee,
                             idItem = inventory.Item.idItem,
-                            quantityItem = inventory.Item.quantity
+                            oldQuantityItem = inventory.OldQuantity,
+                            newQuantityItem = inventory.NewQuantity
                         };
                         var currentItem = DataProvider.Ins.DB.items.Where(x => x.idItem == inventory.Item.idItem).FirstOrDefault();
-                        currentItem.quantity = inventory.Count;
+                        currentItem.quantity = inventory.NewQuantity;
 
                         DataProvider.Ins.DB.checkItems.Add(temp);
                         DataProvider.Ins.DB.SaveChanges();
@@ -622,7 +626,8 @@ namespace bookStoreManagetment.ViewModel
                     InforItems = new List<inforItem> { new inforItem
                     {
                             idItem = ckItem.idItem,
-                            quantityItem = ckItem.quantityItem
+                            OldQuantityItem = ckItem.oldQuantityItem,
+                            NewQuantityItem = ckItem.newQuantityItem
                     }},
 
                     nameEmployee = getFullNameEmployyee(ckItem.idEmployee)
@@ -633,7 +638,8 @@ namespace bookStoreManagetment.ViewModel
                 ListCheckSheets[i].InforItems.Add(new inforItem
                 {
                     idItem = ckItem.idItem,
-                    quantityItem = ckItem.quantityItem
+                    OldQuantityItem = ckItem.oldQuantityItem,
+                    NewQuantityItem = ckItem.newQuantityItem
                 });
             }
 

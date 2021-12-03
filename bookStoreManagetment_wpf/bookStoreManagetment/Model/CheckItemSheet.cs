@@ -9,7 +9,8 @@ namespace bookStoreManagetment.Model
     public class inforItem
     {
         public string idItem { get; set; }
-        public int quantityItem { get; set; }
+        public int OldQuantityItem { get; set; }
+        public int NewQuantityItem { get; set; }
     }
     public class CheckItemSheet
     {

@@ -9,7 +9,8 @@ namespace bookStoreManagetment.Model
     public class Inventory
     {
         public item Item { get; set; }
-        public int Count { get; set; }
+        public int OldQuantity { get; set; }
+        public int NewQuantity { get; set; }
         public List<int> ListIntergers { get; set; }
 
         public Inventory()

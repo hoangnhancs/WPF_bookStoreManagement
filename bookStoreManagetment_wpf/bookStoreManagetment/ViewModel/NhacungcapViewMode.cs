@@ -117,6 +117,14 @@ namespace bookStoreManagetment.ViewModel
             //load nha cung cap user control
             LoadNhacungcapCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                // ẩn grid filter
+                IsFilter = Visibility.Collapsed;
+
+                // set màu cho nút filter
+                var bc = new BrushConverter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+
                 textBoxSearchValue = "";
                 CurrentStatus = "";
                 IsFilter = Visibility.Collapsed;
@@ -125,7 +133,6 @@ namespace bookStoreManagetment.ViewModel
                 LoadListStatus();
                 
                 SearchEngineer(textBoxSearchValue, CurrentStatus);
-                MessageBox.Show(InventoryList.Count().ToString());
             });
 
 
@@ -151,7 +158,6 @@ namespace bookStoreManagetment.ViewModel
                 addressSup = SelectedItem.Supplier.addressSupplier;
                 emailSup = SelectedItem.Supplier.emailSupplier;
                 string[] lstadd = addressSup.Split(',');
-                MessageBox.Show(lstadd[0] + "," + lstadd[1] + "," + lstadd[2] + "," + lstadd[3]);
                 sonha = lstadd[0];
                 xa = lstadd[1].Replace(" xã ", "");
                 huyen = lstadd[2].Replace(" huyện ", "");
