@@ -29,9 +29,9 @@ namespace bookStoreManagetment.Model
 
             // nhân viên
             if (listPermission.Contains("2"))
-                ChinhSuaQuyDinh = true;
+                ChinhSuaNhanVien = true;
             else
-                ChinhSuaQuyDinh = false;
+                ChinhSuaNhanVien = false;
         }
     }
 }
