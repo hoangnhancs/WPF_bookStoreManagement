@@ -17,12 +17,14 @@
     <!--load user control-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedUserControlCommand}" />
+            <i:InvokeCommandAction Command="{Binding LoadedUserControlCommand}"
+                                   CommandParameter="{Binding ElementName=btnFilter}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
         <!--Phiếu thu / chi-->
         <Grid Visibility="Collapsed"
+              Width="auto"
               x:Name="gridListPhieuChi">
             <Grid.RowDefinitions>
                 <RowDefinition Height="56"></RowDefinition>
@@ -645,7 +647,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <!--Loại phiếu-->
+                            <!--Loại phiếu--><!--
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.billType}"
                                     Header="Loại Phiếu"
@@ -662,7 +664,7 @@
                                         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                            </DataGridTextColumn>-->
 
 
                             <!--trạng thái -->
@@ -839,6 +841,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        
         <Grid x:Name="gridFilter"
                           Visibility="{Binding IsFilter}"
                           Height="200"

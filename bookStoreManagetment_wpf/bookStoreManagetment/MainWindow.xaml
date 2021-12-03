@@ -10,12 +10,12 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}" 
         Name="_MainWindow"
-        Title="MainWindow" Height="700" Width="1200">
+        Title="MainWindow" Height="700" Width="1200" Icon="pictures/Logo Hani.png">
 
 
     <!--Resouces-->
@@ -66,22 +66,24 @@
         </Grid.RowDefinitions>
 
         <!--Header-->
-        <Grid Grid.Row="0" Background="{StaticResource VertihicalAquaLinearGradient}">
+        <Grid Grid.Row="0" Background="#bcd7f4">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="175"></ColumnDefinition>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <!--Logo-->
-            <Grid Grid.Column="0" 
-                  Background="OrangeRed">
+            <Grid Grid.Column="0">
+                <Grid.Background>
+                    <ImageBrush ImageSource="pictures/Logo Hani (1).png" Stretch="UniformToFill"/>
+                </Grid.Background>
                 <!-- Bỏ source ảnh vào đây-->
                 <!--<Image x:Name="Logo" Source="myLogo.png" Stretch="Fill"></Image>-->
             </Grid>
 
             <!--sub header-->
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -90,13 +92,18 @@
                 <!--Account-->
                 <Grid Grid.Column="1">
                     <materialDesign:Chip
-                        x:Name="chipAccount"
-                        Width="auto"
-                        Content="Tài Khoản"
-                        Icon="T" 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                    />
+                            x:Name="chipAccount"
+                            Width="auto"
+                            Content="Tài Khoản"
+                            Icon="T" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ShowHideLoginCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </materialDesign:Chip>
                 </Grid>
             </Grid>
         </Grid>
@@ -105,7 +112,7 @@
         <Grid Grid.Row="1">
             <DockPanel>
                 <Grid Width="40"
-                      Background="{StaticResource HorizontalAquaLinearGradient}"
+                      Background="#bcd7f4"
                       x:Name="gridSubMenu"
                       Visibility="Visible"
                       DockPanel.Dock="Left">
@@ -177,7 +184,7 @@
                                     <i:InvokeCommandAction
                                         Command="{Binding ShowHideMenuCommand}"
                                         CommandParameter="{Binding ElementName= gridMenu}">
-                                    </i:InvokeCommandAction> 
+                                    </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
                                     Command="{Binding OpenSubMenuCommand}"
                                     CommandParameter="{Binding ElementName=subMenuQLVP}"/>
@@ -236,7 +243,7 @@
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
                                         Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLBH}"/>
+                                        CommandParameter="{Binding ElementName=subMenuQLKH}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -244,7 +251,7 @@
                         <!--employee-->
                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                 x:Name="btnIconQLNV"
-                                Command="{Binding ChangeColorOpenedSTP}"
+                                Command="{Binding ChangeColorButtonClickCommand}"
                                 CommandParameter="{Binding ElementName=btnQLNV}">
                             <materialDesign:PackIcon Kind="PersonBadge" 
                                                      HorizontalAlignment="Center"
@@ -255,16 +262,12 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowHideMenuCommand}"
-                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName= btnIconQLNV}">
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowHideMenuCommand}"
-                                        CommandParameter="{Binding ElementName= gridMenu}">
-                                    </i:InvokeCommandAction>
-                                    <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                        Command="{Binding openDSNhanVienUCCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -293,7 +296,7 @@
                                     <i:InvokeCommandAction
                                             Command="{Binding OpenSubMenuCommand}"
                                             CommandParameter="{Binding ElementName=subMenuQLTC}"/>
-                                    
+
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -396,14 +399,14 @@
                       Visibility="Collapsed"
                       DockPanel.Dock="Left">
                     <DockPanel
-                    Background="{StaticResource HorizontalAquaLinearGradient}">
+                    Background="#bcd7f4">
                         <!--Feature sub menu-->
                         <ScrollViewer
-                                  Background="{StaticResource HorizontalAquaLinearGradient}"
+                                  Background="#bcd7f4"
                         x:Name="test_scv" 
                         VerticalScrollBarVisibility="Auto" 
                         HorizontalScrollBarVisibility="Hidden">
-                            
+
                             <StackPanel x:Name="stackPanelFeatures"
                                         Margin="10 0 0 0"
                                         Background="Transparent">
@@ -504,7 +507,7 @@
                                                 Command="{Binding ChangeColorButtonClickCommand}"
                                                 CommandParameter="{Binding ElementName=btnNhapHang}"
                                                 Style="{StaticResource btnStyle_MenuFeatures}"
-                                                Content="Nhập hàng">    
+                                                Content="Nhập hàng">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="Click">
                                                     <i:InvokeCommandAction
@@ -617,6 +620,9 @@
                                                         Command="{Binding ChangeColorButtonIconClickCommand}"
                                                         CommandParameter="{Binding ElementName=btnIconQLBH}">
                                                     </i:InvokeCommandAction>
+                                                    <i:InvokeCommandAction 
+                                                    Command="{Binding KhachtrahangCommand}"
+                                                    CommandParameter="{Binding ElementName=GridMainForm}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
@@ -660,6 +666,10 @@
                                                         Command="{Binding ChangeColorButtonIconClickCommand}"
                                                         CommandParameter="{Binding ElementName=btnIconQLKH}">
                                                     </i:InvokeCommandAction>
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding openDSKhachHangUCCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                                    </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
@@ -690,21 +700,26 @@
                                             x:Name="btnQLNV"
                                             Width="145"
                                             HorizontalContentAlignment="Left"
+                  
                                             Style="{StaticResource btnStyle_MenuFeatures}"
                                             Content="Quản lý nhân viên">
-                                        <!--Event button click open sub menu-->
+                                        <!--ẩn hiện -->
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
-                                                    Command="{Binding OpenSubMenuCommand}"
-                                                    CommandParameter="{Binding ElementName=subMenuQLNV}"/>
+                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                        CommandParameter="{Binding ElementName= btnIconQLNV}">
+                                                </i:InvokeCommandAction>
                                                 <i:InvokeCommandAction
-                                                    Command="{Binding ChangeColorOpenedSTP}"
-                                                    CommandParameter="{Binding ElementName=btnQLNV}"/>
+                                        Command="{Binding openDSNhanVienUCCommand}"
+                                        CommandParameter="{Binding ElementName=GridMainForm}"/>
+                                                <i:InvokeCommandAction
+                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                        CommandParameter="{Binding ElementName=btnQLNV}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>
-                                    <!--Sub menu-->
+                                    <!--Sub menu--><!--
                                     <StackPanel x:Name="subMenuQLNV" Margin="10 0 0 0" Visibility="Collapsed">
                                         <Button HorizontalAlignment="Left"
                                                 x:Name="btnDSNV"
@@ -740,7 +755,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
                                 </StackPanel>
 
                                 <!--Quản lí thu chi-->
@@ -938,7 +953,7 @@
                     <!--Main Form-->
                     <Grid 
                     x:Name="GridMainForm"
-                    Background="AntiqueWhite"
+                    Background="White"
                     HorizontalAlignment="Stretch">
 
                         <!--Features-->
@@ -953,6 +968,117 @@
                 Grid.Row="1"               
                 Content="{Binding SelectedViewModel}"></ContentControl>
             </DockPanel>
+        </Grid>
+
+        <Grid Width="120"
+              Height="80" 
+              Margin="0,66,15,0" 
+              Grid.RowSpan="2" 
+              Visibility="{Binding IsLogin}"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top"
+              >
+            <Border BorderThickness="2"
+                    BorderBrush="Black"
+                    CornerRadius="8"
+                    Background="#19000000">
+                <StackPanel 
+                            Margin="0 5 ">
+                    <Button Content="Thông tin"
+                            Height="30"
+                            Background="Transparent"
+                            Foreground="Black"
+                            BorderBrush="Black"
+                            Command="{Binding CheckPasswordLogedAccountCommand}"
+                            CommandParameter="{Binding ElementName=GridMainForm}"></Button>
+                    <Button Content="Đăng xuất"
+                            Command="{Binding LogoutCommand}"
+                            CommandParameter="{Binding ElementName=_MainWindow}"
+                            Height="30"
+                            Background="Transparent"
+                            Foreground="Black"
+                            BorderBrush="Black"
+                            Margin="0 5 0 0"
+                            >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding LoadedDashBoardCommand}"
+                                                       CommandParameter="{Binding ElementName=GridMainForm}">
+                                </i:InvokeCommandAction>
+                                <i:InvokeCommandAction 
+                                    Command="{Binding ChangeColorButtonClickCommand}"
+                                    CommandParameter="{Binding ElementName= btnDashboard}">
+                                </i:InvokeCommandAction>
+                                <i:InvokeCommandAction
+                                    Command="{Binding ChangeColorButtonIconClickCommand}"
+                                    CommandParameter="{Binding ElementName=btnIconDashboard}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+
+        <Grid x:Name="gridChangePassword"
+                  Visibility="{Binding VisibilityGridPassword}"
+                Width="354"
+                HorizontalAlignment= "Center"
+                Height="150"
+                VerticalAlignment="Center"
+              Grid.Row="1">
+            <Border BorderBrush="Black"
+                                    Background="#FFE7E7E7"
+                                    BorderThickness="2"
+                                    CornerRadius="12">
+                <Grid>
+                    <StackPanel Margin="12" VerticalAlignment="Center">
+                        <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Center">
+                            <TextBlock Text="Vui lòng nhập mật khẩu"></TextBlock>
+                            <TextBox Text="{Binding DisplayPassword ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+                        <StackPanel Margin="0 30 0 0"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <Button Width="120"
+                                    Background="Red"
+                                    BorderBrush="Red"
+                                    Command="{Binding CloseCheckPasswordLogedAccountCommand}"
+                                    Foreground="White"
+                                    Content="Thoát">
+                            </Button>
+                            <Button Width="120"
+                                    BorderBrush="Green"
+                                        Command="{Binding ViewInformationLogedAccountCommand}"
+                                    CommandParameter="{Binding ElementName=GridMainForm}"
+                                    Background="Green"
+                                    Foreground="White"
+                                    Margin="50 0 0 0"
+                                    Content="Xác nhận">
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource MaterialDesignFlatDarkButton}"
+                                        ToolTip="Đóng Bộ Lọc"
+                                        Command="{Binding CloseCheckPasswordLogedAccountCommand}"
+                                        Width="30"
+                                        Height="30"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="Red"
+                                        BorderBrush="Transparent">
+                        <materialDesign:PackIcon Kind="Close" 
+                                                                 Width="20"
+                                                                 Height="20"/>
+
+                    </Button>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>

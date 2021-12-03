@@ -28,7 +28,14 @@
     <viewmodel:AddSupplierViewModel x:Key="AddSupplierVM"></viewmodel:AddSupplierViewModel>
     <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
     <viewmodel:mailViewModel x:Key="mailVM"></viewmodel:mailViewModel>
+
+    <viewmodel:KhachtrahangViewModel x:Key="KhachtrahangVM"></viewmodel:KhachtrahangViewModel>
+
     <viewmodel:DSHoaDonViewModel x:Key="DSHoaDonVM"></viewmodel:DSHoaDonViewModel>
+
+    <viewmodel:DSNhanVienViewModel x:Key="DSNhanVienVM" ></viewmodel:DSNhanVienViewModel>
+    <viewmodel:DSKhachHangViewModel x:Key="DSKhachHangVM" ></viewmodel:DSKhachHangViewModel>
+    <viewmodel:ThongTinNhanVienViewModel x:Key="ThongTinNhanVienVM" ></viewmodel:ThongTinNhanVienViewModel>
 
     <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
         <view:NhacungcapUC></view:NhacungcapUC>

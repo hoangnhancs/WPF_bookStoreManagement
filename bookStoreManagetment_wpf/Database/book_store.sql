@@ -120,18 +120,6 @@ create table khachtrahang
 )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 create table custommer
 (
 	sttCustommer int identity (1,1) primary key,
@@ -1085,9 +1073,9 @@ VALUES
 
 
 INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
-(N'IP001', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Tiền mặt')
+(N'IP001', N'EMP002', N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Tiền mặt')
 INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
-(N'IP002', 1, N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Thẻ')
+(N'IP002', N'EMP002', N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Thẻ')
 
 
 
@@ -1104,3 +1092,19 @@ insert into sentmail
 values
 (2,N'thaihoangnhantk17lqd@gmail.com',N'Đã gửi', @new, N'Nhà sách XXX', N'Thư mời tham dự cuộc họp',N'Hội họp')
 
+
+
+insert into supplier values
+(N'NCC001', 'SUP1', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC1@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc1.com', N'33433', N'sku1'),
+(N'NCC002', 'SUP2', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC2@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc2.com', N'33433', N'sku2'),
+(N'NCC003', 'SUP3', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC3@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc3.com', N'33433', N'sku3'),
+(N'NCC004', 'SUP4', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC4@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc4.com', N'33433', N'sku4'),
+(N'NCC005', 'SUP5', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC5@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc5.com', N'33433', N'sku5'),
+(N'NCC006', 'SUP6', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC6@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc6.com', N'33433', N'sku6'),
+(N'NCC007', 'SUP7', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC7@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc7.com', N'33433', N'sku7'),
+(N'NCC008', 'SUP8', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC8@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc8.com', N'33433', N'sku8'),
+(N'NCC009', 'SUP9', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC9@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc9.com', N'33433', N'sku9'),
+(N'NCC010', 'SUP10', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC10@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc10.com', N'33433', N'sku10'),
+(N'NCC011', 'SUP11', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC11@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc11.com', N'33433', N'sku11'),
+(N'NCC012', 'SUP12', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC12@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc12.com', N'33433', N'sku12'),
+(N'NCC013', 'SUP13', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC13@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc13.com', N'33433', N'sku13')

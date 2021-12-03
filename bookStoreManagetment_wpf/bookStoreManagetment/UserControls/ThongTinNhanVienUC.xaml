@@ -1,0 +1,203 @@
+﻿<UserControl x:Class="bookStoreManagetment.UserControls.ThongTinNhanVienUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             DataContext="{StaticResource ThongTinNhanVienVM}"
+             x:Name="_ThongTinNhanVienUC"
+             d:DesignHeight="575" d:DesignWidth="1024">
+    <!--loaded command-->
+    <!--loaded command-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                    Command="{Binding LoadedUserControlCommand}" 
+                    CommandParameter="{Binding ElementName=passworBoxNV}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+                      GridLinesVisibility="None" SelectionChanged="DataGrid_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--main Content-->
+        <Grid Grid.Row = "0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TextBlock
+                Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"
+                FontWeight="Bold"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                    </TextBlock>
+                </Grid>
+
+                <Grid Grid.Row="1"
+              Margin="50 10 10 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid Height="140"
+                          HorizontalAlignment="Left"
+                          Width="140"
+                          Margin="20 0 0 0">
+                                <Border BorderBrush="Black"
+                                BorderThickness="2">
+                                    <Grid>
+                                        <materialDesign:PackIcon Kind="ImagePlus" 
+                                                         Width="20"
+                                                         Height="20"
+                                                         HorizontalAlignment="Right"
+                                                         VerticalAlignment="Top"/>
+                                        <Image Source="{Binding ViewEmployee.Staff.employeeImagePath, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></Image>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <StackPanel Width="300"
+                                Height="42"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                                <TextBlock Text="Chức Vụ: "></TextBlock>
+                                <TextBox Text="{Binding ViewEmployee.Position, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <StackPanel Width="300"
+                                Height="42"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                                <TextBlock Text="Email: "></TextBlock>
+                                <TextBox Text="{Binding ViewEmployee.Staff.employeeEmail, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <StackPanel Orientation="Vertical"
+                                        Width="350"
+                                        Height="42"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Tên người dùng: "></TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="300"
+                                        Text="{Binding ViewEmployee.Staff.nameAccount, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction
+                                                        Command="{Binding TextChangedNameAccountCommand}"
+                                                        CommandParameter="{Binding ElementName=iconErrorAccount}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <materialDesign:PackIcon Kind="AccountAlert"
+                                                                 Visibility="Collapsed"
+                                                                 ToolTip = "Tài khoản đã tồn tại"
+                                                                 x:Name="iconErrorAccount"
+                                                                 Foreground="Red"
+                                                                 HorizontalAlignment="Left"
+                                                                 VerticalAlignment="Center"/>
+                                </StackPanel>
+                                
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <StackPanel Width="300"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                                <TextBlock Text="Mật Khẩu: "></TextBlock>
+                                <Grid>
+                                    <TextBox Visibility="Visible"
+                                        Text="{Binding ViewEmployee.Password, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                        <!--loaded command-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction
+                                                    Command="{Binding TextChangedPasswordCommand}"
+                                                    CommandParameter="{Binding ElementName=passworBoxNV}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <StackPanel Width="300"
+                                Height="42"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                                <TextBlock Text="Số Điện Thoại: "></TextBlock>
+                                <TextBox Text="{Binding ViewEmployee.Staff.phoneNumber, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></TextBox>
+                            </StackPanel>
+                        </Grid>
+
+
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                        <Button Width="120"
+                                BorderBrush="Green"
+                                Background="Green"
+                                Command="{Binding SavePasswordCommand}"
+                                Foreground="White"
+                                Content="Lưu">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</UserControl>

@@ -99,7 +99,9 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -148,6 +150,7 @@
     <Compile Include="Model\checkItem.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\checkmail.cs" />
     <Compile Include="Model\CheckItemSheet.cs" />
     <Compile Include="Behaviors\DataGridExport.cs" />
     <Compile Include="Model\custommer.cs">
@@ -165,6 +168,7 @@
     <Compile Include="Model\item.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\itemtrave.cs" />
     <Compile Include="Model\khachtrahang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -209,6 +213,7 @@
     <Compile Include="Model\supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\TrahangInfor.cs" />
     <Compile Include="Nhacungcap.xaml.cs">
       <DependentUpon>Nhacungcap.xaml</DependentUpon>
     </Compile>
@@ -226,6 +231,12 @@
     </Compile>
     <Compile Include="UserControls\DSHoaDonUC.xaml.cs">
       <DependentUpon>DSHoaDonUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DSKhachHangUCxaml.xaml.cs">
+      <DependentUpon>DSKhachHangUCxaml.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DSNhanVien.xaml.cs">
+      <DependentUpon>DSNhanVien.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ImportGoodsUC.xaml.cs">
       <DependentUpon>ImportGoodsUC.xaml</DependentUpon>
@@ -245,6 +256,9 @@
     <Compile Include="UserControls\EditSupplier.xaml.cs">
       <DependentUpon>EditSupplier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\KhachtrahangUC.xaml.cs">
+      <DependentUpon>KhachtrahangUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\mailUC.xaml.cs">
       <DependentUpon>mailUC.xaml</DependentUpon>
     </Compile>
@@ -254,22 +268,29 @@
     <Compile Include="UserControls\NhacungcapUC.xaml.cs">
       <DependentUpon>NhacungcapUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ThongTinNhanVienUC.xaml.cs">
+      <DependentUpon>ThongTinNhanVienUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AddSupplierViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CaiDatChungViewModel.cs" />
     <Compile Include="ViewModel\CheckItemsViewModel.cs" />
     <Compile Include="ViewModel\DashBoardViewModel.cs" />
     <Compile Include="ViewModel\DSHoaDonViewModel.cs" />
+    <Compile Include="ViewModel\DSKhachHangViewModel.cs" />
+    <Compile Include="ViewModel\DSNhanVienViewModel.cs" />
     <Compile Include="ViewModel\ImportGoodsViewModel.cs" />
     <Compile Include="ViewModel\ListofProductsViewModel.cs" />
     <Compile Include="ViewModel\DSThuChiViewModel.cs" />
     <Compile Include="ViewModel\EditSupplierViewModel.cs" />
+    <Compile Include="ViewModel\KhachtrahangViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\mailViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NhacungcapViewMode.cs" />
     <Compile Include="ViewModel\PhieuChiViewModel.cs" />
     <Compile Include="ViewModel\PhieuThuViewModel.cs" />
+    <Compile Include="ViewModel\ThongTinNhanVienViewModel.cs" />
     <Page Include="CheckItemsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -322,6 +343,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\DSKhachHangUCxaml.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DSNhanVien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ImportGoodsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -346,12 +375,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\KhachtrahangUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\mailUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TestUC.xaml" />
     <Page Include="UserControls\NhacungcapUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ThongTinNhanVienUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -412,6 +449,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="pictures\icons8_edit_25px.png" />
+    <Resource Include="pictures\icons8_trash_25px.png" />
+    <Resource Include="pictures\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pictures\3c57ed515c290ff8ef59afa950d950da.png" />
+    <Resource Include="pictures\Logo Hani %281%29.png" />
     <Content Include="bookStoreManagement.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -429,12 +476,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Resource Include="pictures\icons8_edit_25px.png" />
-    <Resource Include="pictures\icons8_trash_25px.png" />
-    <Resource Include="pictures\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows\" />
+    <Content Include="pictures\noImage.png" />
+    <Resource Include="pictures\Logo Hani.png" />
+    <Content Include="pictures\Logo Hani.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.2.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.2.1\build\MaterialDesignThemes.targets')" />

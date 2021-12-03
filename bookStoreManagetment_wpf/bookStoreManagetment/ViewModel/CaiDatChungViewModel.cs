@@ -64,6 +64,14 @@ namespace bookStoreManagetment.ViewModel
         private Rule _ViewRule;
         public Rule ViewRule { get => _ViewRule; set { _ViewRule = value; OnPropertyChanged(); } }
 
+        // background
+        private Brush _BackgroudFilter;
+        public Brush BackgroudFilter { get => _BackgroudFilter; set { _BackgroudFilter = value; OnPropertyChanged(); } }
+        // foreground
+        private Brush _ForegroudFilter;
+        public Brush ForegroudFilter { get => _ForegroudFilter; set { _ForegroudFilter = value; OnPropertyChanged(); } }
+
+
         // danh sách tất cả quy định
         private ObservableCollection<Rule> backupListRules;
         private ObservableCollection<Rule> _ListRules;
@@ -91,6 +99,7 @@ namespace bookStoreManagetment.ViewModel
             LoadedCheckItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+                
             });
 
             // load form
@@ -112,7 +121,7 @@ namespace bookStoreManagetment.ViewModel
                 if (Query != "" && Query != null)
                 {
                     ObservableCollection<Rule> newListRules = new ObservableCollection<Rule>();
-                    foreach (var rule in ListRules)
+                    foreach (var rule in backupListRules)
                     {
                         if (rule.Setting.nameSetting.ToLower().Contains(Query) || rule.Setting.idSetting.ToLower().Contains(Query))
                         {
@@ -182,8 +191,8 @@ namespace bookStoreManagetment.ViewModel
             {
                 Filter();
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#FF008000");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
             });
 
             // chỉnh sửa quy định
@@ -240,10 +249,9 @@ namespace bookStoreManagetment.ViewModel
                 displayEndDay = null;
                 Query = null;
 
-                // reset màu nút filter
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
 
             });
 
@@ -285,7 +293,7 @@ namespace bookStoreManagetment.ViewModel
                     createdateSetting = DateTime.Now,
                     idEmployee = currentAcc.idEmployee,
                 };
-                newViewRule.FullNameEmployee = currentAcc.firstName + " " + currentAcc.lastName;
+                newViewRule.FullNameEmployee = currentAcc.lastName + " " + currentAcc.firstName;
                 ViewRule = newViewRule;
 
                 // chỉnh title
@@ -298,8 +306,8 @@ namespace bookStoreManagetment.ViewModel
                 ListRules = backupListRules;
 
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
             });
 
             // xoá dữ liệu cài đặt
@@ -373,7 +381,7 @@ namespace bookStoreManagetment.ViewModel
             var staffs = DataProvider.Ins.DB.employees.ToList();
             foreach (var staff in staffs)
             {
-                AllStaff.Add(staff.firstName + " " + staff.lastName);
+                AllStaff.Add(staff.lastName + " " + staff.firstName);
             }
 
             // load list quy định
@@ -384,13 +392,17 @@ namespace bookStoreManagetment.ViewModel
                 newRule.Setting = new setting();
                 newRule.Setting = set;
                 var staff = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == set.idEmployee).FirstOrDefault();
-                newRule.FullNameEmployee = staff.firstName + " " + staff.lastName;
+                newRule.FullNameEmployee = staff.lastName + " " + staff.firstName;
                 ListRules.Add(newRule);
             }
             backupListRules = ListRules;
 
             // ẩn filter
             IsFilter = Visibility.Collapsed;
+
+            var bc = new BrushConverter();
+            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
 
         }
 

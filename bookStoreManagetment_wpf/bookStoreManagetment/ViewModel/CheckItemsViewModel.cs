@@ -64,6 +64,26 @@ namespace bookStoreManagetment.ViewModel
         private List<string> _MaPhieu;
         public List<string> MaPhieu { get => _MaPhieu; set { _MaPhieu = value; OnPropertyChanged(); } }
 
+        // filter
+        // ngày bắt đầu
+        private string _displayBeginDay;
+        public string displayBeginDay { get => _displayBeginDay; set { _displayBeginDay = value; OnPropertyChanged(); } }
+        // ngày kết thúc
+        private string _displayEndDay;
+        public string displayEndDay { get => _displayEndDay; set { _displayEndDay = value; OnPropertyChanged(); } }
+        // background
+        private Brush _BackgroudFilter;
+        public Brush BackgroudFilter { get => _BackgroudFilter; set { _BackgroudFilter = value; OnPropertyChanged(); } }
+        // foreground
+        private Brush _ForegroudFilter;
+        public Brush ForegroudFilter { get => _ForegroudFilter; set { _ForegroudFilter = value; OnPropertyChanged(); } }
+        // query tìm kiếm
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
+        // ẩn hiện grid filter
+        private Visibility _IsFilter;
+        public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
+
         private List<CellItems> _backupAllItems;
         public List<CellItems> BackupAllItems { get => _backupAllItems; set { _backupAllItems = value; OnPropertyChanged(); } }
         private List<CellItems> _ShowItems;
@@ -87,10 +107,16 @@ namespace bookStoreManagetment.ViewModel
         public ICommand DeleteCheckSheetCommand { get; set; }
         public ICommand LoadAllItemsCommand { get; set; }
         public ICommand checkBtnAddCheckSheet { get; set; }
+
+        //filter
+        public ICommand CheckFilterCommand { get; set; }
+        public ICommand DeleteFilterCommand { get; set; }
+        public ICommand CloseFilterCommand { get; set; }
+        public ICommand OpenFilterCommand { get; set; }
+        public ICommand TextChangedSearchCommand { get; set; }
         public CheckItemsViewModel()
         {
-            AllStaff = new List<string>();
-            AllStaff.Add(DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().lastName);
+
             Title = "Danh Sách Phiếu Kiểm Hàng";
 
             InventoryList = new ObservableCollection<Inventory>();
@@ -101,6 +127,76 @@ namespace bookStoreManagetment.ViewModel
                 LoadData();
             });
 
+            // textchanged tìm kiếm 
+            TextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (Query != "" && Query != null)
+                {
+                    ObservableCollection<CheckItemSheet> newListCheckSheet = new ObservableCollection<CheckItemSheet>();
+                    foreach (var checkSheet in ListCheckSheets)
+                    {
+                        if (checkSheet.codeCheckItem.ToLower().Contains(Query))
+                        {
+                            newListCheckSheet.Add(checkSheet);
+                        }
+                    }
+                    ListCheckSheets = newListCheckSheet;
+                }
+                else
+                {
+                    Filter();
+                }
+
+            });
+
+            // filter
+            CheckFilterCommand = new RelayCommand<object>((p) => {
+                if (displayEndDay != null && displayBeginDay != null)
+                    return true;
+                if (DisplayNhanVien != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                Filter();
+                var bc = new BrushConverter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+            });
+
+            // đóng/mở filter grid
+            OpenFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IsFilter == Visibility.Visible)
+                    IsFilter = Visibility.Collapsed;
+                else
+                    IsFilter = Visibility.Visible;
+            });
+
+            // đóng filter grid
+            CloseFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsFilter = Visibility.Collapsed;
+            });
+
+            // xoá filter
+            DeleteFilterCommand = new RelayCommand<object>((p) => {
+                if (DisplayNhanVien != null || displayEndDay != null || displayBeginDay != null)
+                    return true;
+                return false;
+            }, (p) =>
+            {
+                displayBeginDay = null;
+                displayEndDay = null;
+                DisplayNhanVien = "";
+                DisplayNhanVien = null;
+                Query = "";
+                ListCheckSheets = BackupListCheckSheet;
+
+                var bc = new BrushConverter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            });
 
             // kiểm tra điều kiện nút thêm sản phẩm
             checkBtnAddCheckSheet = new RelayCommand<object>(
@@ -128,6 +224,10 @@ namespace bookStoreManagetment.ViewModel
             // load tất cả sản phẩm
             LoadAllItemsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                // gán nv bằng nv đăng nhập
+                var currentEmployee = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
+                DisplayNhanVien = currentEmployee.lastName + " " + currentEmployee.firstName;
+
                 // load tất cả sản phẩm
                 BackupAllItems = new List<CellItems>();
                 var listItems = DataProvider.Ins.DB.items;
@@ -142,10 +242,12 @@ namespace bookStoreManagetment.ViewModel
                 ShowItems = new List<CellItems>();
                 ShowItems = BackupAllItems;
 
-                DisplayNhanVien = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault().lastName;
+                var currentAcc = DataProvider.Ins.DB.employees.Where(x => x.nameAccount == LoggedAccount.Account.nameAccount).FirstOrDefault();
+                DisplayNhanVien = currentAcc.lastName + " " + currentAcc.firstName;
                 DisplayNgay = null;
                 DisplayMaPhieu = null;
                 Note = null;
+                InventoryList.Clear();
                 ListCheckSheets = BackupListCheckSheet;
 
             });
@@ -183,6 +285,7 @@ namespace bookStoreManagetment.ViewModel
                 }
                 State = Visibility.Collapsed;
                 isReadOnly = false;
+                Title = "Danh Sách Phiếu Kiểm Hàng > " + temp.codeCheckItem;
             });
 
             // xoá tất cả trường tiềm kiếm
@@ -212,11 +315,27 @@ namespace bookStoreManagetment.ViewModel
                 {
                     grid.Visibility = Visibility.Visible;
                     if (grid.Name == "gridAddReport")
+                    {
                         Title = "Danh Sách Phiếu Kiểm Hàng > Kiểm Hàng";
+                    }
                     else if (grid.Name == "gridAddItems")
                         Title = "Danh Sách Phiếu Kiểm Hàng > Kiểm Hàng > Thêm Sản Phẩm";
                     else
+                    {
                         Title = "Danh Sách Phiếu Kiểm Hàng";
+
+                        // reset filter
+                        displayBeginDay = null;
+                        displayEndDay = null;
+                        DisplayNhanVien = "";
+                        DisplayNhanVien = null;
+
+                        var bc = new BrushConverter();
+                        BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+                        ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+
+                        Query = "";
+                    }           
                 }
                 else
                 {
@@ -344,6 +463,7 @@ namespace bookStoreManagetment.ViewModel
             // hoàn thành thêm sản phẩm
             ClickCompletedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+
                 ObservableCollection<Inventory> temp = new ObservableCollection<Inventory>();
                 foreach (var cellItems in BackupAllItems)
                 {
@@ -359,7 +479,7 @@ namespace bookStoreManagetment.ViewModel
                         }
                         else
                         {
-                            _Inventory.Count = 0;
+                            _Inventory.Count = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItems.Items.idItem).FirstOrDefault().quantity;
                         }
                         temp.Add(_Inventory);
                     }
@@ -367,6 +487,7 @@ namespace bookStoreManagetment.ViewModel
 
                 InventoryList.Clear();
                 InventoryList = temp;
+
             });
 
             // hoàn thành thêm phiếu kiểm hàng
@@ -377,21 +498,50 @@ namespace bookStoreManagetment.ViewModel
                 (p) =>
                 {
                     int i = 0;
-                    int idCount = ListCheckSheets.Count() + 1;
-                    foreach (var inventory in InventoryList)
+                    // tìm id phù hợp
+                    int startID = BackupListCheckSheet.Count;
+                    string code = "";
+                    do
                     {
+                        code = "CK" + getNextCode.getCode(startID);
+                        var checkCode = DataProvider.Ins.DB.checkItems.Where(x => x.idCheckItems == code).FirstOrDefault();
+                        if (checkCode == null)
+                        {
+                            break;
+                        }
+                        startID++;
+                    } while (true);
+                    var listDisplay = DisplayNhanVien.Split(' ');
+                    var firstName = listDisplay[listDisplay.Length - 1];
+                    var lastName = listDisplay[0] ;
+                    for(int c = 0; c < listDisplay.Length - 1; c++)
+                    {
+                        if (c > 0)
+                        {
+                            lastName += " " + listDisplay[c];
+                        }
+                    }
+
+                    foreach (var inventory in InventoryList)
+                    { 
                         checkItem temp = new checkItem()
                         {
                             note = Note,
-                            idCheckItems = "PKH" + idCount.ToString(),
+                            idCheckItems = code,
                             dateCheckItems = DateTime.Now,
-                            idEmployee = DataProvider.Ins.DB.employees.Where(x => x.lastName == DisplayNhanVien).FirstOrDefault().idEmployee,
+                            idEmployee = DataProvider.Ins.DB.employees.Where(x => x.lastName == lastName &&
+                                                                                  x.firstName == firstName
+                                                                                ).FirstOrDefault().idEmployee,
                             idItem = inventory.Item.idItem,
-                            quantityItem = inventory.Count
+                            quantityItem = inventory.Item.quantity
                         };
+                        var currentItem = DataProvider.Ins.DB.items.Where(x => x.idItem == inventory.Item.idItem).FirstOrDefault();
+                        currentItem.quantity = inventory.Count;
 
                         DataProvider.Ins.DB.checkItems.Add(temp);
                         DataProvider.Ins.DB.SaveChanges();
+
+                        var _currentItem = DataProvider.Ins.DB.items.Where(x => x.idItem == inventory.Item.idItem).FirstOrDefault();
 
                         addCheckSheet(temp);
                         i++;
@@ -436,20 +586,27 @@ namespace bookStoreManagetment.ViewModel
             BackupListCheckSheet = ListCheckSheets;
 
             // load tất cả người làm
+            AllStaff = new List<string>();
             var listEmployee = DataProvider.Ins.DB.employees;
             foreach (var employee in listEmployee)
             {
-                if (AllStaff.Contains(employee.lastName) == false)
-                {
-                    AllStaff.Add(employee.lastName);
-                }
+                AllStaff.Add(employee.lastName + " " + employee.firstName);
             }
 
-            // load số trang
-            NumItems = ListInterger.CreateListInterger(ListCheckSheets.Count + 1);
-            DisplayNumOfPages = ListCheckSheets.Count + 1;
+            // ẩn grid filter
+            IsFilter = Visibility.Collapsed;
+
+            // set màu cho nút filter
+            var bc = new BrushConverter();
+            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
+            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
         }
 
+        private string getFullNameEmployyee(string idEmployee)
+        {
+            var currentEmployee = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == idEmployee).FirstOrDefault();
+            return currentEmployee.lastName + " " + currentEmployee.firstName;
+        }
 
         // thêm check sheet
         private void addCheckSheet(checkItem ckItem)
@@ -467,8 +624,9 @@ namespace bookStoreManagetment.ViewModel
                             idItem = ckItem.idItem,
                             quantityItem = ckItem.quantityItem
                     }},
-                    nameEmployee = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == ckItem.idEmployee).FirstOrDefault().lastName
-                });
+
+                    nameEmployee = getFullNameEmployyee(ckItem.idEmployee)
+                }) ;
             }
             else
             {
@@ -487,6 +645,32 @@ namespace bookStoreManagetment.ViewModel
             // load số trang
             NumItems = ListInterger.CreateListInterger(ListCheckSheets.Count + 1);
             DisplayNumOfPages = ListCheckSheets.Count + 1;
+        }
+
+        //filter
+        private void Filter()
+        {
+            List<CheckItemSheet> newListCheckSheet = BackupListCheckSheet.ToList();
+            if (DisplayNhanVien != null && DisplayNhanVien != "")
+            {
+                newListCheckSheet = newListCheckSheet.Where(x => x.nameEmployee == DisplayNhanVien).ToList();
+            }
+
+            if (displayBeginDay != null)
+            {
+                List<CheckItemSheet> temp = new List<CheckItemSheet>();
+                foreach (var checkSheet in newListCheckSheet)
+                {
+                    if (DateTime.Compare(checkSheet.dateCheckItems, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                     && DateTime.Compare(checkSheet.dateCheckItems, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                    {
+                        temp.Add(checkSheet);
+                    }
+                }
+                newListCheckSheet = temp;
+            }
+
+            ListCheckSheets = new ObservableCollection<CheckItemSheet>(newListCheckSheet);
         }
 
     }

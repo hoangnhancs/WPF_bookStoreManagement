@@ -7,7 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              DataContext="{StaticResource CheckItemsVM}"
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="575" d:DesignWidth="1024" Background="White">
     <!--loaded command-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -132,7 +132,7 @@
                                     Background="WhiteSmoke"
                                     IsEnabled="{Binding isReadOnly}"
                                     Margin="50 5 0 0">
-                               
+
                             </TextBox>
                         </DockPanel>
                     </Grid>
@@ -242,23 +242,20 @@
                                             <ComboBox materialDesign:HintAssist.Hint="(Thực)" 
                                                       MinWidth="72" 
                                                       Margin="16 0 0 0" 
+                                                      HorizontalAlignment="Center"
+                                                      HorizontalContentAlignment="Center"
                                                       IsEnabled= "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.isReadOnly}" 
                                                       VerticalAlignment="Bottom" 
                                                       IsEditable="True" 
                                                       ItemsSource="{Binding ListIntergers}"
                                                       SelectedValue="{Binding Count, UpdateSourceTrigger=PropertyChanged}">
-
-                                                <ComboBox.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <VirtualizingStackPanel />
-                                                    </ItemsPanelTemplate>
-                                                </ComboBox.ItemsPanel>
                                             </ComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <!--Giá-->
                                 <DataGridTextColumn
+                                    Binding="{Binding Item.importPriceItem}"
                                     Width="*"
                                     Header="Giá"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
@@ -489,7 +486,7 @@
                               AutoGenerateColumns="False"
                               materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                               materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
-                       
+
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -526,7 +523,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
+
                             <!--Tên sản phẩm-->
                             <DataGridTextColumn Binding="{Binding Items.nameItem}" 
                                                 Width="auto"
@@ -606,7 +603,7 @@
                   x:Name="gridShowReport"
                   Visibility="Visible">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
@@ -614,117 +611,77 @@
             <!--tools bar-->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
+                <!--thanh tìm kiếm-->
                 <Grid Grid.Column="0">
-                    <StackPanel
-                   HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                   Orientation="Horizontal">
-                        <TextBlock
-                        Text="Mã Phiếu :"
-                        Width="80"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        </TextBlock>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="250"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" 
+                          Margin="20 0 5 0">
+                        <Border BorderBrush="Black"
+                                BorderThickness="2"
+                                CornerRadius="15">
+                            <DockPanel
+                                        VerticalAlignment="Center"
+                                        Opacity="0.8"
+                                        Margin="4 0 0 0">
+                                <materialDesign:PackIcon Kind="Search" 
+                                                         DockPanel.Dock="Left"
+                                                         Width="20"
+                                                         Height="20"/>
+                                <TextBox Padding="5 0 0 0"
+                                         DockPanel.Dock="Bottom"
+                                         Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         x:Name="textboxSearch"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         materialDesign:HintAssist.Hint="Nhập Tên hoặc Mã phiếu chi"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                    BorderThickness="0">
+                                    <!--tìm kiếm theo tên và mã -->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding TextChangedSearchCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
 
-                        <ComboBox
-                            MinWidth="80"
-                            ItemsSource="{Binding BackupListCheckSheet}"
-                            DisplayMemberPath="codeCheckItem"
-                            SelectedValuePath="codeCheckItem"
-                            SelectedValue="{Binding DisplayMaPhieu, UpdateSourceTrigger=PropertyChanged}"
-                            IsEditable="True">
-                        </ComboBox>
-                    </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Button Width="120"
+                                x:Name="btnFilter"
+                                HorizontalAlignment="Left"
+                                Command="{Binding OpenFilterCommand}"
+                                CommandParameter="{Binding ElementName=btnFilter}"
+                                Background="{Binding BackgroudFilter}"
+                                Foreground="{Binding ForegroudFilter}"
+                                BorderBrush="Black"
+                                Margin="20 0 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Filter"
+                                                         HorizontalAlignment="Left"
+                                                         Width="20"
+                                                         Height="20"/>
+                                <TextBlock
+                                     Text="Bộ Lọc"
+                                    Margin="5 0 0 0"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <StackPanel
-                   HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                   Orientation="Horizontal">
-                        <TextBlock
-                        Text="Nhân viên :"
-                        Width="80"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        </TextBlock>
-
-                        <ComboBox
-                            ItemsSource="{Binding AllStaff}"
-                            SelectedValue="{Binding DisplayNhanVien, UpdateSourceTrigger=PropertyChanged}"
-                            Margin="0 5 0 5"
-                            IsEditable="True"
-                            Width="120">
-                        </ComboBox>
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Column="2">
-                    <StackPanel
-                   HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                   Orientation="Horizontal">
-                        <TextBlock
-                        Text="Nhân viên :"
-                        Width="80"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        </TextBlock>
-
-                        <DatePicker
-                            x:Name="FutureDatePicker"
-                            SelectedDateFormat="Short"
-                            MinWidth="80"
-                            materialDesign:HintAssist.Hint="Chọn ngày" 
-                            FirstDayOfWeek="Monday"
-                            IsTodayHighlighted="True"
-                            SelectedDate="{Binding DisplayNgay, 
-                            UpdateSourceTrigger=PropertyChanged, 
-                            StringFormat = {}{0:MM-dd-yyyy}}"
-                            >
-                        </DatePicker>
-                    </StackPanel>
-                </Grid>
-                
-                <Grid Grid.Column="3">
-                    <StackPanel
-                   HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                   Orientation="Horizontal">
-                        <Button
-                        Foreground="Black"
-                        Content="Làm mới"
-                        BorderBrush="Transparent"
-                        Background="WhiteSmoke"
-                            Command="{Binding clearAllFielSearchCommand}"
-                        Margin="0 0 10 0"
-                        Height="26"
-                        Width="100">
-                        </Button>
-
-                        <Button
-                            x:Name="btnSearchCheckSheets"
-                        Content="Tìm kiếm"
-                        Foreground="Black"
-                        BorderBrush="Transparent"
-                        Background="WhiteSmoke"
-                            Command="{Binding ClickSearchCheckSheetsCommand}"
-                            CommandParameter="{Binding ElementName=btnSearchCheckSheets}"
-                        Margin="10 0 0 0"
-                        Height="26"
-                        Width="100">
-                        </Button>
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Column="4">
                     <Button HorizontalAlignment="Right"
                             Background="ForestGreen"
                             BorderBrush="Transparent"
@@ -765,7 +722,7 @@
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8">
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8" SelectionChanged="datagridShowCheckSheet_SelectionChanged">
                     <DataGrid.Columns>
 
                         <!--Mã Phiếu-->
@@ -839,7 +796,7 @@
                                                     <i:InvokeCommandAction 
                                                         Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DeleteCheckSheetCommand}" 
                                                         CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
-                                                    
+
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
@@ -849,6 +806,104 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+                <Grid x:Name="gridFilter"
+                          Visibility="{Binding IsFilter}"
+                          Height="184"
+                          Opacity="0.95"
+                          Width="300"
+                          Margin="0 0 20 0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top">
+                    <Border BorderThickness="2"
+                                CornerRadius="10"
+                                BorderBrush="Black"
+                                Background="#FFE7E7E7">
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition Height="0.8*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                            Margin="10 0 0 0">
+                                    <TextBlock Text="Tên Nhân Viên"
+                                                   FontWeight="SemiBold"/>
+                                    <ComboBox IsEditable="True"
+                                                  ItemsSource="{Binding AllStaff}"
+                                                  SelectedValue="{Binding DisplayNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Text="{Binding DisplayNhanVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Left"
+                                              Width="150"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                            Margin="5">
+                                    <TextBlock Text="Ngày tạo"
+                                                   FontWeight="SemiBold"/>
+                                    <StackPanel Orientation="Horizontal"
+                                                    Margin="0 2 0 0">
+                                        <DatePicker SelectedDate="{Binding displayBeginDay}"
+                                                        HorizontalAlignment="Left"
+                                                    Width="100"
+                                                    materialDesign:HintAssist.Hint="Ngày bắt đầu" 
+                                                        FirstDayOfWeek="Monday" 
+                                            SelectedDateFormat="Short"/>
+                                        <materialDesign:PackIcon
+                                                Margin="10 0 10 0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Kind="Minus" 
+                                                                     />
+                                        <DatePicker SelectedDate="{Binding displayEndDay}"
+                                                        HorizontalAlignment="Right"
+                                                        DisplayDateStart="{Binding displayBeginDay}"
+                                                    Width="100"
+                                                    materialDesign:HintAssist.Hint="Ngày kết thúc" SelectedDateFormat="Short"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
+                                    <Button Content="Xoá bộ lọc"
+                                                Command="{Binding DeleteFilterCommand}"
+                                                CommandParameter="{Binding ElementName=btnFilter}"
+                                                Padding="0"
+                                                Height="30"
+                                                Width="100"/>
+                                    <Button Content="Lọc"
+                                                Command="{Binding CheckFilterCommand}"
+                                                CommandParameter="{Binding ElementName=btnFilter}"
+                                                Height="30"
+                                                Padding="0"
+                                                Margin="20 0 0 0"
+                                                Width="100"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource MaterialDesignFlatDarkButton}"
+                                        ToolTip="Đóng Bộ Lọc"
+                                        Command="{Binding CloseFilterCommand}"
+                                        Width="30"
+                                        Height="30"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="Red"
+                                        BorderBrush="Transparent">
+                                <materialDesign:PackIcon Kind="Close" 
+                                                                 Width="20"
+                                                                 Height="20"/>
+
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="2">
@@ -943,6 +998,8 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
+
         </Grid>
     </Grid>
+
 </UserControl>

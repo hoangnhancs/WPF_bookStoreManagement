@@ -16,16 +16,26 @@ using System.Windows.Shapes;
 namespace bookStoreManagetment.UserControls
 {
     /// <summary>
-    /// Interaction logic for CheckItemsUC.xaml
+    /// Interaction logic for DSKhachHangUCxaml.xaml
     /// </summary>
-    public partial class CheckItemsUC : UserControl
+    public partial class DSKhachHangUCxaml : UserControl
     {
-        public CheckItemsUC()
+        public DSKhachHangUCxaml()
         {
             InitializeComponent();
         }
 
-        private void datagridShowCheckSheet_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void datagridDSKhachHang_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

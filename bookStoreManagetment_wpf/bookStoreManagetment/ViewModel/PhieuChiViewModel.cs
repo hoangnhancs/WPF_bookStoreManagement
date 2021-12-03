@@ -412,7 +412,7 @@ namespace bookStoreManagetment.ViewModel
             var listBill = DataProvider.Ins.DB.profitSummaries;
             foreach (var bill in listBill)
             {
-                if (bill.billType.ToLower() == "export")
+                if (bill.billType.ToLower() == "import")
                 {
                     var currentExport = DataProvider.Ins.DB.importBills.Where(x => x.billCodeImport == bill.billCode).FirstOrDefault();
                     exportBill newExport = new exportBill();
@@ -482,7 +482,7 @@ namespace bookStoreManagetment.ViewModel
             string code = "";
             do
             {
-                code = "EP" + getNextCode.getCode(startID);
+                code = "IP" + getNextCode.getCode(startID);
                 var checkCode = DataProvider.Ins.DB.profitSummaries.Where(x => x.billCode == code).FirstOrDefault();
                 if (checkCode == null)
                 {
@@ -495,7 +495,7 @@ namespace bookStoreManagetment.ViewModel
             newViewExportSheet.ProfitSummary = new profitSummary
             {
                 billCode = code,
-                billType = "Export",
+                billType = "import",
                 idEmployee = currentAcc.idEmployee,
                 nameEmployee = currentAcc.firstName + " " + currentAcc.lastName,
                 day = DateTime.Now
