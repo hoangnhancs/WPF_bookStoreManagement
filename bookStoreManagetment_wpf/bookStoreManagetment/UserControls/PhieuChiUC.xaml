@@ -41,28 +41,6 @@
                        Width="auto"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"></TextBlock>
-
-                <!--trạng thái--><!--
-                <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Margin="0 0 10 0">
-                    <materialDesign:PackIcon Kind="CheckboxMarkedCircleOutline" 
-                                         Height="30" 
-                                         BorderBrush="ForestGreen"
-                                         Foreground="ForestGreen"
-                                         Width="30"/>
-                    <Separator Height="5"
-                           Background="Black"
-                           BorderBrush="Black"
-                           Foreground="Black"
-                           Width="50"></Separator>
-                    <materialDesign:PackIcon Kind="CheckboxBlankCircleOutline" 
-                                         Height="30"
-                                         BorderBrush="Green"
-                                         Foreground="Green"
-                                         Width="30"/>
-                </StackPanel>-->
             </Grid>
 
             <!--main content-->
@@ -612,7 +590,7 @@
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.nameBill}"
                                     Header="Tên Phiếu"
-                                    Width="auto"
+                                    Width="*"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -632,6 +610,7 @@
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.nameCustomer}"
                                     Header="Đối tượng"
+                                Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -647,44 +626,11 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <!--Loại phiếu--><!--
-                            <DataGridTextColumn
-                                    Binding="{Binding ProfitSummary.billType}"
-                                    Header="Loại Phiếu"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.HeaderStyle >
-                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>-->
-
-
-                            <!--trạng thái -->
-                            <!--
-                            <DataGridTextColumn
-                                    Binding="{Binding }"
-                                    Header="Trạng thái"
-                                    Width="auto"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>-->
-
                             <!--số tiền -->
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.rootPrice}"
                                     Header="Số tiền"
+                                Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -704,6 +650,7 @@
                             <DataGridTextColumn
                                     Binding="{Binding ProfitSummary.day}"
                                     Header="Ngày ghi nhận"
+                                Width="auto"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                 <DataGridTextColumn.HeaderStyle >
                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">

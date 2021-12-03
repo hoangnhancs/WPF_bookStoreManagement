@@ -222,9 +222,7 @@
 
                         <!--customer-->
                         <Button Style="{StaticResource btnStyle_MenuFeatures}"
-                                x:Name="btnIconQLKH"
-                                Command="{Binding ChangeColorOpenedSTP}"
-                                CommandParameter="{Binding ElementName=btnQLKH}">
+                                x:Name="btnIconQLKH">
                             <materialDesign:PackIcon Kind="PeopleGroup" 
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center"
@@ -234,16 +232,17 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowHideMenuCommand}"
-                                        CommandParameter="{Binding ElementName= gridSubMenu}">
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLKH}">
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
-                                        Command="{Binding ShowHideMenuCommand}"
-                                        CommandParameter="{Binding ElementName= gridMenu}">
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnDSKH}">
                                     </i:InvokeCommandAction>
                                     <i:InvokeCommandAction
-                                        Command="{Binding OpenSubMenuCommand}"
-                                        CommandParameter="{Binding ElementName=subMenuQLKH}"/>
+                                                        Command="{Binding openDSKhachHangUCCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                    </i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -638,7 +637,7 @@
                                             HorizontalContentAlignment="Left"
                                             Style="{StaticResource btnStyle_MenuFeatures}"
                                             Content="Quản lý khách hàng" Click="btnQLKH_Click">
-                                        <!--Tạo event click vô button mở submenu và đổi màu btn-->
+                                        <!--Tạo event click vô button mở submenu và đổi màu btn--><!--
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <i:InvokeCommandAction
@@ -647,6 +646,22 @@
                                                 <i:InvokeCommandAction
                                                     Command="{Binding ChangeColorOpenedSTP}"
                                                     CommandParameter="{Binding ElementName=btnQLKH}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonIconClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnIconQLKH}">
+                                                </i:InvokeCommandAction>
+                                                <i:InvokeCommandAction
+                                                        Command="{Binding ChangeColorButtonClickCommand}"
+                                                        CommandParameter="{Binding ElementName=btnDSKH}">
+                                                </i:InvokeCommandAction>
+                                                <i:InvokeCommandAction
+                                                        Command="{Binding openDSKhachHangUCCommand}"
+                                                        CommandParameter="{Binding ElementName=GridMainForm}">
+                                                </i:InvokeCommandAction>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Button>

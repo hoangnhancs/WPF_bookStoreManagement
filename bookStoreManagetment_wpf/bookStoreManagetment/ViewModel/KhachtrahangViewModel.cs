@@ -250,7 +250,7 @@ namespace bookStoreManagetment.ViewModel
         {
             LoadDSKhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-
+                IsFilter = Visibility.Collapsed;
                 LoadData();
                 DSKhachtrahangVisible = Visibility.Visible;
                 ThemKhachtrahangVisible = Visibility.Collapsed;
