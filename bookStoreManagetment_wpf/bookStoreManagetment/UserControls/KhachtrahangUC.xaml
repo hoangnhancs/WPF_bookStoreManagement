@@ -149,7 +149,7 @@
                         HorizontalAlignment="Center" 
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center"
-                        ItemsSource="{Binding InventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="auto" Header="Mã hóa đơn" Binding="{Binding BillcodeSell}" IsReadOnly="True">
@@ -312,7 +312,7 @@
                                                 Margin="20 0 0 0"
                                                 Width="100"
                                                 IsEnabled="True"
-                                                Command="{Binding SearchEngineer}"></Button>
+                                                Command="{Binding btnLoc2Command}"></Button>
                                                 </StackPanel>
                                             </Grid>
                                             <Button HorizontalAlignment="Right"
@@ -336,7 +336,67 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="2">
-
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="40">
+                                <TextBlock Height="40" VerticalAlignment="Center" TextAlignment="Center">Số dòng mỗi trang:</TextBlock>
+                                <Border BorderBrush="Black" BorderThickness="1" Width="40" Height="40">
+                                    <TextBox Width="40" Height="40" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                         Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                </Border>
+                                <Button x:Name="btnPageFirst" Content="&lt;&lt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnfirstPageCommand}"></Button>
+                                <Button x:Name="btnPagePrev" Content='&lt;' VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnPrevPageCommand}"></Button>
+                                <Button x:Name="btn3cham1" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                                <Button x:Name="btnpage1" Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Visibility="{Binding BtnPage1.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage1.BackGround}"
+                                    Foreground="Black"></Button>
+                                <Button x:Name="btnpage2" Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Visibility="{Binding BtnPage2.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage2.BackGround}"
+                                    Foreground="Black"></Button>
+                                <Button x:Name="btnpage3" Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="40" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Visibility="{Binding BtnPage3.PageVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding BtnPage3.BackGround}"
+                                    Foreground="Black"></Button>
+                                <Button x:Name="btn3cham2" Content="..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40" 
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Button>
+                                <Button x:Name="btnPageNext" Content="&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding btnNextClickCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button x:Name="btnPageEnd" Content="&gt;&gt;" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                    Width="40" Height="40"
+                                    Background="{x:Null}" BorderBrush="Black" Foreground="Black"
+                                    IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding btnendPageCommand}"></Button>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                     <Grid x:Name="gridTaoKhachtrahang" Visibility="Collapsed">
