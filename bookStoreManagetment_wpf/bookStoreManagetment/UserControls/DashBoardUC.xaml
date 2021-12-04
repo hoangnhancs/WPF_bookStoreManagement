@@ -38,7 +38,6 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                    Text="Dashboard"
-                   FontSize="30"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
@@ -57,7 +56,6 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                    Text="Kết quả kinh doanh hàng ngày"
-                   FontSize="30"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
@@ -74,7 +72,6 @@
                                 <TextBlock FontWeight="SemiBold"
                                     Foreground="White"
                                 Text="Doanh thu"
-                                FontSize="18"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="10 5 0 5"
@@ -83,7 +80,6 @@
 
                             <TextBlock Foreground="White"
                             Text="{Binding Revenue}"
-                            FontSize="22"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
                             <!--Text="{Binding Description}"-->
@@ -98,7 +94,6 @@
                                     <materialDesign:PackIcon Foreground="White" Kind="CardTextOutline" Width="25" Height="25" VerticalAlignment="Center"/>
                                     <TextBlock Foreground="White"
                                 Text="Đơn hàng mới"
-                                FontSize="18"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="10 5 0 5"
@@ -107,7 +102,6 @@
 
                                 <TextBlock  Foreground="White"
                                 Text="{Binding NewOrder}"
-                                FontSize="22"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                                 <!--Text="{Binding Description}"-->
@@ -124,7 +118,6 @@
                                     <materialDesign:PackIcon Foreground="White" Kind="RotateLeft" Width="25" Height="25" VerticalAlignment="Center" />
                                     <TextBlock Foreground="White"
                                     Text="Đơn hàng trả"
-                                    FontSize="18"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Margin="10 5 0 5"
@@ -133,7 +126,6 @@
 
                                 <TextBlock  Foreground="White"
                                 Text="{Binding Return}"
-                                FontSize="22"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                                 <!--Text="{Binding Description}"-->
@@ -149,7 +141,6 @@
                                     <materialDesign:PackIcon  Foreground="White" Kind="CreditCardOutline" Width="25" Height="25" VerticalAlignment="Center"/>
                                     <TextBlock Foreground="White"
                                 Text="Phiếu chi"
-                                FontSize="18"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Margin="10 5 0 5"/>
@@ -157,7 +148,6 @@
 
                                 <TextBlock  Foreground="White"
                             Text="{Binding BillPayment}"
-                            FontSize="22"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
                                 <!--Text="{Binding Description}"-->
@@ -166,7 +156,6 @@
                     </StackPanel>
                     <TextBlock Grid.Row="2"
                    Text="Doanh thu bán hàng"
-                   FontSize="30"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
                    Margin="20 0 0 0">
@@ -202,107 +191,10 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                    Text="Top sản phẩm"
-                   FontSize="40"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center">
                     </TextBlock>
-                    <!--<StackPanel
-                    Grid.Row="1"
-                    Margin="5">
-                    <StackPanel
-                            Margin="5 0 0 20"
-                            Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
-                        <StackPanel >
-                            <TextBlock
-                                Text="{Binding NameTop1}"
-                                TextTrimming="CharacterEllipsis"
-                                FontSize="18"
-                                VerticalAlignment="Center"
-                                Margin="5 5 0 5"/>
-                            <TextBlock
-                                Text="1,000,000Đ"
-                                FontSize="25"
-                                HorizontalAlignment="Left"/>
-                        </StackPanel>
-
-
-                    </StackPanel>
-
-                    <StackPanel
-                            Margin="5 0 0 20"
-                            Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
-                        <StackPanel >
-                            <TextBlock
-                                Text="Đắc nhân Tâm"
-                                FontSize="22"
-                                VerticalAlignment="Center"
-                                Margin="5 5 0 5"/>
-                            <TextBlock
-                            Text="1,000,000Đ"
-                            FontSize="25"
-                            HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </StackPanel>
-
-
-                    <StackPanel
-                            Margin="5 0 0 20"
-                            Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
-                        <StackPanel >
-                            <TextBlock
-                                Text="Ảo thật đấy"
-                                FontSize="22"
-                                VerticalAlignment="Center"
-                                Margin="5 5 0 5"/>
-                            <TextBlock
-                            Text="1,000,000Đ"
-                            FontSize="25"
-                            HorizontalAlignment="Left"/>
-                        </StackPanel>
-
-
-                    </StackPanel>
-
-                    <StackPanel
-                            Margin="5 0 0 20"
-                            Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
-                        <StackPanel >
-                            <TextBlock
-                                Text="Đêm kinh hoàng"
-                                FontSize="22"
-                                VerticalAlignment="Center"
-                                Margin="5 5 0 5"/>
-                            <TextBlock
-                            Text="1,000,000Đ"
-                            FontSize="25"
-                            HorizontalAlignment="Left"/>
-                        </StackPanel>
-
-
-                    </StackPanel>
-                    <StackPanel
-                            Margin="5 0 0 20"
-                            Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
-                        <StackPanel >
-                            <TextBlock
-                                Text="Cà phê cùng Tony"
-                                FontSize="22"
-                                VerticalAlignment="Center"
-                                Margin="5 5 0 5"/>
-                            <TextBlock
-                            Text="1,000,000Đ"
-                            FontSize="25"
-                            HorizontalAlignment="Left"/>
-                        </StackPanel>
-
-
-                    </StackPanel>
-                </StackPanel>-->
+                    
                     <DataGrid 
                     Grid.Row="1"
                     ItemsSource="{Binding TopProducts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -329,12 +221,10 @@
                                             <StackPanel >
                                                 <TextBlock
                                                 Text="{Binding nameItem}"
-                                                FontSize="18"
                                                 VerticalAlignment="Center"
                                                 Margin="5 5 0 5"/>
                                                 <TextBlock
                                                 Text="{Binding priceItem}"
-                                                FontSize="18"
                                                 HorizontalAlignment="Left"/>
                                             </StackPanel>
 

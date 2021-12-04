@@ -39,7 +39,6 @@
                         <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Danh sách sản phẩm"
-                FontSize="20"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Margin="10 0 0 0"
@@ -317,7 +316,7 @@ Command="{Binding btnendPageCommand}"></Button>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="20"
+                                <TextBlock 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
@@ -328,7 +327,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                                <TextBlock Text="Thêm sản phẩm" FontSize="20"
+                                <TextBlock Text="Thêm sản phẩm"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
                             </StackPanel>
@@ -344,7 +343,8 @@ Command="{Binding btnendPageCommand}"></Button>
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                    <TextBlock Text="Thông tin sản phẩm" FontSize="20" Margin="10 0 0 0"></TextBlock>
+                                    <TextBlock Text="Thông tin sản phẩm"
+                                               Margin="10 0 0 0"></TextBlock>
                                 </Border>
                             </Grid>
                             <Grid Grid.Row="1" Margin="50 0 50 0">
@@ -365,7 +365,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <TextBlock Text="Danh mục" FontSize="15" VerticalAlignment="Center" Margin="20,12,58.6,12.8" Width="auto"/>
+                                                <TextBlock Text="Danh mục" VerticalAlignment="Center" Margin="20,12,58.6,12.8" Width="auto"/>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <ComboBox
@@ -374,7 +374,6 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     ItemsSource="{Binding CatalogItem}"
                                                     Text="{Binding CatalogProductsAdd}"
                                                     IsEditable="True"
-                                                    FontSize="20"
                                                     Width="auto"
                                                     MaxWidth="500"
                                                     MinWidth="300"
@@ -383,7 +382,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                                 </ComboBox>
                                             </Grid>
                                             <Grid Grid.Column="2">
-                                                <TextBlock Text="Loại" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" Width="auto" Margin=" 25 0 0 0"></TextBlock>
+                                                <TextBlock Text="Loại" VerticalAlignment="Center" HorizontalAlignment="Left" Width="auto" Margin=" 25 0 0 0"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="3">
                                                 <ComboBox
@@ -393,7 +392,6 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     ItemsSource="{Binding TypeItemAdd}"
                                                     IsEditable="True"
                                                     Margin="0 0 15 0"
-                                                    FontSize="20"
                                                     Width="300"
                                                     HorizontalAlignment="Left">
                                                 </ComboBox>
@@ -412,7 +410,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     <ColumnDefinition Width="19*"/>
                                                     <ColumnDefinition Width="6*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Text="Tên sản phẩm " FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,21,0,21.4" Grid.ColumnSpan="2"></TextBlock>
+                                                <TextBlock Text="Tên sản phẩm " VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,21,0,21.4" Grid.ColumnSpan="2"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <TextBox
@@ -422,7 +420,6 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                                     BorderThickness="2"
                                                     VerticalAlignment="Center"
-                                                    FontSize="20"
                                                     Width="auto"
                                                     MaxWidth="500"
                                                     MinWidth="300"
@@ -439,7 +436,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                             </Grid.ColumnDefinitions>
 
                                             <Grid Grid.Column="0">
-                                                <TextBlock Text="SKU" FontSize="15" Margin="20 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                                <TextBlock Text="SKU" Margin="20 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <TextBox
@@ -450,13 +447,12 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     Width="auto"
                                                     MaxWidth="500"
                                                     MinWidth="300"
-                                                    VerticalAlignment="Center" 
-                                                    FontSize="20"
+                                                    VerticalAlignment="Center"
                                                     HorizontalAlignment="Left"
                                                     Margin="-2,0,0,10.2"/>
                                             </Grid>
                                             <Grid Grid.Column="2">
-                                                <TextBlock Text="Mã Vạch" FontSize="15" Margin="25 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                                <TextBlock Text="Mã Vạch" Margin="25 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="3" Margin="0 0 0 10">
                                                 <TextBox
@@ -468,7 +464,6 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     MaxWidth="500"
                                                     MinWidth="300"
                                                     VerticalAlignment="Center" 
-                                                    FontSize="20"
                                                     Margin="0 0 0 0"
                                                     HorizontalAlignment="Left"/>
                                             </Grid>
@@ -488,7 +483,7 @@ Command="{Binding btnendPageCommand}"></Button>
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                    <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
+                                    <TextBlock Text="Chi tiết sản phẩm" Margin=" 10 0 0 0"></TextBlock>
                                 </Border>
                             </Grid>
                             <Grid Grid.Row="1" Margin="50 0 50 0">
@@ -510,7 +505,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <TextBlock Text="Giá" FontSize="15" Margin="20 0 0 0" VerticalAlignment="Center"></TextBlock>
+                                                <TextBlock Text="Giá" Margin="20 0 0 0" VerticalAlignment="Center"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <TextBox
@@ -523,11 +518,10 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     MaxWidth="500"
                                                     Width="auto"
                                                     VerticalAlignment="Center"
-                                                    HorizontalAlignment="Left"
-                                                    FontSize="20"/>
+                                                    HorizontalAlignment="Left"/>
                                             </Grid>
                                             <Grid Grid.Column="2">
-                                                <TextBlock Text="Đơn vị" FontSize="15" Margin="25 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                                                <TextBlock Text="Đơn vị" Margin="25 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="3">
                                                 <TextBox
@@ -540,8 +534,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                                     Width="auto"
                                                     VerticalAlignment="Center"
                                                     HorizontalAlignment="Left"
-                                                    Text="{Binding UnitProductAdd}"
-                                                    FontSize="20"/>
+                                                    Text="{Binding UnitProductAdd}"/>
                                             </Grid>
                                         </Grid>
                                         <Grid Grid.Row="1">
@@ -551,7 +544,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <TextBlock Text="Hình ảnh" FontSize="15" Margin="20 40 60 30"></TextBlock>
+                                                <TextBlock Text="Hình ảnh" Margin="20 40 60 30"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <Button
@@ -586,7 +579,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                             </Grid>
                                         </Grid>
                                         <Grid Grid.Row="2">
-                                            <TextBlock Text="Mô tả sản phẩm:" FontSize="15" Margin="20 0 0 0"></TextBlock>
+                                            <TextBlock Text="Mô tả sản phẩm:" Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Row="3">
                                             <TextBox
@@ -662,7 +655,7 @@ Command="{Binding btnendPageCommand}"></Button>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="20"
+                                <TextBlock 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
@@ -673,7 +666,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                                <TextBlock Text="Chỉnh sửa" FontSize="20"
+                                <TextBlock Text="Chỉnh sửa"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
                             </StackPanel>
@@ -689,7 +682,7 @@ Command="{Binding btnendPageCommand}"></Button>
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                    <TextBlock Text="Thông tin sản phẩm" FontSize="20" Margin="10 0 0 0"></TextBlock>
+                                    <TextBlock Text="Thông tin sản phẩm" Margin="10 0 0 0"></TextBlock>
                                 </Border>
                             </Grid>
                             <Grid Grid.Row="1" Margin="50 0 50 0">
@@ -697,21 +690,20 @@ Command="{Binding btnendPageCommand}"></Button>
                                 BorderThickness="2" Margin="0,0,-0.4,-0.2">
                                     <StackPanel>
                                         <WrapPanel Width="auto" >
-                                            <TextBlock Text="Danh mục" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 " Width="auto"></TextBlock>
+                                            <TextBlock Text="Danh mục" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 " Width="auto"></TextBlock>
                                             <ComboBox
                                             materialDesign:HintAssist.Hint="All"
                                             materialDesign:TextFieldAssist.HasClearButton="True"
                                             ItemsSource="{Binding CatalogItem}"
                                             Text="{Binding CatalogProductsEdit}"
                                             IsEditable="True"
-                                            FontSize="20"
                                             Width="auto"
                                             MaxWidth="500"
                                             MinWidth="300"
                                             Margin="5"
                                             HorizontalAlignment="Center">
                                             </ComboBox>
-                                            <TextBlock Text="Loại" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="auto" Margin=" 25 0 55 0"></TextBlock>
+                                            <TextBlock Text="Loại"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="auto" Margin=" 25 0 55 0"></TextBlock>
                                             <ComboBox
                                             Text="{Binding TypeProductsEdit}"
                                             materialDesign:HintAssist.Hint="All"
@@ -719,7 +711,6 @@ Command="{Binding btnendPageCommand}"></Button>
                                             ItemsSource="{Binding TypeItemAdd}"
                                             IsEditable="True"
                                             Margin="5"
-                                            FontSize="20"
                                             Width="auto"
                                             MaxWidth="500"
                                             MinWidth="300"
@@ -727,7 +718,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                             </ComboBox>
                                         </WrapPanel>
                                         <WrapPanel Width="auto">
-                                            <TextBlock Text="Tên sản phẩm" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 30 0"></TextBlock>
+                                            <TextBlock Text="Tên sản phẩm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 30 0"></TextBlock>
                                             <TextBox
                                             Text="{Binding NameProductsEdit}"
                                             Margin="0 15 0 10"
@@ -735,7 +726,6 @@ Command="{Binding btnendPageCommand}"></Button>
                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                             BorderThickness="2"
                                             VerticalAlignment="Center"
-                                            FontSize="20"
                                             Width="auto"
                                             MaxWidth="500"
                                             MinWidth="300"
@@ -744,7 +734,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                         </WrapPanel>
 
                                         <WrapPanel Margin=" 0 0 0 10">
-                                            <TextBlock Text="SKU" FontSize="15" Margin="20 0 95 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="SKU" Margin="20 0 95 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                             <TextBox
                                             Text="{Binding SKUProductsEdit}"
                                             materialDesign:HintAssist.Hint=""
@@ -754,9 +744,8 @@ Command="{Binding btnendPageCommand}"></Button>
                                             MaxWidth="500"
                                             MinWidth="300"
                                             VerticalAlignment="Center" 
-                                            FontSize="20"
                                             IsReadOnly="True"/>
-                                            <TextBlock Text="Mã Vạch" FontSize="15" Margin="30 0 30 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Mã Vạch" Margin="30 0 30 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                             <TextBox
                                             Text="{Binding BarcodeProductsEdit}"
                                             materialDesign:HintAssist.Hint=""
@@ -765,8 +754,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                             Width="auto"
                                             MaxWidth="500"
                                             MinWidth="300"
-                                            VerticalAlignment="Center" 
-                                            FontSize="20"/>
+                                            VerticalAlignment="Center" />
                                         </WrapPanel>
                                     </StackPanel>
                                 </Border>
@@ -783,7 +771,7 @@ Command="{Binding btnendPageCommand}"></Button>
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                    <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
+                                    <TextBlock Text="Chi tiết sản phẩm" Margin=" 10 0 0 0"></TextBlock>
                                 </Border>
                             </Grid>
                             <Grid Grid.Row="1" Margin="50 0 50 0">
@@ -791,7 +779,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                 BorderThickness="2">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Giá" FontSize="15" Margin="20 0 100 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Giá" Margin="20 0 100 5" VerticalAlignment="Center"></TextBlock>
                                             <TextBox
                                             Text="{Binding PriceProductsEdit}"
                                             Margin="0 0 0 0"
@@ -801,9 +789,8 @@ Command="{Binding btnendPageCommand}"></Button>
                                             MinWidth="300"
                                             MaxWidth="500"
                                             Width="auto"
-                                            VerticalAlignment="Center"
-                                            FontSize="20"/>
-                                            <TextBlock Text="Đơn vị" FontSize="15" Margin="30 0 50 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            VerticalAlignment="Center"/>
+                                            <TextBlock Text="Đơn vị" Margin="30 0 50 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                             <TextBox
                                             Margin="0 5 0 5"
                                             materialDesign:HintAssist.Hint=""
@@ -813,13 +800,12 @@ Command="{Binding btnendPageCommand}"></Button>
                                             MaxWidth="500"
                                             Width="auto"
                                             VerticalAlignment="Center"
-                                            Text="{Binding UnitProductsEdit}"
-                                            FontSize="20"/>
+                                            Text="{Binding UnitProductsEdit}"/>
 
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Hình ảnh" FontSize="15" Margin="20 40 60 30"></TextBlock>
+                                            <TextBlock Text="Hình ảnh" Margin="20 40 60 30"></TextBlock>
                                             <Button
                                             Width="30"
                                             Height="30"
@@ -842,7 +828,7 @@ Command="{Binding btnendPageCommand}"></Button>
                                         </StackPanel>
 
                                         <StackPanel>
-                                            <TextBlock Text="Mô tả sản phẩm:" FontSize="15" Margin="20 0 0 0"></TextBlock>
+                                            <TextBlock Text="Mô tả sản phẩm:" Margin="20 0 0 0"></TextBlock>
                                             <TextBox
                                             Text="{Binding DescriptionProductsEdit}"
                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
