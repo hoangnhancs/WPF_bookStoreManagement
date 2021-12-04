@@ -4,23 +4,67 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bookStoreManagetment"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="BarcodeScanner" Height="400" Width="600"
+        Title="Quét Barcode" Height="400" Width="600"
         WindowStartupLocation="CenterOwner"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Foreground="#FF495B67"
+        Background="#F2F7FA"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource DSHoaDonVM}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="9*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Image x:Name="videoPlayer" Margin="10,0,10,70" Source="{Binding QRCode}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Margin="10 10 10 0" Grid.Row="0">
+                <Image x:Name="videoPlayer" Source="{Binding QRCode}"/>
+            </materialDesign:Card>
+            <StackPanel Orientation="Horizontal" Grid.Row="1"
+                        HorizontalAlignment="Left">
+                <Button Width="30"
+                        Height="30"
+                        Padding="0"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Foreground="#1e98d7"
+                        Command="{Binding StartBarcodeScannerCommand}">
+                    <materialDesign:PackIcon Kind="Play"
+                                                 Width="30"
+                                                 Height="30"/>
+                </Button>
+                <Button Width="30"
+                        Height="30"
+                        Padding="0"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Foreground="Red"
+                        Command="{Binding StopBarcodeScannerCommand}"
+                        Margin="5 0 5 0">
+                    <materialDesign:PackIcon Kind="Pause"
+                                                 Width="30"
+                                                 Height="30"/>
+                </Button>
+            </StackPanel>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="10 0 0 0">
             <StackPanel Orientation="Horizontal">
-                <ComboBox x:Name="comboBox"
+                <StackPanel>
+                    <TextBlock Text="Chọn camera:"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0 0 0 5"></TextBlock>
+                    <materialDesign:Card Width="200" Height="25">
+                        <ComboBox x:Name="comboBox"
                           Width="200"
                           Height="25"
                           HorizontalAlignment="Left"
@@ -28,19 +72,23 @@
                           DisplayMemberPath="Name"
                           ItemsSource="{Binding VideoDevices}"
                           SelectedItem="{Binding CurrentDevice}" />
-                <Button Width="67"
-                        Height="25"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Command="{Binding StartBarcodeScannerCommand}"
-                        Content="Start" />
-                <Button Width="67"
-                        Height="25"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Command="{Binding StopBarcodeScannerCommand}"
-                        Content="Stop" />
-                <TextBlock Text="{Binding Barcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Background="Violet" Width="200" Height="25"></TextBlock>
+                    </materialDesign:Card>
+                </StackPanel>
+
+                <StackPanel Margin="10 0 0 0">
+                    <TextBlock Text="Kết quả:"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0 0 0 5"></TextBlock>
+                    <materialDesign:Card Width="200" Height="25">
+                        <TextBlock 
+                    Text="{Binding Barcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    VerticalAlignment="Center"
+                    Width="200" Height="25">
+
+                        </TextBlock>
+                    </materialDesign:Card>
+                </StackPanel>
             </StackPanel>
         </Grid>
 
