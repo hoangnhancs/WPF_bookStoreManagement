@@ -239,7 +239,7 @@ namespace bookStoreManagetment.ViewModel
                 if (Query != "" && Query != null)
                 {
                     ObservableCollection<CheckItemSheet> newListCheckSheet = new ObservableCollection<CheckItemSheet>();
-                    foreach (var checkSheet in ListCheckSheets)
+                    foreach (var checkSheet in BackupListCheckSheet)
                     {
                         var check = checkSheet.codeCheckItem.ToLower();
                         var check2 = check.Contains(Query);
@@ -270,8 +270,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 Filter();
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
                 //settingButtonNextPrev();
             });
 
@@ -305,8 +304,7 @@ namespace bookStoreManagetment.ViewModel
                 ListCheckSheets = BackupListCheckSheet;
 
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // kiểm tra điều kiện nút thêm sản phẩm
@@ -445,8 +443,7 @@ namespace bookStoreManagetment.ViewModel
                         DisplayNhanVien = null;
 
                         var bc = new BrushConverter();
-                        BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                        ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                        BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
 
                         Query = "";
                     }           
@@ -958,8 +955,7 @@ namespace bookStoreManagetment.ViewModel
 
             // set màu cho nút filter
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
         }
 
         private string getFullNameEmployyee(string idEmployee)

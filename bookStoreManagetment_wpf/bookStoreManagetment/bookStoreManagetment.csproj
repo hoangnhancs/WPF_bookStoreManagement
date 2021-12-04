@@ -493,6 +493,7 @@
     </Content>
     <Content Include="bookStoreManagement_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>bookStoreManagement.mdf</DependentUpon>
     </Content>
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
