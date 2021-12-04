@@ -603,11 +603,13 @@ namespace bookStoreManagetment.ViewModel
                     TrahangInfor _Inventory = new TrahangInfor();
                     string billcodesell = item.billCodeSell;
                     string _namecus = DataProvider.Ins.DB.Database.SqlQuery<String>("select nameCustomer from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
+                    string _nameemp = DataProvider.Ins.DB.Database.SqlQuery<String>("select nameEmployee from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     string _status = DataProvider.Ins.DB.Database.SqlQuery<String>("select trangthai from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     string _lido = DataProvider.Ins.DB.Database.SqlQuery<String>("select lido from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     DateTime _ngaytra = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select sellDate from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     _Inventory.BillcodeSell = billcodesell;
                     _Inventory.NameCustomer = _namecus;
+                    _Inventory.NameEmployee = _nameemp;
                     _Inventory.LiDo = _lido;
                     _Inventory.TrangThai = _status;
                     _Inventory.SellDate = _ngaytra;
@@ -676,6 +678,7 @@ namespace bookStoreManagetment.ViewModel
                     {
                         _Inventory.BillcodeSell = billcodesell;
                         _Inventory.NameCustomer = _namecus;
+                        _Inventory.NameEmployee = _nameemp;
                         _Inventory.LiDo = _lido;
                         _Inventory.TrangThai = _status;
                         _Inventory.SellDate = _ngaytra;
