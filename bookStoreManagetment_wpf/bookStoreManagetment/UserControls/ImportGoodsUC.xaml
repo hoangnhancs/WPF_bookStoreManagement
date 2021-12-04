@@ -43,7 +43,6 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Danh sách đơn nhập hàng"
-                        FontSize="20"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left"
                         Margin="10 0 0 0"
@@ -258,8 +257,7 @@
                                                 Height="20"
                                                      Style="{StaticResource MaterialDesignIconButton}"
                                                 Margin=" 20 0 0 0"
-                                                    Foreground="#1e98d7"
-                                                FontSize="10">
+                                                    Foreground="#1e98d7">
                                                     <materialDesign:PackIcon Kind="Eye" Width="20" Height="20"/>
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
@@ -336,7 +334,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="20"
+                            <TextBlock 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
@@ -347,7 +345,7 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                            <TextBlock Text="Thêm đơn" FontSize="20"
+                            <TextBlock Text="Thêm đơn"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
                         </StackPanel>
@@ -365,7 +363,7 @@
                                     <RowDefinition Height="50"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <TextBlock Text="Nhà cung cấp" FontSize="16" Margin="10 0 0 0"></TextBlock>
+                                    <TextBlock Text="Nhà cung cấp" Margin="10 0 0 0"></TextBlock>
                                 </Grid>
                                 <Grid Grid.Row="1" >
                                     <Grid>
@@ -373,8 +371,7 @@
                                             x:Name="comboBoxSupplier"
                                             ItemsSource="{Binding listSupplier}"
                                             IsEditable="True"
-                                            Margin="20 5 20 10"
-                                            FontSize="18">
+                                            Margin="20 5 20 10">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
                                                     <i:InvokeCommandAction
@@ -400,20 +397,20 @@
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Nhà cung cấp" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
-                                                <TextBlock Text="{Binding NameSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Nhà cung cấp" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
+                                                <TextBlock Text="{Binding NameSupplier}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="SĐT/Email" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
-                                                <TextBlock Text="{Binding EmailPhonenumberSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                                <TextBlock Text="SĐT/Email" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
+                                                <TextBlock Text="{Binding EmailPhonenumberSupplier}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="2">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Địa chỉ" FontSize="15" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                <TextBlock Text="{Binding AddressSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Địa chỉ" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                                <TextBlock Text="{Binding AddressSupplier}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
@@ -429,7 +426,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Margin="50 10 50 0">
-                            <TextBlock Text="Chi tiết sản phẩm" FontSize="16" Margin=" 10 0 0 0"></TextBlock>
+                            <TextBlock Text="Chi tiết sản phẩm" Margin=" 10 0 0 0"></TextBlock>
                         </Grid>
                         <Grid Grid.Row="1" Margin="50 0 50 0">
                             <Grid>
@@ -637,7 +634,6 @@
 
                                         <Grid Grid.Column="0">
                                             <Button Content="Thêm sản phẩm" Width="200"
-                                                    FontSize="20"
                                                     Background="ForestGreen"
                                                     BorderBrush="ForestGreen"
                                                     Foreground="White"
@@ -658,7 +654,6 @@
                                         <Grid Grid.Column="1">
                                             <TextBlock Text="Thành tiền:"
                                                            VerticalAlignment="Center"
-                                                           FontSize="16"
                                                        FontWeight="SemiBold"
                                                            Margin="0 0 0 0"
                                                            HorizontalAlignment="Right"></TextBlock>
@@ -666,7 +661,6 @@
                                         <Grid Grid.Column="2">
                                             <TextBlock Text="{Binding TotalAllProducts}"
                                                            VerticalAlignment="Center"
-                                                           FontSize="16"
                                                        FontWeight="SemiBold"
                                                            Margin="10 0 20 0"></TextBlock>
                                         </Grid>
@@ -691,16 +685,16 @@
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="Mã sản phẩm" FontSize="20" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
+                                            <TextBlock Text="Mã sản phẩm" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding CodeProduct}" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding CodeProduct}" VerticalAlignment="Center"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="2">
-                                            <TextBlock Text="Đơn vị" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Đơn vị" VerticalAlignment="Center"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="3">
-                                            <TextBlock Text="{Binding UnitProduct}" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="{Binding UnitProduct}" VerticalAlignment="Center"
                                                            Margin="10 0  0 0"></TextBlock>
                                         </Grid>
                                     </Grid>
@@ -710,11 +704,11 @@
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="Tên sản phẩm" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="Tên sản phẩm" VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding NameProduct}" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding NameProduct}" VerticalAlignment="Center"></TextBlock>
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Row="2">
@@ -725,14 +719,13 @@
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="Số lượng" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="Số lượng" VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <TextBox
                                                     Text="{Binding QuantityProduct}"
                                                     Margin="20 0 20 0"
-                                                    FontSize="20"
                                                     VerticalAlignment="Center"
                                                     x:Name="textboxquantity">
                                                 <i:Interaction.Triggers>
@@ -746,14 +739,13 @@
                                             </TextBox>
                                         </Grid>
                                         <Grid Grid.Column="2">
-                                            <TextBlock Text="Đơn giá" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="Đơn giá" VerticalAlignment="Center"
                                                            Margin="15 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="3">
                                             <TextBox
                                                     Text="{Binding PriceProduct}"
                                                     Margin="20 0 20 0"
-                                                    FontSize="20"
                                                     VerticalAlignment="Center"
                                                     x:Name="textboxprice">
                                                 <i:Interaction.Triggers>
@@ -776,13 +768,11 @@
                                         <Grid Grid.Column="0">
                                             <TextBlock Text="Thành tiền  :"
                                                            VerticalAlignment="Center"
-                                                           FontSize="30"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <TextBlock Text="{Binding TotalAllProduct}"
                                                            VerticalAlignment="Center"
-                                                           FontSize="30"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                     </Grid>
@@ -890,7 +880,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="20"
+                            <TextBlock 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
@@ -901,7 +891,7 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                            <TextBlock Text="Chỉnh sửa" FontSize="20"
+                            <TextBlock Text="Chỉnh sửa" 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
                         </StackPanel>
@@ -922,7 +912,7 @@
                                     <Border BorderBrush="#424242"
                                     BorderThickness="2 2 2 0"
                                     HorizontalAlignment="Stretch">
-                                        <TextBlock Text="Nhà cung cấp" FontSize="16" Margin="10 0 0 0"></TextBlock>
+                                        <TextBlock Text="Nhà cung cấp"  Margin="10 0 0 0"></TextBlock>
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="1" >
@@ -934,8 +924,7 @@
                                             x:Name="comboBoxEditSupplier"
                                             ItemsSource="{Binding listSupplier}"
                                             IsEditable="True"
-                                            Margin="20 5 20 10"
-                                            FontSize="18">
+                                            Margin="20 5 20 10">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="SelectionChanged">
                                                         <i:InvokeCommandAction
@@ -966,20 +955,20 @@
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Nhà cung cấp" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
-                                                    <TextBlock Text="{Binding EditNameSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Nhà cung cấp" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
+                                                    <TextBlock Text="{Binding EditNameSupplier}" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Row="1">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="SĐT/Email" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
-                                                    <TextBlock Text="{Binding EditEmailPhonenumberSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="SĐT/Email" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
+                                                    <TextBlock Text="{Binding EditEmailPhonenumberSupplier}" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Row="2">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Địa chỉ" FontSize="15" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                    <TextBlock Text="{Binding EditAddressSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Địa chỉ" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                                    <TextBlock Text="{Binding EditAddressSupplier}" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
@@ -999,7 +988,7 @@
                             BorderThickness="2 2 2 0"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Stretch">
-                                <TextBlock Text="Chi tiết sản phẩm" FontSize="16" Margin=" 10 0 0 0"></TextBlock>
+                                <TextBlock Text="Chi tiết sản phẩm" Margin=" 10 0 0 0"></TextBlock>
                             </Border>
                         </Grid>
                         <Grid Grid.Row="1" Margin="50 0 50 0">
@@ -1208,7 +1197,6 @@
 
                                         <Grid Grid.Column="0">
                                             <Button Content="Thêm sản phẩm" Width="200"
-                                                    FontSize="20"
                                                     Background="ForestGreen"
                                                     BorderBrush="ForestGreen"
                                                     Foreground="White"
@@ -1232,7 +1220,6 @@
                                         <Grid Grid.Column="1">
                                             <TextBlock Text="Thành tiền:"
                                                            VerticalAlignment="Center"
-                                                           FontSize="16"
                                                        FontWeight="DemiBold"
                                                            Margin="0 0 0 0"
                                                            HorizontalAlignment="Right"></TextBlock>
@@ -1240,7 +1227,6 @@
                                         <Grid Grid.Column="2">
                                             <TextBlock Text="{Binding EditTotalAllImportGoods}"
                                                            VerticalAlignment="Center"
-                                                           FontSize="16"
                                                        FontWeight="DemiBold"
                                                            Margin="10 0 20 0"></TextBlock>
                                         </Grid>
@@ -1265,16 +1251,16 @@
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="Mã sản phẩm" FontSize="20" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
+                                            <TextBlock Text="Mã sản phẩm" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding EditCodeProduct}" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding EditCodeProduct}" VerticalAlignment="Center"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="2">
-                                            <TextBlock Text="Đơn vị" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Đơn vị" VerticalAlignment="Center"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="3">
-                                            <TextBlock Text="{Binding EditUnitProduct}" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="{Binding EditUnitProduct}" VerticalAlignment="Center"
                                                            Margin="10 0  0 0"></TextBlock>
                                         </Grid>
                                     </Grid>
@@ -1284,11 +1270,11 @@
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="Tên sản phẩm" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="Tên sản phẩm" VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding EditNameProduct}" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding EditNameProduct}" VerticalAlignment="Center"></TextBlock>
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Row="2">
@@ -1299,14 +1285,13 @@
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="Số lượng" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="Số lượng" VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <TextBox
                                                     Text="{Binding EditQuantityProduct}"
                                                     Margin="20 0 20 0"
-                                                    FontSize="20"
                                                     VerticalAlignment="Center"
                                                     x:Name="textboxEditquantity">
                                                 <i:Interaction.Triggers>
@@ -1320,14 +1305,13 @@
                                             </TextBox>
                                         </Grid>
                                         <Grid Grid.Column="2">
-                                            <TextBlock Text="Đơn giá" FontSize="20" VerticalAlignment="Center"
+                                            <TextBlock Text="Đơn giá" VerticalAlignment="Center"
                                                            Margin="15 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="3">
                                             <TextBox
                                                     Text="{Binding EditPriceProduct}"
                                                     Margin="20 0 20 0"
-                                                    FontSize="20"
                                                     VerticalAlignment="Center"
                                                     x:Name="textboxEditprice">
                                                 <i:Interaction.Triggers>
@@ -1350,13 +1334,11 @@
                                         <Grid Grid.Column="0">
                                             <TextBlock Text="Thành tiền  :"
                                                            VerticalAlignment="Center"
-                                                           FontSize="30"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <TextBlock Text="{Binding EditTotalAllProduct}"
                                                            VerticalAlignment="Center"
-                                                           FontSize="30"
                                                            Margin="20 0 0 0"></TextBlock>
                                         </Grid>
                                     </Grid>
@@ -1910,7 +1892,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="20"
+                            <TextBlock 
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Margin="10 0 0 0"
@@ -1921,7 +1903,7 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Height="30" Width="20"/>
-                            <TextBlock Text="Thêm đơn" FontSize="20"
+                            <TextBlock Text="Thêm đơn"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"></TextBlock>
                         </StackPanel>
@@ -1935,7 +1917,7 @@
                             <Grid Grid.Row="0" VerticalAlignment="Bottom">
 
                                 <Grid>
-                                    <TextBlock Text="Nhà cung cấp" FontSize="20" Margin="10 0 0 0"></TextBlock>
+                                    <TextBlock Text="Nhà cung cấp" Margin="10 0 0 0"></TextBlock>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" MinHeight="20" >
@@ -1947,20 +1929,20 @@
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Nhà cung cấp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
-                                            <TextBlock Text="{Binding DetailNameSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Nhà cung cấp"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
+                                            <TextBlock Text="{Binding DetailNameSupplier}"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Row="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="SĐT/Email" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
-                                            <TextBlock Text="{Binding DetailEmailPhonenumberSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                            <TextBlock Text="SĐT/Email"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
+                                            <TextBlock Text="{Binding DetailEmailPhonenumberSupplier}"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Row="2">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Địa chỉ" FontSize="15" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                            <TextBlock Text="{Binding DetailAddressSupplier}" FontSize="18" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Địa chỉ"  Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding DetailAddressSupplier}"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -1975,7 +1957,7 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Chi tiết sản phẩm" FontSize="20" Margin=" 10 0 0 0"></TextBlock>
+                                <TextBlock Text="Chi tiết sản phẩm"  Margin=" 10 0 0 0"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid>
@@ -2129,7 +2111,6 @@
                                             <Grid Grid.Column="1">
                                                 <TextBlock Text="Thành tiền:"
                                                            VerticalAlignment="Center"
-                                                           FontSize="16"
                                                            FontWeight="SemiBold"
                                                            Margin="0 0 0 0"
                                                            HorizontalAlignment="Right"></TextBlock>
@@ -2137,7 +2118,6 @@
                                             <Grid Grid.Column="2">
                                                 <TextBlock Text="{Binding TotalAllImportGoods}"
                                                            VerticalAlignment="Center"
-                                                           FontSize="16"
                                                            FontWeight="SemiBold"
                                                            Margin="10 0 20 0"></TextBlock>
                                             </Grid>

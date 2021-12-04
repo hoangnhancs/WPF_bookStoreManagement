@@ -105,12 +105,14 @@
 
                             <Grid Grid.Column="1">
                                 <Button Width="120"
-                                        Background="#d78a1e"
                             x:Name="btnFilter"
                                         Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                             HorizontalAlignment="Left"
                             Command="{Binding OpenFilterCommand}"
                             CommandParameter="{Binding ElementName=btnFilter}"
+                            Foreground="White"
+                            Background="#d78a1e"
+                            BorderBrush="#d78a1e"
                             Margin="20 0 0 0">
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Filter"
