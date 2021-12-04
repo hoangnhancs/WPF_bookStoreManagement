@@ -78,6 +78,10 @@ namespace bookStoreManagetment.ViewModel
         public string DisplayPayment { get => _DisplayPayment; set { _DisplayPayment = value; OnPropertyChanged(); } }
 
 
+        // background
+        private Brush _BackgroudFilter;
+        public Brush BackgroudFilter { get => _BackgroudFilter; set { _BackgroudFilter = value; OnPropertyChanged(); } }
+
         // danh sách tất cả đơn nhập xuất
         private ObservableCollection<Sheet> backupListSheet;
         private ObservableCollection<Sheet> _ListSheet;
@@ -100,6 +104,9 @@ namespace bookStoreManagetment.ViewModel
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+
+                var bc = new BrushConverter();
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // xuất file 
@@ -170,8 +177,7 @@ namespace bookStoreManagetment.ViewModel
                 Filter();
                 Report = Calc_Report();
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#FF008000");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
             });
 
             // xoá filter
@@ -190,8 +196,7 @@ namespace bookStoreManagetment.ViewModel
                 ListSheet = backupListSheet;
                 Report = Calc_Report();
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // đóng filter grid
@@ -298,6 +303,7 @@ namespace bookStoreManagetment.ViewModel
 
             // ẩn filter
             IsFilter = Visibility.Collapsed;
+
         }
 
         // hàm sắp xếp
@@ -336,30 +342,33 @@ namespace bookStoreManagetment.ViewModel
         {
             // load quỹ
             Summary newReport = new Summary();
-            if (ListSheet[0].ProfitSummary.billType.ToLower() == "export")
+            if (ListSheet.Count > 0)
             {
-                newReport.OldBudget = (int)(ListSheet[0].ProfitSummary.budget - ListSheet[0].ProfitSummary.rootPrice);
-            }
-            else
-            {
-                newReport.OldBudget = (int)(ListSheet[0].ProfitSummary.budget + ListSheet[0].ProfitSummary.rootPrice);
-            }
-            newReport.Earned = 0;
-            newReport.Paid = 0;
-
-            foreach (var sheet in ListSheet)
-            {
-                if (sheet.ProfitSummary.billType.ToLower() == "export")
+                if (ListSheet[0].ProfitSummary.billType.ToLower() == "export")
                 {
-                    newReport.Earned += sheet.ProfitSummary.rootPrice;
+                    newReport.OldBudget = (int)(ListSheet[0].ProfitSummary.budget - ListSheet[0].ProfitSummary.rootPrice);
                 }
                 else
                 {
-                    newReport.Paid += sheet.ProfitSummary.rootPrice;
+                    newReport.OldBudget = (int)(ListSheet[0].ProfitSummary.budget + ListSheet[0].ProfitSummary.rootPrice);
                 }
-            }
+                newReport.Earned = 0;
+                newReport.Paid = 0;
 
-            newReport.Budget = newReport.OldBudget + newReport.Earned - newReport.Paid;
+                foreach (var sheet in ListSheet)
+                {
+                    if (sheet.ProfitSummary.billType.ToLower() == "export")
+                    {
+                        newReport.Earned += sheet.ProfitSummary.rootPrice;
+                    }
+                    else
+                    {
+                        newReport.Paid += sheet.ProfitSummary.rootPrice;
+                    }
+                }
+
+                newReport.Budget = newReport.OldBudget + newReport.Earned - newReport.Paid;
+            }
             return newReport;
         }
     }

@@ -122,8 +122,7 @@ namespace bookStoreManagetment.ViewModel
                 ListRules = backupListRules;
 
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+                (p as Button).Background = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // textchanged tìm kiếm 
@@ -177,8 +176,7 @@ namespace bookStoreManagetment.ViewModel
                 ListRules = backupListRules;
 
                 var bc = new BrushConverter();
-                (p as Button).Background = (Brush)bc.ConvertFromString("#00FFFFFF");
-                (p as Button).Foreground = (Brush)bc.ConvertFromString("#FF000000");
+                (p as Button).Background = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // filter 
@@ -202,8 +200,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 Filter();
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
             });
 
             // chỉnh sửa quy định
@@ -271,8 +268,7 @@ namespace bookStoreManagetment.ViewModel
                 Query = null;
 
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
 
             });
 
@@ -342,8 +338,7 @@ namespace bookStoreManagetment.ViewModel
                 ListRules = backupListRules;
 
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // xoá dữ liệu cài đặt
@@ -445,8 +440,7 @@ namespace bookStoreManagetment.ViewModel
             IsFilter = Visibility.Collapsed;
 
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
 
         }
 

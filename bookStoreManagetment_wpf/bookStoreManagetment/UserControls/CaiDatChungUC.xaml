@@ -6,12 +6,13 @@
              xmlns:local="clr-namespace:bookStoreManagetment.UserControls"
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             TextElement.FontWeight="Regular"
+             TextElement.FontWeight="Medium"
              TextElement.FontSize="13"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              x:Name="UCSetting"
              Background="Transparent"
+             Foreground="#FF495B67"
              FontFamily="{DynamicResource MaterialDesignFont}"
              DataContext="{StaticResource CaiDatChungVM}"
              d:DesignHeight="575" d:DesignWidth="1024">
@@ -105,9 +106,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" 
                           Margin="20 0 5 0">
-                        <Border BorderBrush="Black"
-                                BorderThickness="1"
-                                CornerRadius="15">
+                        <materialDesign:Card UniformCornerRadius="20">
                             <DockPanel
                                         VerticalAlignment="Center"
                                         Opacity="0.8"
@@ -133,7 +132,7 @@
                                     </i:Interaction.Triggers>
                                 </TextBox>
                             </DockPanel>
-                        </Border>
+                        </materialDesign:Card>
                     </Grid>
 
                     <!--Background="{Binding BackgroudFilter}"-->
@@ -142,11 +141,11 @@
                                 x:Name="btnFilter"
                                 HorizontalAlignment="Left"
                                 Command="{Binding OpenFilterCommand}"
+                                Background="{Binding BackgroudFilter}"
                                 CommandParameter="{Binding ElementName=btnFilter}"
-                                Background="#d78a1e"
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                 BorderBrush="Transparent"
-                                Foreground="{Binding ForegroudFilter}"
+                                Foreground="White"
                                 Margin="20 0 0 0">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Filter"
@@ -242,6 +241,7 @@
                                 <DataGridTextColumn
                                     Binding="{Binding Setting.contentSetting}"
                                     Header="Nội Dung"
+                                    Width="2*"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                     <DataGridTextColumn.HeaderStyle >
                                         <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -301,7 +301,7 @@
                                                     Kind="Eye"                                             
                                                     Width="auto"
                                                     Height="auto"
-                                                    Foreground="Aqua"/>
+                                                    Foreground="#1e98d7"/>
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
                                                             <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickShowHideGridCommand}"
@@ -325,10 +325,10 @@
                                                             CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                                     Margin="0 0 5 0">
                                                     <materialDesign:PackIcon 
-                                                    Kind="LeadPencil"                                             
+                                                    Kind="Pencil"                                             
                                                     Width="auto"
                                                     Height="auto"
-                                                    Foreground="Green"/>
+                                                    Foreground="ForestGreen"/>
                                                     <i:Interaction.Triggers>
                                                         <!--ẩn hiện grid-->
                                                         <i:EventTrigger EventName="Click">
@@ -380,62 +380,63 @@
                           Margin="0,0,22,0"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Top">
-                        <Border BorderThickness="2"
+                        <materialDesign:Card Background="Transparent">
+                            <Border BorderThickness="1"
                                 CornerRadius="10"
                                 BorderBrush="Black"
-                                Background="#FFE7E7E7">
-                            <Grid Margin="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition Height="0.8*"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <StackPanel Orientation="Vertical"
+                                Background="White">
+                                <Grid Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="0.8*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <StackPanel Orientation="Vertical"
                                             Margin="5">
-                                        <TextBlock Text="Người tạo"
+                                            <TextBlock Text="Người tạo"
                                                    FontWeight="SemiBold"></TextBlock>
-                                        <ComboBox IsEditable="True"
+                                            <ComboBox IsEditable="True"
                                                   ItemsSource="{Binding AllStaff}"
                                                   SelectedValue="{Binding DisplayStaff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   Text="{Binding DisplayStaff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   HorizontalAlignment="Left"
                                               Width="150"></ComboBox>
-                                    </StackPanel>
-                                </Grid>
+                                        </StackPanel>
+                                    </Grid>
 
-                                <Grid Grid.Row="1">
-                                    <StackPanel Orientation="Vertical"
+                                    <Grid Grid.Row="1">
+                                        <StackPanel Orientation="Vertical"
                                             Margin="5">
-                                        <TextBlock Text="Ngày tạo"
+                                            <TextBlock Text="Ngày tạo"
                                                    FontWeight="SemiBold"></TextBlock>
-                                        <StackPanel Orientation="Horizontal"
+                                            <StackPanel Orientation="Horizontal"
                                                     Margin="0 2 0 0">
-                                            <DatePicker SelectedDate="{Binding displayBeginDay}"
+                                                <DatePicker SelectedDate="{Binding displayBeginDay}"
                                                         HorizontalAlignment="Left"
                                                     Width="100"
                                                     materialDesign:HintAssist.Hint="Ngày bắt đầu" 
                                                         FirstDayOfWeek="Monday" SelectedDateFormat="Short">
-                                            </DatePicker>
-                                            <materialDesign:PackIcon
+                                                </DatePicker>
+                                                <materialDesign:PackIcon
                                                 Margin="10 0 10 0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Kind="Minus" 
                                                                      />
-                                            <DatePicker SelectedDate="{Binding displayEndDay}"
+                                                <DatePicker SelectedDate="{Binding displayEndDay}"
                                                         HorizontalAlignment="Right"
                                                         DisplayDateStart="{Binding displayBeginDay}"
                                                     Width="100"
                                                     materialDesign:HintAssist.Hint="Ngày kết thúc" SelectedDateFormat="Short">
-                                            </DatePicker>
+                                                </DatePicker>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                                <Grid Grid.Row="2">
-                                    <StackPanel Orientation="Horizontal"
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
-                                        <Button Content="Xoá bộ lọc"
+                                            <Button Content="Xoá bộ lọc"
                                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                                 Background="Red"
                                                 BorderBrush="Transparent"
@@ -444,7 +445,7 @@
                                                 Padding="0"
                                                 Height="30"
                                                 Width="100"></Button>
-                                        <Button Content="Lọc"
+                                            <Button Content="Lọc"
                                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                                 Background="#1e98d7"
                                                 BorderBrush="Transparent"
@@ -454,9 +455,9 @@
                                                 Padding="0"
                                                 Margin="20 0 0 0"
                                                 Width="100"></Button>
-                                    </StackPanel>
-                                </Grid>
-                                <Button HorizontalAlignment="Right"
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource MaterialDesignFlatDarkButton}"
                                         ToolTip="Đóng Bộ Lọc"
@@ -467,13 +468,15 @@
                                         Background="Transparent"
                                         Foreground="Red"
                                         BorderBrush="Transparent">
-                                    <materialDesign:PackIcon Kind="Close" 
+                                        <materialDesign:PackIcon Kind="Close" 
                                                                  Width="20"
                                                                  Height="20"/>
 
-                                </Button>
-                            </Grid>
-                        </Border>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </materialDesign:Card>
+                        
                     </Grid>
                 </Grid>
             </Grid>
@@ -490,11 +493,9 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0"
+                <Grid Grid.Row="0" materialDesign:ShadowAssist.ShadowDepth="Depth3"
                            Margin="20 10 20 10">
-                    <Border BorderBrush="Black"
-                                Width="auto"
-                        BorderThickness="1">
+                    <materialDesign:Card>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.5*"></RowDefinition>
@@ -524,6 +525,7 @@
                                             Margin="50 0 0 0"
                                             Height="40">
                                         <TextBlock Text="Mã Quy Định"
+                                                   FontSize="16"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
                                         <TextBox Width="120"
@@ -539,6 +541,7 @@
                                             Margin="50 0 0 0"
                                             Height="40">
                                         <TextBlock Text="Ngày chỉnh sửa"
+                                                   FontSize="16"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
                                         <DatePicker IsEnabled="{Binding IsEnable, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -565,6 +568,7 @@
                                             Margin="50 0 0 0"
                                             Height="40">
                                         <TextBlock Text="Tên Quy Định"
+                                                   FontSize="16"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
                                         <TextBox Width="200"
@@ -580,6 +584,7 @@
                                             Margin="50 0 0 0"
                                             Height="40">
                                         <TextBlock Text="Người Tạo"
+                                                   FontSize="16"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"></TextBlock>
                                         <ComboBox IsEnabled="{Binding IsEnable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -595,30 +600,12 @@
                                 </Grid>
                             </Grid>
 
-                            <!--Trạng Thái-->
-                            <!--<Grid Grid.Row="3">
-                            <StackPanel Orientation="Horizontal"
-                                            Margin="50 0 0 0"
-                                            Height="40">
-                                <TextBlock Text="Trạng Thái"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"></TextBlock>
-                                <ToggleButton
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Height="auto"
-                                    Margin="48 0 0 0"
-                                    Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                                    ToolTip="MaterialDesignSwitchAccentToggleButton"
-                                    IsChecked="True" />
-                            </StackPanel>
-                        </Grid>-->
-
                             <!--Nội dung quy định-->
                             <Grid Grid.Row="3"
                               Margin="50 0 50 0">
                                 <StackPanel>
                                     <TextBlock Text="Nội Dung"
+                                               FontSize="16"
                                            Margin="0 10 0 10"></TextBlock>
                                     <TextBox IsReadOnly="{Binding IsReadOnly, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding ViewRule.Setting.contentSetting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -633,7 +620,7 @@
                                 </StackPanel>
                             </Grid>
                         </Grid>
-                    </Border>
+                    </materialDesign:Card>
                 </Grid>
                 <!--button-->
                 <Grid Grid.Row="1">
@@ -641,6 +628,7 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center">
                         <Button Width="120"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                         Background="Red"
                         BorderBrush="Red"
                         Foreground="White"
@@ -659,9 +647,10 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button Width="120"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                             Visibility="{Binding IsSaveRule}"
-                        BorderBrush="Green"
-                        Background="Green"
+                        BorderBrush="#1e98d7"
+                        Background="#1e98d7"
                         Foreground="White"
                         Margin="50 0 0 0"
                             Command="{Binding CheckSaveCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

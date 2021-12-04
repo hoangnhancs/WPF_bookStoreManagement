@@ -158,8 +158,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 Filter(backupListCustomers);
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
             });
 
             // đóng/mở filter grid
@@ -192,8 +191,7 @@ namespace bookStoreManagetment.ViewModel
                 ListCustomers = backupListCustomers;
 
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // xoá nhân viên
@@ -241,8 +239,7 @@ namespace bookStoreManagetment.ViewModel
                         ListCustomers = backupListCustomers;
 
                         var bc = new BrushConverter();
-                        BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                        ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                        BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
                     }
                 }
                 else
@@ -450,8 +447,7 @@ namespace bookStoreManagetment.ViewModel
 
             // set màu cho nút filter
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
         }
         
         private void LoadBillOffCus(ShowKhachHang KH) 

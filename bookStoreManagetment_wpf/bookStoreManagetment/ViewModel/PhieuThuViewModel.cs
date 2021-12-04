@@ -22,6 +22,11 @@ namespace bookStoreManagetment.ViewModel
     }
     public class PhieuThuViewModel:BaseViewModel
     {
+
+        // title 
+        private string _Title;
+        public string Title { get => _Title; set { _Title = value; OnPropertyChanged(); } }
+
         // ẩn hiện các nút khi chuyển grid
         private Visibility _isAddRule;
         public Visibility IsAddRule { get => _isAddRule; set { _isAddRule = value; OnPropertyChanged(); } }
@@ -123,8 +128,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 Filter();
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
             });
 
             // đóng/mở filter grid
@@ -156,8 +160,7 @@ namespace bookStoreManagetment.ViewModel
                 ListImportBill = backupListImportBill;
 
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
             // xoá dữ liệu xem phiếu thu
             DeleteImportSheetCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -212,6 +215,7 @@ namespace bookStoreManagetment.ViewModel
             LoadDataViewImportSheetCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ViewImportSheet = (p as importBill);
+                Title = "Danh Sách Phiếu Thu > " + ViewImportSheet.ProfitSummary.billCode;
             });
 
 
@@ -225,6 +229,7 @@ namespace bookStoreManagetment.ViewModel
                     if (grid.Name == "gridListRule")
                     {
                         IsAddRule = Visibility.Visible;
+                        Title = "Danh Sách Phiếu Thu";
                     }
                     else
                     {
@@ -240,8 +245,7 @@ namespace bookStoreManagetment.ViewModel
                         ListImportBill = backupListImportBill;
 
                         var bc = new BrushConverter();
-                        BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                        ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                        BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
                     }
                 }
                 else
@@ -298,8 +302,9 @@ namespace bookStoreManagetment.ViewModel
 
             // set màu cho nút filter
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
+
+            Title = "Danh Sách Phiếu Thu";
         }
 
         //filter

@@ -193,9 +193,9 @@ namespace bookStoreManagetment.ViewModel
                     var converter = new System.Windows.Media.BrushConverter();
                     if (ButtonClicked != null)
                     {
-                        ButtonClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
+                        ButtonClicked.Foreground = (Brush)converter.ConvertFromString("#FF495B67");
                     }
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1E98D7");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1e98d7");
                     ButtonClicked = (p as Button);
                 }            
             });
@@ -208,10 +208,10 @@ namespace bookStoreManagetment.ViewModel
                     var converter = new System.Windows.Media.BrushConverter();
                     if (ButtonIconClicked != null)
                     {
-                        ButtonIconClicked.Foreground = (Brush)converter.ConvertFromString("#FF000000");
+                        ButtonIconClicked.Foreground = (Brush)converter.ConvertFromString("#FF495B67");
                     }
                     var check = (p as Button).Name;
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1E98D7");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#1e98d7");
                     ButtonIconClicked = (p as Button);
                 }
             });
@@ -327,14 +327,14 @@ namespace bookStoreManagetment.ViewModel
             {   if (!openbtn.Contains((p as Button)))
                 {
                     var converter = new System.Windows.Media.BrushConverter();
-                    var brush = (Brush)converter.ConvertFromString("#FFFF0000");
+                    var brush = (Brush)converter.ConvertFromString("#d75c1e");
                     (p as Button).Foreground = brush;
                     openbtn.Add((p as Button));
                 }
                 else
                 {
                     var converter = new System.Windows.Media.BrushConverter();
-                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FF000000");
+                    (p as Button).Foreground = (Brush)converter.ConvertFromString("#FF495B67");
                     openbtn.Remove((p as Button));
                 }
             });

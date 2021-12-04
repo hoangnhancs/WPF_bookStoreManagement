@@ -154,8 +154,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 Filter();
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
             });
 
             // đóng/mở filter grid
@@ -189,8 +188,7 @@ namespace bookStoreManagetment.ViewModel
                 ListExportBill = backupListExportBill;
 
                 var bc = new BrushConverter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // sự kiện ô nhận tiền thay đổi
@@ -371,8 +369,7 @@ namespace bookStoreManagetment.ViewModel
                         ListExportBill = backupListExportBill;
 
                         var bc = new BrushConverter();
-                        BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                        ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                        BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
                     }
                 }
                 else
@@ -466,8 +463,7 @@ namespace bookStoreManagetment.ViewModel
 
             // set màu cho nút filter
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
         }
 
         // tạo dữ liệu cho thêm phiếu chi
