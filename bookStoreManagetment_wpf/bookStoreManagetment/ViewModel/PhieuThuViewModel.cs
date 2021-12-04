@@ -43,6 +43,10 @@ namespace bookStoreManagetment.ViewModel
         private importBill _ViewImportSheet;
         public importBill ViewImportSheet { get => _ViewImportSheet; set { _ViewImportSheet = value; OnPropertyChanged(); } }
 
+        // xem hóa đơn bán
+        private BillDetail _ViewBillDetail;
+        public BillDetail ViewBillDetail { get => _ViewBillDetail; set { _ViewBillDetail = value; OnPropertyChanged(); } }
+
         // danh sách tất cả đơn hàng nhập
         private ObservableCollection<importBill> backupListImportBill;
         private ObservableCollection<importBill> _ListImportBill;
@@ -75,11 +79,18 @@ namespace bookStoreManagetment.ViewModel
         private Visibility _IsFilter;
         public Visibility IsFilter { get => _IsFilter; set { _IsFilter = value; OnPropertyChanged(); } }
 
+        // ẩn hiện xem chi tiết hóa đơn bán
+        private Visibility _IsBillViewing;
+        public Visibility IsBillViewing { get => _IsBillViewing; set { _IsBillViewing = value; OnPropertyChanged(); } }
+
         // list commnad
         public ICommand LoadedUserControlCommand { get; set; }
         public ICommand ClickShowHideGridCommand { get; set; }
         public ICommand LoadDataViewImportSheetCommand { get; set; }
         public ICommand DeleteImportSheetCommand { get; set; }
+        public ICommand ViewBillCommand { get; set; }
+        public ICommand CloseViewSellBillCommand { get; set; }
+        
         //filter
         public ICommand CheckFilterCommand { get; set; }
         public ICommand DeleteFilterCommand { get; set; }
@@ -253,8 +264,42 @@ namespace bookStoreManagetment.ViewModel
                     grid.Visibility = Visibility.Collapsed;
                 }
             });
+
+            // load dữ liệu xem chi tiết hóa đơn bán
+            ViewBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //ViewImportSheet = (p as importBill);
+                //Title = "Danh Sách Phiếu Thu > " + ViewImportSheet.ProfitSummary.billCode;
+                IsBillViewing = Visibility.Visible;
+                string billcode = ViewImportSheet.ProfitSummary.billCode;
+                var sellbilldetails = DataProvider.Ins.DB.sellBills.Where(x => x.billCodeSell == billcode);
+                var sellbilldetail = DataProvider.Ins.DB.sellBills.Where(x => x.billCodeSell == billcode).FirstOrDefault();
+                custommer CurrentCustomer = DataProvider.Ins.DB.custommers.Where(x => x.idCustommer == sellbilldetail.idCustomer).FirstOrDefault();
+                List<SellBillItem>  ListOrderItems = new List<SellBillItem>();
+                foreach (var billdetail in sellbilldetails)
+                {
+                    ListOrderItems.Add(new SellBillItem { Item = DataProvider.Ins.DB.items.Where(x => x.idItem == billdetail.idItem).FirstOrDefault(), Amount = billdetail.number, Discount = billdetail.discount });
+                }
+
+                ViewBillDetail = new BillDetail
+                {
+                    Bill = DataProvider.Ins.DB.bills.Where(x => x.billType == "export" && x.billCode == billcode).FirstOrDefault(),
+                    CustomerFullName = CurrentCustomer.lastName + " " + CurrentCustomer.firstName,
+                    CustomerPhoneNumber = CurrentCustomer.phoneNumber,
+                    CustomerAddress = CurrentCustomer.custommerAddress,
+                    EmployeeFullName = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == sellbilldetail.idEmployee).Select(x => x.lastName + " " + x.firstName).FirstOrDefault(),
+                    Total = (int)sellbilldetails.Select(x => x.unitPrice * x.number * (1 - x.discount / 100)).Sum(),
+                    OrderItems = ListOrderItems,
+                    SellBill = sellbilldetail,
+                };
+            });
+
+            CloseViewSellBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => 
+            {
+                IsBillViewing = Visibility.Collapsed;
+            });
         }
-        
+
         private void LoadData()
         {
             //// load tất cả nhân viên
@@ -265,7 +310,7 @@ namespace bookStoreManagetment.ViewModel
             //{
             //    AllStaff.Add(staff.lastName);
             //}
-
+            IsBillViewing = Visibility.Collapsed;
             ListImportBill = new ObservableCollection<importBill>();
             ListDoiTuong = new List<string>();
             var listBill = DataProvider.Ins.DB.profitSummaries;

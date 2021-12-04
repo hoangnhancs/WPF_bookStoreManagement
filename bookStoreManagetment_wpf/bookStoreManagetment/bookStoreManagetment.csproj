@@ -166,6 +166,7 @@
     <Compile Include="Model\bill.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\BillDetail.cs" />
     <Compile Include="Model\bookInformation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -585,7 +585,6 @@
                                                                 </Style>
                                                             </DataGrid.Resources>
 
-
                                                             <DataGrid.Columns>
                                                                 <DataGridTextColumn Binding="{Binding Item.idItem}" Width ="Auto" Header="Mã sản phẩm" IsReadOnly ="True">
                                                                     <DataGridTextColumn.HeaderStyle >
@@ -790,17 +789,9 @@
                             </Grid>
 
                         </Grid>
-                        <!--Thanh toán-->
+                        <!--Thoát-->
                         <Grid Grid.Row="2">
-                            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Content="Trả hàng" Foreground="White" BorderBrush="Red" >
-                                <!--<i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction
-                             Command="{Binding CheckoutClickCommand}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>-->
-                            </Button>
+                            <Button Command="{Binding BacktoDSHoaDonCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Content="Thoát" Foreground="White" BorderBrush="Red" />
                         </Grid>
                     </Grid>
                 </Grid>
