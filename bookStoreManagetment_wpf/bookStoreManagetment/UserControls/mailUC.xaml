@@ -484,7 +484,7 @@
                                     <TextBlock Text="Ngày gửi" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0"></TextBlock>
                                     <materialDesign:Card Height="30" UniformCornerRadius="10">
                                         <DatePicker  Height="30" HorizontalContentAlignment="Center" Width="90" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" HorizontalAlignment="Center"
-                                Text="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
+                                SelectedDate="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
                                         </DatePicker>
                                     </materialDesign:Card>
                                 </StackPanel>

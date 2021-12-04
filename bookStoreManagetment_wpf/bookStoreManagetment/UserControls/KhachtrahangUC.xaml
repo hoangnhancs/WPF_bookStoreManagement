@@ -119,6 +119,10 @@
                             </Grid>
 
                             <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="113*"/>
+                                    <ColumnDefinition Width="57*"/>
+                                </Grid.ColumnDefinitions>
                                 <Button Width="120"
                             x:Name="btnFilter"
                                         Style="{StaticResource MaterialDesignFlatDarkBgButton}"
@@ -128,7 +132,7 @@
                             Background="#d78a1e"
                             BorderBrush="#d78a1e"
                                         Foreground="White"
-                            Margin="20 0 0 0">
+                            Margin="20,2,0,2">
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Filter"
                                                         HorizontalAlignment="Left"
@@ -320,7 +324,8 @@
                                                 Padding="0"
                                                 Height="30"
                                                 Width="100"
-                                                IsEnabled="True"></Button>
+                                                IsEnabled="True"
+                                                            Command="{Binding clearFilter}"></Button>
                                                     <Button Background="#1e98d7"
                                                             Foreground="White"
                                                             BorderBrush="#1e98d7"
@@ -686,7 +691,7 @@
                                 </Grid>
                             </StackPanel>
                         </Grid>
-                        
+
                     </Grid>
                     <!--{Binding ChitietHoadontraVisible}-->
                     <Grid x:Name="gridChitietTrahang" Visibility="{Binding ChitietHoadontraVisible}">
@@ -710,7 +715,7 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="4*"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <Grid Grid.Row="0">
                                     <materialDesign:Card Margin="5">
                                         <StackPanel>
@@ -820,7 +825,7 @@
                                         </StackPanel>
                                     </materialDesign:Card>
                                 </Grid>
-                                
+
                                 <Grid Grid.Row="2">
                                     <materialDesign:Card Margin="5">
                                         <StackPanel VerticalAlignment="Center">
@@ -918,5 +923,5 @@
             </Grid>
         </Grid>
     </Grid>
-  
+
 </UserControl>
