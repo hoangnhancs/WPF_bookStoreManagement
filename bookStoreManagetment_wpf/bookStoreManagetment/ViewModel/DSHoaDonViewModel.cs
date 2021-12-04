@@ -27,30 +27,6 @@ namespace bookStoreManagetment.ViewModel
 {
     class DSHoaDonViewModel : BaseViewModel
     {
-        #region Khai báo class chi tiết hóa đơn
-        public class BillDetail
-        {
-            public bill Bill { get; set; }
-            public string EmployeeFullName { get; set; }
-            public string CustomerFullName { get; set; }
-            public string CustomerPhoneNumber { get; set; }
-            public string CustomerAddress { get; set; }
-            public int Total { get; set; }
-            public List<SellBillItem> OrderItems { get; set; }
-            public sellBill SellBill { get; set; }
-            public string billStatus { get; set; }
-        }
-        #endregion
-
-        #region Khai báo class SellBillItem
-        public class SellBillItem
-        {
-            public item Item { get; set; }
-            public int Amount { get; set; }
-            public int Discount { get; set; }
-        }
-        #endregion
-
         public DSHoaDonViewModel()
         {
             #region Command load data cho DSHoaDon UC
@@ -81,14 +57,14 @@ namespace bookStoreManagetment.ViewModel
                         var curentCustomer = DataProvider.Ins.DB.custommers.Where(x => x.idCustommer == billDetails.FirstOrDefault().idCustomer).FirstOrDefault();
                         customerFullName = curentCustomer.lastName + " " + curentCustomer.firstName;
                         customerAddress = curentCustomer.custommerAddress;
-                        employeeFullName = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == billDetails.FirstOrDefault().idEmployee).Select(x => x.lastName + " " + x.firstName).SingleOrDefault();
-                        total = (int)billDetails.Select(x => x.unitPrice * x.number * (1 - x.discount / 100)).Sum();
                         customerPhoneNumber = curentCustomer.phoneNumber;
+                        employeeFullName = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == billDetails.FirstOrDefault().idEmployee).Select(x => x.lastName + " " + x.firstName).FirstOrDefault();
+                        total = (int)billDetails.Select(x => x.unitPrice * x.number * (1 - x.discount / 100)).Sum();
                     }
                     ListOrderItems = new List<SellBillItem>();
                     foreach (var billdetail in billDetails)
                     {
-                        ListOrderItems.Add(new SellBillItem { Item = ListItems.Where(x => x.idItem == billdetail.idItem).SingleOrDefault(), Amount = billdetail.number, Discount = billdetail.discount });
+                        ListOrderItems.Add(new SellBillItem { Item = ListItems.Where(x => x.idItem == billdetail.idItem).FirstOrDefault(), Amount = billdetail.number, Discount = billdetail.discount });
                     }
                     BillDetail hoadon = new BillDetail
                     {
@@ -110,8 +86,6 @@ namespace bookStoreManagetment.ViewModel
                 currentpage = 1;
                 pack_page = 1;
                 settingButtonNextPrev();
-
-
             }
             #endregion
 
