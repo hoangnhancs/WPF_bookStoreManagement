@@ -229,8 +229,14 @@ namespace bookStoreManagetment.ViewModel
                 isEnableFilterButton = true;
             }
         }
+        private string _paymentmethod;
+        public string PaymentMethod { get { return _paymentmethod; } set { _paymentmethod = value; OnPropertyChanged(); } }
+        private string _deliverymethod;
+        public string DeliveryMethod { get { return _deliverymethod; } set { _deliverymethod = value; OnPropertyChanged(); } }
+
         public string tmpcbbnhanviensearch { get; set; }
         public string tmpcbbkhachhangsearch { get; set; }
+        public ICommand textboxSearchChangedCommand { get; set; }
         public List<itemtrave> lstitemtrave { get; set; }
         public int total_price { get; set; }
         private ObservableCollection<string> _tenkhachhanglist;
@@ -253,107 +259,7 @@ namespace bookStoreManagetment.ViewModel
                 OnPropertyChanged();
             }
         }
-        //#region "page"
-        ////Page Property
-        //private ObservableCollection<TrahangInfor> _DivInventoryList;
-        //public ObservableCollection<TrahangInfor> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
-
-        //private Visibility _3cham1Visible;
-        //public Visibility Bacham1Visible
-        //{
-        //    get { return _3cham1Visible; }
-        //    set
-        //    {
-        //        _3cham1Visible = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private Visibility _3cham2Visible;
-        //public Visibility Bacham2Visible
-        //{
-        //    get { return _3cham2Visible; }
-        //    set
-        //    {
-        //        _3cham2Visible = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //public int maxpage { get; set; }
-        //public int max_pack_page { get; set; }
-        //public int pack_page { get; set; }
-        //public int currentpage = 1;
-        //private string _numRowEachPageTextBox;
-        //public string NumRowEachPageTextBox
-        //{
-        //    get { return _numRowEachPageTextBox; }
-        //    set
-        //    {
-        //        _numRowEachPageTextBox = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //public int NumRowEachPage;
-        //private page btnPage1;
-        //public page BtnPage1
-        //{
-        //    get { return btnPage1; }
-        //    set
-        //    {
-        //        btnPage1 = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private page btnPage2;
-        //public page BtnPage2
-        //{
-        //    get { return btnPage2; }
-        //    set
-        //    {
-        //        btnPage2 = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private page btnPage3;
-        //public page BtnPage3
-        //{
-        //    get { return btnPage3; }
-        //    set
-        //    {
-        //        btnPage3 = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //private bool _leftVisi;
-        //public bool LeftVisi
-        //{
-        //    get { return _leftVisi; }
-        //    set
-        //    {
-        //        _leftVisi = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private bool _rightVisi;
-        //public bool RightVisi
-        //{
-        //    get { return _rightVisi; }
-        //    set
-        //    {
-        //        _rightVisi = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public ICommand tbNumRowEachPageCommand { get; set; }
-        //public ICommand btnNextClickCommand { get; set; }
-        //public ICommand btnendPageCommand { get; set; }
-        //public ICommand btnfirstPageCommand { get; set; }
-        //public ICommand btnPrevPageCommand { get; set; }
-        //public ICommand btnLoc2Command { get; set; }
-
-        ////Page Property
-        //#endregion //here  
+       
         public KhachtrahangViewModel()
         {
             LoadDSKhachtrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -368,12 +274,7 @@ namespace bookStoreManagetment.ViewModel
                 TextBoxSearchValue = "";
                 ComboBoxTenKhachhang = "";
                 ComboBoxNhanvienphutrachValue = "";
-                //MessageBox.Show(InventoryList.Count().ToString());
-                //NumRowEachPageTextBox = "5";
-                //NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-                //currentpage = 1;
-                //pack_page = 1;
-                //settingButtonNextPrev();
+
                 isEnableFilterButton = false;
             });
 
@@ -385,12 +286,34 @@ namespace bookStoreManagetment.ViewModel
             });
             tbMahoadonChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                LoadData();
+                int check = DataProvider.Ins.DB.khachtrahangs.Where(i => i.billCodeSell == Mahoadon).Count();
+                Console.WriteLine(check.ToString() + Mahoadon);
+                if (check == 0)
+                {
+                    Danhsachsanpham.Clear();
+
+                    var lstItem = DataProvider.Ins.DB.sellBills.Where(i => i.billCodeSell == Mahoadon);
+                    //Console.WriteLine(Mahoadon + lstItem.Count().ToString());
+                    foreach (var item in lstItem)
+                    {
+                        string _iditem = item.idItem;
+                        item _tempitem = DataProvider.Ins.DB.items.Where(i => i.idItem == _iditem).FirstOrDefault();
+                        itemtrave _newitemtrave = new itemtrave();
+                        _newitemtrave.Item = _tempitem;
+                        _newitemtrave.BuyNumber = item.number;
+                        _newitemtrave.TraveNumber = item.number;
+                        Danhsachsanpham.Add(_newitemtrave);
+                    }
+                    lstitemtrave = Danhsachsanpham.ToList();
+                }
+                else
+                    MessageBox.Show("Đơn hàng này đã được trả trước đó!!!");
             });
             defindSelectedItemTrave = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 SelectedItemTrave = p as itemtrave;
             });
+            
             saveTextBoxSLTVCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //Console.WriteLine(SelectedItemTrave.Item.idItem);
@@ -431,52 +354,62 @@ namespace bookStoreManagetment.ViewModel
                 if (MessageBox.Show("Bạn có muốn thêm?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     Danhsachsanpham = new ObservableCollection<itemtrave>(lstitemtrave);
-                    DateTime now = DateTime.Now;
-                    string d = now.Day.ToString();
-                    string m = now.Month.ToString();
-                    string y = now.Year.ToString();
-                    string h = now.Hour.ToString();
-                    string min = now.Minute.ToString();
-                    string s = now.Second.ToString();
-                    string idbilltra = "BILL" + d + m + y + h + min + s;
-
-                    foreach (var i in Danhsachsanpham)
+                    if (Danhsachsanpham.Count > 0 && LiDo!=null && TenNhanVien!=null ) 
                     {
-
-                        int _tmpnum = i.TraveNumber;
-                        var _tmpidCus = DataProvider.Ins.DB.Database.SqlQuery<string>("Select idCustomer from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
-                        var _tmpfirstnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select firstName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
-                        var _tmplastnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select lastName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
-                        string _tmpnameCus = _tmplastnameCus + " " + _tmpfirstnameCus;
-                        var _tmpdiscount = DataProvider.Ins.DB.Database.SqlQuery<int>("Select discount from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
-                        var _unit = DataProvider.Ins.DB.Database.SqlQuery<String>("Select unit from item where iditem=N'" + i.Item.idItem + "'").FirstOrDefault();
-                        khachtrahang _tmp = new khachtrahang();
-                        _tmp.billCodeTra = idbilltra;
-                        _tmp.billCodeSell = Mahoadon;
-                        _tmp.nameCustomer = _tmpnameCus;
-                        _tmp.number = _tmpnum;
-                        _tmp.sellDate = now;
-                        _tmp.trangthai = "Đã trả hàng";
-                        _tmp.unit = i.Item.unit;
-                        _tmp.unitPrice = i.Item.sellPriceItem;
-                        _tmp.idCustomer = _tmpidCus;
-                        _tmp.idItem = i.Item.idItem;
-                        _tmp.discount = _tmpdiscount;
-                        _tmp.lido = LiDo;
-                        _tmp.nameEmployee = TenNhanVien;
-                        DataProvider.Ins.DB.khachtrahangs.Add(_tmp);
-                        DataProvider.Ins.DB.SaveChanges(); //cập nhật bảng tả hàng
-                        var res = DataProvider.Ins.DB.items.SingleOrDefault(t => t.idItem == i.Item.idItem);
-                        if (res != null)
+                        if (TenNhanVien.Replace(" ", "") != "" && LiDo.Replace(" ", "") != "")
                         {
-                            res.quantity = res.quantity + _tmpnum;
-                            DataProvider.Ins.DB.SaveChanges();
+                            DateTime now = DateTime.Now;
+                            string d = now.Day.ToString();
+                            string m = now.Month.ToString();
+                            string y = now.Year.ToString();
+                            string h = now.Hour.ToString();
+                            string min = now.Minute.ToString();
+                            string s = now.Second.ToString();
+                            string idbilltra = "BILL" + d + m + y + h + min + s;
+
+                            foreach (var i in Danhsachsanpham)
+                            {
+
+                                int _tmpnum = i.TraveNumber;
+                                var _tmpidCus = DataProvider.Ins.DB.Database.SqlQuery<string>("Select idCustomer from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
+                                var _tmpfirstnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select firstName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
+                                var _tmplastnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select lastName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
+                                string _tmpnameCus = _tmplastnameCus + " " + _tmpfirstnameCus;
+                                var _tmpdiscount = DataProvider.Ins.DB.Database.SqlQuery<int>("Select discount from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
+                                var _unit = DataProvider.Ins.DB.Database.SqlQuery<String>("Select unit from item where iditem=N'" + i.Item.idItem + "'").FirstOrDefault();
+                                khachtrahang _tmp = new khachtrahang();
+                                _tmp.billCodeTra = idbilltra;
+                                _tmp.billCodeSell = Mahoadon;
+                                _tmp.nameCustomer = _tmpnameCus;
+                                _tmp.number = _tmpnum;
+                                _tmp.sellDate = now;
+                                _tmp.trangthai = "Đã trả hàng";
+                                _tmp.unit = i.Item.unit;
+                                _tmp.unitPrice = i.Item.sellPriceItem;
+                                _tmp.idCustomer = _tmpidCus;
+                                _tmp.idItem = i.Item.idItem;
+                                _tmp.discount = _tmpdiscount;
+                                _tmp.lido = LiDo;
+                                _tmp.nameEmployee = TenNhanVien;
+                                DataProvider.Ins.DB.khachtrahangs.Add(_tmp);
+                                DataProvider.Ins.DB.SaveChanges(); //cập nhật bảng tả hàng
+                                var res = DataProvider.Ins.DB.items.SingleOrDefault(t => t.idItem == i.Item.idItem);
+                                if (res != null)
+                                {
+                                    res.quantity = res.quantity + _tmpnum;
+                                    DataProvider.Ins.DB.SaveChanges();
+                                }
+                            }
+                            clearData();
+                            MessageBox.Show("Thêm thành công!!!");
+                            searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
+                            //settingButtonNextPrev();
                         }
+                        else
+                            MessageBox.Show("Vui lòng nhập đủ thông tin");
                     }
-                    clearData();
-                    MessageBox.Show("Thêm thành công!!!");
-                    searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
-                    //settingButtonNextPrev();
+                    else
+                        MessageBox.Show("Vui lòng nhập đủ thông tin");
                 }
             });
 
@@ -525,6 +458,8 @@ namespace bookStoreManagetment.ViewModel
                 }
                 ChitietThoigianDathang = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select selldate from sellbill where billcodesell=N'" + ChitietMahoadon + "'").FirstOrDefault();
                 GhiChu = DataProvider.Ins.DB.Database.SqlQuery<String>("select note from sellbill where billcodesell=N'" + ChitietMahoadon + "'").FirstOrDefault();
+                PaymentMethod = DataProvider.Ins.DB.Database.SqlQuery<string>("select paymentMethod from sellbill where billcodesell=N'" + ChitietMahoadon + "'").FirstOrDefault();
+                DeliveryMethod = DataProvider.Ins.DB.Database.SqlQuery<string>("select deliveryMethod from sellbill where billcodesell=N'" + ChitietMahoadon + "'").FirstOrDefault();
             });
             btnThoatCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -655,58 +590,7 @@ namespace bookStoreManagetment.ViewModel
                 searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
                 //settingButtonNextPrev();
             });
-            //tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    currentpage = 1;
-            //    //LoadData();
-            //    searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
-            //    settingButtonNextPrev();
-            //});
-            //btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    if (currentpage < maxpage)
-            //    {
-            //        currentpage += 1;
-            //        if (currentpage % 3 == 0)
-            //            pack_page = currentpage / 3;
-            //        else
-            //            pack_page = Convert.ToInt32(currentpage / 3) + 1;
-            //        //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-            //    }
-            //    settingButtonNextPrev();
-            //});
-            //btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    currentpage = maxpage;
-            //    pack_page = max_pack_page;
-            //    settingButtonNextPrev();
-            //});
-            //btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    currentpage = 1;
-            //    pack_page = 1;
-            //    //settingButtonNextPrev();
-            //});
-            //btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    if (currentpage > 1)
-            //    {
-            //        currentpage -= 1;
-            //        if (currentpage % 3 == 0)
-            //            pack_page = currentpage / 3;
-            //        else
-            //            pack_page = Convert.ToInt32(currentpage / 3) + 1;
-            //        //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-            //    }
-            //    //settingButtonNextPrev();
-            //});
-            //btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
-            //{
-            //    currentpage = 1;
-            //    pack_page = 1;
-            //    searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
-            //    //settingButtonNextPrev();
-            //});
+            
             void LoadData()
             {
                 InventoryList = new ObservableCollection<TrahangInfor>();
@@ -719,11 +603,13 @@ namespace bookStoreManagetment.ViewModel
                     TrahangInfor _Inventory = new TrahangInfor();
                     string billcodesell = item.billCodeSell;
                     string _namecus = DataProvider.Ins.DB.Database.SqlQuery<String>("select nameCustomer from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
+                    string _nameemp = DataProvider.Ins.DB.Database.SqlQuery<String>("select nameEmployee from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     string _status = DataProvider.Ins.DB.Database.SqlQuery<String>("select trangthai from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     string _lido = DataProvider.Ins.DB.Database.SqlQuery<String>("select lido from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     DateTime _ngaytra = DataProvider.Ins.DB.Database.SqlQuery<DateTime>("select sellDate from khachtrahang where billCodeSell=N'" + billcodesell + "'").FirstOrDefault();
                     _Inventory.BillcodeSell = billcodesell;
                     _Inventory.NameCustomer = _namecus;
+                    _Inventory.NameEmployee = _nameemp;
                     _Inventory.LiDo = _lido;
                     _Inventory.TrangThai = _status;
                     _Inventory.SellDate = _ngaytra;
@@ -745,6 +631,8 @@ namespace bookStoreManagetment.ViewModel
                     Danhsachsanpham.Add(_newitemtrave);
                 }
                 lstitemtrave = Danhsachsanpham.ToList();
+                
+
                 TennhanvienList = new ObservableCollection<string>();
                 TenkhachhangList = new ObservableCollection<string>();
                 TennhanvienList.Add("Tất cả");
@@ -790,6 +678,7 @@ namespace bookStoreManagetment.ViewModel
                     {
                         _Inventory.BillcodeSell = billcodesell;
                         _Inventory.NameCustomer = _namecus;
+                        _Inventory.NameEmployee = _nameemp;
                         _Inventory.LiDo = _lido;
                         _Inventory.TrangThai = _status;
                         _Inventory.SellDate = _ngaytra;
@@ -805,192 +694,7 @@ namespace bookStoreManagetment.ViewModel
                 Danhsachsanpham.Clear();
                 lstitemtrave.Clear();
             }
-            //void settingButtonNextPrev()
-            //{
-            //    int ilc = InventoryList.Count();
-            //    BtnPage1 = new page();
-            //    BtnPage2 = new page();
-            //    BtnPage3 = new page();
-
-            //    //currentpage = 1;
-
-            //    if (NumRowEachPageTextBox != "")
-            //    {
-            //        //init max page
-            //        NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-            //        if (ilc % NumRowEachPage == 0)
-            //            maxpage = ilc / NumRowEachPage;
-            //        else
-            //            maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
-            //        if (maxpage % 3 == 0)
-            //            max_pack_page = maxpage / 3;
-            //        else
-            //            max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
-
-
-            //        //Init max page
-            //        DivInventoryList = new ObservableCollection<TrahangInfor>();
-            //        DivInventoryList.Clear();
-            //        int startPos = (currentpage - 1) * NumRowEachPage;
-            //        int endPos = currentpage * NumRowEachPage - 1;
-            //        if (endPos >= ilc)
-            //            endPos = ilc - 1;
-
-            //        int flag = 0;
-            //        foreach (var item in InventoryList)
-            //        {
-            //            if (flag >= startPos && flag <= endPos)
-            //                DivInventoryList.Add(item);
-            //            flag++;
-            //        }
-            //        //MessageBox.Show(DivInventoryList.Count.ToString());
-
-            //        //Button "..." visible
-
-            //        //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
-            //        //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
-            //        if (max_pack_page == 1)
-            //        {
-            //            Bacham1Visible = Visibility.Collapsed;
-            //            Bacham2Visible = Visibility.Collapsed;
-            //        }
-            //        else
-            //        {
-            //            if (pack_page == max_pack_page)
-            //            {
-            //                Bacham1Visible = Visibility.Visible;
-            //                Bacham2Visible = Visibility.Collapsed;
-            //            }
-            //            else
-            //            {
-            //                if (pack_page == 1)
-            //                {
-            //                    Bacham1Visible = Visibility.Collapsed;
-            //                    Bacham2Visible = Visibility.Visible;
-            //                }
-            //                else
-            //                {
-            //                    Bacham1Visible = Visibility.Visible;
-            //                    Bacham2Visible = Visibility.Visible;
-            //                }
-            //            }
-            //        }
-
-
-            //        //Button "..." visible
-
-
-            //        if (currentpage == 1 && maxpage == 1)
-            //        {
-            //            LeftVisi = false;
-            //            RightVisi = true;
-            //        }
-            //        else
-            //        {
-            //            if (currentpage == maxpage)
-            //            {
-            //                LeftVisi = true;
-            //                RightVisi = false;
-            //            }
-            //            else
-            //            {
-            //                if (currentpage == 1)
-            //                {
-            //                    LeftVisi = false;
-            //                    RightVisi = true;
-            //                }
-            //                else
-            //                {
-            //                    LeftVisi = true;
-            //                    RightVisi = true;
-            //                }
-            //            }
-            //        }
-
-
-            //        if (maxpage >= 3)
-            //        {
-            //            BtnPage1.PageVisi = Visibility.Visible;
-            //            BtnPage2.PageVisi = Visibility.Visible;
-            //            BtnPage3.PageVisi = Visibility.Visible;
-
-            //            switch (currentpage % 3)
-            //            {
-            //                case 1:
-            //                    BtnPage1.BackGround = Brushes.Blue;
-            //                    BtnPage2.BackGround = Brushes.White;
-            //                    BtnPage3.BackGround = Brushes.White;
-            //                    BtnPage1.PageVal = currentpage;
-            //                    BtnPage2.PageVal = currentpage + 1;
-            //                    BtnPage3.PageVal = currentpage + 2;
-            //                    break;
-            //                case 2:
-            //                    BtnPage1.BackGround = Brushes.White;
-            //                    BtnPage2.BackGround = Brushes.Blue;
-            //                    BtnPage3.BackGround = Brushes.White;
-            //                    BtnPage1.PageVal = currentpage - 1;
-            //                    BtnPage2.PageVal = currentpage;
-            //                    BtnPage3.PageVal = currentpage + 1;
-            //                    break;
-            //                case 0:
-            //                    BtnPage1.BackGround = Brushes.White;
-            //                    BtnPage2.BackGround = Brushes.White;
-            //                    BtnPage3.BackGround = Brushes.Blue;
-            //                    BtnPage1.PageVal = currentpage - 2;
-            //                    BtnPage2.PageVal = currentpage - 1;
-            //                    BtnPage3.PageVal = currentpage;
-            //                    break;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (maxpage == 2)
-            //            {
-            //                BtnPage1.PageVisi = Visibility.Visible;
-            //                BtnPage2.PageVisi = Visibility.Visible;
-            //                BtnPage3.PageVisi = Visibility.Collapsed;
-            //                switch (currentpage)
-            //                {
-            //                    case 1:
-            //                        BtnPage1.BackGround = Brushes.Blue;
-            //                        BtnPage2.BackGround = Brushes.White;
-            //                        BtnPage1.PageVal = currentpage;
-            //                        BtnPage2.PageVal = currentpage + 1;
-            //                        break;
-            //                    case 2:
-            //                        BtnPage1.BackGround = Brushes.White;
-            //                        BtnPage2.BackGround = Brushes.Blue;
-            //                        BtnPage1.PageVal = currentpage - 1;
-            //                        BtnPage2.PageVal = currentpage;
-            //                        break;
-            //                }
-            //            }
-            //            else
-            //            {
-            //                BtnPage1.PageVisi = Visibility.Visible;
-            //                BtnPage2.PageVisi = Visibility.Collapsed;
-            //                BtnPage3.PageVisi = Visibility.Collapsed;
-            //                BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
-            //                BtnPage1.BackGround = Brushes.Blue;
-            //                BtnPage1.PageVal = currentpage;
-            //            }
-            //        }
-            //        if (pack_page == max_pack_page)
-            //        {
-            //            switch (pack_page * 3 - maxpage)
-            //            {
-            //                case 1:
-            //                    BtnPage3.PageVisi = Visibility.Collapsed;
-            //                    break;
-            //                case 2:
-            //                    BtnPage2.PageVisi = Visibility.Collapsed;
-            //                    BtnPage3.PageVisi = Visibility.Collapsed;
-            //                    break;
-            //            }
-            //        }
-
-            //    }
-            //}
+            
         }
     }
 }

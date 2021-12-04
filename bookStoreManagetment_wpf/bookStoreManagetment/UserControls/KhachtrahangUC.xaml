@@ -119,6 +119,10 @@
                             </Grid>
 
                             <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="113*"/>
+                                    <ColumnDefinition Width="57*"/>
+                                </Grid.ColumnDefinitions>
                                 <Button Width="120"
                             x:Name="btnFilter"
                                         Style="{StaticResource MaterialDesignFlatDarkBgButton}"
@@ -128,7 +132,7 @@
                             Background="#d78a1e"
                             BorderBrush="#d78a1e"
                                         Foreground="White"
-                            Margin="20 0 0 0">
+                            Margin="20,2,0,2">
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Filter"
                                                         HorizontalAlignment="Left"
@@ -174,6 +178,20 @@
                                                 </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="*" Header="Tên khách hàng" Binding="{Binding NameCustomer}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="*" Header="Tên nhân viên" Binding="{Binding NameEmployee}" IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderStyle >
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                                         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
@@ -320,7 +338,8 @@
                                                 Padding="0"
                                                 Height="30"
                                                 Width="100"
-                                                IsEnabled="True"></Button>
+                                                IsEnabled="True"
+                                                            Command="{Binding clearFilter}"></Button>
                                                     <Button Background="#1e98d7"
                                                             Foreground="White"
                                                             BorderBrush="#1e98d7"
@@ -354,113 +373,7 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <!--
-                            <StackPanel
-                Orientation="Horizontal"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right">
-                                <StackPanel.Resources>
-                                    <Style TargetType="Button" x:Key="btnNextPage">
-                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                        <Setter Property="Padding" Value="0 0 0 0"></Setter>
-                                        <Setter Property="Background" Value="Transparent"></Setter>
-                                        <Setter Property="BorderBrush" Value="Black"></Setter>
-                                        <Setter Property="Foreground" Value="Black"></Setter>
-                                        <Setter Property="FontSize" Value="9"></Setter>
-                                        <Setter Property="Height" Value="18"></Setter>
-                                        <Setter Property="Width" Value="18"></Setter>
-                                    </Style>
-                                </StackPanel.Resources>
-
-                                <TextBox Width="22" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                         Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                                <TextBlock
-                    Padding="10 0 10 0"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Text="hàng mỗi trang"></TextBlock>
-                           
-                                <StackPanel HorizontalAlignment="Center"
-                                x:Name="panelListBtnPages"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                                    <StackPanel.Resources>
-                                        <Style TargetType="Button" x:Key="styleBtnNextPage">
-                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                            <Setter Property="Background" Value="Transparent"></Setter>
-                                            <Setter Property="BorderBrush" Value="Black"></Setter>
-                                            <Setter Property="Foreground" Value="Black"></Setter>
-                                            <Setter Property="Padding" Value="0"></Setter>
-                                            <Setter Property="Height" Value="20"></Setter>
-                                            <Setter Property="Width" Value="20"></Setter>
-                                            <Setter Property="Margin" Value="4 0 2 0 "></Setter>
-                                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-                                        </Style>
-                                    </StackPanel.Resources>
-                                    <Button x:Name="btnPageFirst"
-                                Style="{StaticResource styleBtnNextPage}"
-                                Command="{Binding btnfirstPageCommand}"
-                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <materialDesign:PackIcon Kind="PageFirst" />
-                                    </Button>
-                                    <Button Content="&lt;" 
-                                x:Name="btnPrePage"
-                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                FontSize="13"
-                                Padding="0 0 0 4"
-                                FontWeight="DemiBold"   
-                                Style="{StaticResource styleBtnNextPage}"
-                                Command="{Binding btnPrevPageCommand}"></Button>
-                                    <Button Content="..." 
-                                x:Name="btnDotLeft"
-                                Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource styleBtnNextPage}"
-                                ></Button>
-                                    <Button Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding BtnPage1.PageVisi, UpdateSourceTrigger=PropertyChanged}"
-                                Background="{Binding BtnPage1.BackGround, UpdateSourceTrigger=PropertyChanged}"
-                                x:Name="btnPage1"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                                    <Button Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding BtnPage2.PageVisi, UpdateSourceTrigger=PropertyChanged}"
-                                Background="{Binding BtnPage2.BackGround, UpdateSourceTrigger=PropertyChanged}"
-                                x:Name="btnPage2"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                                    <Button Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding BtnPage3.PageVisi, UpdateSourceTrigger=PropertyChanged}"
-                                Background="{Binding BtnPage3.BackGround, UpdateSourceTrigger=PropertyChanged}"
-                                x:Name="btnPage3"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                                    <Button Content="..." 
-                                x:Name="btnDotRight"
-                                
-                                Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource styleBtnNextPage}"
-                                ></Button>
-                                    <Button Content="&gt;" 
-                                x:Name="NextPage"
-                                FontSize="13"
-                                Padding="0 0 0 4"
-                                FontWeight="DemiBold"
-                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource styleBtnNextPage}"
-                                Command="{Binding btnNextClickCommand}"></Button>
-                                    <Button Style="{StaticResource styleBtnNextPage}"
-                                x:Name="btnPageLast"
-                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding btnendPageCommand}">
-                                        <materialDesign:PackIcon Kind="PageLast" />
-                                    </Button>
-                                </StackPanel>
-                            </StackPanel>-->
+                            
                         </Grid>
                     </Grid>
                     <!--{Binding ThemKhachtrahangVisible}-->
@@ -686,7 +599,7 @@
                                 </Grid>
                             </StackPanel>
                         </Grid>
-                        
+
                     </Grid>
                     <!--{Binding ChitietHoadontraVisible}-->
                     <Grid x:Name="gridChitietTrahang" Visibility="{Binding ChitietHoadontraVisible}">
@@ -710,7 +623,7 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="4*"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <Grid Grid.Row="0">
                                     <materialDesign:Card Margin="5">
                                         <StackPanel>
@@ -820,7 +733,7 @@
                                         </StackPanel>
                                     </materialDesign:Card>
                                 </Grid>
-                                
+
                                 <Grid Grid.Row="2">
                                     <materialDesign:Card Margin="5">
                                         <StackPanel VerticalAlignment="Center">
@@ -918,5 +831,5 @@
             </Grid>
         </Grid>
     </Grid>
-  
+
 </UserControl>

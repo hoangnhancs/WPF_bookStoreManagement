@@ -65,6 +65,7 @@
                                     Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
+                                    Background="#1e98d7" BorderBrush="#1e98d7" Foreground="White"
                         Command="{Binding btnAddSupCommand}"></Button>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -111,7 +112,8 @@
                             HorizontalAlignment="Left"
                             Command="{Binding OpenFilterCommand}"
                             CommandParameter="{Binding ElementName=btnFilter}"
-                            
+                            Foreground="White"
+                            Background="#d78a1e"
                             BorderBrush="#d78a1e"
                             Margin="20 0 0 0">
                                     <StackPanel Orientation="Horizontal">
@@ -715,26 +717,29 @@
                             <Grid Grid.Row="1">
                                 <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
-                                    <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                                Content="Xoá bộ lọc"  
-                                            Background="Red"
-                                            Foreground="White"
-                                            BorderBrush="Red"
-                                Padding="0"
-                                Height="30"
-                                Width="100"
-                                IsEnabled="True"></Button>
-                                    <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                                Content="Lọc"  
-                                    Background="#1e98d7"
-                                            BorderBrush="#1e98d7"
-                                            Foreground="White"
-                                Height="30"
-                                Padding="0"
-                                Margin="20 0 0 0"
-                                Width="100"
-                                IsEnabled="True"
-                                Command="{Binding searchEngineer}"></Button>
+                                    <Button 
+                                        Background="Red"
+                                        BorderBrush="Red"
+                                        Foreground="White"
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Content="Xoá bộ lọc"         
+                                        Padding="0"
+                                        Height="30"
+                                        Width="100"
+                                        IsEnabled="True"
+                                        Command="{Binding clearFilter}"></Button>
+                                    <Button 
+                                        Background="#1e98d7"
+                                        Foreground="White"
+                                        BorderBrush="#1e98d7"
+                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                        Content="Lọc"              
+                                        Height="30"
+                                        Padding="0"
+                                        Margin="20 0 0 0"
+                                        Width="100"
+                                        IsEnabled="True"
+                                        Command="{Binding searchEngineer}"></Button>
                                 </StackPanel>
                             </Grid>
                             <Button HorizontalAlignment="Right"
