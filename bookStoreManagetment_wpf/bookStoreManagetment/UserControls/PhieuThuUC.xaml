@@ -11,6 +11,7 @@
              TextElement.FontSize="13"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
+             Foreground="#FF495B67"
              Background="Transparent"
              FontFamily="{DynamicResource MaterialDesignFont}"
              DataContext="{StaticResource PhieuThuVM}"
@@ -167,6 +168,15 @@
                                                                      VerticalAlignment="Center"
                                                                      Width="25"
                                                                      Height="25"/>
+                                                            <!--ẩn hiện grid-->
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="Click">
+                                                                    <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridShowBill}" />
+                                                                    <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridPhieuThu}" />
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
                                                         </Button>
 
                                                     </StackPanel>
@@ -382,7 +392,7 @@
                 </Grid>
 
                 <!--{Binding IsBillViewing}-->
-                <Grid Visibility="{Binding IsBillViewing}">
+                <Grid Visibility="Collapsed" x:Name="gridShowBill">
                     <Grid Margin="10,0,10,0" Background="Transparent">
                         <Grid.Resources>
                             <Style TargetType="Border">
@@ -809,7 +819,17 @@
                         </Grid>
                         <!--Thoát-->
                         <Grid Grid.Row="2">
-                            <Button Command="{Binding CloseViewSellBillCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Content="Thoát" Foreground="White" BorderBrush="Red" />
+                            <Button Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Content="Thoát" Foreground="White" BorderBrush="Red">
+                                <!--ẩn hiện grid-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridShowBill}" />
+                                        <i:InvokeCommandAction Command="{Binding ClickShowHideGridCommand}"
+                                   CommandParameter="{Binding ElementName=gridPhieuThu}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
