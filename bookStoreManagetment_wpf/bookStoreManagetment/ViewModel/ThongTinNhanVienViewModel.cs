@@ -34,6 +34,10 @@ namespace bookStoreManagetment.ViewModel
         private ShowInforStaff _ViewEmployee;
         public ShowInforStaff ViewEmployee { get => _ViewEmployee; set { _ViewEmployee = value; OnPropertyChanged(); } }
 
+        // title 
+        private string _Title;
+        public string Title { get => _Title; set { _Title = value; OnPropertyChanged(); } }
+
         public bool AccountFail { get; set; }
 
         // command
@@ -140,6 +144,8 @@ namespace bookStoreManagetment.ViewModel
                 
             }
             ViewEmployee = newViewEmployee;
+
+            Title = "Xin Chào" + ViewEmployee.FullName;
         }
     }
 }

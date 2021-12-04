@@ -45,10 +45,9 @@
           <Property Name="idEmployee" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="dateCheckItems" Type="datetime" Nullable="false" />
           <Property Name="idItem" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="quantityItem" Type="int" Nullable="false" />
+          <Property Name="oldQuantityItem" Type="int" Nullable="false" />
           <Property Name="note" Type="nvarchar(max)" />
-          <Property Name="newQuantityItem" Type="int" />
-          <Property Name="oldQuantityItem" Type="int" />
+          <Property Name="newQuantityItem" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -86,7 +85,7 @@
           <Property Name="nameAccount" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="employeeSalary" Type="int" />
           <Property Name="employeeNote" Type="nvarchar" MaxLength="200" />
-          <Property Name="employeeImagePath" Type="nvarchar" MaxLength="50" />
+          <Property Name="employeeImagePath" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -309,10 +308,9 @@
           <Property Name="idEmployee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dateCheckItems" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="idItem" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="quantityItem" Type="Int32" Nullable="false" />
+          <Property Name="oldQuantityItem" Type="Int32" Nullable="false" />
           <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="newQuantityItem" Type="Int32" />
-          <Property Name="oldQuantityItem" Type="Int32" />
+          <Property Name="newQuantityItem" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="custommer">
           <Key>
@@ -350,7 +348,7 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="employeeImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="employeeImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -576,10 +574,9 @@
                 <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
                 <ScalarProperty Name="dateCheckItems" ColumnName="dateCheckItems" />
                 <ScalarProperty Name="idItem" ColumnName="idItem" />
-                <ScalarProperty Name="quantityItem" ColumnName="quantityItem" />
+                <ScalarProperty Name="oldQuantityItem" ColumnName="oldQuantityItem" />
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="newQuantityItem" ColumnName="newQuantityItem" />
-                <ScalarProperty Name="oldQuantityItem" ColumnName="oldQuantityItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

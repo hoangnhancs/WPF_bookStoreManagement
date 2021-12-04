@@ -487,6 +487,13 @@
     <Resource Include="pictures\3c57ed515c290ff8ef59afa950d950da.png" />
     <Resource Include="pictures\Logo Hani %281%29.png" />
     <Resource Include="Logo Hani %281%29 %281%29.png" />
+    <Content Include="bookStoreManagement.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bookStoreManagement_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>bookStoreManagement.mdf</DependentUpon>
+    </Content>
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
