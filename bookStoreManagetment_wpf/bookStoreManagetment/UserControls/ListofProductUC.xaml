@@ -894,6 +894,127 @@ Command="{Binding btnendPageCommand}"></Button>
                 </ScrollViewer>
             </Grid>
 
+            <Grid x:Name="gridFilter"
+                          Visibility="{Binding IsFilter}"
+                          Height="200"
+                          Opacity="0.95"
+                          Width="300"
+                          Margin="0,75,20,0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top">
+                <Border BorderThickness="1"
+                                CornerRadius="10"
+                                BorderBrush="Black"
+                                Background="White">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="0.8*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Orientation="Vertical"
+                                            Margin="5">
+                                <TextBlock Text="Danh mục"
+                                                   FontWeight="SemiBold"></TextBlock>
+                                <ComboBox IsEditable="True"
+                                                  ItemsSource="{Binding DanhMucSanPham}"
+                                                  SelectedValue="{Binding DisplayGroupType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Text="{Binding DisplayGroupType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Left"
+                                              Width="184">
+                                    <!--sự kiện thay đổi lựu chọn-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SelectionChangedNhomTheLoaiFilterCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Orientation="Vertical"
+                                            Margin="40 0 0 0">
+                                <TextBlock Text="Thể loại"
+                                                   FontWeight="SemiBold"></TextBlock>
+                                <ComboBox IsEditable="True"
+                                      materialDesign:HintAssist.Hint="Chọn Thể loại"
+                                                  ItemsSource="{Binding ListTypeItem}"
+                                                  SelectedValue="{Binding DisplayNameType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Text="{Binding DisplayNameType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Left"
+                                              Width="150"></ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <StackPanel Orientation="Vertical"
+                                            Margin="5">
+                                <TextBlock Text="Ngày tạo"
+                                                   FontWeight="SemiBold"></TextBlock>
+                                <StackPanel Orientation="Horizontal"
+                                                    Margin="0 2 0 0">
+                                    <TextBox
+                                        Text="{Binding KhoangGiaTruoc}"
+                                        Margin="8 0 0 0"
+                                        VerticalAlignment="Bottom" 
+                                        Width="110"/>
+                                    <materialDesign:PackIcon
+                                                Margin="10 0 10 0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Kind="Minus" />
+                                    <TextBox
+                                        Text="{Binding KhoangGiaSau}"
+                                        Margin="8 0 0 0"
+                                        VerticalAlignment="Bottom"
+                                        Width="110"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                <Button Content="Xoá bộ lọc"
+                                                Command="{Binding DeleteFilterCommand}"
+                                                CommandParameter="{Binding ElementName=btnFilter}"
+                                                Padding="0"
+                                                Height="30"
+                                    Background="Red"
+                                    BorderBrush="Transparent"
+                                    Foreground="White"
+                                                Width="100"></Button>
+                                <Button Content="Lọc"
+                                    Background="#1e98d7"
+                                    BorderBrush="Transparent"
+                                    Foreground="Black"
+                                                Command="{Binding CheckFilterCommand}"
+                                                CommandParameter="{Binding ElementName=btnFilter}"
+                                                Height="30"
+                                                Padding="0"
+                                                Margin="20 0 0 0"
+                                                Width="100"></Button>
+                            </StackPanel>
+                        </Grid>
+                        <Button HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource MaterialDesignFlatDarkButton}"
+                                        ToolTip="Đóng Bộ Lọc"
+                                        Command="{Binding CloseFilterCommand}"
+                                        Width="30"
+                                        Height="30"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="Red"
+                                        BorderBrush="Transparent">
+                            <materialDesign:PackIcon Kind="Close" 
+                                                                 Width="20"
+                                                                 Height="20"/>
+
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
 
         </Grid>
     </Grid>
