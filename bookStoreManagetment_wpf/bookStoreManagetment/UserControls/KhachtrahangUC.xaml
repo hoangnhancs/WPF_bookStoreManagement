@@ -736,17 +736,17 @@
 
                                 <Grid Grid.Row="2">
                                     <materialDesign:Card Margin="5">
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">Hình thức thanh toán và giao nhận</TextBlock>
+                                        <StackPanel>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Hình thức thanh toán và giao nhận</TextBlock>
                                             <StackPanel Orientation="Horizontal" Height="25">
                                                 <Image Source="/pictures/search.png"/>
                                                 <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">Xác nhận thanh toán</TextBlock>
-                                                <ComboBox  Margin="15 0 0 0" Text="Thanh toán COD" SelectedValue="Thanh toán COD"></ComboBox>
+                                                <TextBox IsReadOnly="True" Margin="15 0 0 0" Text="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Height="25">
                                                 <Image Source="/pictures/search.png"/>
                                                 <TextBlock  Margin="5 0 0 0" VerticalAlignment="Center">Đóng gói và giao hàng</TextBlock>
-                                                <ComboBox  Margin="5 0 0 0" Text="Thanh toán COD" SelectedValue="Thanh toán COD"></ComboBox>
+                                                <TextBox IsReadOnly="True" Margin="5 0 0 0" Text="{Binding DeliveryMethod, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                             </StackPanel>
                                         </StackPanel>
                                     </materialDesign:Card>
@@ -807,7 +807,7 @@
                                         <Grid Grid.Column="1">
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock VerticalAlignment="Center">Thời gian trả hàng</TextBlock>
+                                                    <TextBlock VerticalAlignment="Center">Nhân viên kiểm</TextBlock>
                                                     <TextBox Margin="10 0 0 0" Width="200" Text="{Binding Chitietnhanvien}" IsReadOnly="True"></TextBox>
                                                 </StackPanel>
                                                 <TextBlock Margin="0 5 0 0" VerticalAlignment="Center">Xác nhận kiểm đủ</TextBlock>

@@ -301,7 +301,9 @@ namespace bookStoreManagetment.ViewModel
                         itemtrave _newitemtrave = new itemtrave();
                         _newitemtrave.Item = _tempitem;
                         _newitemtrave.BuyNumber = item.number;
+
                         _newitemtrave.TraveNumber = item.number;
+                        
                         Danhsachsanpham.Add(_newitemtrave);
                     }
                     lstitemtrave = Danhsachsanpham.ToList();
@@ -366,15 +368,16 @@ namespace bookStoreManagetment.ViewModel
                             string min = now.Minute.ToString();
                             string s = now.Second.ToString();
                             string idbilltra = "BILL" + d + m + y + h + min + s;
-
+                            
+                            int tientralai = 0;
                             foreach (var i in Danhsachsanpham)
                             {
-
                                 int _tmpnum = i.TraveNumber;
                                 var _tmpidCus = DataProvider.Ins.DB.Database.SqlQuery<string>("Select idCustomer from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
                                 var _tmpfirstnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select firstName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
                                 var _tmplastnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select lastName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
                                 string _tmpnameCus = _tmplastnameCus + " " + _tmpfirstnameCus;
+                                
                                 var _tmpdiscount = DataProvider.Ins.DB.Database.SqlQuery<int>("Select discount from sellbill where billCodeSell=N'" + Mahoadon + "'").FirstOrDefault();
                                 var _unit = DataProvider.Ins.DB.Database.SqlQuery<String>("Select unit from item where iditem=N'" + i.Item.idItem + "'").FirstOrDefault();
                                 khachtrahang _tmp = new khachtrahang();
@@ -386,11 +389,15 @@ namespace bookStoreManagetment.ViewModel
                                 _tmp.trangthai = "Đã trả hàng";
                                 _tmp.unit = i.Item.unit;
                                 _tmp.unitPrice = i.Item.sellPriceItem;
+                                string tmpid = i.Item.idItem;
+                                
                                 _tmp.idCustomer = _tmpidCus;
                                 _tmp.idItem = i.Item.idItem;
                                 _tmp.discount = _tmpdiscount;
                                 _tmp.lido = LiDo;
                                 _tmp.nameEmployee = TenNhanVien;
+                                tientralai += _tmpnum* i.Item.sellPriceItem;
+
                                 DataProvider.Ins.DB.khachtrahangs.Add(_tmp);
                                 DataProvider.Ins.DB.SaveChanges(); //cập nhật bảng tả hàng
                                 var res = DataProvider.Ins.DB.items.SingleOrDefault(t => t.idItem == i.Item.idItem);
@@ -399,11 +406,67 @@ namespace bookStoreManagetment.ViewModel
                                     res.quantity = res.quantity + _tmpnum;
                                     DataProvider.Ins.DB.SaveChanges();
                                 }
+                                var sellbilltmp = DataProvider.Ins.DB.sellBills.SingleOrDefault(k=>k.billCodeSell==Mahoadon&&k.idItem==tmpid);
+                                if(sellbilltmp!=null)
+                                {
+                                    sellbilltmp.number = sellbilltmp.number - _tmpnum;
+                                }    
                             }
+          
+                            var _t = DataProvider.Ins.DB.profitSummaries.SingleOrDefault(k => k.billCode == Mahoadon);
+                            if (tientralai == _t.rootPrice)
+                            {
+                                MessageBox.Show("1");
+                                var _sellbillwithbillcodesell = DataProvider.Ins.DB.sellBills.Where(k => k.billCodeSell == Mahoadon);
+                                if (_sellbillwithbillcodesell != null)
+                                {
+                                    foreach (var _i in _sellbillwithbillcodesell)
+                                    {
+                                        DataProvider.Ins.DB.sellBills.Remove(_i);
+                                    }
+                                    DataProvider.Ins.DB.SaveChanges();
+                                }
+                                var _profitcodesell = DataProvider.Ins.DB.profitSummaries.SingleOrDefault(k => k.billCode == Mahoadon);
+               
+                                if(_profitcodesell!=null)
+                                {
+                                    var _fixbudget = DataProvider.Ins.DB.profitSummaries.Where(i => i.sttPayHistory > _profitcodesell.sttPayHistory);
+                                    foreach(var _tmpfixbudget in _fixbudget)
+                                    {
+                                        
+                                        _tmpfixbudget.budget = _tmpfixbudget.budget - tientralai;
+                                    }
+                                    DataProvider.Ins.DB.SaveChanges();
+                                    DataProvider.Ins.DB.profitSummaries.Remove(_profitcodesell);
+                                }
+                                DataProvider.Ins.DB.SaveChanges();
+                            }
+                            else
+                            {
+                                MessageBox.Show("2");
+                                var _profitcodesell = DataProvider.Ins.DB.profitSummaries.SingleOrDefault(k => k.billCode == Mahoadon);
+                                _profitcodesell.rootPrice = _profitcodesell.rootPrice - tientralai;
+                                _profitcodesell.payPrice = _profitcodesell.payPrice - tientralai;
+                                _profitcodesell.budget = _profitcodesell.budget - tientralai;
+                                DataProvider.Ins.DB.SaveChanges();
+               
+                                if (_profitcodesell != null)
+                                {
+                                    var _fixbudget = DataProvider.Ins.DB.profitSummaries.Where(i => i.sttPayHistory > _profitcodesell.sttPayHistory);
+                                    foreach (var _tmpfixbudget in _fixbudget)
+                                    {
+                                        
+                                        _tmpfixbudget.budget = _tmpfixbudget.budget - tientralai;
+                                    }
+                                    DataProvider.Ins.DB.SaveChanges();
+                                    
+                                }
+                                DataProvider.Ins.DB.SaveChanges();
+                            }    
                             clearData();
                             MessageBox.Show("Thêm thành công!!!");
                             searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
-                            //settingButtonNextPrev();
+                            
                         }
                         else
                             MessageBox.Show("Vui lòng nhập đủ thông tin");
