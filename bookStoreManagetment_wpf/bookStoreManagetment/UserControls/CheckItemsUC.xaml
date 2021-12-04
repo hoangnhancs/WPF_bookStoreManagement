@@ -418,7 +418,7 @@
 
         <!-- thêm sản phẩm kiểm tra-->
         <Grid Grid.Row="1"
-              Visibility="Collapsed"
+              Visibility="Visible"
               x:Name="gridAddItems">
             <Grid>
                 <Grid.RowDefinitions>
@@ -567,7 +567,8 @@
                                     </DataGridTemplateColumn.HeaderStyle>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="Ảnh"></Button>
+                                            <Image Source="{Binding SourceImage}" Width="30"
+                                                   Height="40"></Image>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -587,7 +588,7 @@
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
@@ -680,7 +681,7 @@
         <!--show check items-->
         <Grid Grid.Row="1"
                   x:Name="gridShowReport"
-                  Visibility="Visible">
+                  Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="36"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
@@ -715,7 +716,7 @@
                                          Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          x:Name="textboxSearch"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
-                                         materialDesign:HintAssist.Hint="Nhập Tên hoặc Mã phiếu kiểm hàng"
+                                         materialDesign:HintAssist.Hint="Mã phiếu kiểm hàng"
                                      VerticalAlignment="Center"
                                      VerticalContentAlignment="Center"
                                     BorderThickness="0">

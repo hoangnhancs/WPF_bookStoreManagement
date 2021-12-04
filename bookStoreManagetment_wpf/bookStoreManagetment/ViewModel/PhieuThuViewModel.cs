@@ -242,6 +242,10 @@ namespace bookStoreManagetment.ViewModel
                         IsAddRule = Visibility.Visible;
                         Title = "Danh Sách Phiếu Thu";
                     }
+                    else if (grid.Name == "gridShowBill")
+                    {
+
+                    }
                     else
                     {
                         IsAddRule = Visibility.Collapsed;

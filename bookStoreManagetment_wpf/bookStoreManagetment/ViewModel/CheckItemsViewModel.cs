@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace bookStoreManagetment.ViewModel
 {
@@ -17,6 +18,7 @@ namespace bookStoreManagetment.ViewModel
     {
         public item Items { get; set; }
         public bool IsSelected { get; set; }
+        public ImageSource SourceImage { get; set; }
     }
 
     public class CheckItemsViewModel : BaseViewModel
@@ -345,7 +347,23 @@ namespace bookStoreManagetment.ViewModel
                     CellItems newCell = new CellItems();
                     newCell.Items = item;
                     newCell.IsSelected = false;
+                    newCell.SourceImage = null; 
+                    try
+                    {
+                        newCell.SourceImage = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + item.nameItem +".jpg"));
 
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            newCell.SourceImage = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                        }
+                        catch
+                        {
+
+                        }
+                    }
                     BackupAllItems.Add(newCell);
                 }
                 ShowItems = new List<CellItems>();
