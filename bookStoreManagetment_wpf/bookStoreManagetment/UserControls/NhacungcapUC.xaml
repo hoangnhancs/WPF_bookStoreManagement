@@ -65,7 +65,6 @@
                                     Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                    Background="#1e98d7" BorderBrush="#1e98d7" Foreground="White"
                         Command="{Binding btnAddSupCommand}"></Button>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -112,9 +111,6 @@
                             HorizontalAlignment="Left"
                             Command="{Binding OpenFilterCommand}"
                             CommandParameter="{Binding ElementName=btnFilter}"
-                            Foreground="White"
-                            Background="#d78a1e"
-                            BorderBrush="#d78a1e"
                             Margin="20 0 0 0">
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Filter"
