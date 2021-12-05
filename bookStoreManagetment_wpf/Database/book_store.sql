@@ -5,6 +5,7 @@ go
 --drop database bookstoremanagement
 ------------------------------------
 use bookStoreManagement
+go
 
 create table account
 (
@@ -13,8 +14,7 @@ create table account
 	passwordAccount nvarchar(15) not null,
 	typeAccount nvarchar(5) not null,
 )
-select * from employee
-select * from custommer
+
 create table item
 (
 	idItem nvarchar(10) primary key,
@@ -31,7 +31,6 @@ create table item
 	unit nvarchar(10),
 )
 
-SELECT * FROM khachtrahang
 create table bookInformation
 (
 	sttInformation int identity (1,1) primary key,
@@ -997,10 +996,10 @@ insert into custommer(idCustommer, firstName, lastName, phoneNumber, custommerAd
 
 
 insert into employee(idEmployee, firstName, lastName, phoneNumber, employeeType, employeeEmail, employeeAddress, sex, citizenIdentification, dateOfBirth, nameAccount) values
-(N'EMP001', N'Nhân', N'Thái Hoàng', N'04819350', N'staff', N'thaihoangnhantk17lqd@gmail.com', N'TPHCM', N'Nam', N'45612847', '12-01-2000', N'staff1'),
-(N'EMP002', N'Chi', N'Nguyễn Yến', N'07364016', N'staff', N'chiny@gmail.com', N'TPHCM', N'Nu', N'46571834', '01-04-2000', N'staff2'),
+(N'EMP001', N'Nhân', N'Thái Hoàng', N'04819350', N'staff', N'thaihoangnhantk17lqd@gmail.com', N'TPHCM', N'Nam', N'45612847', '12-01-2000', N'nhanht'),
+(N'EMP002', N'Chi', N'Nguyễn Yến', N'07364016', N'staff', N'chiny@gmail.com', N'TPHCM', N'Nu', N'46571834', '01-04-2000', N'chiny'),
 (N'EMP003', N'Anh', N'Phùng Minh', N'03678123', N'admin', N'anhpm@gmail.com', N'TPHCM', N'Nam', N'57385963', '14-03-2000', N'admin'),
-(N'EMP004', N'Ân', N'Huỳnh Ngọc Thiên', N'04567219', N'staff', N'anhnt@gmail.com', N'TPHCM', N'Nam', N'19087652', '15-01-2000', N'staff3')
+(N'EMP004', N'Ân', N'Huỳnh Ngọc Thiên', N'04567219', N'staff', N'anhnt@gmail.com', N'TPHCM', N'Nam', N'19087652', '15-01-2000', N'anhnt')
 
 DECLARE @MyDateTime datetime = GETDATE();
 insert into mail values 
@@ -1042,16 +1041,16 @@ insert into bill values
 (N'IP002',N'import')
 
 
-DECLARE @MyDateTime datetime = GETDATE();
+--DECLARE @MyDateTime datetime = GETDATE();
 insert into sellBill values
-(N'EP001',N'EMP001',N'CUS001',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK001',275000,2,0,N'', N'', N'Giao hàng', N'Thẻ'),
-(N'EP001',N'EMP001',N'CUS001',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK003',159500,4,0,N'', N'', N'Giao hàng', N'Thẻ'),
-(N'EP001',N'EMP001',N'CUS001',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK004',132000,3,0,N'', N'', N'Giao hàng', N'Thẻ'),
-(N'EP002',N'EMP003',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK001',275000,2,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt'),
-(N'EP002',N'EMP003',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK003',159500,4,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt'),
-(N'EP002',N'EMP003',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK004',132000,3,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt')
+(N'EP001',N'EMP001',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK001',275000,2,0,N'', N'', N'Giao hàng', N'Thẻ'),
+(N'EP001',N'EMP001',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK003',159500,4,0,N'', N'', N'Giao hàng', N'Thẻ'),
+(N'EP001',N'EMP001',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK004',132000,3,0,N'', N'', N'Giao hàng', N'Thẻ'),
+(N'EP002',N'EMP003',N'CUS003',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK001',275000,2,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt'),
+(N'EP002',N'EMP003',N'CUS003',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK003',159500,4,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt'),
+(N'EP002',N'EMP003',N'CUS003',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK004',132000,3,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt')
 
-DECLARE @MyDateTime datetime = GETDATE();
+--DECLARE @MyDateTime datetime = GETDATE();
 insert into importBill values
 (N'IP001', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK005', 68000, N'', N'Thẻ', N'NCC002'),
 (N'IP001', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK006', 149000, N'', N'Thẻ', N'NCC002'),
@@ -1063,10 +1062,10 @@ insert into importBill values
 (N'IP002', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK009', 98000, N'', N'Thẻ', N'NCC002')
 
 --DELETE profitSummary
-DECLARE @MyDateTime datetime = GETDATE();
+--DECLARE @MyDateTime datetime = GETDATE();
 insert into profitSummary values
-(N'EP001',N'export',1584000,2000000,416000, N'CUS001', N'EMP001', @MyDateTime, N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', N'Khách hàng', N'Thẻ', N'Bán hàng', N'', 101584000),
-(N'EP002',N'export',1584000,1584000,0, N'CUS002', N'EMP001', @MyDateTime, N'Lê Võ Ngọc Anh', N'Phùng Minh Anh', N'Khách hàng', N'Tiền mặt', N'Bán hàng', N'', 103168000),
+(N'EP001',N'export',1584000,2000000,416000, N'CUS002', N'EMP001', @MyDateTime, N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', N'Khách hàng', N'Thẻ', N'Bán hàng', N'', 101584000),
+(N'EP002',N'export',1584000,1584000,0, N'CUS003', N'EMP003', @MyDateTime, N'Lê Võ Ngọc Anh', N'Phùng Minh Anh', N'Khách hàng', N'Tiền mặt', N'Bán hàng', N'', 103168000),
 (N'IP001',N'import',36250000,36250000,0, N'NCC002', N'EMP002', @MyDateTime, N'SUP2', N'Nguyễn Yến Chi', N'Nhà cung cấp', N'Tiền mặt', N'Nhập hàng', N'', 66918000),
 (N'IP002',N'import',30700000,30700000,0, N'NCC002', N'EMP002', @MyDateTime, N'SUP2', N'Nguyễn Yến Chi', N'Nhà cung cấp', N'Tiền mặt', N'Nhập hàng', N'', 36218000)
 
@@ -1086,10 +1085,10 @@ update item set quantity=quantity+50 where idItem=N'BOOK007'
 update item set quantity=quantity+50 where idItem=N'BOOK009'
 
 
-update custommer set accumulatedPoints=accumulatedPoints+1584000 where idCustommer=N'CUS001'
 update custommer set accumulatedPoints=accumulatedPoints+1584000 where idCustommer=N'CUS002'
+update custommer set accumulatedPoints=accumulatedPoints+1584000 where idCustommer=N'CUS003'
 
-DECLARE @MyDateTime datetime = GETDATE();
+--DECLARE @MyDateTime datetime = GETDATE();
 DECLARE @NewLineChar AS CHAR(2) = CHAR(13) + CHAR(10)
 declare @content nvarchar(200) = N'Thời gian Làm Việc:'+@NewLineChar+
 N'- Ca 1: 7h30 - 11h30'+@NewLineChar+
@@ -1103,7 +1102,7 @@ insert into setting values
 (N'SET001', N'Giờ làm việc', N'Áp dụng', @content,@MyDateTime,N'EMP003')
 
 
-DECLARE @MyDateTime datetime = GETDATE()
+--DECLARE @MyDateTime datetime = GETDATE()
 insert into checkItems values
 (N'CK001', N'EMP001', @MyDateTime,N'BOOK001',N'',96,96),
 (N'CK001', N'EMP001', @MyDateTime,N'BOOK002',N'',100,100),
@@ -1113,21 +1112,21 @@ insert into checkItems values
 --delete khachtrahang
 SELECT * FROM khachtrahang
 insert into khachtrahang values
-(N'IP112202119510',N'EP003',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK001',275000,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển'),
-(N'IP112202119510',N'EP003',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK003',159500,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển'),
-(N'IP112202119510',N'EP003',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK004',132000,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển')
+(N'IP112202119510',N'EP002',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK001',275000,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển'),
+(N'IP112202119510',N'EP002',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK003',159500,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển'),
+(N'IP112202119510',N'EP002',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK004',132000,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển')
 update item set quantity=quantity+1 where idItem=N'BOOK001'
 update item set quantity=quantity+1 where idItem=N'BOOK003'
 update item set quantity=quantity+1 where idItem=N'BOOK004'
 
-DECLARE @MyDateTime datetime = GETDATE()
+--DECLARE @MyDateTime datetime = GETDATE()
 insert into profitSummary values
 (N'IP112202119510',N'import',566500,566500,0, N'CUS002', N'EMP003', @MyDateTime, N'Nguyễn Hoàng Thắng', N'Phùng Minh Anh', N'Khách hàng', N'Tiền mặt', N'Trả hàng', N'', 36218000-566500)
 
 insert into bill values
 (N'IP112202119510', N'import')
 
-
+select * from employee
 --select quantity from ITEM WHERE idItem=N'BOOK002'
 --select quantity from ITEM WHERE idItem=N'BOOK003'
 --select quantity from ITEM WHERE idItem=N'BOOK004'
@@ -1149,6 +1148,8 @@ SELECT * FROM custommer WHERE idCustommer=N'CUS002'
 select * from sellBill
 select * from khachtrahang
 select * from profitSummary
+select * from employee
+select * from bill
 
 
 --alter table bookInformation add foreign key (idBook) references item(idItem)
