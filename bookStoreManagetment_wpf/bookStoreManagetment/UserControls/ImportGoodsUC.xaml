@@ -927,6 +927,7 @@
                                             <ComboBox
                                             x:Name="comboBoxEditSupplier"
                                             ItemsSource="{Binding listSupplier}"
+                                                SelectedItem="{Binding SelectedSupplier}"
                                             IsEditable="True"
                                             Margin="20 5 20 10">
                                                 <i:Interaction.Triggers>
@@ -1573,7 +1574,13 @@
                                                     Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="Ảnh"></Button>
+                                            <Rectangle Width="70"
+                                                    Height="70" 
+                                                   HorizontalAlignment="Left">
+                                                <Rectangle.Fill>
+                                                    <ImageBrush ImageSource="{Binding Photo}"></ImageBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -1780,7 +1787,13 @@
                                                     Width="auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Content="Ảnh"></Button>
+                                                <Rectangle Width="70"
+                                                    Height="70" 
+                                                   HorizontalAlignment="Left">
+                                                    <Rectangle.Fill>
+                                                        <ImageBrush ImageSource="{Binding Photo}"></ImageBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

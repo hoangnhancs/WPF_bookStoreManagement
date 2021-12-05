@@ -198,13 +198,14 @@
                 <Grid Grid.Column="1">
                     <materialDesign:Card Margin="0 30 5 10">
                         <DataGrid 
-                    ItemsSource="{Binding TopProducts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    ColumnWidth="*"
-                    CanUserSortColumns="True"
-                    CanUserAddRows="False"
-                    AutoGenerateColumns="False"
-                    x:Name="mydatagrid"
-                    Background="Transparent">
+                            ItemsSource="{Binding TopProducts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ColumnWidth="*"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            x:Name="mydatagrid"
+                            Background="Transparent"
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn
                             Header="Top sản phẩm"
@@ -225,7 +226,14 @@
                                             <StackPanel
                                         Margin="5 0 0 0"
                                         Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="CurrencyUsd" Width="60" Height="60" VerticalAlignment="Center"/>
+
+                                                <Rectangle Width="60"
+                                                    Height="60" 
+                                                   HorizontalAlignment="Left">
+                                                    <Rectangle.Fill>
+                                                        <ImageBrush ImageSource="{Binding Photo}"></ImageBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
                                                 <StackPanel >
                                                     <TextBlock
                                                 Text="{Binding nameItem}"
