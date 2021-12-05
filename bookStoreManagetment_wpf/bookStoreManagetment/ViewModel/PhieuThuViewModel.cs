@@ -272,8 +272,6 @@ namespace bookStoreManagetment.ViewModel
             // load dữ liệu xem chi tiết hóa đơn bán
             ViewBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                //ViewImportSheet = (p as importBill);
-                //Title = "Danh Sách Phiếu Thu > " + ViewImportSheet.ProfitSummary.billCode;
                 IsBillViewing = Visibility.Visible;
                 string billcode = ViewImportSheet.ProfitSummary.billCode;
                 var sellbilldetails = DataProvider.Ins.DB.sellBills.Where(x => x.billCodeSell == billcode);

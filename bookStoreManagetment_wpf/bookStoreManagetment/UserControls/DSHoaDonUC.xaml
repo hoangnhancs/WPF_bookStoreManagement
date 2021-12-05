@@ -79,6 +79,8 @@
 
                                 <!--Xuất file Excel-->
                                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                        Command="{Binding ExportFileCommand}"
+                                        CommandParameter="{Binding ElementName=datagridBillList}"
                                         Width="150"
                                         Background="ForestGreen"
                                         BorderBrush="ForestGreen"
@@ -232,7 +234,8 @@
                     <!--data grid hiển thị thông tin hóa đơn-->
                     <Grid Grid.Row="2">
                         <materialDesign:Card Margin="5 5 10 5">
-                            <DataGrid ItemsSource="{Binding DivInventoryList}" 
+                            <DataGrid ItemsSource="{Binding DisplayBillList}" 
+                                      x:Name="datagridBillList"
                                       ColumnWidth="*"
                       SelectedItem="{Binding SelectedBill, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       CanUserAddRows="False"
@@ -259,10 +262,9 @@
                                     <DataGridTemplateColumn Header="Mã hóa đơn"  Width ="Auto" IsReadOnly ="True" CanUserSort="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
-                                                        Path=DataContext.PrintBillCommand}"
+                                                <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding}"
-                                        Content="{Binding Bill.billCode}"
+                                        Content="{Binding BillCode}"
                                         Background="Transparent"
                                         BorderBrush="Transparent"
                                         Foreground="Blue">
@@ -306,7 +308,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Binding="{Binding SellBill.billstatus}" Width ="Auto" Header="Trạng thái đơn" IsReadOnly ="True">
+                                    <DataGridTextColumn Binding="{Binding BillStatus}" Width ="Auto" Header="Trạng thái đơn" IsReadOnly ="True">
                                         <DataGridTextColumn.HeaderStyle >
                                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                                 <Setter Property="HorizontalAlignment" Value="Center"></Setter>
@@ -334,7 +336,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTemplateColumn Header="In hóa đơn"
+                                    <!--<DataGridTemplateColumn Header="In hóa đơn"
                                                             Width="auto">
                                         <DataGridTemplateColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
@@ -354,7 +356,7 @@
                                                 </Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+                                    </DataGridTemplateColumn>-->
                                 </DataGrid.Columns>
                             </DataGrid>
                         </materialDesign:Card>
@@ -403,9 +405,14 @@
 
                                     <TextBlock Text=">" VerticalAlignment="Center"/>
                                     <TextBlock Text="Tạo hóa đơn" VerticalAlignment="Center"/>
-                                    <TextBlock Text=">" VerticalAlignment="Center"></TextBlock>
-                                    <TextBlock Text="{Binding ViewBillDetail.Bill.billCode}" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text=">" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding ViewBillDetail.Bill.billCode}" VerticalAlignment="Center"/>
                                 </WrapPanel>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="0,0,30,0">
+                                <Button Command="{Binding OpenPrintBillCommand}" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Background="forestGreen">
+                                    <materialDesign:PackIcon Kind="Printer"/>
+                                </Button>
                             </Grid>
                         </Grid>
 
@@ -791,7 +798,7 @@
                         </Grid>
                         <!--Thoát-->
                         <Grid Grid.Row="2">
-                            <Button Command="{Binding BacktoDSHoaDonCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Content="Thoát" Foreground="White" BorderBrush="Red" />
+                            <Button Command="{Binding BacktoDSHoaDonCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Content="Thoát" Foreground="White" BorderBrush="Red" Width="120" />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -1317,7 +1324,7 @@
                         <Grid Grid.Row="2">
                             <Button HorizontalAlignment="Center"
                                 Command="{Binding CheckoutClickCommand}"
-                                VerticalAlignment="Center" Background="#1e98d7" BorderBrush="#1e98d7" Content="Thanh toán" Foreground="White">
+                                VerticalAlignment="Center" Background="#1e98d7" BorderBrush="#1e98d7" Content="Thanh toán" Foreground="White" Width="120">
                             </Button>
                         </Grid>
                     </Grid>
