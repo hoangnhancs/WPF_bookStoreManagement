@@ -418,7 +418,7 @@
 
         <!-- thêm sản phẩm kiểm tra-->
         <Grid Grid.Row="1"
-              Visibility="Visible"
+              Visibility="Collapsed"
               x:Name="gridAddItems">
             <Grid>
                 <Grid.RowDefinitions>
@@ -681,7 +681,7 @@
         <!--show check items-->
         <Grid Grid.Row="1"
                   x:Name="gridShowReport"
-                  Visibility="Collapsed">
+                  Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="36"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
