@@ -238,6 +238,7 @@
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                                         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                                         <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        <Setter Property="ContentStringFormat" Value="dd MMM yyyy"></Setter>
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                                 <DataGridTextColumn.ElementStyle>
@@ -739,14 +740,26 @@
                                         <StackPanel>
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Hình thức thanh toán và giao nhận</TextBlock>
                                             <StackPanel Orientation="Horizontal" Height="25">
-                                                <Image Source="/pictures/search.png"/>
+                                                <materialDesign:PackIcon Kind="CreditCard" 
+                                                        VerticalAlignment="Center"
+                                                        Width="20"
+                                                        Height="20"/>
                                                 <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">Xác nhận thanh toán</TextBlock>
-                                                <TextBox IsReadOnly="True" Margin="15 0 0 0" Text="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                                                <materialDesign:Card Margin="22 0 0 0" Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                                    <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                    Text="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                                </materialDesign:Card>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Height="25">
-                                                <Image Source="/pictures/search.png"/>
+                                                <materialDesign:PackIcon Kind="TruckDelivery" 
+                                                        VerticalAlignment="Center"
+                                                        Width="20"
+                                                        Height="20"/>
                                                 <TextBlock  Margin="5 0 0 0" VerticalAlignment="Center">Đóng gói và giao hàng</TextBlock>
-                                                <TextBox IsReadOnly="True" Margin="5 0 0 0" Text="{Binding DeliveryMethod, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                                <materialDesign:Card Margin="10 0 0 0" Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                                    <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                    Text="{Binding DeliveryMethod, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                                </materialDesign:Card>
                                             </StackPanel>
                                         </StackPanel>
                                     </materialDesign:Card>
@@ -759,19 +772,35 @@
                                                VerticalAlignment="Center">Thông tin đơn hàng</TextBlock>
                                         <TextBlock Margin="0 10 0 0" HorizontalAlignment="Left"
                                                VerticalAlignment="Center">Mã đơn hàng</TextBlock>
-                                        <TextBox IsReadOnly="True" Text="{Binding ChitietMahoadon}"></TextBox>
+                                        <materialDesign:Card Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                            <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                    Text="{Binding ChitietMahoadon, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        </materialDesign:Card>
                                         <TextBlock Margin="0 10 0 0" HorizontalAlignment="Left"
                                                VerticalAlignment="Center">Ngày đặt hàng</TextBlock>
-                                        <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"></DatePicker>
+                                        <materialDesign:Card Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                            <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></DatePicker>
+                                        </materialDesign:Card>
+                                        
                                         <TextBlock Margin="0 10 0 0" HorizontalAlignment="Left"
                                                VerticalAlignment="Center">Thời gian giao hàng</TextBlock>
-                                        <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"></DatePicker>
+                                        <materialDesign:Card Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                            <DatePicker SelectedDate="{Binding ChitietThoigianDathang}"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></DatePicker>
+                                        </materialDesign:Card>
                                         <TextBlock Margin="0 10 0 0" HorizontalAlignment="Left"
                                                VerticalAlignment="Center">Nhân viên</TextBlock>
-                                        <TextBox IsReadOnly="True" Text="{Binding Chitietnhanvien}"></TextBox>
+                                        <materialDesign:Card Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                            <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                    Text="{Binding Chitietnhanvien, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        </materialDesign:Card>
                                         <TextBlock Margin="0 10 0 0" HorizontalAlignment="Left"
                                                VerticalAlignment="Center">Ghi chú</TextBlock>
-                                        <TextBox IsReadOnly="True" Text="{Binding GhiChu}"></TextBox>
+                                        <materialDesign:Card Width="230"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                            <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                    Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        </materialDesign:Card>
                                     </StackPanel>
                                 </materialDesign:Card>
                             </Grid>
@@ -799,7 +828,11 @@
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock VerticalAlignment="Center">Thời gian trả hàng</TextBlock>
-                                                    <DatePicker Margin="10 0 0 0" SelectedDate="{Binding ChitietThoigianTrahang}"></DatePicker>
+                                                    <materialDesign:Card Width="190"  UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                                        <DatePicker Margin="5 0 0 0" SelectedDate="{Binding ChitietThoigianTrahang}"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></DatePicker>
+                                                    </materialDesign:Card>
+                                                    
                                                 </StackPanel>
                                                 <TextBlock Margin="0 5 0 0">Lí do trả hàng</TextBlock>
                                             </StackPanel>
@@ -808,16 +841,21 @@
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock VerticalAlignment="Center">Nhân viên kiểm</TextBlock>
-                                                    <TextBox Margin="10 0 0 0" Width="200" Text="{Binding Chitietnhanvien}" IsReadOnly="True"></TextBox>
+                                                 
+                                                    <materialDesign:Card Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                                        <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                                        Text="{Binding Chitietnhanvien, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                                    </materialDesign:Card>
                                                 </StackPanel>
                                                 <TextBlock Margin="0 5 0 0" VerticalAlignment="Center">Xác nhận kiểm đủ</TextBlock>
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Row="2">
-                                        <TextBox Margin="0 0 0 5" Width="300" IsReadOnly="True" 
-                                         HorizontalAlignment="Left" VerticalAlignment="Center"
-                                         Text="{Binding Chitietlido}"></TextBox>
+                                        <materialDesign:Card Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" >
+                                            <TextBox Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center"
+                                    Text="{Binding Chitietlido, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        </materialDesign:Card>
                                     </Grid>
                                 </Grid>
                             </materialDesign:Card>

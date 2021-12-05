@@ -293,112 +293,7 @@
                             </DataGrid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <!--<StackPanel
-                Orientation="Horizontal"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right">
-                                    <StackPanel.Resources>
-                                        <Style TargetType="Button" x:Key="btnNextPage">
-                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                            <Setter Property="Padding" Value="0 0 0 0"></Setter>
-                                            <Setter Property="Background" Value="Transparent"></Setter>
-                                            <Setter Property="BorderBrush" Value="Black"></Setter>
-                                            <Setter Property="Foreground" Value="Black"></Setter>
-                                            <Setter Property="FontSize" Value="9"></Setter>
-                                            <Setter Property="Height" Value="18"></Setter>
-                                            <Setter Property="Width" Value="18"></Setter>
-                                        </Style>
-                                    </StackPanel.Resources>
-       
-                                    <TextBox Width="22" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                         Text="{Binding NumRowEachPageTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="TextChanged">
-                                                <i:InvokeCommandAction Command="{Binding tbNumRowEachPageCommand}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </TextBox>
-                                    <TextBlock
-                    Padding="10 0 10 0"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Text="hàng mỗi trang"></TextBlock>
-                                    
-                                    <StackPanel HorizontalAlignment="Center"
-                                x:Name="panelListBtnPages"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                                        <StackPanel.Resources>
-                                            <Style TargetType="Button" x:Key="styleBtnNextPage">
-                                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                <Setter Property="BorderBrush" Value="Black"></Setter>
-                                                <Setter Property="Foreground" Value="Black"></Setter>
-                                                <Setter Property="Padding" Value="0"></Setter>
-                                                <Setter Property="Height" Value="20"></Setter>
-                                                <Setter Property="Width" Value="20"></Setter>
-                                                <Setter Property="Margin" Value="4 0 2 0 "></Setter>
-                                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-                                            </Style>
-                                        </StackPanel.Resources>
-                                        <Button x:Name="btnPageFirst"
-                                Style="{StaticResource styleBtnNextPage}"
-                                Command="{Binding btnfirstPageCommand}"
-                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <materialDesign:PackIcon Kind="PageFirst" />
-                                        </Button>
-                                        <Button Content="&lt;" 
-                                x:Name="btnPrePage"
-                                IsEnabled="{Binding LeftVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                FontSize="13"
-                                Padding="0 0 0 4"
-                                FontWeight="DemiBold"   
-                                Style="{StaticResource styleBtnNextPage}"
-                                Command="{Binding btnPrevPageCommand}"></Button>
-                                        <Button Content="..." 
-                                x:Name="btnDotLeft"
-                                Visibility="{Binding Bacham1Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource styleBtnNextPage}"
-                                ></Button>
-                                        <Button Content="{Binding BtnPage1.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding BtnPage1.PageVisi, UpdateSourceTrigger=PropertyChanged}"
-                                Background="{Binding BtnPage1.BackGround, UpdateSourceTrigger=PropertyChanged}"
-                                x:Name="btnPage1"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                                        <Button Content="{Binding BtnPage2.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding BtnPage2.PageVisi, UpdateSourceTrigger=PropertyChanged}"
-                                Background="{Binding BtnPage2.BackGround, UpdateSourceTrigger=PropertyChanged}"
-                                x:Name="btnPage2"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                                        <Button Content="{Binding BtnPage3.PageVal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="{Binding BtnPage3.PageVisi, UpdateSourceTrigger=PropertyChanged}"
-                                Background="{Binding BtnPage3.BackGround, UpdateSourceTrigger=PropertyChanged}"
-                                x:Name="btnPage3"
-                        Style="{StaticResource styleBtnNextPage}"></Button>
-                                        <Button Content="..." 
-                                x:Name="btnDotRight"
-                                
-                                Visibility="{Binding Bacham2Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource styleBtnNextPage}"
-                                ></Button>
-                                        <Button Content="&gt;" 
-                                x:Name="NextPage"
-                                FontSize="13"
-                                Padding="0 0 0 4"
-                                FontWeight="DemiBold"
-                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource styleBtnNextPage}"
-                                Command="{Binding btnNextClickCommand}"></Button>
-                                        <Button Style="{StaticResource styleBtnNextPage}"
-                                x:Name="btnPageLast"
-                                IsEnabled="{Binding RightVisi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding btnendPageCommand}">
-                                            <materialDesign:PackIcon Kind="PageLast" />
-                                        </Button>
-                                    </StackPanel>
-                                </StackPanel>-->
+                        
                             </Grid>
                         </Grid>
                     </Grid>
@@ -446,9 +341,10 @@
                             Margin="10,5,0,5.4" Grid.ColumnSpan="2"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0">
-                                    <TextBox x:Name="nameSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding nameSup,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="tennhacungcap"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding nameSup, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="2">
@@ -473,14 +369,21 @@
                             Margin="10 0 0 0"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0">
+                                    <!--
                                     <TextBox x:Name="mailSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
                                  Text="{Binding emailSup,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    </TextBox>-->
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="mailSuptb"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding emailSup, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="1">
-                                    <TextBox x:Name="phoneSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding phoneSup,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="phonesuptb"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding phoneSup, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -519,14 +422,18 @@
                             Margin="10 0 0 0"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0">
-                                    <TextBox x:Name="tinhAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding tinh,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="tinh"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding tinh, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="1">
-                                    <TextBox x:Name="huyenAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding huyen,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    
+                                    <!---->
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="huyen"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding huyen, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="2">
@@ -551,14 +458,16 @@
                             Margin="10 0 0 0"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0">
-                                    <TextBox x:Name="xaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding xa,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="xa"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding xa, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="1">
-                                    <TextBox x:Name="sonhaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding sonha,UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="sonha"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding sonha, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -597,12 +506,16 @@
                             Margin="10 0 0 0"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0">
-                                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding fax,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="fax"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding fax, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="1">
-                                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding masothue,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="masothue"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding masothue, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="2">
@@ -621,26 +534,30 @@
                             Margin="10 0 0 0"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0">
-                                    <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"
-                                 Text="{Binding website,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    <materialDesign:Card Height="30" Width="300" UniformCornerRadius="10" HorizontalAlignment="Left" Margin="10 0 0 0" >
+                                        <TextBox Margin="5 0 0 0" x:Name="website"  VerticalAlignment="Center" Width="300" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding website, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="3">
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
-                                <Button Width="100"  Content="Thoát" Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                            Background="Transparent" 
-                            Foreground="Black" 
-                            BorderBrush="Black">
+                                <Button Background="Red"
+                                        BorderBrush="Red"
+                                        Foreground="White"
+                                        Width="100"  Content="Thoát" Style="{StaticResource MaterialDesignFlatDarkBgButton}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding btnExitCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Button Width="100" Background="Transparent" Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                <Button Width="100" Style="{StaticResource MaterialDesignFlatDarkBgButton}"
                                         Margin="10 0 0 0"
-                                Foreground="Black" BorderBrush="Black" 
+                                        Background="#1e98d7"
+                                        Foreground="White"
+                                        BorderBrush="#1e98d7"
                                 Content="Cập nhật" Visibility="{Binding ButtonUpdateVisible}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
@@ -651,8 +568,10 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Button Width="100" Background="Transparent" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="10 0 0 0"
-                                Foreground="Black" BorderBrush="Black" 
+                                <Button Width="100" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="10 0 0 0"
+                                Background="#1e98d7"
+                                        Foreground="White"
+                                        BorderBrush="#1e98d7"
                                 Content="Thêm" Visibility="{Binding ButtonInsertVisible}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">

@@ -461,6 +461,9 @@ namespace bookStoreManagetment.ViewModel
                             {
                                 MessageBox.Show(e.Message);
                             }
+                            clearData();
+                            MessageBox.Show("Thêm thành công!!!");
+                            searchEngineer(TextBoxSearchValue, ComboBoxTenKhachhang, ComboBoxNhanvienphutrachValue);
                         }
                         else
                             MessageBox.Show("Vui lòng nhập đủ thông tin");
