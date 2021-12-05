@@ -36,7 +36,7 @@
 
             <Grid
             x:Name="gridListofProduct"
-            Visibility="Collapsed">
+            Visibility="Visible">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
@@ -136,7 +136,7 @@
                     </Button>
                     <materialDesign:Card Grid.Row="3" Margin="10">
                         <DataGrid 
-                            ItemsSource="{Binding DivInventoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding ListofProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             ColumnWidth="*"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
@@ -808,7 +808,7 @@
                                                 Height="80"
                                                 Margin=" 5">
                                             <Rectangle.Fill>
-                                                <ImageBrush></ImageBrush>
+                                                <ImageBrush ImageSource="{Binding ImageViewerEdit}"></ImageBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
 

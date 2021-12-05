@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace bookStoreManagetment.ViewModel
 {
@@ -328,11 +329,13 @@ namespace bookStoreManagetment.ViewModel
         private string _query;
         public string Query { get => _query; set { _query = value; OnPropertyChanged(); } }
 
+        private string _selectedsupplier;
+        public string SelectedSupplier { get => _selectedsupplier; set { _selectedsupplier = value; OnPropertyChanged(); } }
+
         public string backupbillcode;
 
         public ImportGoodsViewModel()
         {
-
             var totalprice = Model.DataProvider.Ins.DB.importBills.GroupBy(p => new { p.billCodeImport, p.importDate, p.nameEmployee, p.idsupplier })
                                                             .Select(pa => new {
                                                                 billcode = pa.Key.billCodeImport,
@@ -367,8 +370,8 @@ namespace bookStoreManagetment.ViewModel
             TotalAllProducts = 0;
 
             // Load bộ lọc
-            displayBeginDay = "";
-            displayEndDay = "";
+            displayBeginDay = null;
+            displayEndDay = null;
             IsFilter = Visibility.Collapsed;
             var bc = new BrushConverter();
             BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
@@ -418,7 +421,7 @@ namespace bookStoreManagetment.ViewModel
                 displayEndDay = null;
                 DisplayNameSupplier = "";
                 DisplayNameSupplier = null;
-                InventoryImportGoods = new ObservableCollection<InventoryGoods>( BackupInventoryImportGoods );
+                InventoryImportGoods = new ObservableCollection<InventoryGoods>(BackupInventoryImportGoods);
 
                 BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
@@ -433,6 +436,18 @@ namespace bookStoreManagetment.ViewModel
                 newCell.Items = item;
                 newCell.IsSelected = false;
 
+                ImageSource photo = null;
+                try
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + item.nameItem + ".jpg"));
+                }
+                catch (Exception ex)
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+
+                }
+                newCell.Photo = photo;
+
                 backupAllItems.Add(newCell);
             }
 
@@ -446,6 +461,18 @@ namespace bookStoreManagetment.ViewModel
                 CellItems newCell = new CellItems();
                 newCell.Items = item;
                 newCell.IsSelected = false;
+
+                ImageSource photo = null;
+                try
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + item.nameItem + ".jpg"));
+                }
+                catch (Exception ex)
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+
+                }
+                newCell.Photo = photo;
 
                 backupEditAllItems.Add(newCell);
             }
@@ -475,7 +502,7 @@ namespace bookStoreManagetment.ViewModel
                 if (p != null)
                 {
 
-                    if ( Query == "" )
+                    if (Query == "")
                     {
                         InventoryImportGoods = new ObservableCollection<InventoryGoods>(BackupInventoryImportGoods);
                     }
@@ -960,6 +987,8 @@ namespace bookStoreManagetment.ViewModel
                     var select = (p as InventoryGoods);
                     backupbillcode = select.CodeBill;
 
+                    SelectedSupplier = select.NameSupplier;
+
                     EditNameSupplier = select.NameSupplier;
                     var cell = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == select.NameSupplier).FirstOrDefault();
                     EditEmailPhonenumberSupplier = cell.phoneNumberSupplier + " / " + cell.emailSupplier;
@@ -1060,7 +1089,13 @@ namespace bookStoreManagetment.ViewModel
 
             });
 
-            ClickAddFormImportGoodsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ClickAddFormImportGoodsCommand = new RelayCommand<object>((p) => {
+                if (NameSupplier != null && EmailPhonenumberSupplier != null && AddressSupplier != null && InventoryList.Count() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }, (p) =>
             {
                 if (p != null)
                 {
@@ -1069,6 +1104,13 @@ namespace bookStoreManagetment.ViewModel
                     int totalall = 0;
 
                     DateTime Daynow = DateTime.Now;
+
+                    int bud = 0;
+                    var ytyy = DataProvider.Ins.DB.profitSummaries.Where(pa => pa.billType == "import").Select(pa => pa.budget);
+                    foreach (int data in ytyy)
+                    {
+                        bud = data;
+                    }
 
                     bill Bill = new bill()
                     {
@@ -1102,7 +1144,6 @@ namespace bookStoreManagetment.ViewModel
                         cell.quantity = cell.quantity + data.Count;
 
                     }
-
                     profitSummary profit = new profitSummary()
                     {
                         billCode = c < 10 ? "IP00" + c : c < 100 ? "IP0" + c : "IP" + c,
@@ -1119,7 +1160,7 @@ namespace bookStoreManagetment.ViewModel
                         payment = "Tiền mặt",
                         nameBill = "Nhập hàng",
                         note = "",
-                        budget = DataProvider.Ins.DB.profitSummaries.Where(billtype => billtype.billType == "import").Last().budget - TotalAllProducts
+                        budget = bud - TotalAllProducts
                     };
 
                     DataProvider.Ins.DB.profitSummaries.Add(profit);
@@ -1454,7 +1495,7 @@ namespace bookStoreManagetment.ViewModel
             List<InventoryGoods> newListExportBill = BackupInventoryImportGoods;
             if (DisplayNameSupplier != null && DisplayNameSupplier != "")
             {
-                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.typeGroup == DisplayNameSupplier).ToList();
+                newListExportBill = newListExportBill.Where(x => x.NameSupplier == DisplayNameSupplier).ToList();
             }
 
             if (displayBeginDay != null)
@@ -1478,6 +1519,7 @@ namespace bookStoreManagetment.ViewModel
         {
             public item Items { get; set; }
             public bool IsSelected { get; set; }
+            public ImageSource Photo { get; set; }
         }
 
         public class Inventory

@@ -23,109 +23,10 @@ namespace bookStoreManagetment.ViewModel
     }
     public class ListofProductsViewModel : BaseViewModel
     {
-        #region Nhân chỉ phân trang
-        //Page Property
-        private ObservableCollection<Product> _DivInventoryList;
-        public ObservableCollection<Product> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
 
-        private Visibility _3cham1Visible;
-        public Visibility Bacham1Visible
-        {
-            get { return _3cham1Visible; }
-            set
-            {
-                _3cham1Visible = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility _3cham2Visible;
-        public Visibility Bacham2Visible
-        {
-            get { return _3cham2Visible; }
-            set
-            {
-                _3cham2Visible = value;
-                OnPropertyChanged();
-            }
-        }
-        public int maxpage { get; set; }
-        public int max_pack_page { get; set; }
-        public int pack_page { get; set; }
-        public int currentpage = 1;
-        private string _numRowEachPageTextBox;
-        public string NumRowEachPageTextBox
-        {
-            get { return _numRowEachPageTextBox; }
-            set
-            {
-                _numRowEachPageTextBox = value;
-                OnPropertyChanged();
-            }
-        }
-        public int NumRowEachPage;
-        private page btnPage1;
-        public page BtnPage1
-        {
-            get { return btnPage1; }
-            set
-            {
-                btnPage1 = value;
-                OnPropertyChanged();
-            }
-        }
-        private page btnPage2;
-        public page BtnPage2
-        {
-            get { return btnPage2; }
-            set
-            {
-                btnPage2 = value;
-                OnPropertyChanged();
-            }
-        }
-        private page btnPage3;
-        public page BtnPage3
-        {
-            get { return btnPage3; }
-            set
-            {
-                btnPage3 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _leftVisi;
-        public bool LeftVisi
-        {
-            get { return _leftVisi; }
-            set
-            {
-                _leftVisi = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _rightVisi;
-        public bool RightVisi
-        {
-            get { return _rightVisi; }
-            set
-            {
-                _rightVisi = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICommand tbNumRowEachPageCommand { get; set; }
-        public ICommand btnNextClickCommand { get; set; }
-        public ICommand btnendPageCommand { get; set; }
-        public ICommand btnfirstPageCommand { get; set; }
-        public ICommand btnPrevPageCommand { get; set; }
-        public ICommand btnLoc2Command { get; set; }
-
-
-        #endregion
 
         public ICommand ClickHiddenCommand { get; set; }
+        public ICommand ClickHiddenFilterCommand { get; set; }
         public ICommand ClickAddProductCommand { get; set; }
         public ICommand ClickEditProductCommand { get; set; }
         public ICommand TextChangedSearchCommand { get; set; }
@@ -140,6 +41,7 @@ namespace bookStoreManagetment.ViewModel
         public ICommand CloseFilterCommand { get; set; }
         public ICommand SelectionChangedNhomTheLoaiFilterCommand { get; set; }
         public ICommand ClickUploadImageCommand { get; set; }
+        public ICommand EditClickUploadImageCommand { get; set; }
 
         // ẩn hiện grid filter
         private Visibility _IsFilter;
@@ -155,7 +57,7 @@ namespace bookStoreManagetment.ViewModel
         private List<Product> _backuplistAllproduct;
         public List<Product> BackUpListAllProduct { get => _backuplistAllproduct; set { _backuplistAllproduct = value; OnPropertyChanged(); } }
 
-        
+
 
         private string _displaynametype;
         public string DisplayNameType { get => _displaynametype; set { _displaynametype = value; OnPropertyChanged(); } }
@@ -259,8 +161,11 @@ namespace bookStoreManagetment.ViewModel
 
 
         //uoload ảnh
-        private BitmapImage _imageviewer;
-        public BitmapImage ImageViewer { get => _imageviewer; set { _imageviewer = value; OnPropertyChanged(); } }
+        private ImageSource _imageviewer;
+        public ImageSource ImageViewer { get => _imageviewer; set { _imageviewer = value; OnPropertyChanged(); } }
+
+        private ImageSource _imagevieweredit;
+        public ImageSource ImageViewerEdit { get => _imagevieweredit; set { _imagevieweredit = value; OnPropertyChanged(); } }
 
         public string FileNameImage;
 
@@ -272,7 +177,7 @@ namespace bookStoreManagetment.ViewModel
                 if (data.typeItem == "book")
                 {
                     var type = DataProvider.Ins.DB.bookInformations.Where(p => p.idBook == data.idItem);
-                    ListAllProduct.Add(new Product() { Item = data, typeItem = type.Select(p => p.typeContent).FirstOrDefault()});
+                    ListAllProduct.Add(new Product() { Item = data, typeItem = type.Select(p => p.typeContent).FirstOrDefault() });
                 }
                 else
                 {
@@ -302,15 +207,6 @@ namespace bookStoreManagetment.ViewModel
             var bc = new BrushConverter();
             BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
 
-            NumRowEachPageTextBox = "5";
-            NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-            currentpage = 1;
-            pack_page = 1;
-            settingButtonNextPrev();
-
-
-
-
             ClickUploadImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
@@ -327,6 +223,26 @@ namespace bookStoreManagetment.ViewModel
                     bitmap.UriSource = new Uri(selectedFileName);
                     bitmap.EndInit();
                     ImageViewer = bitmap;
+                    //ImageViewer1.Source = bitmap;
+                }
+            });
+
+            EditClickUploadImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+                dlg.InitialDirectory = "c:\\";
+                dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+                dlg.RestoreDirectory = true;
+
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string selectedFileName = dlg.FileName;
+                    FileNameImage = selectedFileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(selectedFileName);
+                    bitmap.EndInit();
+                    ImageViewerEdit = bitmap;
                     //ImageViewer1.Source = bitmap;
                 }
             });
@@ -366,24 +282,21 @@ namespace bookStoreManagetment.ViewModel
                 {
                     newListDoiTuong = DataProvider.Ins.DB.studytoolsInformations.Select(pa => pa.typecontent).ToList().Distinct().ToList();
                 }
-                ListTypeItem = new ObservableCollection<string>( newListDoiTuong );
+                ListTypeItem = new ObservableCollection<string>(newListDoiTuong);
 
             });
 
             CheckFilterCommand = new RelayCommand<object>((p) => {
                 if (DisplayGroupType != null || DisplayNameType != null)
                     return true;
-                if (KhoangGiaTruoc >= 0  && KhoangGiaSau >= KhoangGiaTruoc)
+                if (KhoangGiaTruoc >= 0 && KhoangGiaSau >= KhoangGiaTruoc)
                     return true;
-                
+
                 return false;
             }, (p) =>
             {
                 Filter();
                 BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
-                currentpage = 1;
-                pack_page = 1;
-                settingButtonNextPrev();
             });
 
 
@@ -408,17 +321,32 @@ namespace bookStoreManagetment.ViewModel
                 }
             });
 
+            ClickHiddenFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsFilter = Visibility.Collapsed;
+                int c = DataProvider.Ins.DB.items.Count() + 1;
+                string name = c < 10 ? "BOOK00" + c : c < 100 ? "BOOK0" + c : "BOOK" + c;
+                SKUProductsAdd = name;
+                DescriptionProductsAdd = "Đang cập nhật";
+                ImageViewer = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+            });
+
             ClickAddProductCommand = new RelayCommand<object>((p) => {
-                Console.WriteLine(Int32.Parse(PriceProductsAdd.ToString()));
-                return true;
+
+                if (BarcodeProductsAdd != null && NameProductsAdd != null && CatalogProductsAdd != null && UnitProductAdd != null && TypeProductsAdd != null)
+                {
+                    return true;
+                }
+                return false;
             }, (p) =>
             {
+                string nameimage = NameProductsAdd + ".jpg";
                 item Item = new item()
                 {
                     idItem = SKUProductsAdd,
                     nameItem = NameProductsAdd,
                     linkItem = "Đang cập nhật",
-                    imageItem = "FileNameImage",
+                    imageItem = nameimage,
                     importPriceItem = 0,
                     sellPriceItem = Int32.Parse(PriceProductsAdd.ToString()),
                     descriptionItem = DescriptionProductsAdd,
@@ -428,6 +356,15 @@ namespace bookStoreManagetment.ViewModel
                     supplierItem = "NCC002",
                     unit = UnitProductAdd
                 };
+
+                nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + nameimage);
+
+                using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewer));
+                    encoder.Save(fileStream);
+                }
 
                 DataProvider.Ins.DB.items.Add(Item);
 
@@ -471,6 +408,18 @@ namespace bookStoreManagetment.ViewModel
                 ListofProduct = new ObservableCollection<Product>(ListAllProduct);
                 (p as DataGrid).Items.Refresh();
                 MessageBox.Show("Thêm thành công!");
+
+                int c = DataProvider.Ins.DB.items.Count() + 1;
+                string name = c < 10 ? "BOOK00" + c : c < 100 ? "BOOK0" + c : "BOOK" + c;
+                CatalogProductsAdd = null;
+                TypeItemAdd = null;
+                NameProductsAdd = "";
+                SKUProductsAdd = name;
+                BarcodeProductsAdd = null;
+                PriceProductsAdd = 0;
+                UnitProductAdd = null;
+                ImageViewer = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                DescriptionProductsAdd = "Đang cập nhật";
             });
 
             TextChangedSearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -496,9 +445,6 @@ namespace bookStoreManagetment.ViewModel
                             }
                         }
                     }
-                    currentpage = 1;
-                    pack_page = 1;
-                    settingButtonNextPrev();
                 }
             });
 
@@ -543,19 +489,50 @@ namespace bookStoreManagetment.ViewModel
                 UnitProductsEdit = cellItem.Select(pa => pa.unit).FirstOrDefault();
                 DescriptionProductsEdit = cellItem.Select(pa => pa.descriptionItem).FirstOrDefault();
 
+                ImageSource photo = null;
+                try
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + selected.Item.nameItem + ".jpg"));
+                }
+                catch (Exception ex)
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+
+                }
+                ImageViewerEdit = photo;
+
             });
 
-            ClickEditUpdateProductCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ClickEditUpdateProductCommand = new RelayCommand<object>((p) => {
+                if (BarcodeProductsEdit != null && NameProductsEdit != null && CatalogProductsEdit != null && UnitProductsEdit != null && TypeProductsEdit != null)
+                {
+                    return true;
+                }
+                return false;
+            }, (p) =>
             {
+
                 var cellItem = DataProvider.Ins.DB.items.Where(x => x.idItem == sku).SingleOrDefault();
 
                 //cellItem.idItem = SKUProductsEdit;
                 cellItem.typeItem = CatalogProductsEdit;
                 cellItem.nameItem = NameProductsEdit;
+                cellItem.imageItem = NameProductsEdit + ".jpg";
                 cellItem.barcode = BarcodeProductsEdit;
                 cellItem.sellPriceItem = PriceProductsEdit;
                 cellItem.unit = UnitProductsEdit;
                 cellItem.descriptionItem = DescriptionProductsEdit;
+
+                System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cellItem.imageItem);
+                string nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + NameProductsEdit + ".jpg");
+
+                using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewer));
+                    encoder.Save(fileStream);
+                }
+
 
                 if (CatalogProductsEdit == "book")
                 {
@@ -619,236 +596,6 @@ namespace bookStoreManagetment.ViewModel
                 DataProvider.Ins.DB.SaveChanges();
             });
 
-            tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = 1;
-                //LoadData();
-                Filter();
-                settingButtonNextPrev();
-            });
-            btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (currentpage < maxpage)
-                {
-                    currentpage += 1;
-                    if (currentpage % 3 == 0)
-                        pack_page = currentpage / 3;
-                    else
-                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
-                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-                }
-                settingButtonNextPrev();
-            });
-            btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = maxpage;
-                pack_page = max_pack_page;
-                settingButtonNextPrev();
-            });
-            btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = 1;
-                pack_page = 1;
-                settingButtonNextPrev();
-            });
-            btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (currentpage > 1)
-                {
-                    currentpage -= 1;
-                    if (currentpage % 3 == 0)
-                        pack_page = currentpage / 3;
-                    else
-                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
-                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-                }
-                settingButtonNextPrev();
-            });
-
-            btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-
-                Filter();
-                settingButtonNextPrev();
-            });
-
-        }
-
-        void settingButtonNextPrev()
-        {
-            int ilc = ListofProduct.Count();
-            BtnPage1 = new page();
-            BtnPage2 = new page();
-            BtnPage3 = new page();
-
-            //currentpage = 1;
-
-            if (NumRowEachPageTextBox != "")
-            {
-                //init max page
-                NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-                if (ilc % NumRowEachPage == 0)
-                    maxpage = ilc / NumRowEachPage;
-                else
-                    maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
-                if (maxpage % 3 == 0)
-                    max_pack_page = maxpage / 3;
-                else
-                    max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
-
-                //Init max page
-                DivInventoryList = new ObservableCollection<Product>();
-                DivInventoryList.Clear();
-                int startPos = (currentpage - 1) * NumRowEachPage;
-                int endPos = currentpage * NumRowEachPage - 1;
-                if (endPos >= ilc)
-                    endPos = ilc - 1;
-
-                int flag = 0;
-                foreach (var item in ListofProduct)
-                {
-                    if (flag >= startPos && flag <= endPos)
-                        DivInventoryList.Add(item);
-                    flag++;
-                }
-                //MessageBox.Show(DivInventoryList.Count.ToString());
-
-                //Button "..." visible
-
-                //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
-                //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
-                if (max_pack_page == 1)
-                {
-                    Bacham1Visible = Visibility.Collapsed;
-                    Bacham2Visible = Visibility.Collapsed;
-                }
-                else
-                {
-                    if (pack_page == max_pack_page)
-                    {
-                        Bacham1Visible = Visibility.Visible;
-                        Bacham2Visible = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        if (pack_page == 1)
-                        {
-                            Bacham1Visible = Visibility.Collapsed;
-                            Bacham2Visible = Visibility.Visible;
-                        }
-                        else
-                        {
-                            Bacham1Visible = Visibility.Visible;
-                            Bacham2Visible = Visibility.Visible;
-                        }
-                    }
-                }
-
-                //Button "..." visible
-
-                if (currentpage == 1 && maxpage == 1)
-                {
-                    LeftVisi = false;
-                    RightVisi = true;
-                }
-                else
-                {
-                    if (currentpage == maxpage)
-                    {
-                        LeftVisi = true;
-                        RightVisi = false;
-                    }
-                    else
-                    {
-                        if (currentpage == 1)
-                        {
-                            LeftVisi = false;
-                            RightVisi = true;
-                        }
-                        else
-                        {
-                            LeftVisi = true;
-                            RightVisi = true;
-                        }
-                    }
-                }
-
-                if (maxpage >= 3)
-                {
-                    BtnPage1.PageVisi = Visibility.Visible;
-                    BtnPage2.PageVisi = Visibility.Visible;
-                    BtnPage3.PageVisi = Visibility.Visible;
-
-                    switch (currentpage % 3)
-                    {
-                        case 1:
-                            BtnPage1.BackGround = Brushes.Blue;
-                            BtnPage2.BackGround = Brushes.White;
-                            BtnPage3.BackGround = Brushes.White;
-                            BtnPage1.PageVal = currentpage;
-                            BtnPage2.PageVal = currentpage + 1;
-                            BtnPage3.PageVal = currentpage + 2;
-                            break;
-                        case 2:
-                            BtnPage1.BackGround = Brushes.White;
-                            BtnPage2.BackGround = Brushes.Blue;
-                            BtnPage3.BackGround = Brushes.White;
-                            BtnPage1.PageVal = currentpage - 1;
-                            BtnPage2.PageVal = currentpage;
-                            BtnPage3.PageVal = currentpage + 1;
-                            break;
-                        case 0:
-                            BtnPage1.BackGround = Brushes.White;
-                            BtnPage2.BackGround = Brushes.White;
-                            BtnPage3.BackGround = Brushes.Blue;
-                            BtnPage1.PageVal = currentpage - 2;
-                            BtnPage2.PageVal = currentpage - 1;
-                            BtnPage3.PageVal = currentpage;
-                            break;
-                    }
-                }
-                else
-                {
-                    if (maxpage == 2)
-                    {
-                        BtnPage1.PageVisi = Visibility.Visible;
-                        BtnPage2.PageVisi = Visibility.Visible;
-                        BtnPage3.PageVisi = Visibility.Collapsed;
-                        switch (currentpage)
-                        {
-                            case 1:
-                                BtnPage1.BackGround = Brushes.Blue;
-                                BtnPage2.BackGround = Brushes.White;
-                                BtnPage1.PageVal = currentpage;
-                                BtnPage2.PageVal = currentpage + 1;
-                                break;
-                            case 2:
-                                BtnPage1.BackGround = Brushes.White;
-                                BtnPage2.BackGround = Brushes.Blue;
-                                BtnPage1.PageVal = currentpage - 1;
-                                BtnPage2.PageVal = currentpage;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        BtnPage1.PageVisi = Visibility.Visible;
-                        BtnPage2.PageVisi = Visibility.Collapsed;
-                        BtnPage3.PageVisi = Visibility.Collapsed;
-                        BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
-                        BtnPage1.BackGround = Brushes.Blue;
-                        BtnPage1.PageVal = currentpage;
-                    }
-                }
-                if (pack_page == max_pack_page)
-                {
-                    if ((pack_page * 3) > maxpage)
-                        BtnPage3.PageVisi = Visibility.Collapsed;
-                    if ((pack_page * 3 - 1) > maxpage)
-                        BtnPage2.PageVisi = Visibility.Collapsed;
-                }
-
-            }
         }
 
         private void Filter()
