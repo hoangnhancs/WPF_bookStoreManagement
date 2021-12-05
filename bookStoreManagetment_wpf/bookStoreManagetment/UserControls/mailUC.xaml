@@ -192,6 +192,7 @@
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                                         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                                         <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        <Setter Property="ContentStringFormat" Value="dd MMM yyyy"></Setter>
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                                 <DataGridTextColumn.ElementStyle>
@@ -369,6 +370,7 @@
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                                         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                                         <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        <Setter Property="ContentStringFormat" Value="dd MMM yyyy"></Setter>
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                                 <DataGridTextColumn.ElementStyle>
@@ -481,9 +483,9 @@
                             </Grid>
                             <Grid Grid.Column="3">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Ngày gửi" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0"></TextBlock>
+                                    <TextBlock Text="Ngày gửi" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0" ></TextBlock>
                                     <materialDesign:Card Height="30" UniformCornerRadius="10">
-                                        <DatePicker  Height="30" HorizontalContentAlignment="Center" Width="90" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" HorizontalAlignment="Center"
+                                        <DatePicker Height="30" HorizontalContentAlignment="Center" Width="90" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" HorizontalAlignment="Center"
                                 SelectedDate="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
                                         </DatePicker>
                                     </materialDesign:Card>
