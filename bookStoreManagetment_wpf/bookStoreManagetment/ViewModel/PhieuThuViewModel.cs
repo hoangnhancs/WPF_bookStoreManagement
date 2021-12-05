@@ -318,7 +318,7 @@ namespace bookStoreManagetment.ViewModel
             var listBill = DataProvider.Ins.DB.profitSummaries;
             foreach(var bill in listBill)
             {
-                if(bill.billType == "import")
+                if(bill.billType == "export")
                 {
                     if (bill.nameCustomer != null && bill.nameCustomer != "")
                     {
