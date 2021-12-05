@@ -175,21 +175,22 @@
                       Height="auto"
                           Margin="10 0 10 10">
                         <materialDesign:Card>
-                            <Wpf:CartesianChart Background="Transparent"  Margin="5">
+                            <Wpf:CartesianChart Background="Transparent" 
+                                                Margin="5">
                                 <Wpf:CartesianChart.Series>
                                     <Wpf:ColumnSeries Title="Doanh thu bán hàng" 
-                                  Values="{Binding Results}"
-                                  Configuration="{Binding Mapper}"/>
+                                  Values="{Binding Results, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  Configuration="{Binding Mapper,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </Wpf:CartesianChart.Series>
                                 <Wpf:CartesianChart.AxisX>
-                                    <Wpf:Axis LabelsRotation="-20" Labels="{Binding Labels}" DisableAnimations="True">
+                                    <Wpf:Axis LabelsRotation="-20" Labels="{Binding Labels,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisableAnimations="True">
                                         <Wpf:Axis.Separator>
                                             <Wpf:Separator Step="1"></Wpf:Separator>
                                         </Wpf:Axis.Separator>
                                     </Wpf:Axis>
                                 </Wpf:CartesianChart.AxisX>
                                 <Wpf:CartesianChart.AxisY>
-                                    <Wpf:Axis LabelFormatter="{Binding MillionFormatter}"></Wpf:Axis>
+                                    <Wpf:Axis LabelFormatter="{Binding MillionFormatter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Wpf:Axis>
                                 </Wpf:CartesianChart.AxisY>
                             </Wpf:CartesianChart>
                         </materialDesign:Card>
