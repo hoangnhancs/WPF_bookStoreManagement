@@ -22,37 +22,12 @@ namespace bookStoreManagetment.Model
     }
     #endregion
 
-    #region Khai báo class chi tiết hóa đơn để in
-    public class BillDetailForPrint
-    {
-        public string BillCode { get; set; }
-        public string EmployeeFullName { get; set; }
-        public string CustomerFullName { get; set; }
-        public string CustomerPhoneNumber { get; set; }
-        public string CustomerAddress { get; set; }
-        public int Total { get; set; }
-        public string BillStatus { get; set; }
-        public List<SellBillItemForPrint> OrderItems { get; set; }
-    }
-
-    #endregion
-
     #region Khai báo class SellBillItem
     public class SellBillItem
     {
         public item Item { get; set; }
         public int Amount { get; set; }
         public int Discount { get; set; }
-    }
-    #endregion
-
-    #region Khai báo class SellBillItem để in
-    public class SellBillItemForPrint
-    {
-        public int NameItem { get; set; }
-        public int Amount { get; set; }
-        public int Discount { get; set; }
-        public int UnitPrice { get; set; }
     }
     #endregion
 }
