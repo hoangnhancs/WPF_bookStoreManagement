@@ -157,6 +157,9 @@
     <Compile Include="CheckItemsWindow.xaml.cs">
       <DependentUpon>CheckItemsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InhoaDon.xaml.cs">
+      <DependentUpon>InhoaDon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -166,6 +169,7 @@
     <Compile Include="Model\bill.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\BillDetail.cs" />
     <Compile Include="Model\bookInformation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -322,6 +326,10 @@
     </Page>
     <Compile Include="ViewModel\ThongTinNhanVienViewModel.cs" />
     <Page Include="CheckItemsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InhoaDon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -490,6 +498,13 @@
     <Resource Include="pictures\3c57ed515c290ff8ef59afa950d950da.png" />
     <Resource Include="pictures\Logo Hani %281%29.png" />
     <Resource Include="Logo Hani %281%29 %281%29.png" />
+    <Content Include="bookStoreManagement.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bookStoreManagement_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>bookStoreManagement.mdf</DependentUpon>
+    </Content>
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

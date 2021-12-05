@@ -300,8 +300,7 @@ namespace bookStoreManagetment.ViewModel
             // Load bộ lọc
             IsFilter = Visibility.Collapsed;
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
 
             NumRowEachPageTextBox = "5";
             NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
@@ -352,8 +351,7 @@ namespace bookStoreManagetment.ViewModel
                 DisplayGroupType = "";
                 DisplayGroupType = null;
                 ListofProduct = new ObservableCollection<Product>(BackUpListAllProduct);
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // sự kiện thay đổi lựu chọn nhóm người nhận filter
@@ -382,8 +380,7 @@ namespace bookStoreManagetment.ViewModel
             }, (p) =>
             {
                 Filter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#CCFFFFFF");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d75c1e");
                 currentpage = 1;
                 pack_page = 1;
                 settingButtonNextPrev();
