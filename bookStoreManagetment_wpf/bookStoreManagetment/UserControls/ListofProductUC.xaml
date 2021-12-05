@@ -131,6 +131,9 @@
                                 <i:InvokeCommandAction
                                             Command="{Binding ClickHiddenCommand}"
                                             CommandParameter="{Binding ElementName=gridAddProduct}"/>
+                                <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenFilterCommand}"
+                                            CommandParameter="{Binding ElementName=gridFilter}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
