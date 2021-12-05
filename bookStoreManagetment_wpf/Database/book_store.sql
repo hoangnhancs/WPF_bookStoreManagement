@@ -5,6 +5,7 @@ go
 --drop database bookstoremanagement
 ------------------------------------
 use bookStoreManagement
+go
 
 create table account
 (
@@ -29,7 +30,6 @@ create table item
 	supplierItem nvarchar(10), --nha cung cap
 	unit nvarchar(10),
 )
-
 
 create table bookInformation
 (
@@ -153,6 +153,7 @@ create table employee
 	nameAccount nvarchar(20) not null,
 	employeeSalary int,
 	employeeNote nvarchar(200),
+	employeeImagePath nvarchar(200),
 )
 
 
@@ -175,38 +176,6 @@ alter table supplier add masothue nvarchar(30)
 -- Tạo khóa ngoại sau khi tạo bảng
 
 -----------------------------
-insert into account(nameAccount,passwordAccount, typeAccount) values
-(N'admin',N'admin',N'admin'),
-(N'staff',N'staff',N'staff'),
-(N'hoangnhancs',N'123456',N'staff')
-
-
-
---alter table bookInformation add foreign key (idBook) references item(idItem)
-
---alter table studytoolsInformation add foreign key (idStudyTool) references item(idItem)
-
---alter table importBill add foreign key (billCodeImport) references bill(billCode)
---alter table importBill add foreign key (idItem) references item(idItem)
-
---alter table sellBill add foreign key (billCodeSell) references bill(billCode)
---alter table sellBill add foreign key (idItem) references item(idItem)
-
---alter table profitSummary add foreign key (billCode) references bill(billCode)
---alter table profitSummary add foreign key (idCustomer) references custommer(idCustommer) 
---alter table profitSummary add foreign key (idEmployee) references employee(idEmployee)
-
---alter table itemSummary add foreign key (billCode) references bill(billCode)
---alter table itemSummary add foreign key (idCustomer) references custommer(idCustommer) 
---alter table itemSummary add foreign key (idEmployee) references employee(idEmployee)
---alter table itemSummary add foreign key (idItem) references item(idItem)
-
---alter table item add foreign key(supplierItem) references supplier(idSupplier)
-
---alter table checkItems add foreign key(idEmployee) references employee(idEmployee)
---alter table checkItems add foreign key(idItem) references item(idItem)
-
-
 
 
 create table mail
@@ -280,12 +249,14 @@ CREATE TABLE [dbo].[checkItems] (
 [idEmployee] nvarchar(30) NOT NULL,
 [dateCheckItems] DATETIME NOT NULL,
 [idItem] NVARCHAR (10) NOT NULL,
-[quantityItem] INT NOT NULL,
 [note] NVARCHAR (MAX) NULL,
-PRIMARY KEY CLUSTERED ([idCheckItems] ASC),
+PRIMARY KEY CLUSTERED ([sttCheckItems] ASC),
 --FOREIGN KEY ([idEmployee]) REFERENCES [dbo].[employee] ([idEmployee]),
 --FOREIGN KEY ([idItem]) REFERENCES [dbo].[item] ([idItem])
 );
+alter table checkItems add newQuantityItem int
+alter table checkItems add oldQuantityItem int
+
 
 insert into item values
 (N'BOOK001',N'https://nhasachphuongnam.com/vi/nha-lanh-dao-tuong-lai-vi.html',N'https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/218/nha-lanh-dao-tuong-lai.jpg',N'Nhà Lãnh Đạo Tương Lai',250000,275000,N'Trong tiểu thuyết The Sun Also Rises (Mặt trời vẫn mọc) của Ernest Hemingway, có đoạn thoại thế này: “‘Thế làm sao mà anh phá sản?’, Bill hỏi. ‘Bằng hai cách thôi. Nó đến từ từ; và rồi đùng một cái, tôi trắng tay!’, Mike đáp.” NHÀ LÃNH ĐẠO TƯƠNG LAI: TẦM NHÌN 10 NĂM VÀ HƠN THẾ NỮA Dường như thế giới kinh doanh đang ngày càng tràn ngập những ý tưởng và chiến lược lãnh đạo mới. Trong khi một vài trong số đó tạo ra được các nhà lãnh đạo xuất sắc, vẫn còn rất nhiều việc phải làm và mọi thứ đang thay đổi rất nhanh! Chẳng hạn, trong thập niên vừa qua, người ta nói rằng các nhà lãnh đạo thường xuyên bị ám ảnh bởi giá cả chứng khoán, các nỗ lực đa dạng hóa và mọi giải pháp hướng đến sự toàn diện vẫn còn rất non trẻ, công nghệ (đặc biệt là trí tuệ nhân tạo) không là gì cả so với sự tiên tiến và thay đổi như vũ bão của chính nó ngày hôm nay, hệ thống thứ bậc trong cơ cấu quản lý bị thách thức mãnh liệt nhưng chưa tới mức độ như chúng ta thấy bây giờ, các nền tảng truyền thông xã hội chỉ mới manh nha, iPhone hầu như chưa phổ biến và cụm từ “trải nghiệm nhân viên” còn rất xa lạ, “mục đích” và “tác động” là những khái niệm không được xem trọng, lực lượng lao động chưa phân bố rộng rãi và đa dạng như hiện nay, chủ nghĩa ngắn hạn là ý tưởng phổ biến và phương thức làm việc từ xa (remote-work) hay làm việc từ nhà (work-from-home) không được mấy người hưởng ứng, chưa kể chúng ta từng chịu tác động ghê gớm từ cuộc khủng hoảng tài chính thế giới năm 2008. Tuy nhiên, đó đã là chuyện của 10 năm về trước. Hầu hết chúng ta đều không nhận ra rằng mọi thứ đã thay đổi sâu sắc đến thế nào trong thập kỷ qua vì chúng ta đang sống trong nó, có thể nói như thế. Hãy tưởng tượng rằng bạn lên một chuyến tàu hỏa xuyên lục địa với hành trình kéo dài 10 năm. Suốt chuyến đi, mọi thứ trên tàu không thay đổi, công nghệ vẫn như cũ, y phục của mọi người vẫn thế – không có gì thay đổi cả! Rồi 10 năm qua đi và bạn tới đích. Bước xuống tàu, bạn không còn nhận r',N'893527860562',100,N'book',N'NCC005',N'quyển'),
@@ -1011,100 +982,196 @@ insert into bookInformation values
 (N'BOOK359',N'Văn Học',N'Bìa mềm',N'15.5 x 23.5 cm',341,N'Cao Xuân Hạo',N'Hoàng Thắng',N'NXB Văn Hoá Dân Tộc',N'Phương Nam Book'),
 (N'BOOK360',N'Văn Học',N'Bìa mềm',N'13 x 20.5 cm',224,N'Night-fly',N'Hoàng Thắng',N'NXB Văn Học',N'Người Trẻ Việt')
 
---INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'EP001', N'export', N'2000-01-01 00:00:00')
---INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'EP002', N'export', N'2021-10-20 00:00:00')
---INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'IP001', N'import', N'2000-01-01 00:00:00')
---INSERT INTO [dbo].[bill] ([billCode], [billType], [setBillDay]) VALUES (N'IP002', N'import', N'2021-11-13 00:00:00')
-
-
---INSERT INTO [dbo].[sellBill] ([billCodeSell], [idEmployee], [number], [sellDate], [deliveryDate], [licenseDate], [idCustomer], [idItem], [unitPrice], [discount], [note], [billstatus], [tag]) VALUES (N'IP001', 1, 3, N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', 1, N'BOOK073', 3000, 0, N'không có note', N'Đã giao hàng', N'')
---INSERT INTO [dbo].[sellBill] ([billCodeSell], [idEmployee], [number], [sellDate], [deliveryDate], [licenseDate], [idCustomer], [idItem], [unitPrice], [discount], [note], [billstatus], [tag]) VALUES (N'IP002', 2, 7, N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', N'2000-01-01 00:00:00', 1, N'BOOK074', 100, 0, N'không có note', N'Đã giao hàng', N'')
 
 SET DATEFORMAT dmy;  
 GO
 
-insert into bill(billCode,billType) values
-(N'EP001', N'export'),
-(N'EP002', N'export'),
-(N'EP003', N'export'),
-(N'EP004', N'export'),
-(N'IP001', N'import'),
-(N'IP002', N'import')
 
-insert into custommer(idCustommer, firstName, lastName, phoneNumber, custommerAddress, custommerEmail, sex, citizenIdentification, dateOfBirth) values
-(N'CUS001', N'Thắng', N'Nguyễn Hoàng', N'0463643789', N'TPHCM', N'thangnh@gmail.com', N'Nam', N'34719451', '01-01-2000'),
-(N'CUS002', N'Anh', N'Lê Võ Ngọc', N'0442913789', N'TPHCM', N'anhlvn@gmail.com', N'Nam', N'12623112', '01-01-2000'),
-(N'CUS003', N'Tấn', N'Phan Quang', N'0442917615', N'TPHCM', N'tanpq@gmail.com', N'Nam', N'98064184', '01-02-2000')
+--delete custommer
+insert into custommer(idCustommer, firstName, lastName, phoneNumber, custommerAddress, custommerEmail, sex, citizenIdentification, dateOfBirth,nameAccount,accumulatedPoints,custommerNote) values
+(N'CUS002', N'Thắng', N'Nguyễn Hoàng', N'0463643789', N'TPHCM', N'thangnh@gmail.com', N'Nam', N'34719451', '01-01-2000',N'VIP',0,N''),
+(N'CUS003', N'Anh', N'Lê Võ Ngọc', N'0442913789', N'TPHCM', N'anhlvn@gmail.com', N'Nam', N'12623112', '01-01-2000',N'Thân thiết',0,N''),
+(N'CUS004', N'Tấn', N'Phan Quang', N'0442917615', N'TPHCM', N'tanpq@gmail.com', N'Nam', N'98064184', '01-02-2000',N'Thân thiết',0,N''),
+(N'CUS001', N'Khách vãng lai', N'', N'0442917615', N'TPHCM', N'tanpq@gmail.com', N'Nam', N'98064184', '01-02-2000',N'Khách vãng lai',0,N'')
 
-insert into employee(idEmployee, firstName, lastName, phoneNumber, employeeType, employeeAddress, employeeEmail, sex, citizenIdentification, dateOfBirth, nameAccount) values
-(N'EMP001', N'Nhân', N'Thái Hoàng', N'04819350', N'staff', N'nhanth@gmail.com', N'TPHCM', N'Nam', N'45612847', '12-01-2000', N'staff1'),
-(N'EMP002', N'Chi', N'Nguyễn Yến', N'07364016', N'staff', N'chiny@gmail.com', N'TPHCM', N'Nu', N'46571834', '01-04-2000', N'staff2'),
+
+insert into employee(idEmployee, firstName, lastName, phoneNumber, employeeType, employeeEmail, employeeAddress, sex, citizenIdentification, dateOfBirth, nameAccount) values
+(N'EMP001', N'Nhân', N'Thái Hoàng', N'04819350', N'staff', N'thaihoangnhantk17lqd@gmail.com', N'TPHCM', N'Nam', N'45612847', '12-01-2000', N'nhanht'),
+(N'EMP002', N'Chi', N'Nguyễn Yến', N'07364016', N'staff', N'chiny@gmail.com', N'TPHCM', N'Nu', N'46571834', '01-04-2000', N'chiny'),
 (N'EMP003', N'Anh', N'Phùng Minh', N'03678123', N'admin', N'anhpm@gmail.com', N'TPHCM', N'Nam', N'57385963', '14-03-2000', N'admin'),
-(N'EMP004', N'Ân', N'Huỳnh Ngọc Thiên', N'04567219', N'staff', N'anhnt@gmail.com', N'TPHCM', N'Nam', N'19087652', '15-01-2000', N'staff3')
-
-insert into sellBill(billCodeSell, idEmployee, number, sellDate, deliveryDate, licenseDate, idCustomer, idItem, unitPrice, billStatus, discount, tag, note, deliveryMethod, paymentMethod) values
-(N'EP001', N'EMP001', 3, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK118', 31000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP001', N'EMP001', 2, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK117', 25000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP001', N'EMP001', 6, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK116', 61000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP001', N'EMP001', 1, '11-11-2021 11:20:37', '11-11-2021 11:20:37', '11-11-2021 11:20:37', N'CUS001', N'BOOK115', 42000, N'Đã giao hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP002', N'EMP001', 4, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK123', 111000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP002', N'EMP001', 7, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK111', 36000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP002', N'EMP001', 2, '11-11-2021 16:02:42', '11-11-2021 16:02:42', '11-11-2021 16:02:42', N'CUS001', N'BOOK112', 12000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP003', N'EMP002', 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK141', 27000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP003', N'EMP002', 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK110', 15000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP003', N'EMP002', 7, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK112', 34000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP003', N'EMP002', 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK114', 12000, N'Đã trả hàng',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP004', N'EMP002', 2, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK138', 22000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP004', N'EMP002', 1, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK109', 21000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP004', N'EMP002', 6, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK118', 17000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP004', N'EMP002', 3, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK128', 15000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD'),
-(N'EP004', N'EMP002', 4, '11-11-2021 8:06:06', '11-11-2021 8:06:06', '11-11-2021 8:06:06', N'CUS002', N'BOOK119', 10000, N'Đã thanh toán',0,N'',N'',N'Giao hàng tiết kiệm', N'Thanh toán COD')
-
-
-
-INSERT INTO [dbo].[profitSummary] ([billCode], [billType], [rootPrice], [payPrice], [exchangePrice], [idCustomer], [idEmployee], [day], [nameCustomer], [nameEmployee], [typeGroup], [payment], [nameBill], [note], [budget]) 
-VALUES 
-(N'EP001', N'import', 551000, 551000, 0, N'CUS001', N'EMP001', N'01-01-2000 00:00:00', N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 551000),
-(N'EP001', N'export', 720000, 720000, 0, N'CUS001', N'EMP001', N'01-01-2000 00:00:00', N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 10000),
-(N'EP002', N'import', 361000, 361000, 0, N'CUS002', N'EMP002', N'13-11-2021 00:00:00', N'Lê Võ Ngọc Anh', N'Nguyễn Yến Chi', NULL, N'Tiền Mặt', N'Bán Hàng', NULL, 10300),
-(N'EP002', N'export', 253000, 253000, 0, N'CUS002', N'EMP002', N'20-10-2021 00:00:00', N'Lê Võ Ngọc Anh', N'Nguyễn Yến Chi',NULL, N'Thẻ', N'Bán Hàng ', NULL, 8300)
-
-
-
-
-INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
-(N'IP001', N'EMP002', N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Tiền mặt')
-INSERT INTO [dbo].[importBill] ([billCodeImport], [idEmployee], [nameEmployee], [number], [importDate], [idItem], [unitPrice], [note], [idsupplier], [paymentMethod]) VALUES 
-(N'IP002', N'EMP002', N'Nguyen Yen Chi', 3000, N'01-01-2000 00:00:00', N'BOOK079', 300, N'không có note', N'NCC001', N'Thẻ')
-
-
-
+(N'EMP004', N'Ân', N'Huỳnh Ngọc Thiên', N'04567219', N'staff', N'anhnt@gmail.com', N'TPHCM', N'Nam', N'19087652', '15-01-2000', N'anhnt')
 
 DECLARE @MyDateTime datetime = GETDATE();
 insert into mail values 
 (N'Khuyến mãi', @MyDateTime, N'Thư mời tham gia ưu đãi', N'Kính mời tham gia ưu đãi',N'Sử dụng để gửi thông báo KM', N'ON',N'Nhà sách XXX',N'2021-11-25',N'EVERYWEEK'),
 (N'Hội họp', @MyDateTime, N'Thư mời tham dự cuộc họp', N'Kính mời tham gidựa cuộc họp',N'Sử dụng để gửi thông báo họp nhân viên', N'ON',N'Nhà sách XXX',N'2021-11-25',N'EVERYMONTH'),
 (N'Sinh nhật', @MyDateTime, N'Thư mời tham gia ưu đãi', N'Kính mời tham gia ưu đãi sinh nhật',N'Sử dụng để gửi thông báo KM', N'ON',N'Nhà sách XXX',null,N'EVERYYEAR')
-
-
 DECLARE @new datetime = GETDATE();
 insert into sentmail 
 values
 (2,N'thaihoangnhantk17lqd@gmail.com',N'Đã gửi', @new, N'Nhà sách XXX', N'Thư mời tham dự cuộc họp',N'Hội họp')
-
-
+select * from mail
+select * from sentmail
 
 insert into supplier values
-(N'NCC001', 'SUP1', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC1@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc1.com', N'33433', N'sku1'),
-(N'NCC002', 'SUP2', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC2@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc2.com', N'33433', N'sku2'),
-(N'NCC003', 'SUP3', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC3@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc3.com', N'33433', N'sku3'),
-(N'NCC004', 'SUP4', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC4@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc4.com', N'33433', N'sku4'),
-(N'NCC005', 'SUP5', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC5@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc5.com', N'33433', N'sku5'),
-(N'NCC006', 'SUP6', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC6@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc6.com', N'33433', N'sku6'),
-(N'NCC007', 'SUP7', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC7@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc7.com', N'33433', N'sku7'),
-(N'NCC008', 'SUP8', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC8@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc8.com', N'33433', N'sku8'),
-(N'NCC009', 'SUP9', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC9@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc9.com', N'33433', N'sku9'),
-(N'NCC010', 'SUP10', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC10@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc10.com', N'33433', N'sku10'),
-(N'NCC011', 'SUP11', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC11@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc11.com', N'33433', N'sku11'),
-(N'NCC012', 'SUP12', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC12@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc12.com', N'33433', N'sku12'),
-(N'NCC013', 'SUP13', '18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC13@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc13.com', N'33433', N'sku13')
+(N'NCC001', 'SUP1', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC1@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc1.com', N'33433', N'sku1'),
+(N'NCC002', 'SUP2', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC2@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc2.com', N'33433', N'sku2'),
+(N'NCC003', 'SUP3', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC3@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc3.com', N'33433', N'sku3'),
+(N'NCC004', 'SUP4', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC4@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc4.com', N'33433', N'sku4'),
+(N'NCC005', 'SUP5', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC5@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc5.com', N'33433', N'sku5'),
+(N'NCC006', 'SUP6', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC6@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc6.com', N'33433', N'sku6'),
+(N'NCC007', 'SUP7', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC7@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc7.com', N'33433', N'sku7'),
+(N'NCC008', 'SUP8', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC8@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc8.com', N'33433', N'sku8'),
+(N'NCC009', 'SUP9', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC9@GMAIL.COM', '0123456', N'Đang hợp tác', N'ncc9.com', N'33433', N'sku9'),
+(N'NCC010', 'SUP10', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC10@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc10.com', N'33433', N'sku10'),
+(N'NCC011', 'SUP11', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC11@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc11.com', N'33433', N'sku11'),
+(N'NCC012', 'SUP12', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC12@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc12.com', N'33433', N'sku12'),
+(N'NCC013', 'SUP13', N'18 An Dương Vương, xã Phước Thuận, huyện Phước Thuận, tỉnh Tuy Phước', 'NCC13@GMAIL.COM', '0123456', N'Ngừng hợp tác', N'ncc13.com', N'33433', N'sku13')
+
+insert into account values
+(N'nhanht',N'1',N'staff'),
+(N'chiny',N'1',N'staff'),
+(N'admin',N'admin',N'admin'),
+(N'anhnt',N'1',N'staff')
+
+insert into bill values
+(N'EP001',N'export'),
+(N'EP002',N'export'),
+(N'IP001',N'import'),
+(N'IP002',N'import')
+
+
+--DECLARE @MyDateTime datetime = GETDATE();
+insert into sellBill values
+(N'EP001',N'EMP001',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK001',275000,2,0,N'', N'', N'Giao hàng', N'Thẻ'),
+(N'EP001',N'EMP001',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK003',159500,4,0,N'', N'', N'Giao hàng', N'Thẻ'),
+(N'EP001',N'EMP001',N'CUS002',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK004',132000,3,0,N'', N'', N'Giao hàng', N'Thẻ'),
+(N'EP002',N'EMP003',N'CUS003',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK001',275000,2,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt'),
+(N'EP002',N'EMP003',N'CUS003',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK003',159500,4,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt'),
+(N'EP002',N'EMP003',N'CUS003',N'Đã giao hàng', @MyDateTime,@MyDateTime,@MyDateTime,N'BOOK004',132000,3,0,N'', N'', N'Tại cửa hàng', N'Tiền mặt')
+
+--DECLARE @MyDateTime datetime = GETDATE();
+insert into importBill values
+(N'IP001', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK005', 68000, N'', N'Thẻ', N'NCC002'),
+(N'IP001', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK006', 149000, N'', N'Thẻ', N'NCC002'),
+(N'IP001', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK007', 299000, N'', N'Thẻ', N'NCC002'),
+(N'IP001', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK008', 209000, N'', N'Thẻ', N'NCC002'),
+(N'IP002', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK005', 68000, N'', N'Thẻ', N'NCC002'),
+(N'IP002', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK006', 149000, N'', N'Thẻ', N'NCC002'),
+(N'IP002', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK007', 299000, N'', N'Thẻ', N'NCC002'),
+(N'IP002', N'EMP002', N'Nguyễn Yến Chi', 50, @MyDateTime, N'BOOK009', 98000, N'', N'Thẻ', N'NCC002')
+
+--DELETE profitSummary
+--DECLARE @MyDateTime datetime = GETDATE();
+insert into profitSummary values
+(N'EP001',N'export',1584000,2000000,416000, N'CUS002', N'EMP001', @MyDateTime, N'Nguyễn Hoàng Thắng', N'Thái Hoàng Nhân', N'Khách hàng', N'Thẻ', N'Bán hàng', N'', 101584000),
+(N'EP002',N'export',1584000,1584000,0, N'CUS003', N'EMP003', @MyDateTime, N'Lê Võ Ngọc Anh', N'Phùng Minh Anh', N'Khách hàng', N'Tiền mặt', N'Bán hàng', N'', 103168000),
+(N'IP001',N'import',36250000,36250000,0, N'NCC002', N'EMP002', @MyDateTime, N'SUP2', N'Nguyễn Yến Chi', N'Nhà cung cấp', N'Tiền mặt', N'Nhập hàng', N'', 66918000),
+(N'IP002',N'import',30700000,30700000,0, N'NCC002', N'EMP002', @MyDateTime, N'SUP2', N'Nguyễn Yến Chi', N'Nhà cung cấp', N'Tiền mặt', N'Nhập hàng', N'', 36218000)
+
+update item set quantity=quantity-2 where idItem=N'BOOK001'
+update item set quantity=quantity-4 where idItem=N'BOOK003'
+update item set quantity=quantity-3 where idItem=N'BOOK004'
+update item set quantity=quantity-2 where idItem=N'BOOK001'
+update item set quantity=quantity-4 where idItem=N'BOOK003'
+update item set quantity=quantity-3 where idItem=N'BOOK004'
+update item set quantity=quantity+50 where idItem=N'BOOK005'
+update item set quantity=quantity+50 where idItem=N'BOOK006'
+update item set quantity=quantity+50 where idItem=N'BOOK007'
+update item set quantity=quantity+50 where idItem=N'BOOK008'
+update item set quantity=quantity+50 where idItem=N'BOOK005'
+update item set quantity=quantity+50 where idItem=N'BOOK006'
+update item set quantity=quantity+50 where idItem=N'BOOK007'
+update item set quantity=quantity+50 where idItem=N'BOOK009'
+
+
+update custommer set accumulatedPoints=accumulatedPoints+1584000 where idCustommer=N'CUS002'
+update custommer set accumulatedPoints=accumulatedPoints+1584000 where idCustommer=N'CUS003'
+
+--DECLARE @MyDateTime datetime = GETDATE();
+DECLARE @NewLineChar AS CHAR(2) = CHAR(13) + CHAR(10)
+declare @content nvarchar(200) = N'Thời gian Làm Việc:'+@NewLineChar+
+N'- Ca 1: 7h30 - 11h30'+@NewLineChar+
+N'- Ca 2: 1h30 - 5h30'+@NewLineChar+
+N'Nhân viên phải đi làm đúng giờ. Nếu vi phạm:'+@NewLineChar+
+N'- Lần 1 : Nhắc nhở'+@NewLineChar+
+N'- Lần 2 : Trừ lương theo số phút đi làm trễ'+@NewLineChar+
+N'- Nhiều lần: Bị buộc thôi việc';
+
+insert into setting values
+(N'SET001', N'Giờ làm việc', N'Áp dụng', @content,@MyDateTime,N'EMP003')
+
+
+--DECLARE @MyDateTime datetime = GETDATE()
+insert into checkItems values
+(N'CK001', N'EMP001', @MyDateTime,N'BOOK001',N'',96,96),
+(N'CK001', N'EMP001', @MyDateTime,N'BOOK002',N'',100,100),
+(N'CK001', N'EMP001', @MyDateTime,N'BOOK003',N'',92,92),
+(N'CK001', N'EMP001', @MyDateTime,N'BOOK002',N'',94,94)
+
+--delete khachtrahang
+SELECT * FROM khachtrahang
+insert into khachtrahang values
+(N'IP112202119510',N'EP002',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK001',275000,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển'),
+(N'IP112202119510',N'EP002',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK003',159500,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển'),
+(N'IP112202119510',N'EP002',N'Phùng Minh Anh',1,N'2021-12-01 19:05:10.670',N'CUS002',N'BOOK004',132000,0,N'lỗi kĩ thuật',N'Đã trả hàng',N'Nguyễn Hoàng Thắng',N'quyển')
+update item set quantity=quantity+1 where idItem=N'BOOK001'
+update item set quantity=quantity+1 where idItem=N'BOOK003'
+update item set quantity=quantity+1 where idItem=N'BOOK004'
+
+--DECLARE @MyDateTime datetime = GETDATE()
+insert into profitSummary values
+(N'IP112202119510',N'import',566500,566500,0, N'CUS002', N'EMP003', @MyDateTime, N'Nguyễn Hoàng Thắng', N'Phùng Minh Anh', N'Khách hàng', N'Tiền mặt', N'Trả hàng', N'', 36218000-566500)
+
+insert into bill values
+(N'IP112202119510', N'import')
+
+select * from employee
+--select quantity from ITEM WHERE idItem=N'BOOK002'
+--select quantity from ITEM WHERE idItem=N'BOOK003'
+--select quantity from ITEM WHERE idItem=N'BOOK004'
+
+SELECT * FROM employee WHERE idEmployee=N'EMP003'
+--SELECT * FROM custommer WHERE idCustommer=N'CUS001'
+SELECT * FROM custommer WHERE idCustommer=N'CUS002'
+
+
+
+
+
+
+
+
+
+
+
+select * from sellBill
+select * from khachtrahang
+select * from profitSummary
+select * from employee
+select * from bill
+
+
+--alter table bookInformation add foreign key (idBook) references item(idItem)
+
+--alter table studytoolsInformation add foreign key (idStudyTool) references item(idItem)
+
+--alter table importBill add foreign key (billCodeImport) references bill(billCode)
+--alter table importBill add foreign key (idItem) references item(idItem)
+
+--alter table sellBill add foreign key (billCodeSell) references bill(billCode)
+--alter table sellBill add foreign key (idItem) references item(idItem)
+
+--alter table profitSummary add foreign key (billCode) references bill(billCode)
+--alter table profitSummary add foreign key (idCustomer) references custommer(idCustommer) 
+--alter table profitSummary add foreign key (idEmployee) references employee(idEmployee)
+
+--alter table itemSummary add foreign key (billCode) references bill(billCode)
+--alter table itemSummary add foreign key (idCustomer) references custommer(idCustommer) 
+--alter table itemSummary add foreign key (idEmployee) references employee(idEmployee)
+--alter table itemSummary add foreign key (idItem) references item(idItem)
+
+--alter table item add foreign key(supplierItem) references supplier(idSupplier)
+
+--alter table checkItems add foreign key(idEmployee) references employee(idEmployee)
+--alter table checkItems add foreign key(idItem) references item(idItem)

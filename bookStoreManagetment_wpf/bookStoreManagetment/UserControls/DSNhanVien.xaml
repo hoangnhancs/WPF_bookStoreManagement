@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:bookStoreManagetment.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             TextElement.FontWeight="Regular"
+             TextElement.FontWeight="Medium"
              TextElement.FontSize="13"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="Transparent"
+             Foreground="#FF495B67"
              FontFamily="{DynamicResource MaterialDesignFont}"
              DataContext="{StaticResource DSNhanVienVM}"
              d:DesignHeight="575" d:DesignWidth="1024">
@@ -400,7 +401,7 @@
                                          Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          x:Name="textboxSearch"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
-                                         materialDesign:HintAssist.Hint="Nhập Tên hoặc Mã phiếu chi"
+                                         materialDesign:HintAssist.Hint="Nhập Tên hoặc Mã nhân viên"
                                      VerticalAlignment="Center"
                                      VerticalContentAlignment="Center"
                                     BorderThickness="0">

@@ -10,110 +10,13 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace bookStoreManagetment.ViewModel
 {
     public class ImportGoodsViewModel : BaseViewModel
     {
-        #region 
-        //Page Property
-        private ObservableCollection<Inventory> _DivInventoryList;
-        public ObservableCollection<Inventory> DivInventoryList { get => _DivInventoryList; set { _DivInventoryList = value; OnPropertyChanged(); } }
 
-        private Visibility _3cham1Visible;
-        public Visibility Bacham1Visible
-        {
-            get { return _3cham1Visible; }
-            set
-            {
-                _3cham1Visible = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility _3cham2Visible;
-        public Visibility Bacham2Visible
-        {
-            get { return _3cham2Visible; }
-            set
-            {
-                _3cham2Visible = value;
-                OnPropertyChanged();
-            }
-        }
-        public int maxpage { get; set; }
-        public int max_pack_page { get; set; }
-        public int pack_page { get; set; }
-        public int currentpage = 1;
-        private string _numRowEachPageTextBox;
-        public string NumRowEachPageTextBox
-        {
-            get { return _numRowEachPageTextBox; }
-            set
-            {
-                _numRowEachPageTextBox = value;
-                OnPropertyChanged();
-            }
-        }
-        public int NumRowEachPage;
-        private page btnPage1;
-        public page BtnPage1
-        {
-            get { return btnPage1; }
-            set
-            {
-                btnPage1 = value;
-                OnPropertyChanged();
-            }
-        }
-        private page btnPage2;
-        public page BtnPage2
-        {
-            get { return btnPage2; }
-            set
-            {
-                btnPage2 = value;
-                OnPropertyChanged();
-            }
-        }
-        private page btnPage3;
-        public page BtnPage3
-        {
-            get { return btnPage3; }
-            set
-            {
-                btnPage3 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _leftVisi;
-        public bool LeftVisi
-        {
-            get { return _leftVisi; }
-            set
-            {
-                _leftVisi = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _rightVisi;
-        public bool RightVisi
-        {
-            get { return _rightVisi; }
-            set
-            {
-                _rightVisi = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICommand tbNumRowEachPageCommand { get; set; }
-        public ICommand btnNextClickCommand { get; set; }
-        public ICommand btnendPageCommand { get; set; }
-        public ICommand btnfirstPageCommand { get; set; }
-        public ICommand btnPrevPageCommand { get; set; }
-        public ICommand btnLoc2Command { get; set; }
-        #endregion
 
 
 
@@ -328,11 +231,13 @@ namespace bookStoreManagetment.ViewModel
         private string _query;
         public string Query { get => _query; set { _query = value; OnPropertyChanged(); } }
 
+        private string _selectedsupplier;
+        public string SelectedSupplier { get => _selectedsupplier; set { _selectedsupplier = value; OnPropertyChanged(); } }
+
         public string backupbillcode;
 
         public ImportGoodsViewModel()
         {
-
             var totalprice = Model.DataProvider.Ins.DB.importBills.GroupBy(p => new { p.billCodeImport, p.importDate, p.nameEmployee, p.idsupplier })
                                                             .Select(pa => new {
                                                                 billcode = pa.Key.billCodeImport,
@@ -367,18 +272,12 @@ namespace bookStoreManagetment.ViewModel
             TotalAllProducts = 0;
 
             // Load bộ lọc
-            displayBeginDay = "";
-            displayEndDay = "";
+            displayBeginDay = null;
+            displayEndDay = null;
             IsFilter = Visibility.Collapsed;
             var bc = new BrushConverter();
-            BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-            ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+            BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
 
-            NumRowEachPageTextBox = "5";
-            NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-            currentpage = 1;
-            pack_page = 1;
-            settingButtonNextPrev();
 
             // đóng filter grid
             CloseFilterCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -403,11 +302,6 @@ namespace bookStoreManagetment.ViewModel
             }, (p) =>
             {
                 Filter();
-                BackgroudFilter = (Brush)bc.ConvertFromString("#FF008000");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#DDFFFFFF");
-                currentpage = 1;
-                pack_page = 1;
-                settingButtonNextPrev();
             });
 
             DeleteFilterCommand = new RelayCommand<object>((p) => {
@@ -420,10 +314,9 @@ namespace bookStoreManagetment.ViewModel
                 displayEndDay = null;
                 DisplayNameSupplier = "";
                 DisplayNameSupplier = null;
-                InventoryImportGoods = new ObservableCollection<InventoryGoods>( BackupInventoryImportGoods );
+                InventoryImportGoods = new ObservableCollection<InventoryGoods>(BackupInventoryImportGoods);
 
-                BackgroudFilter = (Brush)bc.ConvertFromString("#00FFFFFF");
-                ForegroudFilter = (Brush)bc.ConvertFromString("#FF000000");
+                BackgroudFilter = (Brush)bc.ConvertFromString("#d78a1e");
             });
 
             // Thêm sản phẩm
@@ -436,6 +329,28 @@ namespace bookStoreManagetment.ViewModel
                 newCell.Items = item;
                 newCell.IsSelected = false;
 
+                ImageSource photo = null;
+                try
+                {
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + item.imageItem));
+
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + item.nameItem + ".jpg"));
+
+                    }
+                    catch (Exception e)
+                    {
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+
+                    }
+
+                }
+                newCell.Photo = photo;
+
                 backupAllItems.Add(newCell);
             }
 
@@ -443,15 +358,8 @@ namespace bookStoreManagetment.ViewModel
 
             //Chỉnh sửa
 
-            backupEditAllItems = new List<CellItems>();
-            foreach (var item in listItems)
-            {
-                CellItems newCell = new CellItems();
-                newCell.Items = item;
-                newCell.IsSelected = false;
-
-                backupEditAllItems.Add(newCell);
-            }
+            backupEditAllItems = new List<CellItems>(backupAllItems);
+            
 
             EditShowItems = new ObservableCollection<CellItems>(backupEditAllItems);
 
@@ -478,7 +386,7 @@ namespace bookStoreManagetment.ViewModel
                 if (p != null)
                 {
 
-                    if ( Query == "" )
+                    if (Query == "")
                     {
                         InventoryImportGoods = new ObservableCollection<InventoryGoods>(BackupInventoryImportGoods);
                     }
@@ -495,9 +403,6 @@ namespace bookStoreManagetment.ViewModel
                             }
                         }
                     }
-                    currentpage = 1;
-                    pack_page = 1;
-                    settingButtonNextPrev();
                 }
             });
 
@@ -963,6 +868,8 @@ namespace bookStoreManagetment.ViewModel
                     var select = (p as InventoryGoods);
                     backupbillcode = select.CodeBill;
 
+                    SelectedSupplier = select.NameSupplier;
+
                     EditNameSupplier = select.NameSupplier;
                     var cell = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == select.NameSupplier).FirstOrDefault();
                     EditEmailPhonenumberSupplier = cell.phoneNumberSupplier + " / " + cell.emailSupplier;
@@ -1063,7 +970,13 @@ namespace bookStoreManagetment.ViewModel
 
             });
 
-            ClickAddFormImportGoodsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ClickAddFormImportGoodsCommand = new RelayCommand<object>((p) => {
+                if (NameSupplier != null && EmailPhonenumberSupplier != null && AddressSupplier != null && InventoryList.Count() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }, (p) =>
             {
                 if (p != null)
                 {
@@ -1072,6 +985,13 @@ namespace bookStoreManagetment.ViewModel
                     int totalall = 0;
 
                     DateTime Daynow = DateTime.Now;
+
+                    int bud = 0;
+                    var ytyy = DataProvider.Ins.DB.profitSummaries.Where(pa => pa.billType == "import").Select(pa => pa.budget);
+                    foreach (int data in ytyy)
+                    {
+                        bud = data;
+                    }
 
                     bill Bill = new bill()
                     {
@@ -1105,7 +1025,6 @@ namespace bookStoreManagetment.ViewModel
                         cell.quantity = cell.quantity + data.Count;
 
                     }
-
                     profitSummary profit = new profitSummary()
                     {
                         billCode = c < 10 ? "IP00" + c : c < 100 ? "IP0" + c : "IP" + c,
@@ -1122,7 +1041,7 @@ namespace bookStoreManagetment.ViewModel
                         payment = "Tiền mặt",
                         nameBill = "Nhập hàng",
                         note = "",
-                        budget = DataProvider.Ins.DB.profitSummaries.Where(billtype => billtype.billType == "import").Last().budget - TotalAllProducts
+                        budget = bud - TotalAllProducts
                     };
 
                     DataProvider.Ins.DB.profitSummaries.Add(profit);
@@ -1220,236 +1139,9 @@ namespace bookStoreManagetment.ViewModel
 
             });
 
-            tbNumRowEachPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = 1;
-                //LoadData();
-                Filter();
-                settingButtonNextPrev();
-            });
-            btnNextClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (currentpage < maxpage)
-                {
-                    currentpage += 1;
-                    if (currentpage % 3 == 0)
-                        pack_page = currentpage / 3;
-                    else
-                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
-                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-                }
-                settingButtonNextPrev();
-            });
-            btnendPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = maxpage;
-                pack_page = maxpage;
-                settingButtonNextPrev();
-            });
-            btnfirstPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                currentpage = 1;
-                pack_page = 1;
-                settingButtonNextPrev();
-            });
-            btnPrevPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                if (currentpage > 1)
-                {
-                    currentpage -= 1;
-                    if (currentpage % 3 == 0)
-                        pack_page = currentpage / 3;
-                    else
-                        pack_page = Convert.ToInt32(currentpage / 3) + 1;
-                    //MessageBox.Show("Max page is" + maxpage.ToString()+"pack_page is"+pack_page.ToString());
-                }
-                settingButtonNextPrev();
-            });
-            btnLoc2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-
-                Filter();
-                settingButtonNextPrev();
-            });
-
         }
 
-        void settingButtonNextPrev()
-        {
-            int ilc = InventoryList.Count();
-            BtnPage1 = new page();
-            BtnPage2 = new page();
-            BtnPage3 = new page();
-
-            //currentpage = 1;
-
-            if (NumRowEachPageTextBox != "")
-            {
-                //init max page
-                NumRowEachPage = Convert.ToInt32(NumRowEachPageTextBox);
-                if (ilc % NumRowEachPage == 0)
-                    maxpage = ilc / NumRowEachPage;
-                else
-                    maxpage = Convert.ToInt32((ilc / NumRowEachPage)) + 1;
-                if (maxpage % 3 == 0)
-                    max_pack_page = maxpage / 3;
-                else
-                    max_pack_page = Convert.ToInt32(maxpage / 3) + 1;
-
-                //Init max page
-                DivInventoryList = new ObservableCollection<Inventory>();
-                DivInventoryList.Clear();
-                int startPos = (currentpage - 1) * NumRowEachPage;
-                int endPos = currentpage * NumRowEachPage - 1;
-                if (endPos >= ilc)
-                    endPos = ilc - 1;
-
-                int flag = 0;
-                foreach (var item in InventoryList)
-                {
-                    if (flag >= startPos && flag <= endPos)
-                        DivInventoryList.Add(item);
-                    flag++;
-                }
-                //MessageBox.Show(DivInventoryList.Count.ToString());
-
-                //Button "..." visible
-
-                //MessageBox.Show("max page is" + maxpage.ToString()+"current page is"+currentpage.ToString());
-                //MessageBox.Show("Max pack page is" + max_pack_page.ToString() + "pack_page is" + pack_page.ToString());
-                if (max_pack_page == 1)
-                {
-                    Bacham1Visible = Visibility.Collapsed;
-                    Bacham2Visible = Visibility.Collapsed;
-                }
-                else
-                {
-                    if (pack_page == max_pack_page)
-                    {
-                        Bacham1Visible = Visibility.Visible;
-                        Bacham2Visible = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        if (pack_page == 1)
-                        {
-                            Bacham1Visible = Visibility.Collapsed;
-                            Bacham2Visible = Visibility.Visible;
-                        }
-                        else
-                        {
-                            Bacham1Visible = Visibility.Visible;
-                            Bacham2Visible = Visibility.Visible;
-                        }
-                    }
-                }
-
-                //Button "..." visible
-
-                if (currentpage == 1 && maxpage == 1)
-                {
-                    LeftVisi = false;
-                    RightVisi = true;
-                }
-                else
-                {
-                    if (currentpage == maxpage)
-                    {
-                        LeftVisi = true;
-                        RightVisi = false;
-                    }
-                    else
-                    {
-                        if (currentpage == 1)
-                        {
-                            LeftVisi = false;
-                            RightVisi = true;
-                        }
-                        else
-                        {
-                            LeftVisi = true;
-                            RightVisi = true;
-                        }
-                    }
-                }
-
-                if (maxpage >= 3)
-                {
-                    BtnPage1.PageVisi = Visibility.Visible;
-                    BtnPage2.PageVisi = Visibility.Visible;
-                    BtnPage3.PageVisi = Visibility.Visible;
-
-                    switch (currentpage % 3)
-                    {
-                        case 1:
-                            BtnPage1.BackGround = Brushes.Blue;
-                            BtnPage2.BackGround = Brushes.White;
-                            BtnPage3.BackGround = Brushes.White;
-                            BtnPage1.PageVal = currentpage;
-                            BtnPage2.PageVal = currentpage + 1;
-                            BtnPage3.PageVal = currentpage + 2;
-                            break;
-                        case 2:
-                            BtnPage1.BackGround = Brushes.White;
-                            BtnPage2.BackGround = Brushes.Blue;
-                            BtnPage3.BackGround = Brushes.White;
-                            BtnPage1.PageVal = currentpage - 1;
-                            BtnPage2.PageVal = currentpage;
-                            BtnPage3.PageVal = currentpage + 1;
-                            break;
-                        case 0:
-                            BtnPage1.BackGround = Brushes.White;
-                            BtnPage2.BackGround = Brushes.White;
-                            BtnPage3.BackGround = Brushes.Blue;
-                            BtnPage1.PageVal = currentpage - 2;
-                            BtnPage2.PageVal = currentpage - 1;
-                            BtnPage3.PageVal = currentpage;
-                            break;
-                    }
-                }
-                else
-                {
-                    if (maxpage == 2)
-                    {
-                        BtnPage1.PageVisi = Visibility.Visible;
-                        BtnPage2.PageVisi = Visibility.Visible;
-                        BtnPage3.PageVisi = Visibility.Collapsed;
-                        switch (currentpage)
-                        {
-                            case 1:
-                                BtnPage1.BackGround = Brushes.Blue;
-                                BtnPage2.BackGround = Brushes.White;
-                                BtnPage1.PageVal = currentpage;
-                                BtnPage2.PageVal = currentpage + 1;
-                                break;
-                            case 2:
-                                BtnPage1.BackGround = Brushes.White;
-                                BtnPage2.BackGround = Brushes.Blue;
-                                BtnPage1.PageVal = currentpage - 1;
-                                BtnPage2.PageVal = currentpage;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        BtnPage1.PageVisi = Visibility.Visible;
-                        BtnPage2.PageVisi = Visibility.Collapsed;
-                        BtnPage3.PageVisi = Visibility.Collapsed;
-                        BtnPage1.PageVal = (currentpage - 1) * NumRowEachPage + 1; ;
-                        BtnPage1.BackGround = Brushes.Blue;
-                        BtnPage1.PageVal = currentpage;
-                    }
-                }
-                if (pack_page == max_pack_page)
-                {
-                    if ((pack_page * 3) > maxpage)
-                        BtnPage3.PageVisi = Visibility.Collapsed;
-                    if ((pack_page * 3 - 1) > maxpage)
-                        BtnPage2.PageVisi = Visibility.Collapsed;
-                }
-
-            }
-        }
+        
 
         //filter
         private void Filter()
@@ -1457,7 +1149,7 @@ namespace bookStoreManagetment.ViewModel
             List<InventoryGoods> newListExportBill = BackupInventoryImportGoods;
             if (DisplayNameSupplier != null && DisplayNameSupplier != "")
             {
-                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.typeGroup == DisplayNameSupplier).ToList();
+                newListExportBill = newListExportBill.Where(x => x.NameSupplier == DisplayNameSupplier).ToList();
             }
 
             if (displayBeginDay != null)
@@ -1481,6 +1173,7 @@ namespace bookStoreManagetment.ViewModel
         {
             public item Items { get; set; }
             public bool IsSelected { get; set; }
+            public ImageSource Photo { get; set; }
         }
 
         public class Inventory

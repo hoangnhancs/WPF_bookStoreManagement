@@ -237,52 +237,56 @@ namespace bookStoreManagetment.ViewModel
         private void LoadData()
         {
             // load quỹ
-            var sheets = DataProvider.Ins.DB.profitSummaries.ToList();
             Summary newReport = new Summary();
-            if (sheets[0].billType.ToLower() == "import")
+            var sheets = DataProvider.Ins.DB.profitSummaries.ToList();
+            if (sheets.Count > 0)
             {
-                newReport.OldBudget = (int)(sheets[0].budget + sheets[0].rootPrice);
-            }
-            else
-            {
-                newReport.OldBudget = (int)(sheets[0].budget - sheets[0].rootPrice);
-            }
-            newReport.Budget = (int)sheets[sheets.Count - 1].budget;
-            newReport.Earned = 0;
-            newReport.Paid = 0;
-
-            // load tất cả danh sách phiếu
-            ListSheet = new ObservableCollection<Sheet>();
-            foreach(var sheet in sheets)
-            {
-                Sheet newSheet = new Sheet();
-                newSheet.ProfitSummary = sheet;
-                newSheet.MaPhieu = sheet.billCode;
-                newSheet.NgayGhiNhan = sheet.day;
-                newSheet.DoiTuong = sheet.typeGroup;
-                newSheet.HinhThucThanhToan = sheet.payment;
-                newSheet.TenPhieu = sheet.nameBill;
-                newSheet.MaChungTu = "-";
-
-                if (sheet.billType.ToLower() == "export")
+                if (sheets[0].billType.ToLower() == "import")
                 {
-                    newSheet.LoaiPhieu = "Thu";
-                    newReport.Earned += sheet.rootPrice;
-                    newSheet.ImportPrice = sheet.rootPrice.ToString();
-                    newSheet.ExportPrice = "-";
+                    newReport.OldBudget = (int)(sheets[0].budget + sheets[0].rootPrice);
                 }
                 else
                 {
-                    newSheet.LoaiPhieu = "Chi";
-                    newReport.Paid += sheet.rootPrice;
-                    newSheet.ExportPrice = sheet.rootPrice.ToString();
-                    newSheet.ImportPrice = "-";
+                    newReport.OldBudget = (int)(sheets[0].budget - sheets[0].rootPrice);
                 }
+                newReport.Budget = (int)sheets[sheets.Count - 1].budget;
+                newReport.Earned = 0;
+                newReport.Paid = 0;
 
-                ListSheet.Add(newSheet);
+                // load tất cả danh sách phiếu
+                ListSheet = new ObservableCollection<Sheet>();
+                foreach (var sheet in sheets)
+                {
+                    Sheet newSheet = new Sheet();
+                    newSheet.ProfitSummary = sheet;
+                    newSheet.MaPhieu = sheet.billCode;
+                    newSheet.NgayGhiNhan = sheet.day;
+                    newSheet.DoiTuong = sheet.typeGroup;
+                    newSheet.HinhThucThanhToan = sheet.payment;
+                    newSheet.TenPhieu = sheet.nameBill;
+                    newSheet.MaChungTu = "-";
+
+                    if (sheet.billType.ToLower() == "export")
+                    {
+                        newSheet.LoaiPhieu = "Thu";
+                        newReport.Earned += sheet.rootPrice;
+                        newSheet.ImportPrice = sheet.rootPrice.ToString();
+                        newSheet.ExportPrice = "-";
+                    }
+                    else
+                    {
+                        newSheet.LoaiPhieu = "Chi";
+                        newReport.Paid += sheet.rootPrice;
+                        newSheet.ExportPrice = sheet.rootPrice.ToString();
+                        newSheet.ImportPrice = "-";
+                    }
+
+                    ListSheet.Add(newSheet);
+                }
+                backupListSheet = ListSheet;
+
             }
-            backupListSheet = ListSheet;
-
+            
             Report = new Summary();
             Report = newReport;
 
