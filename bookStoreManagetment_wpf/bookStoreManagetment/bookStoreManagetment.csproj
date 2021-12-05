@@ -157,6 +157,9 @@
     <Compile Include="CheckItemsWindow.xaml.cs">
       <DependentUpon>CheckItemsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InhoaDon.xaml.cs">
+      <DependentUpon>InhoaDon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -320,6 +323,10 @@
     </Page>
     <Compile Include="ViewModel\ThongTinNhanVienViewModel.cs" />
     <Page Include="CheckItemsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InhoaDon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
