@@ -169,6 +169,8 @@ namespace bookStoreManagetment.ViewModel
 
         public string FileNameImage;
 
+        Random _r = new Random();
+
         public ListofProductsViewModel()
         {
             ListAllProduct = new List<Product>();
@@ -340,7 +342,28 @@ namespace bookStoreManagetment.ViewModel
                 return false;
             }, (p) =>
             {
-                string nameimage = NameProductsAdd + ".jpg";
+                string nameimage;
+                try { 
+                    nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + NameProductsAdd + ".jpg");
+
+                    using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                    {
+                        BitmapEncoder encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewer));
+                        encoder.Save(fileStream);
+                    }
+                }
+                catch
+                {
+                    nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + NameProductsAdd + _r.Next(0,1000000) + ".jpg");
+
+                    using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                    {
+                        BitmapEncoder encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewer));
+                        encoder.Save(fileStream);
+                    }
+                }
                 item Item = new item()
                 {
                     idItem = SKUProductsAdd,
@@ -357,14 +380,7 @@ namespace bookStoreManagetment.ViewModel
                     unit = UnitProductAdd
                 };
 
-                nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + nameimage);
-
-                using (var fileStream = new FileStream(nameimage, FileMode.Create))
-                {
-                    BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewer));
-                    encoder.Save(fileStream);
-                }
+                
 
                 DataProvider.Ins.DB.items.Add(Item);
 
@@ -492,11 +508,22 @@ namespace bookStoreManagetment.ViewModel
                 ImageSource photo = null;
                 try
                 {
-                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + selected.Item.nameItem + ".jpg"));
+                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + cellItem.Select(pa => pa.imageItem).FirstOrDefault()));
+
                 }
                 catch (Exception ex)
                 {
-                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                    try
+                    {
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + selected.Item.nameItem + ".jpg"));
+
+                    }
+                    catch
+                    {
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+
+
+                    }
 
                 }
                 ImageViewerEdit = photo;
@@ -511,27 +538,55 @@ namespace bookStoreManagetment.ViewModel
                 return false;
             }, (p) =>
             {
-
+                
                 var cellItem = DataProvider.Ins.DB.items.Where(x => x.idItem == sku).SingleOrDefault();
+                string nameimage;
+                try
+                {
+                    nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + NameProductsEdit + ".jpg");
 
+                    using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                    {
+                        BitmapEncoder encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewerEdit));
+                        encoder.Save(fileStream);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cellItem.imageItem);
+
+                        using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                        {
+                            BitmapEncoder encoder = new PngBitmapEncoder();
+                            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewerEdit));
+                            encoder.Save(fileStream);
+                        }
+                    }
+                    catch (Exception x)
+                    {
+                        nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + NameProductsEdit + _r.Next(0,1000000) + ".jpg");
+
+                        using (var fileStream = new FileStream(nameimage, FileMode.Create))
+                        {
+                            BitmapEncoder encoder = new PngBitmapEncoder();
+                            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewerEdit));
+                            encoder.Save(fileStream);
+                        }
+                    }
+                }
                 //cellItem.idItem = SKUProductsEdit;
                 cellItem.typeItem = CatalogProductsEdit;
                 cellItem.nameItem = NameProductsEdit;
-                cellItem.imageItem = NameProductsEdit + ".jpg";
+                cellItem.imageItem = nameimage;
                 cellItem.barcode = BarcodeProductsEdit;
                 cellItem.sellPriceItem = PriceProductsEdit;
                 cellItem.unit = UnitProductsEdit;
                 cellItem.descriptionItem = DescriptionProductsEdit;
 
-                System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cellItem.imageItem);
-                string nameimage = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + NameProductsEdit + ".jpg");
-
-                using (var fileStream = new FileStream(nameimage, FileMode.Create))
-                {
-                    BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageViewer));
-                    encoder.Save(fileStream);
-                }
+               
 
 
                 if (CatalogProductsEdit == "book")

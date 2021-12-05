@@ -81,20 +81,29 @@ namespace bookStoreManagetment.ViewModel
             foreach (var data in TopProduct)
             {
                 int gia = DataProvider.Ins.DB.items.Where(p => p.idItem == data.idItem).Select(p => p.sellPriceItem).FirstOrDefault();
-                var cell = DataProvider.Ins.DB.items.Where(p => p.idItem == data.idItem).Select(p => p.nameItem).FirstOrDefault();
+                var cell = DataProvider.Ins.DB.items.Where(p => p.idItem == data.idItem).FirstOrDefault();
 
                 ImageSource photo = null;
                 try
                 {
-                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cell + ".jpg"));
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cell.imageItem));
                 }
                 catch
                 {
-                    photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                    try
+                    {
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cell.nameItem + ".jpg"));
+
+                    }
+                    catch
+                    {
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+
+                    }
                 }
                 TopProducts.Add(new TopProduct()
                 {
-                    nameItem = cell,
+                    nameItem = cell.nameItem,
                     priceItem = string.Format(new CultureInfo("vi-VN"), "{0:0,0 đ}", gia),
                     Photo = photo
                 });
