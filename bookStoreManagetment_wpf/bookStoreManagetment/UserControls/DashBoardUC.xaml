@@ -209,7 +209,7 @@
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn
                             Header="Top sản phẩm"
-                            Width="auto">
+                            Width="*">
                                     <DataGridTemplateColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontWeight" Value="SemiBold"></Setter>
