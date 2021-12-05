@@ -85,7 +85,7 @@
           <Property Name="nameAccount" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="employeeSalary" Type="int" />
           <Property Name="employeeNote" Type="nvarchar" MaxLength="200" />
-          <Property Name="employeeImagePath" Type="nvarchar" MaxLength="50" />
+          <Property Name="employeeImagePath" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -245,16 +245,6 @@
           <Property Name="fax" Type="nvarchar" MaxLength="30" />
           <Property Name="masothue" Type="nvarchar" MaxLength="30" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityContainer Name="bookStoreManagementModelStoreContainer">
           <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
@@ -272,7 +262,6 @@
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="studytoolsInformation" EntityType="Self.studytoolsInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -359,7 +348,7 @@
           <Property Name="nameAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeSalary" Type="Int32" />
           <Property Name="employeeNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="employeeImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="employeeImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="importBill">
           <Key>
@@ -519,16 +508,6 @@
           <Property Name="fax" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="masothue" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityContainer Name="bookStoreManagementEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="accounts" EntityType="Self.account" />
           <EntitySet Name="bills" EntityType="Self.bill" />
@@ -546,7 +525,6 @@
           <EntitySet Name="settings" EntityType="Self.setting" />
           <EntitySet Name="studytoolsInformations" EntityType="Self.studytoolsInformation" />
           <EntitySet Name="suppliers" EntityType="Self.supplier" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -807,17 +785,6 @@
                 <ScalarProperty Name="website" ColumnName="website" />
                 <ScalarProperty Name="fax" ColumnName="fax" />
                 <ScalarProperty Name="masothue" ColumnName="masothue" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="bookStoreManagementModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
