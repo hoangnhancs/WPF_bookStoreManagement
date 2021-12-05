@@ -240,6 +240,9 @@
     <Compile Include="Model\supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\TrahangInfor.cs" />
     <Compile Include="Nhacungcap.xaml.cs">
       <DependentUpon>Nhacungcap.xaml</DependentUpon>

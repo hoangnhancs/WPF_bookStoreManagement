@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="29e9714994934f0ba2795418332ed630" Name="Diagram1">
+      <Diagram DiagramId="b607ca8d63464b3c96e185d236017031" Name="Diagram1">
         <EntityTypeShape EntityType="bookStoreManagementModel.account" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.bill" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.bookInformation" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="bookStoreManagementModel.setting" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.studytoolsInformation" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bookStoreManagementModel.supplier" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookStoreManagementModel.sysdiagram" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
