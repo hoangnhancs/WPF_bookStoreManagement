@@ -106,6 +106,8 @@ namespace bookStoreManagetment.ViewModel
         public ICommand TextChangedTienNhanCommand { get; set; }
         public ICommand SelectionChangedNhomNguoiNhanCommand { get; set; }
         public ICommand SelectionChangedNhomNguoiNhanFilterCommand { get; set; }
+        public ICommand TextChangedLoaiPhieuChi { get; set; }
+        public ICommand CheckSavePhieuChiCommnad { get; set; }
         //filter
         public ICommand CheckFilterCommand { get; set; }
         public ICommand DeleteFilterCommand { get; set; }
@@ -119,6 +121,49 @@ namespace bookStoreManagetment.ViewModel
             LoadedUserControlCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadData();
+            });
+
+            // load form
+            CheckSavePhieuChiCommnad = new RelayCommand<object>((p) => {
+                if (ViewExportSheet == null)
+                    return false;
+                if (ViewExportSheet.ProfitSummary == null)
+                    return false;
+                if (ViewExportSheet.ProfitSummary.typeGroup == null || ViewExportSheet.ProfitSummary.nameBill == null || ViewExportSheet.ProfitSummary.nameCustomer == null || ViewExportSheet.ProfitSummary.payment == null || ViewExportSheet.ProfitSummary.rootPrice == 0 || ViewExportSheet.ProfitSummary.nameEmployee == null)
+                    return false;
+                if (ViewExportSheet.ProfitSummary.typeGroup == "" || ViewExportSheet.ProfitSummary.nameBill == "" || ViewExportSheet.ProfitSummary.nameCustomer == "" || ViewExportSheet.ProfitSummary.payment == "" || ViewExportSheet.ProfitSummary.nameEmployee == "")
+                    return false;
+                return true;
+            }, (p) =>
+            {
+                 
+                
+            });
+
+
+            // load form
+            TextChangedLoaiPhieuChi = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(ViewExportSheet.ProfitSummary.nameBill) == false && ViewExportSheet.ProfitSummary.nameCustomer != null)
+                {
+                    if (ViewExportSheet.ProfitSummary.nameBill.ToLower() == "trả lương" && ViewExportSheet.ProfitSummary.typeGroup.ToLower() == "nhân viên")
+                    {
+                        var idEmployee = "EMP" + getNextCode.getCode(ListNhanVien.FindIndex(x => x ==ViewExportSheet.ProfitSummary.nameCustomer));
+                        var salary = DataProvider.Ins.DB.employees.Where(x => x.idEmployee == idEmployee).FirstOrDefault().employeeSalary;
+                        if (salary != null)
+                        {
+                            ViewExportSheet.ProfitSummary.rootPrice = (int)salary;
+                            ViewExportSheet.ProfitSummary.payPrice = (int)salary;
+                            ViewExportSheet = ViewExportSheet;
+                        }
+                    }
+                    else
+                    {
+                        ViewExportSheet.ProfitSummary.rootPrice = 0;
+                        ViewExportSheet.ProfitSummary.payPrice = 0;
+                        ViewExportSheet = ViewExportSheet;
+                    }
+                }
             });
 
             // textchanged tìm kiếm 
@@ -223,18 +268,17 @@ namespace bookStoreManagetment.ViewModel
                 }
                 else
                 {
-                    bill saveBill = new bill
-                    {
-                        billCode = ViewExportSheet.ProfitSummary.billCode,
-                        billType = ViewExportSheet.ProfitSummary.billType
-                    };
-                    // thêm dữ liệu vào database
-                    DataProvider.Ins.DB.bills.Add(saveBill);
-                    DataProvider.Ins.DB.SaveChanges();
-
                     // cập nhật bill trong profit
-                    var lastRowBackup = backupListExportBill[backupListExportBill.Count - 1];
-                    ViewExportSheet.ProfitSummary.budget = lastRowBackup.ProfitSummary.budget - ViewExportSheet.ProfitSummary.rootPrice;
+                    if (backupListExportBill.Count > 0)
+                    {
+                        var lastRowBackup = backupListExportBill[backupListExportBill.Count - 1];
+                        ViewExportSheet.ProfitSummary.budget = lastRowBackup.ProfitSummary.budget - ViewExportSheet.ProfitSummary.rootPrice;
+                    }
+                    else
+                    {
+                        ViewExportSheet.ProfitSummary.budget = 0 - ViewExportSheet.ProfitSummary.rootPrice;
+                    }
+                   
                     DataProvider.Ins.DB.profitSummaries.Add(ViewExportSheet.ProfitSummary);
                     DataProvider.Ins.DB.SaveChanges();
 
