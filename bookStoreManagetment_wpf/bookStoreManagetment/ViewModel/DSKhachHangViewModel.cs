@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -352,7 +353,24 @@ namespace bookStoreManagetment.ViewModel
                             phoneNumber = ViewKhachHang.Cus.phoneNumber,
                             sex = sexCurrent,
                         });
-                        DataProvider.Ins.DB.SaveChanges();
+                        try
+                        {
+                            // Your code...
+                            // Could also be before try if you know the exception occurs in SaveChanges
+
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                            {
+                                foreach (var validationError in entityValidationErrors.ValidationErrors)
+                                {
+                                    MessageBox.Show("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                                }
+                            }
+                        }
+
                         ViewKhachHang.Cus.idCustommer = code;
                         ViewKhachHang.Cus.sex = sexCurrent;
                         ViewKhachHang.counListBill = 0;
@@ -362,7 +380,7 @@ namespace bookStoreManagetment.ViewModel
                         ListCustomers = backupListCustomers;
                     }
 
-                    (p as DataGrid).Items.Refresh();
+                    //(p as DataGrid).Items.Refresh();
                 });
 
             // check sex

@@ -60,7 +60,7 @@
                 <!--thêm nhân viên-->
                 <Grid Grid.Row="1"
               x:Name="gridThemKhachHang"
-              Visibility="Collapsed">
+              Visibility="Visible">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="45"></RowDefinition>
                         <RowDefinition/>
@@ -307,7 +307,7 @@
                 <!--show check items-->
                 <Grid Grid.Row="1"
                   x:Name="gridDSKhachHang"
-                  Visibility="Visible">
+                  Visibility="Collapsed">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="36"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>

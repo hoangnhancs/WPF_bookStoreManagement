@@ -158,6 +158,11 @@ namespace bookStoreManagetment.ViewModel
 
             // Đăng xuất 
             LogoutCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+
+                #region Unit test
+                GetCurrentWindow = p;
+                #endregion
+
                 RestartApp(p);
             });
 
@@ -381,5 +386,9 @@ namespace bookStoreManagetment.ViewModel
             }
 
         }
+
+        #region Unit test
+        public Window GetCurrentWindow { get; set; }
+        #endregion
     }
 }

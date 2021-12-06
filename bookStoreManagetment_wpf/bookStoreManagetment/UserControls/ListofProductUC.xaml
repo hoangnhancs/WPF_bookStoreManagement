@@ -772,6 +772,7 @@
                                         <TextBlock Text="Giá" Margin="20 0 100 5" VerticalAlignment="Center"></TextBlock>
                                         <TextBox
                                             Text="{Binding PriceProductsEdit}"
+                                            materialDesign:ValidationAssist.HasError="True"
                                             Margin="0 0 0 0"
                                             materialDesign:HintAssist.Hint=""
                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
