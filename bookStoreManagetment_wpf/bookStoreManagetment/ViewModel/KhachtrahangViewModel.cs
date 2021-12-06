@@ -412,7 +412,7 @@ namespace bookStoreManagetment.ViewModel
                                 _tmp.unit = i.Item.unit;
                                 _tmp.unitPrice = i.Item.sellPriceItem;
                                 string tmpid = i.Item.idItem;
-                                tientralai += _tmpnum * i.Item.sellPriceItem;
+                                tientralai += _tmpnum * i.Item.sellPriceItem * _tmpdiscount;
                                 _tmp.idCustomer = _tmpidCus;
                                 _tmp.idItem = i.Item.idItem;
                                 _tmp.discount = _tmpdiscount;
