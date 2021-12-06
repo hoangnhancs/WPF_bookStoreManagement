@@ -249,7 +249,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="auto" Header="Trạng thái">
+                                            <DataGridTemplateColumn Width="*" Header="Trạng thái">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal">
@@ -257,13 +257,12 @@
                                                             x:Name="btnChitiet" 
                                                             Width="100"
                                                             Background="Transparent" 
-                                                            Foreground="Black" 
-                                                            BorderBrush="Black">
+                                                            BorderBrush="Transparent">
                                                                 <materialDesign:PackIcon 
                                                                 Kind="Eye"                                             
                                                                 Width="auto"
                                                                 Height="auto"
-                                                                Foreground="Aqua"/>
+                                                                Foreground="#1e98d7"/>
                                                                 <i:Interaction.Triggers>
                                                                     <i:EventTrigger EventName="Click">
                                                                         <i:InvokeCommandAction

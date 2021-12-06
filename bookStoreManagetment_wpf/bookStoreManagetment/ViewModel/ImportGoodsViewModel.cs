@@ -344,8 +344,14 @@ namespace bookStoreManagetment.ViewModel
                     }
                     catch (Exception e)
                     {
-                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                        try
+                        {
+                            photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                        }
+                        catch
+                        {
 
+                        }
                     }
 
                 }

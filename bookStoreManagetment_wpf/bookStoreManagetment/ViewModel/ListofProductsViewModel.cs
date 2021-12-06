@@ -330,7 +330,14 @@ namespace bookStoreManagetment.ViewModel
                 string name = c < 10 ? "BOOK00" + c : c < 100 ? "BOOK0" + c : "BOOK" + c;
                 SKUProductsAdd = name;
                 DescriptionProductsAdd = "Đang cập nhật";
-                ImageViewer = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                try
+                {
+                    ImageViewer = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                }
+                catch
+                {
+
+                }
             });
 
             ClickAddProductCommand = new RelayCommand<object>((p) => {
