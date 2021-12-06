@@ -17,7 +17,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>D:\app bookStore managetment\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -27,9 +27,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -51,6 +52,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>44C72A55B86FAA27D21ACC80B17AD92731566DF8</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>bookStoreManagetment_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo Hani %281%29.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
@@ -170,6 +186,8 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\BillDetail.cs" />
+    <Compile Include="Model\bitmap2bitmapImage.cs" />
+    <Compile Include="Model\ResourceLibrary.cs" />
     <Compile Include="Model\bookInformation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -436,6 +454,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -443,8 +462,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
@@ -453,6 +473,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="bookStoreManagetment_TemporaryKey.pfx" />
     <None Include="Model\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>
@@ -492,6 +513,7 @@
     <Folder Include="Windows\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Logo Hani %281%29.ico" />
     <Resource Include="pictures\3c57ed515c290ff8ef59afa950d950da.png" />
     <Resource Include="pictures\Logo Hani %281%29.png" />
     <Resource Include="Logo Hani %281%29 %281%29.png" />
@@ -502,6 +524,649 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>bookStoreManagement.mdf</DependentUpon>
     </Content>
+    <Resource Include="Images\7 Thói Quen Hiệu Quả %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\A Cup Of Chicken Soup For The Soul - Cho Những Trái Tim Rộng Mở %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\An %28Tái bản năm 2020%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Ba Nghìn Năm Trước Đóa Sen Nở Trong Đêm Thanh Vắng.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Binh Pháp Tôn Tử Và Nghệ Thuật Kiếm Tiền %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bài Học Vô Giá Từ Những Điều Bình Dị %28 Tái Bản %29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tô Màu &amp; Làm Quen Với Môi Trường - Vật Nuôi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tô Màu Và Làm Quen Với Môi Trường - Trái Cây.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Chữ Thường - Hành Trang Cho Bé Vào Lớp 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Chữ Viết Thường - Dành Cho Bé 4-5 tuổi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Các Hoạt Động Vui Chơi Của Bé.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Các Loài Chim.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Củ, Quả.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Giao Thông Đường Thủy Và Hàng Không.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Khủng Long.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Nghề Nghiệp.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Phương Tiện Giao Thông Đường Bộ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Vật Nuôi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Động Vật Dưới Nước.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Màu - Động Vật Hoang Dã.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Tô Và Tập Viết Tập 2 - Bé Vào Lớp 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Tập Đọc Và Tô Chữ Cái - Hành Trang Cho Bé Vào Lớp 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bé Yêu Tô Màu - Phương Tiện Giao Thông.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bình An Mà Sống.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bí Quyết Thành Công Của Napoleon Hill.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bẫy Tình Yêu - Tập 3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bức Tranh Dorian Gray %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Chinh Phục Thể Loại Du Kí.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Luyện Viết Bản Tin.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Múa Bút Viết Tiểu Sử.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Sáng Tác Cổ Tích.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Trổ Tài Viết Phỏng Vấn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Trổ Tài Viết Đánh Giá.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Tung Chiêu Quảng Cáo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cao Thủ Viết Lách - Tâm Sự Cùng Nhật Kí.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chat Với Bác Sĩ - Bác Sĩ Riêng Của Bé Yêu.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chicken Soup For The Soul - Gieo Niềm Tin Cuộc Sống %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chiến Lược Đầu Tư Chứng Khoán %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chiều Không Tên Như Vết Mực Giữa Đời.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chuyển Đổi Số - Sống Sót Và Bứt Phá Trong Kỷ Nguyên Sụp Đổ Hàng Loạt %28Tái bản năm 2021%29 %28Bìa cứng%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chuyện Này Chuyện Kia - Tập 2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chìa Khóa Vạn Năng Dẫn Lối Thành Công - Bí Quyết Kinh Doanh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chóng Mặt.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Chữa Lành Bằng Tâm Thức %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Combo 5 cuốn Sài Gòn Chuyện Đời Của Phố.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Combo Bác Sĩ Tốt Nhất Của Nhà Mình - Nơi Ánh Sáng Không Bao Giờ Tắt %28Bộ 2 cuốn%29 %28Bìa cứng%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Combo Harvard Business Review - HBR 20 Phút %28Bộ 10 cuốn%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Combo Nghĩ Giàu Là Giàu &amp; Cẩm Nang Hành Động %28Bộ 2 cuốn%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Combo Đỗ Bích Thúy %28Bộ 4 cuốn%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Con Đường Hạnh Phúc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Con Đường Tơ Lụa Mới - Hiện Tại và Tương Lai Của Thế Giới.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Condensed Chicken Soup For The Soul - Dành Cho Mẹ Món Quà Của Tình Yêu %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Contact Marketing - Nghệ Thuật Chinh Phục Khách Hàng.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cuộc Xâm Lăng Của Bé Mực - Tập 6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cuộc Xâm Lăng Của Bé Mực - Tập 7.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cà Nóng Chu Du Trường Sa.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Câu Chuyện Giáo Dục - Dũng Cảm.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Câu Chuyện Giáo Dục - Kiên Trì.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Câu Chuyện Giáo Dục - Nhân Hậu.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Câu Chuyện Giáo Dục - Tài Trí.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Câu Chuyện Giáo Dục - Đạo Đức.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cùng Hạnh Phúc - Bình Thản.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cùng Hạnh Phúc - Nhẫn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Diệt Slime Suốt 300 Năm, Tôi Levelmax Lúc Nào Chẳng Hay %28Truyện tranh%29 %28Tập 4%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Donald Trump - Chiến Lược Đầu Tư Bất Động Sản %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DORAEMON TRUYỆN DÀI - TẬP 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Doraemon Truyện Ngắn - Tập 2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Dán Hình Sáng Tạo Trang Phục Búp Bê - Những Nàng Công Chúa.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Em Tập Viết Đúng, Viết Đẹp - Lớp 4 Tập 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Essential Leadership - Cốt Lõi Về Lãnh Đạo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Giàu Từ Chứng Khoán %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Giải Mã Từ Điển Cảm Xúc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Gokusen - Tập 4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Grimgar - Ảo Ảnh Và Tro Tàn %28Tập 11%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Gột Rửa Âu Lo Tự Do Tâm Trí.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hashtag Startup - Food - Khởi Sự Kinh Doanh Dịch Vụ Ăn Uống %28Bộ 2 cuốn%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hoa Học Trò - Số 1360.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hoa Học Trò - Số 1361 %28Tặng kèm fanbook Horoscope Idol Song Tử, 2 idol poster TZUYU %28TWICE%29, TAEIL &amp; HANRCHAN %28NCT%29%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hoa Học Trò - Số 1363 %28Tặng kèm fanbook Horoscope Idol Cự Giải, 2 idol poster SEVENTEEN%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hoa Học Trò - Số 1364 %28Tặng kèm fanbook khổ lớn Million Club, 2 idol poster BLACKPINK%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hoa Học Trò Số 1362.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Homecoming - Hồi Sinh Đứa Trẻ Bên Trong Bạn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hành Trang Bé Vào Lớp 1 - Vở Bé Học Tiếng Việt %28Quyển 1%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hành Trang Bé Vào Lớp 1 - Vở Bé Học Tiếng Việt.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hạnh Phúc Hay Không Do Ta Quyết Định.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hạnh Phúc Không Khó Định Danh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hạnh Phúc Là Con Đường.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hạnh Phúc Tự Thân.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hạt Phù Sa Sông Nước Cửu Long - Bước Đầu Tìm Hiểu Văn Xuôi Trần Bảo Định.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Hứa Với Con, Ba Nhé.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\IKEA - Dấu Ấn Thụy Điển Trên Bản Đồ Thế Giới.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Joe Biden - Từ Scranton Đến Nhà Trắng.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Khi Bạn Đang Mơ Thì Người Khác Đang Nỗ Lực.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Khoa Học Cho Lứa Tuổi Thiếu Niên - Mười Vạn Câu Hỏi Vì Sao - Cơ Thể Và Sức Khỏe.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Khoa Học Cho Lứa Tuổi Thiếu Niên - Mười Vạn Câu Hỏi Vì Sao - Khoa Học Kĩ Thuật Và Sáng Tạo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Khoa Học Cho Lứa Tuổi Thiếu Niên - Mười Vạn Câu Hỏi Vì Sao - Sinh Vật Và Môi Trường.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Khoa Học Cho Lứa Tuổi Thiếu Niên - Mười Vạn Câu Hỏi Vì Sao - Văn Hóa Và Đời Sống.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Không Chỉ Là Chiếc Áo Phông.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\không có ảnh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Không Phải Trong Dông Bão, Ta Đang Sống Những Ngày Sau Mưa.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Kinh Doanh Thời Trang Thành Công Từ A-Z.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Kiểm Soát Chi Phí Mua Hàng Và Quản Lý Nhà Cung Cấp.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Kể Chuyện Hay, Dựng Nghiệp Lớn - Công Thức Xây Dựng Câu Chuyện Thương Hiệu Từ 30 Nhà Sáng Lập Lừng Danh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Leaders - Những Nhà Lãnh Đạo Thay Đổi Lịch Sử.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lo Âu Xã Hội.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Loạn Bút Hành %28Bìa cứng%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Loạn Bút Hành %28Bìa mềm%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Luân Lý Giáo Khoa Thư.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Luật Tâm Thức - Giải Mã Ma Trận Vũ Trụ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Làm Ít Được Nhiều.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lãnh Đạo Phục Vụ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lãnh Đạo Tập Sự - Hành Trình Không Đơn Độc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lãnh Đạo, Phục Tùng Hoặc Cuốn Xéo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lại Đây, Ôm Cái Nào!.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lớp Học Mật Ngữ - Tập 18 %28Tặng khẩu trang%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lớp Học Mật Ngữ - Tập Đặc Biệt 1 %28Tái bản năm 2021%29 %28Tặng huy hiệu%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lớp Học Mật Ngữ - Tập Đặc Biệt 2 %28Tái bản năm 2021%29 %28Tặng huy hiệu%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lớp Học Mật Ngữ - Tập Đặc Biệt 3 %28Tái bản năm 2021%29 %28Tặng huy hiệu%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mai Em Vào Lớp 1 - Vở Bé Làm Quen Với Chữ Cái.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mai Em Vào Lớp 1 - Vở Bé Làm Quen Với Toán.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mai Em Vào Lớp 1 - Vở Tập Tô Chữ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mùa Hè Cuối Cùng Nơi Này Có Cậu.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mơ Về Bầu Trời Đỏ Tía.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mật Ngữ 12 Cung Hoàng Đạo - Bí Mật Cung Bảo Bình.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mệt Rồi Hãy Ôm Lấy Tôi, Tôi Sẽ Sưởi Ấm Trái Tim Bạn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mọi Điều Bạn Cần Biết Về Các Phát Minh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Mọi Điều Bạn Cần Biết Về Vũ Trụ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Một Chút Trà, Thêm Chút Sữa.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nghe Gã Khờ Chỉ Đường Tới Chân Hạnh Phúc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nghề Nghiệp Của Bố.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nghệ Thuật Lãnh Đạo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nghệ Thuật Quản Lý Nhân Sự %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nghệ Thuật Viết Quảng Cáo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Ngày Nắng.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Người Giàu Có Thành Babylon - Cuốn Sách Làm Giàu Hiệu Quả.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Người Giải Mã Thị Trường Tài Chính.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nha Trang Mùa Đẹp Nhất.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nhà Lãnh Đạo Tương Lai.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nhà Lãnh Đạo Đáng Tin Cậy - 9 Thói Quen Tạo Dựng Lòng Tin Trong Kinh Doanh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nhận Diện Thương Hiệu - Những Điểm Chạm Thị Giác %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nhật Ký Cô Giáo - Học Kỳ Hè.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nhật Ký Tarot.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nhớ Mang Mặt Nạ Dưỡng Khí Cho Mình Trước - 17 Thói Quen Sống Còn Giúp Lãnh Đạo Thành Công.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Những Doanh Nhân Vĩ Đại - Bill Marriott - Những Quyết Định Lịch Sử Làm Nên Đế Chế Khách Sạn Thành Công Nhất Thế Giới.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Những Sát Thủ Hàng Loạt Trong Giới Tài Chính.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Những Tinh Cầu Trôi Dạt - Tập 2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Những Trái Tim Lửa Cháy, Paris 1968.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Những Tù Nhân Của Địa Lý - Khám Phá Sự Vận Hành Của Thế Giới Qua Những Tấm Bản Đồ %28Phiên bản minh họa màu dành cho độc giả trẻ%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Những Đòn Tâm Lý Trong Bán Hàng %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nơi Ánh Sáng Chiếu Soi - Hành Trình Xây Dựng Gia Đình, Khám Phá Chính Mình.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nước Vẫn Chảy Dưới Chân Cầu Mụ Kề %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Nụ Hôn Dối Lừa %28Bộ 2 cuốn%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Olivia.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Phạm Duy Và Lời Ca Lắng Đọng.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Poco Ở Thế Giới Udon - Tập 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Quốc Văn Độc Bản.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Sinh Năm 1972 - Khát Vọng Sống %28Tự truyện Nguyễn Cảnh Bình%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Sự Thật Ta Nắm Giữ - Một Hành Trình Xuyên Nước Mỹ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\The Business Model Book - Xây Dựng, Thiết Kế Và Tối Ưu Mô Hình Kinh Doanh.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\The Culture Code - Khám Phá Sức Mạnh Văn Hóa Đội Nhóm.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thiên Hồn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thiên Thần Nhỏ - Ấn Phẩm Của Báo Tiền Phong %28Số 406%29 %28Tặng poster khổ lớn của các thành viên BTS và board game NCT%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thiên Thần Nhỏ - Ấn Phẩm Của Báo Tiền Phong %28Số 407%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thiên Thần Nhỏ - Ấn Phẩm Của Báo Tiền Phong %28Số 408%29 %28Tặng poster khổ lớn và bookmark BTS%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thuật Tư Tưởng %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thuật Yêu Đương %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thám Tử Lừng Danh Conan - Tập 16.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thám Tử Lừng Danh Conan Tập 17.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thám Tử Lừng Danh Conan Tập 44.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thông Điệp Cuộc Sống Qua Những Câu Chuyện Ý Nghĩa.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thương %28Tái bản năm 2020%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thế Giới Anh Hùng Của Bà Ngoại.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thế Giới Otome Game Thật Khắc Nghiệt Với Nhân Vật Quần Chúng - Tập 3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Thở Giữa Rừng Người - Ghi Chép Về Cách Yêu Đời Toàn Thời Gian.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tiếng Việt - Văn Việt - Người Việt %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Triết Lý Kinh Doanh Của Alibaba.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Trong Mỗi Chúng Ta Đều Có Một Đứa Trẻ Cần Vỗ Về.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Trong Rừng Nho.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Truyện Cổ Tích Việt Nam Chọn Lọc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Trên Đồi Mở Mắt Và Mơ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Trở Thành Chuyên Gia Thị Trường Chứng Khoán.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tuổi Trẻ Mà Tôi Đã Sống.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tác Phẩm Kinh Điển Minh Họa Mới - Tiếng Gọi Của Hoang Dã.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tái Cơ Cấu Tổ Chức.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm An Ắt Bình An.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm Kinh Mình Thuyết Cho Mình %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm Lý Học - Nghệ Thuật Giải Mã Hành Vi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm Lý Học - Tất Cả Những Điều Cần Biết Để Thông Thạo Bộ Môn Này.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm Lý Học Tội Phạm - Phác Họa Chân Dung Kẻ Phạm Tội.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm Lý Học Tội Phạm - Tập 2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tâm Thức Lãnh Đạo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tây Du Hí - Tập 5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tô Màu Công Chúa - Công Chúa Phù Dung.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tô Màu Công Chúa - Công Chúa Phương Tây.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tô Màu Công Chúa - Công Chúa Tóc Dài.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tô Màu Công Chúa Nhỏ - Công Chúa Mộng Mơ.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Tương Lai Sau Đại Dịch COVID.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Từ Điển Cảm Xúc Thế Giới - Tập 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vương Kiện Lâm Và Đế Chế Vạn Đạt.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vườn Hoa Mạt Dược Ký Sự - Những Kỳ Án Nổi Tiếng Chưa Có Lời Giải.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Về Nguyễn Huy Thiệp.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vở Bé Làm Quen Với Chữ Cái 4-5t.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vở Tập Tô Chữ Tập 2 - Dành Cho Bé 4-5 tuổi - Mai Em Vào Lớp 1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vụ Việc Dị Thường Về Bác Sĩ Jekyll Và Ông Hyde.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\You Can Win - Bí Quyết Của Người Chiến Thắng.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Yên - Lặng Yên Để Chữa Lành Cho Nhau.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Yên Lam.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Yêu Sai Cách Nên Mãi Chẳng Đúng Người.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Á Nô - Tập 2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Ăn Uống Là Hạnh Phúc.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Điệp Vụ Gibson Vaughn - Giải Thoát.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Đằng Sau Một Quyết Định Lớn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Đọc Vị Thiên Hạ Lọc Những Cú Lừa %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Đừng Để Tiền Ngủ Yên Trong Túi %28Tái bản năm 2021%29.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Logo Hani %281%29.ico" />
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

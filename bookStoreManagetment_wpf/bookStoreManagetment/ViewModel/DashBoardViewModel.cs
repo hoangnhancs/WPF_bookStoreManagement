@@ -13,6 +13,7 @@ using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
+using bookStoreManagetment.Properties;
 
 namespace bookStoreManagetment.ViewModel
 {
@@ -97,8 +98,7 @@ namespace bookStoreManagetment.ViewModel
                     }
                     catch
                     {
-                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
-
+                        photo = bitmap2bitmapImage.Convert(Resources.no_image);
                     }
                 }
                 TopProducts.Add(new TopProduct()

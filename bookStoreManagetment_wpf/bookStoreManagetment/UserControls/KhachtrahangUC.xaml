@@ -249,21 +249,20 @@
                                                     </Style>
                                                 </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="auto" Header="Trạng thái">
+                                            <DataGridTemplateColumn Width="*" Header="Trạng thái">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal">
                                                             <Button 
                                                             x:Name="btnChitiet" 
                                                             Width="100"
-                                                            Background="Transparent" 
-                                                            Foreground="Black" 
-                                                            BorderBrush="Black">
+                                                            Background="Transparent"
+                                                            BorderBrush="Transparent">
                                                                 <materialDesign:PackIcon 
                                                                 Kind="Eye"                                             
                                                                 Width="auto"
                                                                 Height="auto"
-                                                                Foreground="Aqua"/>
+                                                                Foreground="#1e98d7"/>
                                                                 <i:Interaction.Triggers>
                                                                     <i:EventTrigger EventName="Click">
                                                                         <i:InvokeCommandAction

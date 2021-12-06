@@ -168,7 +168,7 @@
                                         </DataGridTextColumn.HeaderStyle>
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
                                                 <Setter Property="VerticalAlignment" Value="Center"></Setter>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
@@ -229,7 +229,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTemplateColumn Width="auto" Header="">
+                                    <DataGridTemplateColumn Width="*" Header="">
                                         <DataGridTemplateColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                                 <Setter Property="HorizontalAlignment" Value="Right"></Setter>
@@ -249,10 +249,10 @@
                                                     Padding="0"
                                                     Margin="0 0 5 0">
                                                         <materialDesign:PackIcon 
-                                                    Kind="Eye"                                             
+                                                    Kind="Pencil"                                             
                                                     Width="auto"
                                                     Height="auto"
-                                                    Foreground="Aqua"/>
+                                                    Foreground="ForestGreen"/>
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="Click">
                                                                 <i:InvokeCommandAction

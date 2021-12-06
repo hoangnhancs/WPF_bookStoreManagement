@@ -1,4 +1,5 @@
 ﻿using bookStoreManagetment.Model;
+using bookStoreManagetment.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -330,7 +331,7 @@ namespace bookStoreManagetment.ViewModel
                 string name = c < 10 ? "BOOK00" + c : c < 100 ? "BOOK0" + c : "BOOK" + c;
                 SKUProductsAdd = name;
                 DescriptionProductsAdd = "Đang cập nhật";
-                ImageViewer = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                ImageViewer = bitmap2bitmapImage.Convert(Resources.no_image);
             });
 
             ClickAddProductCommand = new RelayCommand<object>((p) => {
@@ -434,7 +435,7 @@ namespace bookStoreManagetment.ViewModel
                 BarcodeProductsAdd = null;
                 PriceProductsAdd = 0;
                 UnitProductAdd = null;
-                ImageViewer = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                ImageViewer = bitmap2bitmapImage.Convert(Resources.no_image);
                 DescriptionProductsAdd = "Đang cập nhật";
             });
 
@@ -520,8 +521,7 @@ namespace bookStoreManagetment.ViewModel
                     }
                     catch
                     {
-                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
-
+                        photo = bitmap2bitmapImage.Convert(Resources.no_image);
 
                     }
 

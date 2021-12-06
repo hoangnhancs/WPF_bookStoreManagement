@@ -306,7 +306,7 @@
                                 </i:Interaction.Triggers>
                             </Button>
 
-                            <!--report-->
+                            <!--report--><!--
                             <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                 x:Name="btnIconQLReport"
                                 Command="{Binding ChangeColorButtonClickCommand}"
@@ -316,7 +316,7 @@
                                                      VerticalAlignment="Center"
                                                  Width="36"
                                                  Height="36"/>
-                                <!--ẩn hiện -->
+                                --><!--ẩn hiện --><!--
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction
@@ -325,9 +325,9 @@
                                         </i:InvokeCommandAction>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                            </Button>
+                            </Button>-->
 
-                            <!--event-->
+                            <!--event--><!--
                             <Button Style="{StaticResource btnStyle_MenuFeatures}"
                                  x:Name="btnIconQLSK"
                                 Command="{Binding ChangeColorButtonClickCommand}"
@@ -337,7 +337,7 @@
                                                      VerticalAlignment="Center"
                                                  Width="36"
                                                  Height="36"/>
-                                <!--ẩn hiện -->
+                                --><!--ẩn hiện --><!--
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction
@@ -346,7 +346,7 @@
                                         </i:InvokeCommandAction>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                            </Button>
+                            </Button>-->
 
                             <!--mail-->
                             <Button Style="{StaticResource btnStyle_MenuFeatures}"
@@ -880,7 +880,7 @@
                                         </Button>
                                     </StackPanel>
 
-                                    <!--Quán lí báo cáo-->
+                                    <!--Quán lí báo cáo--><!--
                                     <StackPanel x:Name="stpQLRP">
                                         <Button HorizontalAlignment="Left"
                                                 FontWeight="SemiBold"
@@ -900,9 +900,9 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
-                                    <!--Quản lí sự kiện-->
+                                    <!--Quản lí sự kiện--><!--
                                     <StackPanel x:Name="stpQLSK">
                                         <Button HorizontalAlignment="Left"
                                                 FontWeight="SemiBold"
@@ -922,7 +922,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
                                     <!--quản lí mail-->
                                     <StackPanel x:Name="stpQLMail">

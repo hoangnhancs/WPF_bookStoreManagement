@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using bookStoreManagetment.Properties;
 
 namespace bookStoreManagetment.ViewModel
 {
@@ -344,7 +345,7 @@ namespace bookStoreManagetment.ViewModel
                     }
                     catch (Exception e)
                     {
-                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                        photo = bitmap2bitmapImage.Convert(Resources.no_image);
 
                     }
 
