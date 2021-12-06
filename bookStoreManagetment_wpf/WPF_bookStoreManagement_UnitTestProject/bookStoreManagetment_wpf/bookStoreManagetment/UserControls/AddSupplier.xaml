@@ -1,0 +1,312 @@
+﻿<UserControl x:Class="bookStoreManagetment.UserControls.AddSupplier"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls"           
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="575" d:DesignWidth="1024"
+             DataContext="{StaticResource AddSupplierVM}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--main Content-->
+        <Grid Grid.Row = "0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock 
+                    Text="Thông tin cơ bản"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <TextBlock 
+                            Text="Tên nhà cung cấp" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <TextBox x:Name="nameSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=nameSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock 
+                            Text="Email" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <TextBlock 
+                            Text="Số điện thoại" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBox x:Name="mailSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=mailSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <TextBox x:Name="phoneSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=phoneSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock 
+                    Text="Địa Chỉ" 
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock 
+                            Text="Tỉnh thành" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <TextBlock 
+                            Text="Quận huyện" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBox x:Name="tinhAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=tinhAddressSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <TextBox x:Name="huyenAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=huyenAddressSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock 
+                            Text="Phường xã" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <TextBlock 
+                            Text="Số nhà, đường" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBox x:Name="xaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=xaAddressSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <TextBox x:Name="sonhaAddressSuptb" Width="300" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}, Path=DataContext.LoadInsertInforCommand}"
+                                    CommandParameter="{Binding ElementName=sonhaAddressSuptb}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock 
+                            FontWeight="SemiBold"
+                            FontSize="18"
+                    Text="Thông tin bổ sung" 
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock 
+                            Text="Số fax" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <TextBlock 
+                            Text="Mã số thuế" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock 
+                            Text="Website" 
+                            VerticalAlignment="Center"
+                            Margin="10 0 0 0"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBox Width="300" HorizontalAlignment="Left" Margin="10 0 0 0"></TextBox>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Width="100" Margin="0 0 30 0" Background="Transparent" Foreground="Black" BorderBrush="Black"
+                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=DataContext.MenuCommand}"
+                        CommandParameter="Nhacungcap">Thoát</Button>
+                        <Button Width="100" Background="Transparent" Foreground="Black" BorderBrush="Black" Content="Cập nhật">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+   
+</UserControl>

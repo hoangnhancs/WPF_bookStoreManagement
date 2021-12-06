@@ -1,0 +1,524 @@
+﻿<Window x:Class="bookStoreManagetment.CheckItemsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        DataContext="{StaticResource CheckItemsVM}"
+        x:Name="checkItemsWindow"
+        Title="CheckItemsWindow" Height="450" Width="800">
+
+    <!--loaded command-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                    Command="{Binding LoadedCheckItemsCommand}"
+                    CommandParameter="{Binding ElementName=listViewContent}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <!--Main-->
+    <Grid Margin="10 0 10 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="13*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--title-->
+        <Grid Grid.Row="0"
+              Background="AliceBlue">
+            <TextBlock
+                Text="Danh sách phiếu kiểm hàng"
+                FontSize="20"
+                FontWeight="Bold"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+            </TextBlock>
+        </Grid>
+
+        <!--add check items-->
+        <Grid Grid.Row="1"
+              x:Name="addCheckItems"
+              Visibility="Visible">
+            <!--loaded command-->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="IsVisibleChanged">
+                    <i:InvokeCommandAction
+                    Command="{Binding LoadedCheckItemsCommand}"
+                    CommandParameter="{Binding ElementName=listViewContent}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!-- infor -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--sub title-->
+                <Grid Grid.Row="0">
+                    <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            FontWeight="SemiBold"
+                            Text="Thông Tin Phiếu Kiểm"></TextBlock>
+                </Grid>
+
+                <!--content-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!--Nhân viên-->
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal"
+                                        Margin="20 0 0 0">
+                            <TextBlock 
+                                    VerticalAlignment="Center"
+                                    Text="Nhân viên kiểm"></TextBlock>
+                            <ComboBox x:Name="comboBoxNameStaf"
+                                      ItemsSource="{Binding AllStaff}"
+                                      Background="WhiteSmoke"
+                                      Margin="50 0 0 0"
+                                      Width="200"
+                                      Height="25"
+                                      SelectedIndex="0"></ComboBox>
+
+                            <!-- Ngày kiểm tra -->
+                            <StackPanel Margin="150 0 0 0"
+                                        Visibility="Hidden"
+                                        x:Name="stackPanelDateCheck"
+                                        Orientation="Horizontal">
+                                <TextBlock Text="Ngày Kiểm "
+                                       VerticalAlignment="Center"></TextBlock>
+
+                                <TextBlock Text="00/00/0000"
+                                           x:Name="textBlockDateCheck"
+                                           VerticalAlignment="Center"
+                                           Margin="10 0 0 0">
+
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!--Ghi chú-->
+                    <Grid Grid.Row="1">
+                        <DockPanel Margin="20 0 0 0">
+                            <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="Ghi chú"></TextBlock>
+                            <TextBox
+                                    Background="WhiteSmoke"
+                                    Margin="50 5 0 0"></TextBox>
+                        </DockPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- list items-->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--sub title-->
+                <Grid Grid.Row="0">
+                    <TextBlock Text="Sản Phẩm"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"></TextBlock>
+                </Grid>
+
+                <!-- content-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="6*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <DataGrid
+                            ItemsSource="{Binding InventoryList}"
+                            ColumnWidth="*"
+                            Margin="0 8 0 0"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8">
+                            <DataGrid.Columns>
+
+                                <!--Mã sản phẩm-->
+                                <DataGridTextColumn                                
+                                    Binding="{Binding Item.idItem}"
+                                    Header="Mã Sản Phẩm"
+                                    Width="auto"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!--Tên sản phẩm-->
+                                <DataGridTextColumn
+                                    Binding="{Binding Item.nameItem}"
+                                    Header="Tên Sản Phẩm"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                </DataGridTextColumn>
+
+                                <!--Đơn vị-->
+                                <DataGridTextColumn
+                                    Binding="{Binding Item.typeItem}"
+                                    Header="Loại"
+                                    Width="auto"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!-- số lượng -->
+                                <DataGridTextColumn
+                                    Binding="{Binding Item.quantity}"
+                                    Header="Số lượng"
+                                    Width="auto"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!--Số lượng thực tế -->
+                                <materialDesign:DataGridComboBoxColumn
+                                    ItemsSource="{Binding }">
+                                    <materialDesign:DataGridComboBoxColumn.SelectedItemBinding>
+                                        <Binding
+                                            Path="SelectedValueOne"
+                                            Mode="TwoWay"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            
+                                        </Binding>
+                                    </materialDesign:DataGridComboBoxColumn.SelectedItemBinding>
+                                </materialDesign:DataGridComboBoxColumn>
+                                <DataGridTextColumn
+                                    
+                                    Binding="{Binding }"
+                                    Header= "Số lượng thực tế"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                </DataGridTextColumn>
+
+                                <!--Ghi chú-->
+                                <DataGridTextColumn
+                                    
+                                    Binding="{Binding Note}"
+                                    Header="Ghi chú"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                </DataGridTextColumn>
+
+                                <!--Xoá --><!--
+                                <DataGridTemplateColumn
+                                    Header="Xoá">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Xoá"></Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>-->
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.Resources>
+                            <Style x:Key="btnControls" TargetType="Button">
+                                <Setter Property="FontWeight" Value="Bold"></Setter>
+                                <Setter Property="Width" Value="150"></Setter>
+                                <Setter Property="Height" Value="26"></Setter>
+                                <Setter Property="Padding" Value="10 0 10 0"></Setter>
+                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="BorderBrush" Value="AliceBlue"></Setter>
+                                <Setter Property="Background" Value="YellowGreen"></Setter>
+                            </Style>
+                        </Grid.Resources>
+                        <StackPanel HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <Button Content="Thêm sản phẩm"
+                            Margin="0 0 10 0 "
+                            Style="{StaticResource btnControls}"></Button>
+                            <Button Content="Tất cả sản phẩm"
+                            Margin="10 0 0 0 "
+                            Style="{StaticResource btnControls}"></Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!--button-->
+            <Grid Grid.Row="2">
+                <Grid.Resources>
+                    <Style x:Key="btnControls" TargetType="Button">
+                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                        <Setter Property="Width" Value="100"></Setter>
+                        <Setter Property="Height" Value="26"></Setter>
+                        <Setter Property="Padding" Value="10 0 10 0"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="BorderBrush" Value="AliceBlue"></Setter>
+                        <Setter Property="Background" Value="AliceBlue"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                    <Button Content="Thoát"
+                            Margin="0 0 10 0 "
+                            Style="{StaticResource btnControls}"
+                            Background="OrangeRed" BorderBrush="#FF0088FF">
+                            <!--click add command-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=addCheckItems}" />
+                                    <i:InvokeCommandAction
+                                            Command="{Binding ClickHiddenCommand}"
+                                            CommandParameter="{Binding ElementName=showCheckItems}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                    </Button>
+                    <Button Content="cập nhật"
+                            Margin="10 0 0 0 "
+                            Style="{StaticResource btnControls}"
+                            Background="ForestGreen"></Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!--show check items-->
+        <Grid Grid.Row="1"
+                  x:Name="showCheckItems"
+                  Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--tools bar-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <StackPanel
+                   HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                   Orientation="Horizontal">
+                        <TextBlock
+                        Text="Mã Phiếu :"
+                        Width="80"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        </TextBlock>
+
+                        <TextBox
+                        Margin="0 5 0 5"
+                        Background="WhiteSmoke"
+                        IsReadOnly="True"
+                        Width="120">
+                        </TextBox>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <StackPanel
+                   HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                   Orientation="Horizontal">
+                        <TextBlock
+                        Text="Nhân viên :"
+                        Width="80"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        </TextBlock>
+
+                        <ComboBox
+
+                        Margin="0 5 0 5"
+                        Background="WhiteSmoke"
+                        IsReadOnly="True"
+                        Width="120">
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <StackPanel
+                   HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                   Orientation="Horizontal">
+                        <Button
+                        Foreground="Black"
+                        Content="Refesh"
+                        BorderBrush="Transparent"
+                        Background="WhiteSmoke"
+                        Margin="0 0 10 0"
+                        Height="26"
+                        Width="100">
+                        </Button>
+
+                        <Button
+                        Content="Tìm kiếm"
+                        Foreground="Black"
+                        BorderBrush="Transparent"
+                        Background="WhiteSmoke"
+                        Margin="10 0 0 0"
+                        Height="26"
+                        Width="100">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="3">
+                    <Button HorizontalAlignment="Right"
+                            Background="ForestGreen"
+                            BorderBrush="Transparent"
+                            VerticalAlignment="Bottom"
+                            Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton">
+                        <materialDesign:PackIcon Kind="Plus"
+                                                 Height="24"
+                                                 Width="24" />
+                        <!--click add command-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction
+                                    Command="{Binding ClickHiddenCommand}"
+                                    CommandParameter="{Binding ElementName=addCheckItems}" />
+                                <i:InvokeCommandAction
+                                    Command="{Binding ClickHiddenCommand}"
+                                    CommandParameter="{Binding ElementName=showCheckItems}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <!--grid view-->
+            <Grid Grid.Row="1">
+                <DataGrid
+                            ColumnWidth="*"
+                            Margin="0 8 0 0"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8">
+                    <DataGrid.Columns>
+
+                        <!--Mã Phiếu-->
+                        <DataGridTextColumn
+                                    Binding="{Binding Code}"
+                                    Header="Mã phiếu"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                        <!--Nhân viên kiểm-->
+                        <DataGridTextColumn
+                                    Binding="{Binding Name}"
+                                    Header="Nhân viên kiểm"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        
+                        <!--Ngày kiểm-->
+                        <DataGridTextColumn
+                                    Binding="{Binding Name}"
+                                    Header="Ngày kiểm"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <!--button -->
+                        <DataGridTemplateColumn
+                                                Header="Công cụ">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Xoá"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" x:Key="btnNextPage">
+                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="Padding" Value="0 0 0 0"></Setter>
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                            <Setter Property="FontSize" Value="9"></Setter>
+                            <Setter Property="Height" Value="18"></Setter>
+                            <Setter Property="Width" Value="18"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <ComboBox
+                    Padding="0 0 0 0"
+                    FontSize="9"
+                    Text="1"
+                    Height="22"
+                    Width="30">
+                    </ComboBox>
+                    <TextBlock
+                    Padding="10 0 10 0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="items per page"></TextBlock>
+                    <Button
+                    Content="1"
+                    Background="AliceBlue"
+                    Style="{StaticResource btnNextPage}">
+                    </Button>
+                    <Button
+                    Content="2"
+                    Margin="3 0 3 0"
+                    Style="{StaticResource btnNextPage}">
+                    </Button>
+                    <Button
+                    Content="3"
+                    Style="{StaticResource btnNextPage}">
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

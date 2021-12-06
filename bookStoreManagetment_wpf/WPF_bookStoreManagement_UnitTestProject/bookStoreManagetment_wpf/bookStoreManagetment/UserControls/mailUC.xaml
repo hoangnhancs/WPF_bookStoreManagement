@@ -1,0 +1,551 @@
+﻿<UserControl x:Class="bookStoreManagetment.UserControls.mailUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:bookStoreManagetment.UserControls" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="#F2F7FA"
+             Foreground=" #FF495B67"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="575" d:DesignWidth="1024"
+             DataContext="{StaticResource mailVM}">
+    <UserControl.Resources>
+        <Image x:Key="iconEdit" Source="/pictures/icons8_edit_25px.png" />
+        <Image x:Key="iconDelete" Source="/pictures/icons8_trash_25px.png" />
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction
+                    Command="{Binding LoadMailCommand}"
+                    />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--căn data-->
+        <Grid Grid.Row="1">
+            <DataGrid ColumnWidth="*"
+                      Background="Transparent"
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--main Content-->
+        <Grid Grid.Row = "0" Background="Transparent">
+            <Grid Margin="10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="13*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock VerticalAlignment="Center" 
+                HorizontalAlignment="Left" 
+                       Text="Quản Lí Mail"
+                       FontWeight="SemiBold"
+                       FontSize="18"
+                Margin="20 0 0 0"></TextBlock>
+                </Grid>
+                <!--Visibility="{Binding GridDetailMailVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                <Grid Grid.Row="1" x:Name="gridMain">
+                    <Grid x:Name="gridMailDetail" 
+                Visibility="{Binding GridDetailMailVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="36"/>
+                            <RowDefinition Height="10*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel
+                    Orientation="Horizontal"
+                    Margin="40 0 0 0">
+                                <Button Background="ForestGreen" Foreground="White" BorderBrush="ForestGreen"
+                                        x:Name="btnMailMau" Width="120" Style="{StaticResource MaterialDesignFlatDarkBgButton}"  Content="Mail mẫu">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                    Command="{Binding ShowMailCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button Background="#d78a1e" Foreground="White" BorderBrush="#d78a1e"
+                                    Width="120" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Content="Quản lý mail">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                    Command="{Binding ShowSentMailCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="340"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" >
+                                <materialDesign:Card UniformCornerRadius="20">
+                                    <DockPanel
+                                    VerticalAlignment="Center"
+                                    Opacity="0.8"
+                                    Margin="4 0 0 0">
+                                        <materialDesign:PackIcon Kind="Search" 
+                                                        DockPanel.Dock="Left"
+                                                        Width="20"
+                                                        Height="20"/>
+                                        <TextBox Padding="5 0 0 0"
+                                        DockPanel.Dock="Bottom"
+                                        Text="{Binding textBoxSearchValue, UpdateSourceTrigger=PropertyChanged}"
+                                        x:Name="textboxSearch"
+                                        materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                        materialDesign:HintAssist.Hint="Nhập mã mail"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        BorderThickness="0">
+                                            <!--tìm kiếm theo tên và mã -->
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding searchEngineer}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+                                    </DockPanel>
+                                </materialDesign:Card>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Background="#1e98d7" Margin="0 0 0 2" Foreground="White" BorderBrush="#1e98d7"
+                                        Content="Thêm mới" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Width="120" HorizontalAlignment="Right" RenderTransformOrigin="0.508,0.5">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction 
+                                    Command="{Binding CloseButton}"
+                                    CommandParameter="{Binding ElementName=btnUpdate}"/>
+                                                <i:InvokeCommandAction 
+                                    Command="{Binding OpenButton}"
+                                    CommandParameter="{Binding ElementName=btnAdd}"/>
+                                                <i:InvokeCommandAction
+                                    Command="{Binding btnAddMailClick}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        <!--{Binding GridDataGridVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}-->
+                        <Grid Grid.Row="2">
+                            <Grid x:Name="gridDataGrid" Visibility="{Binding GridDataGridVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <materialDesign:Card Margin="0 10 0 10">
+                                    <DataGrid 
+                        x:Name="dgMail" 
+                            ColumnWidth="*"
+                        AutoGenerateColumns="False" 
+                        CanUserAddRows="False" 
+                        HorizontalAlignment="Center" 
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        ItemsSource="{Binding InventoryList}"
+                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Header="Tiêu đề mail" Binding="{Binding Mail.subjectMail}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="auto" Header="Loại mail" Binding="{Binding Mail.typeMail}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="auto" Header="Ngày cập nhật" Binding="{Binding Mail.updateDate}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        <Setter Property="ContentStringFormat" Value="dd MMM yyyy"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTemplateColumn Width="*" Header="Gửi tự động">
+                                                <DataGridTemplateColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTemplateColumn.HeaderStyle>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ToggleButton
+                                                Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                        Background="ForestGreen"
+                                                ToolTip="MaterialDesignSwitchToggleButton"
+                                                IsChecked="{Binding Check,UpdateSourceTrigger=PropertyChanged}">
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="Click">
+                                                                    <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.toggleClickCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
+
+                                                        </ToggleButton>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="*" Header="Tùy chỉnh">
+                                                <DataGridTemplateColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTemplateColumn.HeaderStyle>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right">
+                                                            <!--edit-->
+                                                            <Button Background="Transparent"
+                                                                 x:Name="btnEdit"
+                                                    BorderBrush="Transparent"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Padding="0"
+                                                    Margin="0 0 5 0">
+                                                                <materialDesign:PackIcon 
+                                                    Kind="Edit"                                             
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="ForestGreen"/>
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="Click">
+                                                                        <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.DetailMailCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                                        <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.CloseButton}"
+                                                        CommandParameter="{Binding ElementName=btnAdd}"/>
+                                                                        <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.OpenButton}"
+                                                        CommandParameter="{Binding ElementName=btnUpdate}"/>
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                            </Button>
+
+                                                            <!--delete-->
+                                                            <Button 
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                           x:Name="btnDelete"
+                                                Width="auto"
+                                                Height="auto"
+                                                Padding="0">
+                                                                <materialDesign:PackIcon 
+                                                    Kind="Delete"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="red"/>
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="Click">
+                                                                        <i:InvokeCommandAction
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnDeleteCommand}"
+                                                        CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:Card>
+                            </Grid>
+                            <!--{Binding GridSentMailVisible,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}-->
+                            <Grid x:Name="gridSentMail" Visibility="{Binding GridSentMailVisible,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <materialDesign:Card Margin="0 10 0 10">
+                                    <DataGrid ColumnWidth="*"
+                        x:Name="dgSentMail" 
+                        AutoGenerateColumns="False" 
+                        CanUserAddRows="False" 
+                        HorizontalAlignment="Center" 
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        ItemsSource="{Binding InventoryListSentMail}"
+                        SelectedItem="{Binding SelectedItemSentMail, Mode=TwoWay}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="auto" Header="Tiêu đề mail" Binding="{Binding Sentmail.subjectMail}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="*" Header="Mail nhận" Binding="{Binding Sentmail.receiverMail}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="auto" Header="Loại mail" Binding="{Binding Sentmail.typeMail}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="auto" Header="Trạng thái" Binding="{Binding Sentmail.mailStatus}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="auto" Header="Ngày gửi" Binding="{Binding Sentmail.dateSent}" IsReadOnly="True">
+                                                <DataGridTextColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        <Setter Property="ContentStringFormat" Value="dd MMM yyyy"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTemplateColumn Width="*" Header="Trạng thái">
+                                                <DataGridTemplateColumn.HeaderStyle >
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                        <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    </Style>
+                                                </DataGridTemplateColumn.HeaderStyle>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal"
+                                                                HorizontalAlignment="Right">
+                                                            <Button Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                                x:Name="btnChitiet"
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Padding="0"
+                                                    Margin="0 0 5 0">
+                                                                <materialDesign:PackIcon 
+                                                    Kind="Eye"                                             
+                                                    Width="auto"
+                                                    Height="auto"
+                                                    Foreground="#1e98d7"/>
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="Click">
+                                                                        <i:InvokeCommandAction 
+                                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.btnChitietSentMailCommand}"
+                                                            CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:Card>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <!--Visibility="{Binding GridEditMailVisible}-->
+                    <Grid x:Name="gridEditMail" Visibility="{Binding GridEditMailVisible}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="6*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tiêu đề" 
+                                               FontSize="16"
+                                               FontWeight="DemiBold"
+                                               Margin="10 0 10 0"
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <materialDesign:Card Height="30" UniformCornerRadius="10">
+                                        <TextBox VerticalAlignment="Center" Width="200" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="30" Margin="10 0 0 0"
+                            Text="{Binding Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    </materialDesign:Card>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Loại mail" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0"></TextBlock>
+                                    <materialDesign:Card Height="30" UniformCornerRadius="10">
+                                        <ComboBox Margin="10 0 0 0" Width="120" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalAlignment="Center" Height="30"
+                                        Text="{Binding Mailtype, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding cbbMailType}"
+                                        VerticalContentAlignment="Center"
+                                        x:Name="cbbMailType">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding cbbMailTypeSelectionChanged}"
+                                                                CommandParameter="{Binding ElementName=cbbMailType}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ComboBox>
+                                    </materialDesign:Card>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Cách gửi" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0"></TextBlock>
+                                    <materialDesign:Card Height="30" UniformCornerRadius="10">
+                                        <ComboBox Margin="10 0 0 0" Width="120" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalAlignment="Center" Height="40"
+                                        Text="{Binding Senttype, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding cbbSentType}"
+                                        VerticalContentAlignment="Center"
+                                        IsEnabled="{Binding ComboBoxSenttypeEnable, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                                    </materialDesign:Card>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="3">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Ngày gửi" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0" ></TextBlock>
+                                    <materialDesign:Card Height="30" UniformCornerRadius="10">
+                                        <DatePicker Height="30" HorizontalContentAlignment="Center" Width="90" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" HorizontalAlignment="Center"
+                                SelectedDate="{Binding DateSent,UpdateSourceTrigger=PropertyChanged}">
+                                        </DatePicker>
+                                    </materialDesign:Card>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Nội dung" FontSize="16"
+                                           FontWeight="DemiBold"
+                                           Margin="10 0 0 10"/>
+                                <materialDesign:Card UniformCornerRadius="20">
+                                    <TextBox Margin="10" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" Height="180" Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </materialDesign:Card>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Người gửi" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center" Margin="10 0 10 0"></TextBlock>
+                                <materialDesign:Card Height="30" UniformCornerRadius="10">
+                                    <TextBox VerticalAlignment="Center" Margin="10 0 10 0" Width="170" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" VerticalContentAlignment="Center" Height="40" 
+                                    Text="{Binding Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    IsReadOnly="{Binding ReadOnly,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </materialDesign:Card>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Background="Red" BorderBrush="Red" Content="Hủy" Width="120" Style="{StaticResource MaterialDesignFlatDarkBgButton}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction 
+                                    Command="{Binding btnHuyClickCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button Background="#1e98d7" BorderBrush="#1e98d7" x:Name="btnUpdate" Width="120" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="10 0 0 0" Content="Cập nhật" Visibility="Visible"
+                            IsEnabled="{Binding Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                    Command="{Binding btnCapnhatClickCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button x:Name="btnAdd" Width="120" Background="#1e98d7" BorderBrush="#1e98d7" Foreground="White" Content="Thêm" Visibility="Collapsed" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                            IsEnabled="{Binding Enable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction
+                                    Command="{Binding btnAddClickCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

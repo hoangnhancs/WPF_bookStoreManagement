@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:bookStoreManagetment.ViewModel" 
+                    xmlns:view="clr-namespace:bookStoreManagetment.UserControls">
+
+
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+
+    <viewmodel:CheckItemsViewModel x:Key="CheckItemsVM"></viewmodel:CheckItemsViewModel>
+
+    <viewmodel:ListofProductsViewModel x:Key="ListofProductsVM"></viewmodel:ListofProductsViewModel>
+
+    <viewmodel:DashBoardViewModel x:Key="DashBoardVM"></viewmodel:DashBoardViewModel>
+
+    <viewmodel:ImportGoodsViewModel x:Key="ImportGoodsVM"></viewmodel:ImportGoodsViewModel>
+
+    <viewmodel:NhacungcapViewMode x:Key="NhacungcapVM"></viewmodel:NhacungcapViewMode>
+
+    <viewmodel:PhieuThuViewModel x:Key="PhieuThuVM"></viewmodel:PhieuThuViewModel>
+
+    <viewmodel:DSThuChiViewModel x:Key="DSThuChiVM"></viewmodel:DSThuChiViewModel>
+
+    <viewmodel:PhieuChiViewModel x:Key="PhieuChiVM"></viewmodel:PhieuChiViewModel>
+
+    <viewmodel:CaiDatChungViewModel x:Key="CaiDatChungVM"></viewmodel:CaiDatChungViewModel>
+    <viewmodel:AddSupplierViewModel x:Key="AddSupplierVM"></viewmodel:AddSupplierViewModel>
+    <viewmodel:EditSupplierViewModel x:Key="EditSupplierVM"></viewmodel:EditSupplierViewModel>
+    <viewmodel:mailViewModel x:Key="mailVM"></viewmodel:mailViewModel>
+
+    <viewmodel:KhachtrahangViewModel x:Key="KhachtrahangVM"></viewmodel:KhachtrahangViewModel>
+
+    <viewmodel:DSHoaDonViewModel x:Key="DSHoaDonVM"></viewmodel:DSHoaDonViewModel>
+
+    <viewmodel:DSNhanVienViewModel x:Key="DSNhanVienVM" ></viewmodel:DSNhanVienViewModel>
+    <viewmodel:DSKhachHangViewModel x:Key="DSKhachHangVM" ></viewmodel:DSKhachHangViewModel>
+    <viewmodel:ThongTinNhanVienViewModel x:Key="ThongTinNhanVienVM" ></viewmodel:ThongTinNhanVienViewModel>
+
+    <DataTemplate DataType="{x:Type viewmodel:NhacungcapViewMode}">
+        <view:NhacungcapUC></view:NhacungcapUC>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:AddSupplierViewModel}">
+        <view:AddSupplier></view:AddSupplier>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:EditSupplierViewModel}">
+        <view:EditSupplier></view:EditSupplier>
+    </DataTemplate>
+</ResourceDictionary>
+    
