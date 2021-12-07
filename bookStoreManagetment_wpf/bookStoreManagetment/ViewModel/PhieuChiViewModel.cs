@@ -550,12 +550,12 @@ namespace bookStoreManagetment.ViewModel
             List<exportBill> newListExportBill = backupListExportBill.ToList();
             if (DisplayGroupType != null && DisplayGroupType != "")
             {
-                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.typeGroup == DisplayGroupType).ToList();
+                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.typeGroup.ToLower() == DisplayGroupType).ToList();
             }
 
             if (DisplayNameType != null && DisplayNameType != "")
             {
-                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.nameCustomer == DisplayNameType).ToList();
+                newListExportBill = newListExportBill.Where(x => x.ProfitSummary.nameCustomer.ToLower() == DisplayNameType).ToList();
             }
 
             if (displayBeginDay != null)

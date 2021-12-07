@@ -355,6 +355,7 @@ namespace bookStoreManagetment.ViewModel
                         DataProvider.Ins.DB.SaveChanges();
                         ViewKhachHang.Cus.idCustommer = code;
                         ViewKhachHang.Cus.sex = sexCurrent;
+                        ViewKhachHang.Cus.accumulatedPoints = 0;
                         ViewKhachHang.counListBill = 0;
                         ViewKhachHang.FullName = ViewKhachHang.Cus.lastName + " " + ViewKhachHang.Cus.lastName;
                         ViewKhachHang.ListBill = new List<string>();
