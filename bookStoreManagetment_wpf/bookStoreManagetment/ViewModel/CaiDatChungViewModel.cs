@@ -353,7 +353,7 @@ namespace bookStoreManagetment.ViewModel
             }, (p) =>
             {
                 // xác nhận xoá
-                MessageBoxResult result = MessageBox.Show("Bạn có muốn xoá phiếu thu này không ?",
+                MessageBoxResult result = MessageBox.Show("Bạn có muốn xoá quy định này không ?",
                                           "Xác nhận",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Question);
