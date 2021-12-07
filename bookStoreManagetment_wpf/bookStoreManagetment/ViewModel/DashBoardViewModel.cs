@@ -86,20 +86,20 @@ namespace bookStoreManagetment.ViewModel
                 ImageSource photo = null;
                 try
                 {
-                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cell.imageItem));
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Image\\" + cell.imageItem));
                 }
                 catch
                 {
                     try
                     {
-                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\" + cell.nameItem + ".jpg"));
+                        photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Image\\" + cell.nameItem + ".jpg"));
 
                     }
                     catch
                     {
                         try
                         {
-                            photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image\\không có ảnh.jpg"));
+                            photo = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Image\\không có ảnh.jpg"));
                         }
                         catch
                         {

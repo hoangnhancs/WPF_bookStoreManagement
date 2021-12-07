@@ -638,24 +638,32 @@ namespace bookStoreManagetment.ViewModel
 
             ClickRemoveProductCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                var cellItem = p as Product;
-                var cellTableItem = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItem.Item.idItem).SingleOrDefault();
-                if (cellTableItem.typeItem == "book")
+                MessageBoxResult result = MessageBox.Show("Bạn có muốn xoá sản phẩm này không ?",
+                                          "Xác nhận",
+                                          MessageBoxButton.YesNo,
+                                          MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
-                    var cellitem = DataProvider.Ins.DB.bookInformations.Where(x => x.idBook == cellTableItem.idItem).SingleOrDefault();
-                    DataProvider.Ins.DB.items.Remove(cellTableItem);
-                    DataProvider.Ins.DB.bookInformations.Remove(cellitem);
+                    var cellItem = p as Product;
+                    var cellTableItem = DataProvider.Ins.DB.items.Where(x => x.idItem == cellItem.Item.idItem).SingleOrDefault();
+                    if (cellTableItem.typeItem == "book")
+                    {
+                        var cellitem = DataProvider.Ins.DB.bookInformations.Where(x => x.idBook == cellTableItem.idItem).SingleOrDefault();
+                        DataProvider.Ins.DB.items.Remove(cellTableItem);
+                        DataProvider.Ins.DB.bookInformations.Remove(cellitem);
+                    }
+                    else if (cellTableItem.typeItem == "Văn phòng phẩm")
+                    {
+                        var cellitem = DataProvider.Ins.DB.studytoolsInformations.Where(x => x.idStudyTool == cellTableItem.idItem).SingleOrDefault();
+                        DataProvider.Ins.DB.items.Remove(cellTableItem);
+                        DataProvider.Ins.DB.studytoolsInformations.Remove(cellitem);
+                    }
+                    BackUpListAllProduct.Remove(cellItem);
+                    ListAllProduct.Remove(cellItem);
+                    ListofProduct.Remove(cellItem);
+                    DataProvider.Ins.DB.SaveChanges();
                 }
-                else if (cellTableItem.typeItem == "Văn phòng phẩm")
-                {
-                    var cellitem = DataProvider.Ins.DB.studytoolsInformations.Where(x => x.idStudyTool == cellTableItem.idItem).SingleOrDefault();
-                    DataProvider.Ins.DB.items.Remove(cellTableItem);
-                    DataProvider.Ins.DB.studytoolsInformations.Remove(cellitem);
-                }
-                BackUpListAllProduct.Remove(cellItem);
-                ListAllProduct.Remove(cellItem);
-                ListofProduct.Remove(cellItem);
-                DataProvider.Ins.DB.SaveChanges();
+                
             });
 
         }
