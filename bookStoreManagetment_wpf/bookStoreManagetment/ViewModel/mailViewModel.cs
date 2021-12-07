@@ -1,4 +1,4 @@
-﻿using bookStoreManagetment.Model;
+using bookStoreManagetment.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -227,25 +227,32 @@ namespace bookStoreManagetment.ViewModel
                 seen = false;
                 EnableChange(seen);
                 SelectedItem = (p as checkmail);
-                Subject = SelectedItem.Mail.subjectMail;
-                Content = SelectedItem.Mail.content;
-                Sender = SelectedItem.Mail.sender;
-                Mailtype = SelectedItem.Mail.typeMail;
-                Console.WriteLine(Mailtype);
-                //MessageBox.Show(Mailtype);
-                Senttype = SelectedItem.Mail.typesent;
-                try
+                if (SelectedItem.Mail != null)
                 {
-                    DateSent = (DateTime)SelectedItem.Mail.autosentDate;
+                    Subject = SelectedItem.Mail.subjectMail;
+                    Content = SelectedItem.Mail.content;
+                    Sender = SelectedItem.Mail.sender;
+                    Mailtype = SelectedItem.Mail.typeMail;
+                    Console.WriteLine(Mailtype);
+                    //MessageBox.Show(Mailtype);
+                    Senttype = SelectedItem.Mail.typesent;
+                    try
+                    {
+                        DateSent = (DateTime)SelectedItem.Mail.autosentDate;
+                    }
+                    catch
+                    {
+                        DateSent = DateTime.Now.Date;
+                    }
+                    GridDataGridVisible = Visibility.Collapsed;
+                    GridDetailMailVisible = Visibility.Collapsed;
+                    GridSentMailVisible = Visibility.Collapsed;
+                    GridEditMailVisible = Visibility.Visible;
                 }
-                catch
+                else
                 {
-                    DateSent = DateTime.Now.Date;
-                }
-                GridDataGridVisible = Visibility.Collapsed;
-                GridDetailMailVisible = Visibility.Collapsed;
-                GridSentMailVisible = Visibility.Collapsed;
-                GridEditMailVisible = Visibility.Visible;
+                    MessageBox.Show("Không có mail để chỉnh sửa");
+                }    
             });
             #endregion
 
@@ -392,25 +399,36 @@ namespace bookStoreManagetment.ViewModel
             });
             btnCapnhatClickCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (MessageBox.Show("Bạn có muốn cập nhật?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (SelectedItem.Mail != null)
                 {
-                    DateTime now = DateTime.Now.Date;
-                    //string query = "update mail set content=N'" + Content +"',typeMail=N'"+Mailtype +"',subjectMail=N'" + Subject + "',sender=N'" + Sender + "',updateDate=N'" + now.ToString() + "' where idMail=" + SelectedItem.Mail.idMail;
-                    //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
-                    var res = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
-                    if (res != null)
+                    if (MessageBox.Show("Bạn có muốn cập nhật?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        res.content = Content;
-                        res.typeMail = Mailtype;
-                        res.subjectMail = Subject;
-                        res.sender = Sender;
-                        res.updateDate = now;
-                        res.autosentDate = DateSent;
-                        res.typesent = Senttype;
-                        DataProvider.Ins.DB.SaveChanges();
+                        DateTime now = DateTime.Now.Date;
+                        //string query = "update mail set content=N'" + Content +"',typeMail=N'"+Mailtype +"',subjectMail=N'" + Subject + "',sender=N'" + Sender + "',updateDate=N'" + now.ToString() + "' where idMail=" + SelectedItem.Mail.idMail;
+                        //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                        if (check())
+                        {
+                            var res = DataProvider.Ins.DB.mails.SingleOrDefault(i => i.idMail == SelectedItem.Mail.idMail);
+                            if (res != null)
+                            {
+                                res.content = Content;
+                                res.typeMail = Mailtype;
+                                res.subjectMail = Subject;
+                                res.sender = Sender;
+                                res.updateDate = now;
+                                res.autosentDate = DateSent;
+                                res.typesent = Senttype;
+                                DataProvider.Ins.DB.SaveChanges();
+                            }
+                            MessageBox.Show("Cập nhật thành công");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Vui lòng điền đủ thông tin");
+                        }
                     }
-                    MessageBox.Show("Cập nhật thành công");
                 }
+                
             });
             btnAddMailClick = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -426,7 +444,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 string query;
                 DateTime now = DateTime.Now;
-                if (Mailtype != null && Subject != "" && Content != "" && Sender != "" && Senttype != null)
+                if (check()) 
                 {
                     if (Mailtype.ToLower() != "sinh nhật")
                     {
@@ -455,19 +473,26 @@ namespace bookStoreManagetment.ViewModel
             btnDeleteCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 SelectedItem = (p as checkmail);
-                int id = SelectedItem.Mail.idMail;
-
-                string sbj = SelectedItem.Mail.subjectMail;
-
-                if (MessageBox.Show(String.Format("Bạn có muốn xóa mail {0}?", sbj), "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (SelectedItem != null && SelectedItem.Mail != null)
                 {
-                    string query = "delete from mail where idMail=" + id;
-                    DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                    int id = SelectedItem.Mail.idMail;
 
-                    LoadData();
-                    MessageBox.Show(String.Format("Bạn đã xóa thành công mail {0}", sbj));
+                    string sbj = SelectedItem.Mail.subjectMail;
 
+                    if (MessageBox.Show(String.Format("Bạn có muốn xóa mail {0}?", sbj), "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        string query = "delete from mail where idMail=" + id;
+                        DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+
+                        LoadData();
+                        MessageBox.Show(String.Format("Bạn đã xóa thành công mail {0}", sbj));
+
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("Không có mail để xóa");
+                }    
             });
             void EnableChange(bool seen)
             {
@@ -477,7 +502,13 @@ namespace bookStoreManagetment.ViewModel
 
             }
             #endregion
-
+            bool check()
+            {
+                if (Mailtype != null && Mailtype != "" && Subject != "" && Subject != null && Content != "" && Content != null && Sender != null && Sender != "" && Senttype != null && Senttype != "")
+                    return true;
+                else
+                    return false;
+            }
 
             void LoadData()
             {
