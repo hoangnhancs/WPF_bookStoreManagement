@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="bookStoreManagetment.UserControls.DSHoaDonUC"
+<UserControl x:Class="bookStoreManagetment.UserControls.DSHoaDonUC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -39,7 +39,6 @@
         <!--main Content-->
         <Grid Grid.Row = "0">
             <Grid Margin="10" Background="Transparent">
-                <!--{Binding IsDSHoaDon}-->
                 <Grid Visibility="{Binding IsDSHoaDon}" x:Name="gridDSHoaDon">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
@@ -362,7 +361,7 @@
                         </materialDesign:Card>
                     </Grid>
                 </Grid>
-                <!--{Binding IsBillViewing}-->
+
                 <Grid Visibility="{Binding IsBillViewing}" x:Name="gridXemHoaDon">
                     <Grid Margin="10,0,10,0" Background="Transparent">
                         <Grid.Resources>
@@ -410,7 +409,7 @@
                                 </WrapPanel>
                             </Grid>
                             <Grid Grid.Column="1" Margin="0,0,30,0">
-                                <Button Command="{Binding OpenPrintBillCommand}" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Background="forestGreen">
+                                <Button Command="{Binding OpenPrintBillCommand}" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Background="forestGreen" BorderBrush="forestGreen">
                                     <materialDesign:PackIcon Kind="Printer"/>
                                 </Button>
                             </Grid>
@@ -802,7 +801,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <!--{Binding IsBillCreating}-->
+
                 <Grid Visibility="{Binding IsBillCreating}" x:Name="gridTaoHoaDon">
                     <Grid Margin="10,0,10,0" Background="Transparent">
                         <Grid.Resources>
@@ -1377,7 +1376,7 @@
                                         </Grid>
                                         <Grid Grid.Row="1" Background="White">
                                             <Border/>
-                                            <TextBox Text="{Binding PaidPrice, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding PayPrice, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                         </Grid>
                                     </Grid>
                                 </Grid>
