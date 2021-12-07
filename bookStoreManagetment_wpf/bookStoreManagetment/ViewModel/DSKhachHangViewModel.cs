@@ -195,7 +195,13 @@ namespace bookStoreManagetment.ViewModel
             });
 
             // xoá nhân viên
-            DeleteKhachHangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            DeleteKhachHangCommand = new RelayCommand<object>((p) => {
+                if (p == null)
+                    return false;
+                if ((p as ShowKhachHang).Cus == null)
+                    return false;
+                return true;
+            }, (p) =>
             {
                 MessageBoxResult result = MessageBox.Show("Bạn có muốn xoá khách hàng này không ?",
                                           "Xác nhận",

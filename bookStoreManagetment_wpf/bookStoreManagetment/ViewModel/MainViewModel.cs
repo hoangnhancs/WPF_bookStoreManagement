@@ -158,7 +158,15 @@ namespace bookStoreManagetment.ViewModel
 
             // Đăng xuất 
             LogoutCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
-                RestartApp(p);
+                // xác nhận xoá
+                MessageBoxResult result = MessageBox.Show("Bạn có muốn đăng xuất không ?",
+                                          "Xác nhận",
+                                          MessageBoxButton.YesNo,
+                                          MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    RestartApp(p);
+                }
             });
 
             // chane color button command
