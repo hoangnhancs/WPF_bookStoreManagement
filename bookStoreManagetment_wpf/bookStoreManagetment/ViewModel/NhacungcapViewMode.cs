@@ -1,4 +1,4 @@
-﻿using bookStoreManagetment.Model;
+using bookStoreManagetment.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -126,6 +126,7 @@ namespace bookStoreManagetment.ViewModel
                 IsFilter = Visibility.Collapsed;
                 EditNhacungcapVisible = Visibility.Collapsed;
                 DSNhacungcapVisible = Visibility.Visible;
+                //SelectedItem = new Inventory();
                 LoadListStatus();
                 SearchEngineer(textBoxSearchValue, CurrentStatus);
       
@@ -157,46 +158,63 @@ namespace bookStoreManagetment.ViewModel
                 ButtonUpdateVisible = Visibility.Visible;
                 DSNhacungcapVisible = Visibility.Collapsed;
                 EditNhacungcapVisible = Visibility.Visible;
+                
                 SelectedItem = p as Inventory;
-                idSup = SelectedItem.Supplier.idSupplier;
-                nameSup = SelectedItem.Supplier.nameSupplier;
-                addressSup = SelectedItem.Supplier.addressSupplier;
-                emailSup = SelectedItem.Supplier.emailSupplier;
-                string[] lstadd = addressSup.Split(',');
-                //MessageBox.Show(lstadd[0] + "," + lstadd[1] + "," + lstadd[2] + "," + lstadd[3]);
-                sonha = lstadd[0];
-                xa = lstadd[1].Replace(" xã ", "");
-                huyen = lstadd[2].Replace(" huyện ", "");
-                tinh = lstadd[3].Replace(" tỉnh ", "");
-                phoneSup = SelectedItem.Supplier.phoneNumberSupplier;
-                website = SelectedItem.Supplier.website;
-                fax = SelectedItem.Supplier.fax;
-                masothue = SelectedItem.Supplier.masothue;
-                EditNhacungcapVisible = Visibility.Visible;
-                DSNhacungcapVisible = Visibility.Collapsed;
+                if (SelectedItem.Supplier != null)
+                {
+
+                    idSup = SelectedItem.Supplier.idSupplier;
+                    nameSup = SelectedItem.Supplier.nameSupplier;
+                    addressSup = SelectedItem.Supplier.addressSupplier;
+                    emailSup = SelectedItem.Supplier.emailSupplier;
+                    string[] lstadd = addressSup.Split(',');
+                    //MessageBox.Show(lstadd[0] + "," + lstadd[1] + "," + lstadd[2] + "," + lstadd[3]);
+                    sonha = lstadd[0];
+                    xa = lstadd[1].Replace(" xã ", "");
+                    huyen = lstadd[2].Replace(" huyện ", "");
+                    tinh = lstadd[3].Replace(" tỉnh ", "");
+                    phoneSup = SelectedItem.Supplier.phoneNumberSupplier;
+                    website = SelectedItem.Supplier.website;
+                    fax = SelectedItem.Supplier.fax;
+                    masothue = SelectedItem.Supplier.masothue;
+                    EditNhacungcapVisible = Visibility.Visible;
+                    DSNhacungcapVisible = Visibility.Collapsed;
+                }
+                
             });
             updateSupplierCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                updateSupplier();
+                if (SelectedItem.Supplier != null)
+                {
+                    updateSupplier();
+                }
+                else
+                {
+                    MessageBox.Show("Không có thông tin chỉnh sửa");
+                }    
             });
             btnDeleteSupplierCommand = new RelayCommand<Object>((p) => { return true; }, (p) =>
             {
-
-                SelectedItem = p as Inventory;
-                string selectedID = SelectedItem.Supplier.idSupplier;
-
-                if (MessageBox.Show("Bạn có muốn xóa nhà cung cấp này?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (p != null)
                 {
-                    //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
-                    var x = (from y in DataProvider.Ins.DB.suppliers where y.idSupplier == selectedID select y).FirstOrDefault();
-                    if (x != null)
-                    {
-                        DataProvider.Ins.DB.suppliers.Remove(x);
-                        DataProvider.Ins.DB.SaveChanges();
-                    }
-                }
+                    SelectedItem = p as Inventory;
+                
+                    string selectedID = SelectedItem.Supplier.idSupplier;
 
-                SearchEngineer(textBoxSearchValue, CurrentStatus);
+                    if (MessageBox.Show("Bạn có muốn xóa nhà cung cấp này?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        //DataProvider.Ins.DB.Database.ExecuteSqlCommand(query);
+                        var x = (from y in DataProvider.Ins.DB.suppliers where y.idSupplier == selectedID select y).FirstOrDefault();
+                        if (x != null)
+                        {
+                            DataProvider.Ins.DB.suppliers.Remove(x);
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
+                        MessageBox.Show("Xóa nhà cung cấp thành công");
+                    }
+                    
+                    SearchEngineer(textBoxSearchValue, CurrentStatus);
+                }
             });
             //ham them nha cung cap
             void addSupExcuteQuery()
@@ -206,7 +224,8 @@ namespace bookStoreManagetment.ViewModel
                     addressSup = String.Format("{0}, xã {1}, huyện {1}, tỉnh {2}", sonha, xa, huyen, tinh);
                     Console.WriteLine(addressSup);
                     string newid;
-                    if (nameSup != "" && tinh != "" && huyen != "" && xa != "" && sonha != "" && emailSup != "" && phoneSup != "")
+                    if (nameSup != "" && tinh != "" && huyen != "" && xa != "" && sonha != "" && emailSup != "" && phoneSup != "" && fax != "" && website != "" && masothue != "" &&
+                        nameSup != null && tinh != null && huyen != null && xa != null && sonha != null && emailSup != null && phoneSup != null && fax != null && website != null && masothue != null) 
                     {
 
                         int count;
@@ -257,21 +276,29 @@ namespace bookStoreManagetment.ViewModel
             void updateSupplier()
             {
                 if (MessageBox.Show("Bạn có muốn cập nhật?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    var res = DataProvider.Ins.DB.suppliers.SingleOrDefault(i => i.idSupplier == idSup);
-                    addressSup = String.Format("{0}, xã {1}, huyện {1}, tỉnh {2}", sonha, xa, huyen, tinh);
-                    if (res != null)
+                {   
+                    if (nameSup != "" && tinh != "" && huyen != "" && xa != "" && sonha != "" && emailSup != "" && phoneSup != "" && fax != "" && website != "" && masothue != "" &&
+                        nameSup != null && tinh != null && huyen != null && xa != null && sonha != null && emailSup != null && phoneSup != null && fax != null && website != null && masothue != null)
                     {
-                        res.nameSupplier = nameSup;
-                        res.addressSupplier = addressSup;
-                        res.emailSupplier = emailSup;
-                        res.phoneNumberSupplier = phoneSup;
-                        res.website = website;
-                        res.fax = fax;
-                        res.masothue = masothue;
-                        DataProvider.Ins.DB.SaveChanges();
+                        var res = DataProvider.Ins.DB.suppliers.SingleOrDefault(i => i.idSupplier == idSup);
+                        addressSup = String.Format("{0}, xã {1}, huyện {1}, tỉnh {2}", sonha, xa, huyen, tinh);
+                        if (res != null)
+                        {
+                            res.nameSupplier = nameSup;
+                            res.addressSupplier = addressSup;
+                            res.emailSupplier = emailSup;
+                            res.phoneNumberSupplier = phoneSup;
+                            res.website = website;
+                            res.fax = fax;
+                            res.masothue = masothue;
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
+                        MessageBox.Show("Cập nhật thành công");
                     }
-                    MessageBox.Show("Cập nhật thành công");
+                    else
+                    {
+                        MessageBox.Show("Vui lòng điền đủ thông tin");
+                    }    
                 }
             }
             #endregion
