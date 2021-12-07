@@ -1,4 +1,4 @@
-﻿using bookStoreManagetment.Model;
+using bookStoreManagetment.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -303,13 +303,17 @@ namespace bookStoreManagetment.ViewModel
                         _newitemtrave.BuyNumber = item.number;
 
                         _newitemtrave.TraveNumber = item.number;
-                        
+
                         Danhsachsanpham.Add(_newitemtrave);
                     }
                     lstitemtrave = Danhsachsanpham.ToList();
                 }
                 else
+                {
+                    Danhsachsanpham.Clear();
+                    lstitemtrave.Clear();
                     MessageBox.Show("Đơn hàng này đã được trả trước đó!!!");
+                }
             });
             defindSelectedItemTrave = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -353,11 +357,12 @@ namespace bookStoreManagetment.ViewModel
             });
             saveKhachTrahangCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (MessageBox.Show("Bạn có muốn thêm?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (Danhsachsanpham.Count > 0 && LiDo != null && TenNhanVien != null)
                 {
-                    Danhsachsanpham = new ObservableCollection<itemtrave>(lstitemtrave);
-                    if (Danhsachsanpham.Count > 0 && LiDo!=null && TenNhanVien!=null ) 
+                    if (MessageBox.Show("Bạn có muốn thêm?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
+                        Danhsachsanpham = new ObservableCollection<itemtrave>(lstitemtrave);
+
                         if (TenNhanVien.Replace(" ", "") != "" && LiDo.Replace(" ", "") != "")
                         {
                             DateTime now = DateTime.Now;
@@ -372,8 +377,8 @@ namespace bookStoreManagetment.ViewModel
                             var _tmpfirstnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select firstName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
                             var _tmplastnameCus = DataProvider.Ins.DB.Database.SqlQuery<String>("Select lastName from custommer where idCustommer=N'" + _tmpidCus + "'").FirstOrDefault();
                             string _tmpnameCus = _tmplastnameCus + " " + _tmpfirstnameCus;
-                            string firstname="";
-                            string lastname="";
+                            string firstname = "";
+                            string lastname = "";
                             try
                             {
                                 var _tmpsplit = TenNhanVien.Split(' ');
@@ -391,7 +396,7 @@ namespace bookStoreManagetment.ViewModel
                                         firstname += _tmpsplit[i];
                                 }
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 MessageBox.Show(e.Message);
                             }
@@ -418,7 +423,7 @@ namespace bookStoreManagetment.ViewModel
                                 _tmp.discount = _tmpdiscount;
                                 _tmp.lido = LiDo;
                                 _tmp.nameEmployee = TenNhanVien;
-                      
+
 
                                 DataProvider.Ins.DB.khachtrahangs.Add(_tmp);
                                 DataProvider.Ins.DB.SaveChanges(); //cập nhật bảng tả hàng
@@ -452,12 +457,12 @@ namespace bookStoreManagetment.ViewModel
                                 _tmpprofit.nameBill = "Trả hàng";
                                 _tmpprofit.note = "";
                                 var _tmpbud = DataProvider.Ins.DB.profitSummaries.ToList();
-                                
+
                                 _tmpprofit.budget = _tmpbud[_tmpbud.Count - 1].budget - tientralai;
                                 DataProvider.Ins.DB.profitSummaries.Add(_tmpprofit);
                                 DataProvider.Ins.DB.SaveChanges();
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 MessageBox.Show(e.Message);
                             }
@@ -470,6 +475,10 @@ namespace bookStoreManagetment.ViewModel
                     }
                     else
                         MessageBox.Show("Vui lòng nhập đủ thông tin");
+                }
+                else
+                {
+                    MessageBox.Show("Không có sản phẩm trả về");
                 }
             });
 
