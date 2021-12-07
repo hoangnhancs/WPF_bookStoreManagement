@@ -562,13 +562,9 @@
                                         </Grid>
 
                                         <Grid Grid.Column="2">
-                                            <Rectangle Width="80"
-                                                    Height="80"
-                                                    Margin="0,5,645.8,5.4" HorizontalAlignment="Right">
-                                                <Rectangle.Fill>
-                                                    <ImageBrush ImageSource="{Binding ImageViewer}"></ImageBrush>
-                                                </Rectangle.Fill>
-                                            </Rectangle>
+                                            <Image Source="{Binding ImageViewer}"
+                                                   Width="60"
+                                                   HorizontalAlignment="Left"></Image>
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Row="2">
@@ -807,13 +803,9 @@
                                                                      Height="30"
                                                                      Foreground="ForestGreen"/>
                                         </Button>
-                                        <Rectangle Width="80"
-                                                Height="80"
-                                                Margin=" 5">
-                                            <Rectangle.Fill>
-                                                <ImageBrush ImageSource="{Binding ImageViewerEdit}"></ImageBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
+                                        <Image Source="{Binding ImageViewerEdit}"
+                                               HorizontalAlignment="Left"
+                                               Width="60"></Image>
 
                                     </StackPanel>
 

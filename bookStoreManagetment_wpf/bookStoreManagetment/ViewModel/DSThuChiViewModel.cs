@@ -156,8 +156,8 @@ namespace bookStoreManagetment.ViewModel
                         ObservableCollection<Sheet> newListSheet = new ObservableCollection<Sheet>();
                         foreach (var sheet in ListSheet)
                         {
-                            if (DateTime.Compare(sheet.ProfitSummary.day, DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
-                                && DateTime.Compare(sheet.ProfitSummary.day, DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
+                            if (DateTime.Compare(DateTime.ParseExact(sheet.ProfitSummary.day.Date.ToString().Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture), DateTime.ParseExact(displayBeginDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) >= 0
+                                && DateTime.Compare(DateTime.ParseExact(sheet.ProfitSummary.day.Date.ToString().Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture), DateTime.ParseExact(displayEndDay.Split(' ')[0], "M/d/yyyy", System.Globalization.CultureInfo.CurrentCulture)) <= 0)
                             {
                                 newListSheet.Add(sheet);
                             }
@@ -222,13 +222,19 @@ namespace bookStoreManagetment.ViewModel
                     GroupType = new List<string> {
                         "Khách Hàng"
                     };
+                    DisplayGroupType = "Khách Hàng";
                 }
                 else
                 {
-                    GroupType = new List<string> {
-                        "Nhân Viên",
-                        "Nhà Cung Cấp"
-                    };
+                    List<string> newGroupType = new List<string>();
+                    foreach(var profit in DataProvider.Ins.DB.profitSummaries.ToList())
+                    {
+                        if (newGroupType.Contains(profit.typeGroup) == false)
+                        {
+                            newGroupType.Add(profit.typeGroup);
+                        }
+                    }
+                    GroupType = newGroupType;
                 }
                 
             });
@@ -328,14 +334,14 @@ namespace bookStoreManagetment.ViewModel
                 newListSheet = newListSheet.Where(x => x.ProfitSummary.billType.ToLower() == query).ToList();
             }
 
-            if (DisplayGroupType != null && DisplayGroupType != "" && query == "export")
+            if (DisplayGroupType != null && DisplayGroupType != "" && query == "import")
             {
-                newListSheet = newListSheet.Where(x => x.ProfitSummary.typeGroup == DisplayGroupType).ToList();
+                newListSheet = newListSheet.Where(x => x.ProfitSummary.typeGroup.ToLower() == DisplayGroupType.ToLower()).ToList();
             }
 
             if (DisplayPayment != null && DisplayPayment != "")
             {
-                newListSheet = newListSheet.Where(x => x.ProfitSummary.payment == DisplayPayment).ToList();
+                newListSheet = newListSheet.Where(x => x.ProfitSummary.payment.ToLower() == DisplayPayment.ToLower()).ToList();
             }
 
             ListSheet = new ObservableCollection<Sheet>(newListSheet);

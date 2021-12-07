@@ -397,19 +397,19 @@
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Nhà cung cấp" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
+                                                <TextBlock Text="Nhà cung cấp" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 20 0 "/>
                                                 <TextBlock Text="{Binding NameSupplier}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="SĐT/Email" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
+                                                <TextBlock Text="SĐT/Email" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 40 0"></TextBlock>
                                                 <TextBlock Text="{Binding EmailPhonenumberSupplier}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="2">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Địa chỉ" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                                <TextBlock Text="Địa chỉ" Margin="20 0 60 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                                 <TextBlock Text="{Binding AddressSupplier}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Grid>
@@ -960,19 +960,19 @@
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Nhà cung cấp" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
+                                                    <TextBlock Text="Nhà cung cấp" VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 20 0 "/>
                                                     <TextBlock Text="{Binding EditNameSupplier}" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Row="1">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="SĐT/Email" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
+                                                    <TextBlock Text="SĐT/Email" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 40 0"></TextBlock>
                                                     <TextBlock Text="{Binding EditEmailPhonenumberSupplier}" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Row="2">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Địa chỉ" Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                                    <TextBlock Text="Địa chỉ" Margin="20 0 60 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                                     <TextBlock Text="{Binding EditAddressSupplier}" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
@@ -989,24 +989,20 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Margin="50 0 50 0">
-                            <Border BorderBrush="#424242"
-                            BorderThickness="2 2 2 0"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Stretch">
-                                <TextBlock Text="Chi tiết sản phẩm" Margin=" 10 0 0 0"></TextBlock>
-                            </Border>
+                            <TextBlock Text="Chi tiết sản phẩm" FontSize="16" FontWeight="SemiBold" Margin=" 10 0 0 0"></TextBlock>
                         </Grid>
                         <Grid Grid.Row="1" Margin="50 0 50 0">
-                            <Grid>
-                                <Grid x:Name="gribEditimportgoodsdetail"
+                            <materialDesign:Card>
+                                <Grid>
+                                    <Grid x:Name="gribEditimportgoodsdetail"
                                           Visibility="Visible">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="0.2*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <materialDesign:Card Margin="0 0 0 10">
-                                            <DataGrid
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="0.2*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <materialDesign:Card Margin="0 0 0 10">
+                                                <DataGrid
                                                 x:Name="datagribeditimportgood"
                                                 ItemsSource="{Binding InventoryListEdit}"
                                                 ColumnWidth="2*"
@@ -1015,384 +1011,385 @@
                                                 AutoGenerateColumns="False"
                                                 materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                                 materialDesign:DataGridAssist.ColumnHeaderPadding="20 8 8 8" Background="White">
-                                                <DataGrid.Columns>
+                                                    <DataGrid.Columns>
 
-                                                    <!--Mã sản phẩm-->
-                                                    <DataGridTextColumn
+                                                        <!--Mã sản phẩm-->
+                                                        <DataGridTextColumn
                                                         Binding="{Binding Item.idItem}"
                                                         Header="Mã Sản Phẩm"
                                                         Width="auto"
                                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                                        <DataGridTextColumn.HeaderStyle >
-                                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.HeaderStyle>
-                                                        <DataGridTextColumn.ElementStyle>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.ElementStyle>
-                                                    </DataGridTextColumn>
+                                                            <DataGridTextColumn.HeaderStyle >
+                                                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.HeaderStyle>
+                                                            <DataGridTextColumn.ElementStyle>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.ElementStyle>
+                                                        </DataGridTextColumn>
 
-                                                    <!--Tên sản phẩm-->
-                                                    <DataGridTextColumn
+                                                        <!--Tên sản phẩm-->
+                                                        <DataGridTextColumn
                                                         Binding="{Binding Item.nameItem}"
                                                         Header="Tên Sản Phẩm"
                                                         Width="2*"
                                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                                        <DataGridTextColumn.HeaderStyle >
-                                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.HeaderStyle>
-                                                        <DataGridTextColumn.ElementStyle>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                                                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.ElementStyle>
-                                                    </DataGridTextColumn>
+                                                            <DataGridTextColumn.HeaderStyle >
+                                                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.HeaderStyle>
+                                                            <DataGridTextColumn.ElementStyle>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.ElementStyle>
+                                                        </DataGridTextColumn>
 
-                                                    <!--Đơn vị-->
-                                                    <DataGridTextColumn
+                                                        <!--Đơn vị-->
+                                                        <DataGridTextColumn
                                                         Binding="{Binding Item.unit}"
                                                         Header="Loại"
                                                         Width="auto"
                                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                                        <DataGridTextColumn.HeaderStyle >
-                                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.HeaderStyle>
-                                                        <DataGridTextColumn.ElementStyle>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.ElementStyle>
-                                                    </DataGridTextColumn>
+                                                            <DataGridTextColumn.HeaderStyle >
+                                                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.HeaderStyle>
+                                                            <DataGridTextColumn.ElementStyle>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.ElementStyle>
+                                                        </DataGridTextColumn>
 
-                                                    <!--Số lượng-->
-                                                    <DataGridTextColumn
+                                                        <!--Số lượng-->
+                                                        <DataGridTextColumn
                                                         Binding="{Binding Count}"
                                                         Header="Số lượng"
                                                         Width="auto"
                                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                                        <DataGridTextColumn.HeaderStyle >
-                                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.HeaderStyle>
-                                                        <DataGridTextColumn.ElementStyle>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.ElementStyle>
-                                                    </DataGridTextColumn>
+                                                            <DataGridTextColumn.HeaderStyle >
+                                                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.HeaderStyle>
+                                                            <DataGridTextColumn.ElementStyle>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.ElementStyle>
+                                                        </DataGridTextColumn>
 
-                                                    <!--Giá-->
-                                                    <DataGridTextColumn
+                                                        <!--Giá-->
+                                                        <DataGridTextColumn
                                                         Binding="{Binding Item.importPriceItem}"
                                                         Header="Đơn giá"
                                                         Width="auto"
                                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                                        <DataGridTextColumn.HeaderStyle >
-                                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.HeaderStyle>
-                                                        <DataGridTextColumn.ElementStyle>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.ElementStyle>
-                                                    </DataGridTextColumn>
+                                                            <DataGridTextColumn.HeaderStyle >
+                                                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.HeaderStyle>
+                                                            <DataGridTextColumn.ElementStyle>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.ElementStyle>
+                                                        </DataGridTextColumn>
 
-                                                    <!--Giá-->
-                                                    <DataGridTextColumn
+                                                        <!--Giá-->
+                                                        <DataGridTextColumn
                                                         Binding="{Binding TotalPriceItem}"
                                                         Header="Thành tiền"
                                                         Width="auto"
                                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                                                        <DataGridTextColumn.HeaderStyle >
-                                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.HeaderStyle>
-                                                        <DataGridTextColumn.ElementStyle>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                                                            </Style>
-                                                        </DataGridTextColumn.ElementStyle>
-                                                    </DataGridTextColumn>
+                                                            <DataGridTextColumn.HeaderStyle >
+                                                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.HeaderStyle>
+                                                            <DataGridTextColumn.ElementStyle>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                                                </Style>
+                                                            </DataGridTextColumn.ElementStyle>
+                                                        </DataGridTextColumn>
 
-                                                    <!--button-->
-                                                    <DataGridTemplateColumn
+                                                        <!--button-->
+                                                        <DataGridTemplateColumn
                                                         Header="    "
                                                         Width="auto">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Button
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Button
                                                                         Width="20"
                                                                         Height="20"
                                                                         Foreground="ForestGreen"
                                                                         Style="{StaticResource MaterialDesignIconButton}"
                                                                         ToolTip="MaterialDesignIconButton" >
-                                                                        <materialDesign:PackIcon Kind="Pencil" Width="20" Height="20"/>
-                                                                        <i:Interaction.Triggers>
-                                                                            <i:EventTrigger EventName="Click">
-                                                                                <i:InvokeCommandAction
+                                                                            <materialDesign:PackIcon Kind="Pencil" Width="20" Height="20"/>
+                                                                            <i:Interaction.Triggers>
+                                                                                <i:EventTrigger EventName="Click">
+                                                                                    <i:InvokeCommandAction
                                                                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickHiddenCommand}"
                                                                                     CommandParameter="{Binding ElementName=gribEditimportgoodsdetail}"/>
-                                                                                <i:InvokeCommandAction
+                                                                                    <i:InvokeCommandAction
                                                                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickHiddenCommand}"
                                                                                     CommandParameter="{Binding ElementName=gribEditimportGoodsdetailproduct}"/>
-                                                                                <i:InvokeCommandAction 
+                                                                                    <i:InvokeCommandAction 
                                                                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickEdit_ProductAddImportGoodCommand}" 
                                                                                     CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                                            </i:EventTrigger>
-                                                                        </i:Interaction.Triggers>
-                                                                    </Button>
+                                                                                </i:EventTrigger>
+                                                                            </i:Interaction.Triggers>
+                                                                        </Button>
 
-                                                                    <Button
+                                                                        <Button
                                                                         Width="20"
                                                                         Height="20"
                                                                         Foreground="Red"
                                                                         Style="{StaticResource MaterialDesignIconButton}"
                                                                         ToolTip="MaterialDesignIconButton">
-                                                                        <materialDesign:PackIcon Kind="Delete" 
+                                                                            <materialDesign:PackIcon Kind="Delete" 
                                                                             Width="20"
                                                                             Height="20"/>
-                                                                        <i:Interaction.Triggers>
-                                                                            <i:EventTrigger EventName="Click">
-                                                                                <i:InvokeCommandAction 
+                                                                            <i:Interaction.Triggers>
+                                                                                <i:EventTrigger EventName="Click">
+                                                                                    <i:InvokeCommandAction 
                                                                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=DataContext.ClickEdit_RemoveProductImportGoodsCommand}" 
                                                                                     CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                                                                            </i:EventTrigger>
-                                                                        </i:Interaction.Triggers>
-                                                                    </Button>
-                                                                </StackPanel>
+                                                                                </i:EventTrigger>
+                                                                            </i:Interaction.Triggers>
+                                                                        </Button>
+                                                                    </StackPanel>
 
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
 
-                                                </DataGrid.Columns>
-                                            </DataGrid>
-                                        </materialDesign:Card>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </materialDesign:Card>
 
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Column="0">
-                                            <Button Content="Thêm sản phẩm" Width="200"
+                                            <Grid Grid.Column="0">
+                                                <Button Content="Thêm sản phẩm" Width="200"
                                                     Background="ForestGreen"
                                                     BorderBrush="ForestGreen"
                                                     Foreground="White"
                                                     HorizontalAlignment="Left"
                                                     Margin="0 0 0 0">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction
                                                             Command="{Binding ClickHiddenCommand}"
                                                             CommandParameter="{Binding ElementName=gridEditimportGoods}"/>
-                                                        <i:InvokeCommandAction
+                                                            <i:InvokeCommandAction
                                                             Command="{Binding ClickHiddenCommand}"
                                                             CommandParameter="{Binding ElementName=gribAddItemEdit}"/>
-                                                        <i:InvokeCommandAction
+                                                            <i:InvokeCommandAction
                                                             Command="{Binding ClickEditCheckItemCommand}"
                                                             CommandParameter="{Binding ElementName=grideditResultSearch}"/>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="Thành tiền:"
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBlock Text="Thành tiền:"
                                                            VerticalAlignment="Center"
                                                        FontWeight="DemiBold"
                                                            Margin="0 0 0 0"
                                                            HorizontalAlignment="Right"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-                                            <TextBlock Text="{Binding EditTotalAllImportGoods}"
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="{Binding EditTotalAllImportGoods}"
                                                            VerticalAlignment="Center"
                                                        FontWeight="DemiBold"
                                                            Margin="10 0 20 0"></TextBlock>
-                                        </Grid>
+                                            </Grid>
 
+                                        </Grid>
                                     </Grid>
-                                </Grid>
 
-                                <Grid x:Name="gribEditimportGoodsdetailproduct" Visibility="Collapsed">
+                                    <Grid x:Name="gribEditimportGoodsdetailproduct" Visibility="Collapsed">
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="Mã sản phẩm" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding EditCodeProduct}" VerticalAlignment="Center"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-                                            <TextBlock Text="Đơn vị" VerticalAlignment="Center"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-                                            <TextBlock Text="{Binding EditUnitProduct}" VerticalAlignment="Center"
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Mã sản phẩm" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBlock Text="{Binding EditCodeProduct}" VerticalAlignment="Center"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="Đơn vị" VerticalAlignment="Center"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="3">
+                                                <TextBlock Text="{Binding EditUnitProduct}" VerticalAlignment="Center"
                                                            Margin="10 0  0 0"></TextBlock>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.29*"></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="Tên sản phẩm" VerticalAlignment="Center"
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.29*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Tên sản phẩm" VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBlock Text="{Binding EditNameProduct}" VerticalAlignment="Center"></TextBlock>
+                                            </Grid>
                                         </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding EditNameProduct}" VerticalAlignment="Center"></TextBlock>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.6*"></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="Số lượng" VerticalAlignment="Center"
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Số lượng" VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBox
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBox
                                                     Text="{Binding EditQuantityProduct}"
                                                     Margin="20 0 20 0"
                                                     VerticalAlignment="Center"
                                                     x:Name="textboxEditquantity">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="TextChanged">
-                                                        <i:InvokeCommandAction
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding textchangededitquantityCommand}"
                                                                 CommandParameter="{Binding ElementName=textboxEditquantity}"/>
 
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </TextBox>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-                                            <TextBlock Text="Đơn giá" VerticalAlignment="Center"
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBox>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="Đơn giá" VerticalAlignment="Center"
                                                            Margin="15 0 0 0"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-                                            <TextBox
+                                            </Grid>
+                                            <Grid Grid.Column="3">
+                                                <TextBox
                                                     Text="{Binding EditPriceProduct}"
                                                     Margin="20 0 20 0"
                                                     VerticalAlignment="Center"
                                                     x:Name="textboxEditprice">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="TextChanged">
-                                                        <i:InvokeCommandAction
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding textchangededitpriceCommand}"
                                                                 CommandParameter="{Binding ElementName=textboxEditprice}"/>
 
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </TextBox>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBox>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Row="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="Thành tiền  :"
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="Thành tiền  :"
                                                            VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding EditTotalAllProduct}"
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBlock Text="{Binding EditTotalAllProduct}"
                                                            VerticalAlignment="Center"
                                                            Margin="20 0 0 0"></TextBlock>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="4">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-                                            <Button
+                                        <Grid Grid.Row="4">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                                                <Button BorderBrush="Red" Background="Red"
                                                     Margin="0 0 20 0"
                                                     HorizontalAlignment="Right"
                                                     Grid.Row="2"
                                                     Width="150"
                                                     ToolTip="Resource name: MaterialDesignPaperLightButton"
                                                     Content="Thoát">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding ClickHiddenCommand}"
                                                                 CommandParameter="{Binding ElementName=gribEditimportGoodsdetailproduct}"/>
-                                                        <i:InvokeCommandAction
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding ClickHiddenCommand}"
                                                                 CommandParameter="{Binding ElementName=gribEditimportgoodsdetail}"/>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
 
-                                            <Button
-                                                    Margin="0,9,20,0"
+                                                <Button BorderBrush="#1e98d7" Background="#1e98d7"
                                                     HorizontalAlignment="Right"
                                                     Grid.Row="2"
                                                     Width="150"
                                                     ToolTip="Resource name: MaterialDesignPaperLightButton"
                                                     Content="Cập Nhật" VerticalAlignment="Top">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding ClickEdit_UpdateProductImportGoodsCommand}"
                                                                 CommandParameter="{Binding ElementName=datagribeditimportgood}"/>
-                                                        <i:InvokeCommandAction
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding ClickHiddenCommand}"
                                                                 CommandParameter="{Binding ElementName=gribEditimportGoodsdetailproduct}"/>
-                                                        <i:InvokeCommandAction
+                                                            <i:InvokeCommandAction
                                                                 Command="{Binding ClickHiddenCommand}"
                                                                 CommandParameter="{Binding ElementName=gribEditimportgoodsdetail}"/>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                        </StackPanel>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
+                            </materialDesign:Card>
+                            
                         </Grid>
                     </Grid>
 
@@ -1946,19 +1943,19 @@
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Nhà cung cấp"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 50 0 "/>
+                                            <TextBlock Text="Nhà cung cấp"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin=" 20 0 20 0 "/>
                                             <TextBlock Text="{Binding DetailNameSupplier}"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Row="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="SĐT/Email"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 93 0"></TextBlock>
+                                            <TextBlock Text="SĐT/Email"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 0 40 0"></TextBlock>
                                             <TextBlock Text="{Binding DetailEmailPhonenumberSupplier}"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Row="2">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Địa chỉ"  Margin="20 0 116 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Địa chỉ"  Margin="20 0 60 0" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                                             <TextBlock Text="{Binding DetailAddressSupplier}"  VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
