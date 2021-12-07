@@ -947,36 +947,51 @@ namespace bookStoreManagetment.ViewModel
             {
                 if (p != null)
                 {
-                    var select = p as InventoryGoods;
-
-                    bill Bill = Model.DataProvider.Ins.DB.bills.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
-                    Model.DataProvider.Ins.DB.bills.Remove(Bill);
-                    InventoryImportGoods.Remove(select);
-                    var profit = DataProvider.Ins.DB.profitSummaries.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
-                    var employee = DataProvider.Ins.DB.employees.Where(pa => pa.idEmployee == profit.idEmployee).FirstOrDefault();
-
-                    DataProvider.Ins.DB.employees.Remove(employee);
-                    DataProvider.Ins.DB.profitSummaries.Remove(profit);
-                    DataProvider.Ins.DB.employees.Add(employee);
-
-
-                    var ImportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill).Select(pa => pa.idItem).ToList();
-                    foreach (var cell in ImportBill)
+                    MessageBoxResult result = MessageBox.Show("Bạn có muốn xoá khách hàng này không ?",
+                                          "Xác nhận",
+                                          MessageBoxButton.YesNo,
+                                          MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
                     {
-                        Model.importBill cellimportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill && pa.idItem == cell).FirstOrDefault();
-                        DataProvider.Ins.DB.importBills.Remove(cellimportBill);
-                        item data = DataProvider.Ins.DB.items.Where(pa => pa.idItem == cell).FirstOrDefault();
-                        int quantitys = data.quantity;
-                        data.quantity = quantitys - cellimportBill.number;
+                        var select = p as InventoryGoods;
 
+                        bill Bill = Model.DataProvider.Ins.DB.bills.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
+                        Model.DataProvider.Ins.DB.bills.Remove(Bill);
+                        InventoryImportGoods.Remove(select);
+                        var profit = DataProvider.Ins.DB.profitSummaries.Where(pa => pa.billCode == select.CodeBill).FirstOrDefault();
+                        var employee = DataProvider.Ins.DB.employees.Where(pa => pa.idEmployee == profit.idEmployee).FirstOrDefault();
+
+                        DataProvider.Ins.DB.employees.Remove(employee);
+                        DataProvider.Ins.DB.profitSummaries.Remove(profit);
+                        DataProvider.Ins.DB.employees.Add(employee);
+
+
+                        var ImportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill).Select(pa => pa.idItem).ToList();
+                        foreach (var cell in ImportBill)
+                        {
+                            Model.importBill cellimportBill = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == select.CodeBill && pa.idItem == cell).FirstOrDefault();
+                            DataProvider.Ins.DB.importBills.Remove(cellimportBill);
+                            item data = DataProvider.Ins.DB.items.Where(pa => pa.idItem == cell).FirstOrDefault();
+                            int quantitys = data.quantity;
+                            data.quantity = quantitys - cellimportBill.number;
+
+                        }
+                        DataProvider.Ins.DB.SaveChanges();
+                        MessageBox.Show("Xoá thành công!");
                     }
-                    DataProvider.Ins.DB.SaveChanges();
-                    MessageBox.Show("Xoá thành công!");
+                    
                 }
 
             });
 
             ClickAddFormImportGoodsCommand = new RelayCommand<object>((p) => {
+                foreach (var n in InventoryList)
+                {
+                    if (n.Count <= 0)
+                    {
+                        return false;
+                    }
+                }
                 if (NameSupplier != null && EmailPhonenumberSupplier != null && AddressSupplier != null && InventoryList.Count() > 0)
                 {
                     return true;
@@ -1072,13 +1087,30 @@ namespace bookStoreManagetment.ViewModel
 
 
             // Cập nhật sau khi chỉnh sửa
-            ClickUpdateFormImportGoodsCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ClickUpdateFormImportGoodsCommand = new RelayCommand<object>((p) => {
+                foreach (var n in InventoryListEdit)
+                {
+                    if (n.Count <= 0)
+                    {
+                        return false;
+                    }
+                }
+                if (EditNameSupplier != null && EditEmailPhonenumberSupplier != null && EditAddressSupplier != null && InventoryListEdit.Count() > 0)
+                {
+                    return true;
+                }
+
+                return false;
+
+            }, (p) =>
             {
                 if (p != null)
                 {
                     List<string> id = InventoryListEdit.Select(pa => pa.Item.idItem).ToList();
                     List<string> backupid = BackupInventoryListEdit.Select(pa => pa.Item.idItem).ToList();
-
+                    string idnhacc = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == EditNameSupplier).Select(pa => pa.idSupplier).FirstOrDefault();
+                    var pro = DataProvider.Ins.DB.profitSummaries.Where(pa => pa.billCode == backupbillcode).FirstOrDefault();
+                    pro.idCustomer = idnhacc;
                     foreach (string data_id in id)
                     {
                         var cell_id = InventoryListEdit.Where(pa => pa.Item.idItem == data_id).FirstOrDefault();
@@ -1090,7 +1122,8 @@ namespace bookStoreManagetment.ViewModel
 
                             if (cell_id.Count == cell_id.QuantityBefore && cell_id.Item.importPriceItem == cell.importPriceItem)
                             {
-
+                                var im = DataProvider.Ins.DB.importBills.Where(pa => pa.billCodeImport == backupbillcode && pa.idItem == data_id).FirstOrDefault();
+                                im.idsupplier = idnhacc;
                             }
                             else
                             {
@@ -1110,8 +1143,9 @@ namespace bookStoreManagetment.ViewModel
                                 importDate = Daynow,
                                 idItem = cell_id.Item.idItem,
                                 unitPrice = cell_id.Item.importPriceItem,
+                                paymentMethod = "Tiền mặt",
                                 note = "",
-                                idsupplier = DataProvider.Ins.DB.suppliers.Where(pa => pa.nameSupplier == NameSupplier).Select(pa => pa.idSupplier).FirstOrDefault()
+                                idsupplier = idnhacc
                             };
                             //totalall = totalall + data.TotalPriceItem;
 
