@@ -25,7 +25,7 @@ using GridViewExport.Behaviors;
 
 namespace bookStoreManagetment.ViewModel
 {
-    class DSHoaDonViewModel : BaseViewModel
+    public class DSHoaDonViewModel : BaseViewModel
     {
         public DSHoaDonViewModel()
         {
