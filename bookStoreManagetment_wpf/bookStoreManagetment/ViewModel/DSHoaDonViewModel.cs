@@ -1,4 +1,4 @@
-﻿using AForge.Video;
+using AForge.Video;
 using AForge.Video.DirectShow;
 using bookStoreManagetment.Model;
 using System;
@@ -101,7 +101,7 @@ namespace bookStoreManagetment.ViewModel
             #endregion
 
             #region Command in đơn hàng
-            PrintBillCommand = new RelayCommand<object>((p) => { return true; }, (p) => 
+            PrintBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 try
                 {
@@ -129,7 +129,7 @@ namespace bookStoreManagetment.ViewModel
             {
                 ViewBillDetail = SelectedBill;//(p as BillDetail);
                 ThongTinHoaDon = ViewBillDetail;
-                TienKhachTra = DataProvider.Ins.DB.profitSummaries.Where(x=>x.billCode== ThongTinHoaDon.BillCode).FirstOrDefault().payPrice;
+                TienKhachTra = DataProvider.Ins.DB.profitSummaries.Where(x => x.billCode == ThongTinHoaDon.BillCode).FirstOrDefault().payPrice;
                 TienThua = TienKhachTra - ThongTinHoaDon.Total;
                 IsBillViewing = Visibility.Visible;
                 IsDSHoaDon = Visibility.Collapsed;
@@ -144,6 +144,8 @@ namespace bookStoreManagetment.ViewModel
                 IsBillCreating = Visibility.Visible;
                 IsDSHoaDon = Visibility.Collapsed;
                 IsBillViewing = Visibility.Collapsed;
+
+                SellBillInfomation = SellBillInfomation;
                 // Load danh sác khách hàng
                 CustomerList = new ObservableCollection<custommer>(DataProvider.Ins.DB.custommers);
                 // Load danh sách nhân viên
@@ -177,6 +179,7 @@ namespace bookStoreManagetment.ViewModel
 
                 GetVideoDevices();
                 BarcodeScanner newBarcodeScanner = new BarcodeScanner();
+                Barcode = "";
                 newBarcodeScanner.ShowDialog();
             }
             #endregion
@@ -559,7 +562,7 @@ namespace bookStoreManagetment.ViewModel
         private item _SelectedItem;
         public item SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<SellBillItem> _SellBillInfomation;
+        private  ObservableCollection<SellBillItem> _SellBillInfomation;
         public ObservableCollection<SellBillItem> SellBillInfomation { get => _SellBillInfomation; set { _SellBillInfomation = value; OnPropertyChanged(); if (SellBillInfomation != null) { UpdateTotal(); } } }
 
         private ObservableCollection<employee> _EmployeeList;
@@ -1018,33 +1021,38 @@ namespace bookStoreManagetment.ViewModel
                     //MessageBox.Show(result.ToString());
                     Barcode = result.ToString();
                     item newitem = DataProvider.Ins.DB.items.Where(x => x.barcode == Barcode).FirstOrDefault();
-                    bool exists = false;
-                    if (SellBillInfomation != null)
+                    if (newitem != null)
                     {
-                        foreach (var billinfo in SellBillInfomation)
+                        bool exists = false;
+                        if (SellBillInfomation != null)
                         {
-                            if (billinfo.Item == newitem)
+                            foreach (var billinfo in SellBillInfomation)
                             {
-                                exists = true;
+                                if (billinfo.Item == newitem)
+                                {
+                                    exists = true;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        SellBillInfomation = new ObservableCollection<SellBillItem>();
-                    }
-                    if (exists == false)
-                    {
-                        var BillDetail = new SellBillItem() { Item = newitem, Amount = 1, Discount = 0 };
-                        SellBillInfomation.Add(BillDetail);
-                    }
-                    UpdateTotal();
-                }
+                        else
+                        {
+                            SellBillInfomation = new ObservableCollection<SellBillItem>();
+                        }
+                        if (exists == false)
+                        { 
+                            var BillDetail = new SellBillItem() { Item = newitem, Amount = 1, Discount = 0 };
 
+                            App.Current.Dispatcher.Invoke((Action)delegate
+                            {
+                                SellBillInfomation.Add(BillDetail);
+                            });
+                        }
+                        UpdateTotal();
+                    }
+
+                }
                 QRCode = ToBitmapImage(bitmap);
                 QRCode.Freeze();
-                // // avoid cross thread operations and prevents leaks
-                //Dispatcher.BeginInvoke(new ThreadStart(delegate { videoPlayer.Source = QRCode; }));
             }
             catch (Exception exc)
             {
